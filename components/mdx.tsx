@@ -1,13 +1,18 @@
 "use client";
 
 import { Post } from "@prisma/client";
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { replaceLinks } from "@/lib/remark-plugins";
 import { Tweet } from "react-tweet";
 import BlurImage from "@/components/blur-image";
 import styles from "./mdx.module.css";
+import { JSXElementConstructor, ReactElement } from "react";
 
-export default function MDX({ source }: { source: MDXRemoteProps }) {
+export default function MDX({
+  mdxContent,
+}: {
+  mdxContent: ReactElement<any, string | JSXElementConstructor<any>>;
+}) {
   const components = {
     a: replaceLinks,
     BlurImage,
@@ -15,13 +20,15 @@ export default function MDX({ source }: { source: MDXRemoteProps }) {
     Tweet,
   };
 
+  const mdxSource = { compiledSource: mdxContent };
+
   return (
     <article
       className={`prose-md prose prose-stone m-auto w-11/12 dark:prose-invert sm:prose-lg sm:w-3/4 ${styles.root}`}
       suppressHydrationWarning={true}
     >
       {/* @ts-ignore */}
-      <MDXRemote {...source} components={components} />
+      <MDXRemote {...mdxSource} components={components} />
     </article>
   );
 }

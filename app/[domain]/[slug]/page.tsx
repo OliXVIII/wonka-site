@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
-import { getPostData, getSiteData } from "@/lib/fetchers";
 import BlogCard from "@/components/blog-card";
 import BlurImage from "@/components/blur-image";
-import MDX from "@/components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 
 export async function generateMetadata({
@@ -14,14 +12,18 @@ export async function generateMetadata({
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
 
-  const [data, siteData] = await Promise.all([
-    getPostData(domain, slug),
-    getSiteData(domain),
-  ]);
-  if (!data || !siteData) {
-    return null;
-  }
-  const { title, description } = data;
+  // const [data, siteData] = await Promise.all([
+  //   getPostData(domain, slug),
+  //   getSiteData(domain),
+  // ]);
+  // if (!data || !siteData) {
+  //   return null;
+  // }
+  // const { title, description } = data;
+
+  //TODO: Get the title and description from the domain and slug
+  const title = "Title";
+  const description = "Description";
 
   return {
     title,
@@ -88,7 +90,22 @@ export default async function SitePostPage({
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
-  const data = await getPostData(domain, slug);
+  const data = {
+    title: "Title",
+    description: "Description",
+    createdAt: new Date(),
+    site: {
+      user: {
+        name: "User",
+        username: "user",
+        gh_username: "user",
+        image: "/placeholder.png",
+      },
+    },
+    image: "/placeholder.png",
+    imageBlurhash: placeholderBlurhash,
+    adjacentPosts: [],
+  };
 
   if (!data) {
     notFound();
@@ -150,8 +167,6 @@ export default async function SitePostPage({
           src={data.image ?? "/placeholder.png"}
         />
       </div>
-
-      <MDX source={data.mdxSource} />
 
       {data.adjacentPosts.length > 0 && (
         <div className="relative mb-20 mt-10 sm:mt-20">

@@ -2,6 +2,7 @@ import styles from "./loading-dots.module.css";
 
 interface LoadingDotsProps {
   color?: string;
+  className?: string;
 }
 
 const LoadingDots = ({ color = "#000" }: LoadingDotsProps) => {
