@@ -75,9 +75,9 @@ export default async function Navbar({ lang }: NavbarProps) {
 
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      {/* <div className="block flex-none md:hidden">
+      <div className="block flex-none md:hidden">
         <MobileMenu menu={menu} />
-      </div> */}
+      </div>
       <div className="flex w-full items-center">
         <div className="flex w-full md:w-1/3">
           <Link
@@ -90,7 +90,7 @@ export default async function Navbar({ lang }: NavbarProps) {
             </div>
           </Link>
           {menu.length ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
+            <ul className="hidden gap-10 h-20 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
                 <li key={item.title}>
                   <Link
@@ -104,9 +104,9 @@ export default async function Navbar({ lang }: NavbarProps) {
             </ul>
           ) : null}
         </div>
-        <div className="hidden justify-center md:flex md:w-1/3">
+        {/*<div className="hidden justify-center md:flex md:w-1/3">
           <Search />
-        </div>
+        </div>*/}
         <div className="flex justify-end md:w-1/3">
           <Suspense fallback={<OpenCart />}>
             <Cart />
