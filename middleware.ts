@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { useSession } from "next-auth/react";
 
 export const config = {
   matcher: [
@@ -39,11 +40,25 @@ export default async function middleware(req: NextRequest) {
   }`;
 
   // rewrites for app pages
-  if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    const session = await getToken({ req });
-    if (!session && path !== "/login") {
+  if (
+    hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
+    hostname == `www.app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+  ) {
+    const cookiesList = req.cookies.getAll();
+    const sessionCookie = process.env.NEXTAUTH_URL?.startsWith("https://")
+      ? "__Secure-next-auth.session-token"
+      : "next-auth.session-token";
+
+    // no session token present, remove all next-auth cookies and redirect to sign-in
+    if (
+      !cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
+      path !== "/login"
+    ) {
       return NextResponse.redirect(new URL("/login", req.url));
-    } else if (session && path == "/login") {
+    } else if (
+      cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
+      path == "/login"
+    ) {
       return NextResponse.redirect(new URL("/", req.url));
     }
     return NextResponse.rewrite(
@@ -51,17 +66,11 @@ export default async function middleware(req: NextRequest) {
     );
   }
 
-  // special case for `vercel.pub` domain
-  if (hostname === "vercel.pub") {
-    return NextResponse.redirect(
-      "https://vercel.com/blog/platforms-starter-kit",
-    );
-  }
-
   // rewrite root application to `/home` folder
   if (
     hostname === "localhost:3000" ||
-    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
+    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN ||
+    hostname === `www.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
   ) {
     return NextResponse.rewrite(
       new URL(`/home${path === "/" ? "" : path}`, req.url),

@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "next-themes";
 
 const title =
   "Platforms Starter Kit – The all-in-one starter kit for building multi-tenant applications.";
@@ -37,11 +38,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(cal.variable, inter.variable)}>
-        <Providers>
-          {children}
-          <Analytics />
-        </Providers>
+      <body
+        className={`${cn(
+          cal.variable,
+          inter.variable,
+        )} bg-light dark:bg-dark antialiased transition-colors`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Providers>
+            {children}
+            <Analytics />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

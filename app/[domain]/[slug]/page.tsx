@@ -99,10 +99,10 @@ export default async function SitePostPage({
         name: "User",
         username: "user",
         gh_username: "user",
-        image: "/placeholder.png",
+        image: "/logo-background.png",
       },
     },
-    image: "/placeholder.png",
+    image: "/logo-background.png",
     imageBlurhash: placeholderBlurhash,
     adjacentPosts: [],
   };
@@ -164,7 +164,7 @@ export default async function SitePostPage({
           className="h-full w-full object-cover"
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-          src={data.image ?? "/placeholder.png"}
+          src={data.image ?? "/logo-background.png"}
         />
       </div>
 

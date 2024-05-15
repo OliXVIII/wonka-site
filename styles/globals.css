@@ -2,9 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (prefers-color-scheme: dark) {
+@layer base {
+  h1 {
+    @apply max-xs:text-2xl text-3xl tracking-tight text-zinc-700 dark:text-zinc-100 lg:text-[2rem];
+  }
+  h2 {
+    @apply max-xxs:text-xl text-2xl font-normal text-zinc-700 dark:text-zinc-200 lg:text-[1.75rem];
+  }
+  h3 {
+    @apply text-lg font-bold text-zinc-600 dark:text-zinc-200 lg:text-xl;
+  }
   body {
-    background-color: #000000;
+    @apply leading-[1.4rem] text-gray-600 dark:text-zinc-300;
+  }
+  p {
+    @media only screen and (max-width: 475px) {
+      font-size: 0.9rem;
+    }
+    @media screen and (max-height: 700px) {
+      @apply leading-5;
+    }
+    @media screen and (max-width: 375px) {
+      font-size: 0.8rem;
+      @apply leading-[1.2rem];
+    }
+  }
+  em {
+    @apply text-zinc-700 dark:text-zinc-100;
+  }
+  li {
+    @media only screen and (max-width: 475px) {
+      font-size: 0.9rem;
+    }
   }
 }
 
@@ -101,4 +130,34 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
   color: #a8a29e;
   text-decoration: line-through;
   text-decoration-thickness: 2px;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: var(--root-font-size);
+  font-weight: var(--root-font-weight);
+  line-height: var(--root-line-height);
+  background: var(--background);
+  text-transform: var(--root-text-transform);
+  scroll-padding-top: 4.5rem;
+
+  @media all and (min-width: 1024px) {
+    font-size: calc(var(--root-font-size) * 1.15);
+  }
+
+  @media only screen and (min-width: 1537px) {
+    font-size: calc(var(--root-font-size) * 1.18);
+  }
+
+  @media only screen and (min-width: 2049px) {
+    font-size: calc(var(--root-font-size) * 1.45);
+  }
+
+  @media only screen and (min-width: 2561px) {
+    font-size: calc(var(--root-font-size) * 2.3);
+  }
+
+  body {
+    min-height: 100vh;
+  }
 }

@@ -23,7 +23,7 @@ export default function PostCard({
             width={500}
             height={400}
             className="h-full object-cover"
-            src={data.image ?? "/placeholder.png"}
+            src={data.image ?? "/logo-background.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />

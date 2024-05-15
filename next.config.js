@@ -14,10 +14,13 @@ module.exports = {
       { hostname: "abs.twimg.com" },
       { hostname: "pbs.twimg.com" },
       { hostname: "avatar.vercel.sh" },
-      { hostname: "avatars.githubusercontent.com" },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
       { hostname: "www.google.com" },
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
-    ]
+    ],
   },
 };

@@ -1,13 +1,14 @@
 "use client";
 
 import LoadingDots from "@/components/icons/loading-dots";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export default function LoginButton() {
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   // Get error message added by next/auth in URL.
   const searchParams = useSearchParams();
