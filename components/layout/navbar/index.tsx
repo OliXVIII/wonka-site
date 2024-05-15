@@ -10,8 +10,68 @@ import Cart from "@/components/store/cart";
 
 const { SITE_NAME } = process.env;
 
-export default async function Navbar() {
+const hardcodedMenu: Record<string, Menu[]> = {
+  en: [
+    {
+      title: "Home",
+      path: "/",
+    },
+    {
+      title: "Shop",
+      path: "/shop",
+    },
+    {
+      title: "About",
+      path: "/about",
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      title: "Services",
+      path: "/services",
+    },
+    {
+      title: "Events",
+      path: "/events",
+    }
+  ],
+  fr: [
+    {
+      title: "Accueil",
+      path: "/",
+    },
+    {
+      title: "Boutique",
+      path: "/shop",
+    },
+    {
+      title: "À propos",
+      path: "/about",
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      title: "Services",
+      path: "/services",
+    },
+    {
+      title: "Événements",
+      path: "/events",
+    },
+  ],
+};
+
+type NavbarProps = {
+  lang: 'en' | 'fr';
+};
+
+export default async function Navbar({ lang }: NavbarProps) {
   // const menu = await getMenu("next-js-frontend-header-menu");
+  const menu = hardcodedMenu[lang];
 
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
@@ -29,7 +89,7 @@ export default async function Navbar() {
               {SITE_NAME}
             </div>
           </Link>
-          {/* {menu.length ? (
+          {menu.length ? (
             <ul className="hidden gap-6 text-sm md:flex md:items-center">
               {menu.map((item: Menu) => (
                 <li key={item.title}>
@@ -42,7 +102,7 @@ export default async function Navbar() {
                 </li>
               ))}
             </ul>
-          ) : null} */}
+          ) : null}
         </div>
         <div className="hidden justify-center md:flex md:w-1/3">
           <Search />

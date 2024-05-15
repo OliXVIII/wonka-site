@@ -83,7 +83,7 @@ export default async function SiteLayout({
 
   return (
     <div className={fontMapper[data.font]}>
-      <Navbar />
+      <Navbar lang='en'/>
 
       <div className="mt-20">{children}</div>
     </div>
