@@ -25,6 +25,7 @@ export const uiContent: Partial<Record<Locale, UiContent>> = {
       { label: "Contact", href: "/contact" },
     ],
   },
+  // French
   "fr-CA": {
     logo: "Mon Logo",
     mission:
