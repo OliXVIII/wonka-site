@@ -39,13 +39,6 @@ export async function generateMetadata({
       description,
       images: [image],
     },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [image],
-      creator: "@vercel",
-    },
     icons: [logo],
     metadataBase: new URL(`https://${domain}`),
     // Optional: Set canonical URL to custom domain if it exists

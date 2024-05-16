@@ -15,12 +15,6 @@ export async function generateMetadata({ params }: Params) {
       title: "Title",
       description: "Description",
     },
-    twitter: {
-      card: "summary_large_image",
-      title: "Title",
-      description: "Description",
-      creator: "@vercel",
-    },
   };
 }
 

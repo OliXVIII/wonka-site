@@ -74,6 +74,7 @@ export default async function Navbar({ lang }: NavbarProps) {
   const menu = hardcodedMenu[lang];
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
         <MobileMenu menu={menu} />
@@ -114,5 +115,6 @@ export default async function Navbar({ lang }: NavbarProps) {
         </div>
       </div>
     </nav>
+    </Suspense>
   );
 }

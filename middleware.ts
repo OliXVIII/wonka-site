@@ -48,12 +48,17 @@ export default async function middleware(req: NextRequest) {
     const sessionCookie = process.env.NEXTAUTH_URL?.startsWith("https://")
       ? "__Secure-next-auth.session-token"
       : "next-auth.session-token";
-
     // no session token present, remove all next-auth cookies and redirect to sign-in
     if (
       !cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
       path !== "/login"
     ) {
+      // remove all next-auth cookies
+      for (const cookie of cookiesList) {
+        if (cookie.name.startsWith("next-auth.")) {
+          req.cookies.delete(cookie.name);
+        }
+      }
       return NextResponse.redirect(new URL("/login", req.url));
     } else if (
       cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
