@@ -15,9 +15,9 @@ export default async function Posts({
   if (!session?.user) {
     redirect("/login");
   }
+  console.log(session);
   const posts = await prisma.post.findMany({
     where: {
-      userId: session.user.id as string,
       ...(siteId ? { siteId } : {}),
     },
     orderBy: {
