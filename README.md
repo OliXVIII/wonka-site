@@ -18,6 +18,8 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
 
 #Get started
 - Clone the repository
+- Delete any .env file in the root directory
+- "vc env pull" to pull the .env file from the vault
 - Run `pnpm install` to install the dependencies
-- Run `pnpm prisma migrate dev` to create the database schema
+- Run `dotenv -e .env.local -- npx prisma db push --force-reset` to create the database schema
 
