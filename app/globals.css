@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-zinc-700 max-xs:text-2xl text-3xl lg:text-[2rem] tracking-tight dark:text-zinc-100;
+  }
+  h2 {
+    @apply text-zinc-700 text-2xl lg:text-[1.75rem] font-normal dark:text-zinc-200 max-xxs:text-xl;
+  }
+  h3 {
+    @apply text-zinc-600 text-lg lg:text-xl font-bold dark:text-zinc-200;
+  }
+  body {
+    @apply text-gray-600 dark:text-zinc-300 leading-[1.4rem];
+  }
+  p {
+    @media only screen and (max-width: 475px) {
+      font-size: 0.9rem;
+    }
+    @media screen and (max-height: 700px) {
+      @apply leading-5;
+    }
+    @media screen and (max-width: 375px) {
+      font-size: 0.8rem;
+      @apply leading-[1.2rem];
+    }
+  }
+  em {
+    @apply text-zinc-700 dark:text-zinc-100;
+  }
+  li {
+    @media only screen and (max-width: 475px) {
+      font-size: 0.9rem;
+    }
+  }
+  progress.appearance-none {
+    /* Remove default browser styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  /* Additional styles for WebKit browsers (e.g., Chrome, Safari) */
+  progress.appearance-none::-webkit-progress-bar {
+    background-color: transparent; /* Make default progress bar transparent */
+  }
+
+  /* Additional styles for Mozilla browsers (e.g., Firefox) */
+  progress.appearance-none::-moz-progress-bar {
+    background: transparent; /* Make the progress bar in Firefox transparent */
+  }
+  progress::-webkit-progress-value {
+    @apply rounded-full bg-slate-600 dark:bg-slate-400;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .x-scrollbar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    border-right: 2px solid;
+    border-left: 2px solid;
+    @apply border-neutral-200 dark:border-slate-700;
+    background-color: transparent;
+  }
+
+  .x-scrollbar::-webkit-scrollbar {
+    background-color: transparent;
+  }
+
+  .x-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    @apply bg-neutral-200 dark:bg-slate-700;
+  }
+}
+.star-ratings {
+  @apply inline-flex !important;
+}
+
+:root {
+  --background: #fff;
+  --color-outline-homepage-choice: black;
+  --color-border-homepage-choice: #616360;
+  --color-title-homepage-choice: #d49d08;
+  --height-homepage-choice: 100%;
+  --width-homepage-choice: 24rem;
+  --width-homepage-choice-title: 10rem;
+  --font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+  --root-font-size: 15px;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 36px;
+  --root-line-height: 1.4;
+  --root-font-weight: 500;
+  --root-text-transform: none;
+  --root-font-style: normal;
+}
+
+a,
+abbr,
+address,
+blockquote,
+body,
+button,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+iframe,
+img,
+input,
+ins,
+kbd,
+label,
+legend,
+li,
+menu,
+object,
+ol,
+p,
+pre,
+q,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+s,
+small,
+span,
+strong,
+sub,
+sup,
+ul,
+var {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption,
+td,
+th {
+  text-align: left;
+  font-weight: 500;
+}
+
+fieldset,
+img {
+  border: 0;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+  font-style: normal;
+  font-weight: 700;
+}
+
+menu,
+ol,
+ul {
+  list-style: none;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: var(--root-font-size);
+  font-weight: var(--root-font-weight);
+  line-height: var(--root-line-height);
+  background: var(--background);
+  text-transform: var(--root-text-transform);
+  scroll-padding-top: 4.5rem;
+
+  @media all and (min-width: 1024px) {
+    font-size: calc(var(--root-font-size) * 1.15);
+  }
+
+  @media only screen and (min-width: 1537px) {
+    font-size: calc(var(--root-font-size) * 1.18);
+  }
+
+  @media only screen and (min-width: 2049px) {
+    font-size: calc(var(--root-font-size) * 1.45);
+  }
+
+  @media only screen and (min-width: 2561px) {
+    font-size: calc(var(--root-font-size) * 2.3);
+  }
+
+  body {
+    min-height: 100vh;
+  }
+}
