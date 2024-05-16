@@ -11,9 +11,6 @@ export default async function Sites({ limit }: { limit?: number }) {
   }
   const sites = await prisma.site.findMany({
     where: {
-      user: {
-        id: session.user.id as string,
-      },
     },
     orderBy: {
       createdAt: "asc",
