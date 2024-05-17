@@ -8,12 +8,16 @@ import { getSiteData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
 import Navbar from "@/components/layout/navbar";
+import { createContext, useContext } from "react";
+import { UiContent, uiContent } from "@/types/ui-content";
+
+type Params = {
+  params: { domain: string; lang: string };
+}
 
 export async function generateMetadata({
   params,
-}: {
-  params: { domain: string };
-}): Promise<Metadata | null> {
+}: Params): Promise<Metadata | null> {
   const domain = decodeURIComponent(params.domain);
   const data = await getSiteData(domain);
   if (!data) {
@@ -82,3 +86,26 @@ export default async function SiteLayout({
     </div>
   );
 }
+
+
+
+
+const UIContentContext = createContext(uiContent["en-CA"]);
+
+interface UIContentProviderProps {
+    children: ReactNode;
+    uiContent: UiContent;
+  }
+
+export const UIContentProvider: React.FC<UIContentProviderProps> = ({ children, uiContent }) => {
+    return (
+        <UIContentContext.Provider value={uiContent}>
+            {children}
+        </UIContentContext.Provider>
+    );
+};
+
+export const useUIContent = () => {
+    return useContext(UIContentContext);
+}
+

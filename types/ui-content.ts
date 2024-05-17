@@ -5,7 +5,7 @@ export interface Navigation {
   href: string;
 }
 
-type UiContent = {
+export type UiContent = {
   logo: string;
   mission: string;
   description: string;
