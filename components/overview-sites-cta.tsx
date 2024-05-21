@@ -10,8 +10,7 @@ export default async function OverviewSitesCTA() {
     return 0;
   }
   const sites = await prisma.site.count({
-    where: {
-    },
+    where: {},
   });
 
   return sites > 0 ? (

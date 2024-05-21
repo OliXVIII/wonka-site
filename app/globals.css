@@ -4,16 +4,16 @@
 
 @layer base {
   h1 {
-    @apply text-zinc-700 max-xs:text-2xl text-3xl lg:text-[2rem] tracking-tight dark:text-zinc-100;
+    @apply text-3xl tracking-tight text-zinc-700 dark:text-zinc-100 max-xs:text-2xl lg:text-[2rem];
   }
   h2 {
-    @apply text-zinc-700 text-2xl lg:text-[1.75rem] font-normal dark:text-zinc-200 max-xxs:text-xl;
+    @apply text-2xl font-normal text-zinc-700 dark:text-zinc-200 max-xxs:text-xl lg:text-[1.75rem];
   }
   h3 {
-    @apply text-zinc-600 text-lg lg:text-xl font-bold dark:text-zinc-200;
+    @apply text-lg font-bold text-zinc-600 dark:text-zinc-200 lg:text-xl;
   }
   body {
-    @apply text-gray-600 dark:text-zinc-300 leading-[1.4rem];
+    @apply leading-[1.4rem] text-gray-600 dark:text-zinc-300;
   }
   p {
     @media only screen and (max-width: 475px) {
@@ -26,6 +26,9 @@
       font-size: 0.8rem;
       @apply leading-[1.2rem];
     }
+  }
+  a {
+    @apply text-black dark:text-neutral-300;
   }
   em {
     @apply text-zinc-700 dark:text-zinc-100;
@@ -94,7 +97,8 @@
   --height-homepage-choice: 100%;
   --width-homepage-choice: 24rem;
   --width-homepage-choice-title: 10rem;
-  --font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+  --font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial,
+    sans-serif;
   --root-font-size: 15px;
   --font-size-small: 14px;
   --font-size-medium: 16px;

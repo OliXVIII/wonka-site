@@ -4,16 +4,21 @@ import FooterMenu from "@/components/layout/footer/footer-menu";
 import LogoSquare from "@/components/store/logo-square";
 import { getMenu } from "@/lib/shopify";
 import { Suspense } from "react";
+import { UiContent } from "@/types/ui-content";
+import { DataType } from "@/server/fetch-data";
 
-const { COMPANY_NAME, SITE_NAME } = process.env;
+type FooterProps = {
+  data: DataType;
+};
 
-export default async function Footer() {
+export default async function Footer({ data }: FooterProps) {
+  const { uiContent, storage } = data;
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : "");
   const skeleton =
     "w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700";
   const menu = await getMenu("next-js-frontend-footer-menu");
-  const copyrightName = COMPANY_NAME ?? SITE_NAME ?? "";
+  const copyrightName = uiContent.compagnyName ?? uiContent.siteName ?? "";
 
   return (
     <footer className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -23,8 +28,8 @@ export default async function Footer() {
             className="flex items-center gap-2 text-black dark:text-white md:pt-1"
             href="/"
           >
-            <LogoSquare size="sm" />
-            <span className="uppercase">{SITE_NAME}</span>
+            <LogoSquare storage={storage} size="sm" />
+            <span className="uppercase">{copyrightName}</span>
           </Link>
         </div>
         <Suspense

@@ -8,7 +8,6 @@ import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants";
 import { Gallery } from "@/components/store/product/gallery";
 import { Image } from "@/lib/shopify/types";
 import { ProductDescription } from "@/components/store/product/product-description";
-import Footer from "@/components/layout/footer/footer";
 import { GridTileImage } from "@/components/grid/tile";
 
 type ProductParams = {
@@ -103,9 +102,7 @@ export default async function ProductPage({ params }: ProductParams) {
           <RelatedProducts id={product.id} />
         </Suspense>
       </div>
-      <Suspense>
-        <Footer />
-      </Suspense>
+      <Suspense></Suspense>
     </>
   );
 }

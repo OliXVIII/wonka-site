@@ -1,6 +1,5 @@
 import { Carousel } from "@/components/store/carousel";
 import { ThreeItemGrid } from "@/components/grid/three-items";
-import Footer from "@/components/layout/footer/footer";
 import { Suspense } from "react";
 
 type Params = {
@@ -26,9 +25,6 @@ export default async function HomePage({ params }: Params) {
       <ThreeItemGrid />
       <Suspense>
         <Carousel />
-        <Suspense>
-          <Footer />
-        </Suspense>
       </Suspense>
     </>
   );

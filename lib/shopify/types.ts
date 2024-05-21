@@ -8,7 +8,7 @@ export type Edge<T> = {
   node: T;
 };
 
-export type Cart = Omit<ShopifyCart, 'lines'> & {
+export type Cart = Omit<ShopifyCart, "lines"> & {
   lines: CartItem[];
 };
 
@@ -40,11 +40,6 @@ export type Image = {
   height: number;
 };
 
-export type Menu = {
-  title: string;
-  path: string;
-};
-
 export type Money = {
   amount: string;
   currencyCode: string;
@@ -61,7 +56,7 @@ export type Page = {
   updatedAt: string;
 };
 
-export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   variants: ProductVariant[];
   images: Image[];
 };

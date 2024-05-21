@@ -1,4 +1,4 @@
-'use server';
+"use server";
 import {
   HIDDEN_PRODUCT_TAG,
   SHOPIFY_GRAPHQL_API_ENDPOINT,
@@ -33,7 +33,6 @@ import {
   Collection,
   Connection,
   Image,
-  Menu,
   Page,
   Product,
   ShopifyAddToCartOperation,
@@ -54,6 +53,7 @@ import {
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation,
 } from "./types";
+import { Menu } from "@/types/ui-content";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")

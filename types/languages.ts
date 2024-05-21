@@ -3,7 +3,6 @@ import { Region, RegionCode } from "./region";
 export enum Language {
   English = "en",
   French = "fr",
-  Spanish = "es",
 }
 
 export type Locale = `${Language}-${RegionCode}`;
@@ -17,7 +16,24 @@ export type LocaleDetails = {
   default?: Locale;
 };
 
-export const defaultLanguage: LocaleDetails = {
+export const localesDetails: Record<Locale, LocaleDetails> = {
+  "en-CA": {
+    path: "en-CA",
+    region: Region.Canada,
+    regionCode: RegionCode.Canada,
+    language: "English",
+    languageCode: Language.English,
+  },
+  "fr-CA": {
+    path: "fr-CA",
+    region: Region.Canada,
+    regionCode: RegionCode.Canada,
+    language: "French",
+    languageCode: Language.French,
+  },
+};
+
+export const defaultLocale: LocaleDetails = {
   path: "en-CA",
   region: Region.Canada,
   regionCode: RegionCode.Canada,

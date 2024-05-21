@@ -11,6 +11,7 @@ export default async function Sites({ limit }: { limit?: number }) {
   }
   const sites = await prisma.site.findMany({
     where: {
+      user: {},
     },
     orderBy: {
       createdAt: "asc",
@@ -20,7 +21,7 @@ export default async function Sites({ limit }: { limit?: number }) {
 
   return sites.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {sites.map((site) => (
+      {sites.map((site: any) => (
         <SiteCard key={site.id} data={site} />
       ))}
     </div>
