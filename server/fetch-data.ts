@@ -3,13 +3,10 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-import {
-  UiContent,
-  demoUIContent,
-  local108UIContent,
-} from "@/types/ui-content";
+import { UiContent, local108UIContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
-import { StorageType } from "@/types/storage";
+import { StorageType, storageLocal108 } from "@/types/storage";
+import { demoUIContent, storageDemo } from "@/lib/demo";
 
 export type DataType = {
   uiContent: UiContent;
@@ -34,14 +31,7 @@ export async function fetchData(
     ) {
       return {
         uiContent: local108UIContent[lang.languageCode],
-        storage: {
-          logo: {
-            navbar: {
-              link: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/logo-navbar.png?alt=media&token=bb7efcc6-7118-4275-a38e-85a7e9f41172",
-              aspectRatio: 1.5,
-            },
-          },
-        },
+        storage: storageLocal108,
         features: {},
         domain: domain,
       };
@@ -63,13 +53,7 @@ export async function fetchData(
   }
   return {
     uiContent: demoUIContent[lang.languageCode],
-    storage: {
-      logo: {
-        navbar: {
-          link: "https://firebasestorage.googleapis.com/v0/b/wonkasite.appspot.com/o/local-108%2Flogo%2Flocal-108-logo.png?alt=media&token=3b3b3b3b-3b3b-3b3b-3b3b-3b3b3b3b3b3b",
-        },
-      },
-    },
+    storage: storageDemo,
     features: {},
     domain: domain,
   };

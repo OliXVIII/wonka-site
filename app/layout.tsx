@@ -42,7 +42,7 @@ export default function RootLayout({
         className={`${cn(
           cal.variable,
           inter.variable,
-        )} bg-light dark:bg-dark antialiased transition-colors`}
+        )} bg-light antialiased transition-colors dark:bg-neutral-900`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Providers>

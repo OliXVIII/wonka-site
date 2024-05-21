@@ -1,6 +1,7 @@
 import type { SorterParams } from "@orama/orama";
 import { OramaClient } from "@oramacloud/client";
 
+//TODO: Setup orama client
 const ORAMA_API_KEY = process.env.NEXT_PUBLIC_ORAMA_API_KEY!;
 const ORAMA_ENDPOINT = process.env.NEXT_PUBLIC_ORAMA_ENDPOINT!;
 
