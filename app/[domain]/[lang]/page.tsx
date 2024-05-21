@@ -7,9 +7,12 @@ import BlogCard from "@/components/blog-card";
 import { getPostsForSite } from "@/lib/fetchers";
 import Image from "next/image";
 import { fetchData } from "@/server/fetch-data";
-import { Params } from "./layouttest";
 import Navbar from "@/components/layout/navbar";
-import { defaultLocale, localesDetails } from "@/types/languages";
+import { Locale, defaultLocale, localesDetails } from "@/types/languages";
+
+export type PageParams = {
+  params: { domain: string; lang: Locale };
+};
 
 export async function generateStaticParams() {
   const allSites = await prisma.site.findMany({
@@ -33,7 +36,7 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SiteHomePage({ params }: Params) {
+const SiteHomePage = async ({ params }: PageParams) => {
   const domain = decodeURIComponent(params.domain);
   const locale = localesDetails[params.lang] ?? defaultLocale;
   const [data, posts] = await Promise.all([
@@ -116,4 +119,6 @@ export default async function SiteHomePage({ params }: Params) {
       )}
     </>
   );
-}
+};
+
+export default SiteHomePage;
