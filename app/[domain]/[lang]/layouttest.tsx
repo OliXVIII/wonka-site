@@ -1,22 +1,12 @@
-
-import Image from "next/image";
-import Link from "next/link";
 import { ReactNode } from "react";
-import CTA from "@/components/cta";
-import ReportAbuse from "@/components/report-abuse";
-import { notFound, redirect } from "next/navigation";
-import { getSiteData } from "@/lib/fetchers";
-import { fontMapper } from "@/styles/fonts";
-import { Metadata } from "next";
-import Navbar from "@/components/layout/navbar";
-import { createContext } from "react";
-import { UiContent, uiContent } from "@/types/ui-content";
-import { fetchUiContent } from "@/server/fetch-ui-content";
+import { notFound } from "next/navigation";
+import { fetchData } from "@/server/fetch-data";
+import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 
 export type Params = {
   readonly params: { domain: string; lang: Locale };
   readonly children: ReactNode;
-}
+};
 
 // export async function generateMetadata({
 //   params,
@@ -58,14 +48,10 @@ export type Params = {
 //   };
 // }
 
-export default async function SiteLayout({
-  params,
-  children,
-}: Params
-) {
+export default async function SiteLayout({ params, children }: Params) {
   const domain = decodeURIComponent(params.domain);
-  const data = (await fetchUiContent(domain, params.lang)).props;
-
+  const locale = localesDetails[params.lang] ?? defaultLocale;
+  const data = await fetchData(domain, locale);
 
   if (!data) {
     notFound();
@@ -79,33 +65,6 @@ export default async function SiteLayout({
   // ) {
   //   return redirect(`https://${data.customDomain}`);
   // }
-  const UIContentContext = createContext(uiContent[params.lang]);
 
-  return (
-      <UIContentContext.Provider value={data} >
-        <Navbar />
-      </UIContentContext.Provider>
-    );
+  return { children };
 }
-
-
-
-
-// const UIContentContext = createContext(uiContent["en-CA"]);
-
-// // interface UIContentProviderProps {
-// //     children: ReactNode;
-// //     uiContent: UiContent;
-// //   }
-
-// export const UIContentProvider = ( children: ReactNode, uiContent: UiContent ) => {
-//     return (
-//         <UIContentContext.Provider value={uiContent}>
-//             {children}
-//         </UIContentContext.Provider>
-//     );
-// };
-
-// export const useUIContent = () => {
-//   return useContext(UIContentContext);
-// }

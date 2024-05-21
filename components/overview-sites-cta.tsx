@@ -10,9 +10,7 @@ export default async function OverviewSitesCTA() {
     return 0;
   }
   const sites = await prisma.site.count({
-    where: {
-      userId: session.user.id as string,
-    },
+    where: {},
   });
 
   return sites > 0 ? (

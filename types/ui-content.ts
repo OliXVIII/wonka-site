@@ -1,41 +1,72 @@
-import { Locale } from "./languages";
+import { Language, Locale } from "./languages";
 
-export interface Navigation {
-  label: string;
-  href: string;
-}
-
-export type UiContent = {
-  logo: string;
-  mission: string;
-  description: string;
-  // navigation: array of object with href and label
-  navigation: Navigation[];
+export type Menu = {
+  title: string;
+  path: string;
 };
 
-export const demoUIContent: Record<Locale, UiContent> = {
+export type UiContent = {
+  compagnyName: string;
+  description: string;
+  mission: string;
+  navigation: Menu[];
+  siteName: string;
+};
+
+export const demoUIContent: Record<Language, UiContent> = {
   // English
-  "en-CA": {
-    logo: "My Logo",
+  en: {
+    compagnyName: "Demo Company",
+    siteName: "Demo Site",
     mission: "My Mission for this demo site is to show how to use i18n",
     description: "My Description: This is a demo site to show how to use i18n",
     navigation: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { title: "Home", path: "/" },
+      { title: "About", path: "/about" },
+      { title: "Contact", path: "/contact" },
     ],
   },
   // French
-  "fr-CA": {
-    logo: "Mon Logo",
+  fr: {
+    compagnyName: "Compagnie de démonstration",
+    siteName: "Site de démonstration",
     mission:
       "Ma mission pour ce site de démonstration est de montrer comment utiliser i18n",
     description:
       "Ma description: Ceci est un site de démonstration pour montrer comment utiliser i18n",
     navigation: [
-      { label: "Accueil", href: "/" },
-      { label: "À propos", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { title: "Accueil", path: "/" },
+      { title: "À propos", path: "/about" },
+      { title: "Contact", path: "/contact" },
+    ],
+  },
+};
+
+export const local108UIContent: Record<Language, UiContent> = {
+  // English
+  en: {
+    compagnyName: "Local 108 Inc.",
+    description: "Local 108 Description",
+    mission: "Local 108 Mission",
+    siteName: "Local 108",
+    navigation: [
+      { title: "Home", path: "/" },
+      { title: "About", path: "/about" },
+      { title: "Contact", path: "/contact" },
+      { title: "Services", path: "/services" },
+    ],
+  },
+  // French
+  fr: {
+    compagnyName: "Local 108 Inc.",
+    description: "Local 108 Description",
+    mission: "Local 108 Mission",
+    siteName: "Local 108",
+    navigation: [
+      { title: "Accueil", path: "/" },
+      { title: "À propos", path: "/about" },
+      { title: "Contact", path: "/contact" },
+      { title: "Services", path: "/services" },
     ],
   },
 };

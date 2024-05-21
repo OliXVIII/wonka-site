@@ -1,22 +1,32 @@
 import clsx from "clsx";
-import LogoIcon from "@/components/icons/logo";
+import { StorageType } from "@/types/storage";
+import Image from "next/image";
 
-export default function LogoSquare({ size }: { size?: "sm" | undefined }) {
+type LogoSquareProps = {
+  storage: StorageType;
+  size?: "sm" | undefined;
+};
+
+export default function LogoSquare({ storage, size }: LogoSquareProps) {
   return (
     <div
-      className={clsx(
-        "flex flex-none items-center justify-center border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-black",
-        {
-          "h-[40px] w-[40px] rounded-xl": !size,
-          "h-[30px] w-[30px] rounded-lg": size === "sm",
-        },
-      )}
+      className={clsx("relative flex flex-none items-center justify-center ", {
+        "h-[40px] w-[40px] rounded-xl": !size,
+        "h-[30px] w-[30px] rounded-lg": size === "sm",
+      })}
     >
-      <LogoIcon
+      {/* <LogoIcon
         className={clsx({
           "h-[16px] w-[16px]": !size,
           "h-[10px] w-[10px]": size === "sm",
         })}
+      /> */}
+      <Image
+        src={storage.logo.navbar.link}
+        alt="logo"
+        fill
+        objectFit="contain"
+        className={`scale-[${storage.logo.navbar.aspectRatio ?? 1}]`}
       />
     </div>
   );
