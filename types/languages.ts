@@ -3,7 +3,6 @@ import { Region, RegionCode } from "./region";
 export enum Language {
   English = "en",
   French = "fr",
-  Spanish = "es",
 }
 
 export type Locale = `${Language}-${RegionCode}`;

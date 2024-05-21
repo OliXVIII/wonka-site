@@ -2,26 +2,24 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
 import { compileMDX } from "next-mdx-remote/rsc";
+import { fetchUiContent } from "@/server/fetch-ui-content";
 
-export async function getSiteData(domain: string) {
-  const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
-    ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
-    : null;
-
-  return await unstable_cache(
-    async () => {
-      return prisma.site.findUnique({
-        where: subdomain ? { subdomain } : { customDomain: domain },
-        include: { user: true },
-      });
-    },
-    [`${domain}-metadata`],
-    {
-      revalidate: 900,
-      tags: [`${domain}-metadata`],
-    },
-  )();
-}
+// export async function getSiteData(domain: string, lang: Locale) {
+//   return await fetchUiContent( domain, lang );
+  // return await unstable_cache(
+  //   async () => {
+  //     return prisma.site.findUnique({
+  //       where: subdomain ? { subdomain } : { customDomain: domain },
+  //       include: { user: true },
+  //     });
+  //   },
+  //   [`${domain}-metadata`],
+  //   {
+  //     revalidate: 900,
+  //     tags: [`${domain}-metadata`],
+  //   },
+  // )();
+// }
 
 export async function getPostsForSite(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)

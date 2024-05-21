@@ -13,7 +13,7 @@ export type UiContent = {
   navigation: Navigation[];
 };
 
-export const uiContent: Partial<Record<Locale, UiContent>> = {
+export const demoUIContent: Record<Locale, UiContent> = {
   // English
   "en-CA": {
     logo: "My Logo",

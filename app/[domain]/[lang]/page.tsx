@@ -7,6 +7,7 @@ import BlogCard from "@/components/blog-card";
 import { getPostsForSite, getSiteData } from "@/lib/fetchers";
 import Image from "next/image";
 import { fetchUiContent } from "@/server/fetch-ui-content";
+import { Params } from "./layout";
 
 export async function generateStaticParams() {
   const allSites = await prisma.site.findMany({
@@ -32,12 +33,10 @@ export async function generateStaticParams() {
 
 export default async function SiteHomePage({
   params,
-}: {
-  params: { domain: string, lang: string };
-}) {
+}: Params) {
   const domain = decodeURIComponent(params.domain);
   const [data, posts] = await Promise.all([
-    getSiteData(domain),
+    getSiteData(domain, params.lang),
     getPostsForSite(domain),
   ]);
 
