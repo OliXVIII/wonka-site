@@ -11,8 +11,8 @@ import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "../top-menu/theme-selector/theme-selector-server";
 
 type NavbarProps = {
-  locale: LocaleDetails;
   data: DataType;
+  locale: LocaleDetails;
   searchbar?: boolean;
 };
 

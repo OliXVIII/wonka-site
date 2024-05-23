@@ -9,6 +9,7 @@ import Image from "next/image";
 import { fetchData } from "@/server/fetch-data";
 import Navbar from "@/components/layout/navbar";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
+import Footer from "@/components/layout/footer/footer";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -117,6 +118,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
           </div>
         </div>
       )}
+    <Footer data={data} />
     </>
   );
 };

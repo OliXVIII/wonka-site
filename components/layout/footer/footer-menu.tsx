@@ -15,11 +15,11 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
   }, [pathname, item.path]);
 
   return (
-    <li>
+    <li className="flex justify-center items-center md:py-3">
       <Link
         href={item.path}
         className={clsx(
-          "block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm",
+          "flex justify-center block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm",
           {
             "text-black dark:text-neutral-300": active,
           },
@@ -35,8 +35,8 @@ export default function FooterMenu({ menu }: { menu: Menu[] }) {
   if (!menu.length) return null;
 
   return (
-    <nav>
-      <ul>
+    <nav className="flex justify-center items-center m-auto">
+      <ul className= "flex flex-col justify-center">
         {menu.map((item: Menu) => {
           return <FooterMenuItem key={item.title} item={item} />;
         })}
