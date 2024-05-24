@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import dynamic from 'next/dynamic'
 import FooterMenu from "@/components/layout/footer/footer-menu";
 import LogoSquare from "@/components/store/logo-square";
 import { getMenu } from "@/lib/shopify";
@@ -8,8 +8,8 @@ import { UiContent } from "@/types/ui-content";
 import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
 import FooterSimple from "./footer-simple";
-import Map from "@/components/layout/footer/footer-map";
-
+// import FooterMap from "./footer-map";
+const FooterMap = dynamic(() => import('./footer-map'))
 type FooterProps = {
   data: DataType;
 };
@@ -28,13 +28,9 @@ export default async function Footer({ data }: FooterProps) {
     "@ " + currentYear.toString() + " " + uiContent.footer.legal;
 
   return (
-    <footer className="relative justify-center text-sm text-neutral-500 dark:text-neutral-400 mx-auto">
+    <footer className="relative mx-auto text-sm text-neutral-500 dark:text-neutral-400">
       <FooterSimple data={data} />
-      {storage.logo?.map && uiContent.footer.type.map ? (
-        <div className="relative max-w-max">
-          <Map address="990 Rte de l'Église suite 240, Québec, QC G1V 3V5"/>
-        </div>
-      ) : null}
+      {uiContent.footer.type.map && <FooterMap />}
       <div className="border-t border-neutral-200 py-10 text-sm dark:border-neutral-700">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
           <p>{copyrightName}</p>

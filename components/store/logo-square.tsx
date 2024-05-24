@@ -21,13 +21,13 @@ export default function LogoSquare({ storage, size }: LogoSquareProps) {
           "h-[10px] w-[10px]": size === "sm",
         })}
       /> */}
-      <Image
+    {storage.logo.navbar ? <Image
         src={storage.logo.navbar.src}
         alt="logo"
         fill
         style={{ transform: `scale(${storage.logo.navbar.aspectRatio ?? 1})` }}
         className="object-contain dark:invert-[90%]"
-      />
+      />: null }
     </div>
   );
 }

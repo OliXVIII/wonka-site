@@ -13,6 +13,22 @@ export const demoUIContent: Record<Language, UiContent> = {
       { title: "About", path: "/about" },
       { title: "Contact", path: "/contact" },
     ],
+    footer: {
+      legal: "Demo. Tous droits réservés.",
+      notice: "*Ces déclarations n'ont pas été évaluées par le Maitre intergalactique OliLePetitFletanDansLeau.",
+      navigation: [
+        { title: "Politique de Confidentialité", path: "" },
+        { title: "Conditions Générales", path: "" },
+        { title: "Blog", path: "" },
+        { title: "Contactez Nous", path: "" },
+      ],
+      design: "Créé au Québec",
+      crafted: "Conçu par",
+      type: {
+        map: true,
+        choice: "simple",
+      },
+    },
   },
   // French
   fr: {
@@ -26,6 +42,22 @@ export const demoUIContent: Record<Language, UiContent> = {
       { title: "À propos", path: "/about" },
       { title: "Contact", path: "/contact" },
     ],
+    footer: {
+      legal: "Demo. All Rights Reserved.",
+      notice: "*These statements have not been evaluated by THE MASTER OF PUPPETS, MASTER, MASTER.",
+      navigation: [
+        { title: "Privicy Policy", path: "" },
+        { title: "Terms", path: "" },
+        { title: "Blog", path: "" },
+        { title: "Contact Us", path: "" },
+      ],
+      design: "Made in Quebec",
+      crafted: "Crafted by",
+      type: {
+        map: true,
+        choice: "simple",
+      },
+    },
   },
 };
 

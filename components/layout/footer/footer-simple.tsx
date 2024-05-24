@@ -44,7 +44,7 @@ export default async function FooterSimple({ data }: FooterProps) {
           src={storage.logo.logoTitle.src}
           alt="logo"
           fill
-          className="object-contain"
+          className="object-contain dark:invert-[90%]"
         />
       </Link>
     </div>

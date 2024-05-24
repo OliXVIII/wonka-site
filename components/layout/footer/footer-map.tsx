@@ -1,42 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
+import { Loader } from "@googlemaps/js-api-loader"
 
-interface MapProps {
-  address: string;
-}
 
-function Map({ address }: MapProps) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const geocoder = useMemo(() => new google.maps.Geocoder(), []);
+const loader = new Loader({
+  apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+  version: "weekly",
+});
 
-  useEffect(() => {
-    const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-      version: "weekly",
-    });
-    loader.load().then(() => {
-      geocoder.geocode({ address: address }, (results: any, status: any) => {
-        if (status === "OK") {
-          const map = new google.maps.Map(mapRef.current!, {
-            center: results[0].geometry!.location,
-            zoom: 8,
-          });
-          const marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry!.location,
-          });
-        } else {
-          console.error(`Geocode was not successful for the following reason: ${status}`);
-        }
-      });
-    });
-  }, [address, geocoder]);
+let map: google.maps.Map;
 
+loader.load().then(async () => {
+  const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+  map = new Map(document.getElementById("map") as HTMLElement, {
+    center: { lat: 46.78730136218648, lng: -71.26663597022774 },
+    zoom: 15,
+  });
+});
+
+const FooterMap = () => {
   return (
-    <div style={{ height: "400px" }} ref={mapRef}></div>
+    <div id="map" className="h-[150px] w-full"></div>
   );
 }
 
-export default Map;
+export default FooterMap
