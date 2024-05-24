@@ -1,4 +1,4 @@
-import { ThemeSelector } from "./theme-selector/theme-selector-server";
+import { ThemeSelector } from "../navbar/theme-selector/theme-selector-server";
 
 import Image from "next/image";
 

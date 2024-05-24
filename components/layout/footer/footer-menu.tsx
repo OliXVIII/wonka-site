@@ -1,12 +1,12 @@
 "use client";
 
-import { Menu } from "@/types/ui-content";
+import { MenuContent } from "@/types/ui-content";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const FooterMenuItem = ({ item }: { item: Menu }) => {
+const FooterMenuItem = ({ item }: { item: MenuContent }) => {
   const pathname = usePathname();
   const [active, setActive] = useState(pathname === item.path);
 
@@ -31,13 +31,13 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
   );
 };
 
-export default function FooterMenu({ menu }: { menu: Menu[] }) {
+export default function FooterMenu({ menu }: { menu: MenuContent[] }) {
   if (!menu.length) return null;
 
   return (
     <nav>
       <ul>
-        {menu.map((item: Menu) => {
+        {menu.map((item: MenuContent) => {
           return <FooterMenuItem key={item.title} item={item} />;
         })}
       </ul>

@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
-import { useSession } from "next-auth/react";
 
 export const config = {
   matcher: [
@@ -49,10 +47,15 @@ export default async function middleware(req: NextRequest) {
       ? "__Secure-next-auth.session-token"
       : "next-auth.session-token";
     // no session token present, remove all next-auth cookies and redirect to sign-in
+    if (path == "/logout") {
+      console.log("Logging out...");
+      return NextResponse.rewrite(new URL(`/app${path}`, req.url));
+    }
     if (
       !cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
       path !== "/login"
     ) {
+      console.log("No session token found, redirecting to /login");
       // remove all next-auth cookies
       for (const cookie of cookiesList) {
         if (cookie.name.startsWith("next-auth.")) {
@@ -64,8 +67,11 @@ export default async function middleware(req: NextRequest) {
       cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
       path == "/login"
     ) {
+      console.log("Session token found, redirecting to /");
       return NextResponse.redirect(new URL("/", req.url));
     }
+    console.log("Session token found, continuing to requested page");
+
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),
     );

@@ -1,14 +1,21 @@
 "use client";
+
 import { useTheme } from "next-themes";
 
-export const ThemeSelector = () => {
+type ThemeSelectorProps = {
+  menu?: boolean;
+};
+
+export const ThemeSelector = ({ menu }: ThemeSelectorProps) => {
   const { setTheme } = useTheme();
 
   return (
-    <div className="z-10 ml-4 flex items-center px-4 dark:border-slate-50/[0.15] max-sm:ml-3 max-sm:px-3">
+    <div
+      className={`z-10 flex items-center px-4 max-sm:ml-3 max-sm:px-3 ${menu ? "" : "ml-4"}`}
+    >
       <button
         type="button"
-        className="dark:hidden"
+        className="bg-dark/65 rounded-full p-2 dark:hidden"
         onClick={() => setTheme("dark")}
         aria-labelledby="theme-selector"
         aria-label="Theme Selector"
@@ -35,7 +42,7 @@ export const ThemeSelector = () => {
       </button>
       <button
         type="button"
-        className="hidden dark:inline"
+        className="bg-light/65 hidden rounded-full  p-2 dark:inline"
         onClick={() => setTheme("light")}
         aria-labelledby="theme-selector"
         aria-label="Theme Selector"

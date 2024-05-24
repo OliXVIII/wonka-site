@@ -7,11 +7,12 @@ import { UiContent, local108UIContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
 import { StorageType, storageLocal108 } from "@/types/storage";
 import { demoUIContent, storageDemo } from "@/lib/demo";
+import { FeaturesType, local108Features } from "@/types/features";
 
 export type DataType = {
   uiContent: UiContent;
   storage: StorageType;
-  features: any;
+  features: FeaturesType;
   domain: string;
 };
 
@@ -32,7 +33,7 @@ export async function fetchData(
       return {
         uiContent: local108UIContent[lang.languageCode],
         storage: storageLocal108,
-        features: {},
+        features: local108Features,
         domain: domain,
       };
     }

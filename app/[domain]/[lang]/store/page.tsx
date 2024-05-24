@@ -1,5 +1,5 @@
 import { Carousel } from "@/components/store/carousel";
-import { ThreeItemGrid } from "@/components/grid/three-items";
+import { ThreeItemGrid } from "@/components/store/grid/three-items";
 import { Suspense } from "react";
 
 type Params = {

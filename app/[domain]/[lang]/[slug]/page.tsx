@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
-import BlogCard from "@/components/blog-card";
+import BlogCard from "@/components/post/blog-card";
 import BlurImage from "@/components/blur-image";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import { Locale } from "@/types/languages";

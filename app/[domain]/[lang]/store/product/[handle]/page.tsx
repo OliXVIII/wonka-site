@@ -8,7 +8,7 @@ import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants";
 import { Gallery } from "@/components/store/product/gallery";
 import { Image } from "@/lib/shopify/types";
 import { ProductDescription } from "@/components/store/product/product-description";
-import { GridTileImage } from "@/components/grid/tile";
+import { GridTileImage } from "@/components/store/grid/tile";
 
 type ProductParams = {
   params: {

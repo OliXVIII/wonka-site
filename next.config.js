@@ -8,6 +8,7 @@ module.exports = {
     },
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       { hostname: "public.blob.vercel-storage.com" },
       { hostname: "res.cloudinary.com" },
@@ -22,6 +23,7 @@ module.exports = {
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
       { hostname: "firebasestorage.googleapis.com", protocol: "https" },
+      { hostname: "magicmind.com" },
     ],
   },
 };

@@ -1,6 +1,4 @@
-import { InlineSnippet } from "@/components/form/domain-configuration";
 import TopMenu from "@/components/layout/top-menu/top-menu";
-import Image from "next/image";
 
 export default function HomePage() {
   return (

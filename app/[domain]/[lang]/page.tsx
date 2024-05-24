@@ -1,14 +1,12 @@
-import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import BlurImage from "@/components/blur-image";
-import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import BlogCard from "@/components/blog-card";
-import { getPostsForSite } from "@/lib/fetchers";
-import Image from "next/image";
 import { fetchData } from "@/server/fetch-data";
 import Navbar from "@/components/layout/navbar";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
+import { ServicesComponent } from "@/components/services/services-component";
+import { Header } from "@/components/header/header";
+import Image from "next/image";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -39,10 +37,7 @@ export async function generateStaticParams() {
 const SiteHomePage = async ({ params }: PageParams) => {
   const domain = decodeURIComponent(params.domain);
   const locale = localesDetails[params.lang] ?? defaultLocale;
-  const [data, posts] = await Promise.all([
-    fetchData(domain, locale),
-    getPostsForSite(domain),
-  ]);
+  const [data] = await Promise.all([fetchData(domain, locale)]);
 
   if (!data) {
     notFound();
@@ -50,73 +45,33 @@ const SiteHomePage = async ({ params }: PageParams) => {
 
   return (
     <>
-      <Navbar locale={locale} data={data} />
-      <div className="mb-20 w-full">
-        {posts.length > 0 ? (
-          <div className="mx-auto w-full max-w-screen-xl md:mb-28 lg:w-5/6">
-            <Link href={`/${posts[0].slug}`}>
-              <div className="sm:h-150 group relative mx-auto h-80 w-full overflow-hidden lg:rounded-xl">
-                <BlurImage
-                  alt={posts[0].title ?? ""}
-                  blurDataURL={posts[0].imageBlurhash ?? placeholderBlurhash}
-                  className="h-full w-full object-cover group-hover:scale-105 group-hover:duration-300"
-                  width={1300}
-                  height={630}
-                  placeholder="blur"
-                  src={posts[0].image ?? "/logo-background.png"}
-                />
-              </div>
-              <div className="mx-auto mt-10 w-5/6 lg:w-full">
-                <h2 className="font-title my-10 text-4xl dark:text-white md:text-6xl">
-                  {posts[0].title}
-                </h2>
-                <p className="w-full text-base dark:text-white md:text-lg lg:w-2/3">
-                  {posts[0].description}
-                </p>
-                <div className="flex w-full items-center justify-start space-x-4">
-                  <div className="h-6 border-l border-stone-600 dark:border-stone-400" />
-                  <p className="m-auto my-5 w-10/12 text-sm font-light text-stone-500 dark:text-stone-400 md:text-base">
-                    {toDateString(posts[0].createdAt)}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Image
-              alt="missing post"
-              src="https://illustrations.popsy.co/gray/success.svg"
-              width={400}
-              height={400}
-              className="dark:hidden"
-            />
-            <Image
-              alt="missing post"
-              src="https://illustrations.popsy.co/white/success.svg"
-              width={400}
-              height={400}
-              className="hidden dark:block"
-            />
-            <p className="font-title text-2xl text-stone-600 dark:text-stone-400">
-              No posts yet.
-            </p>
-          </div>
-        )}
-      </div>
-
-      {posts.length > 1 && (
-        <div className="mx-5 mb-20 max-w-screen-xl lg:mx-24 2xl:mx-auto">
-          <h2 className="font-title mb-10 text-4xl dark:text-white md:text-5xl">
-            More stories
-          </h2>
-          <div className="grid w-full grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
-            {posts.slice(1).map((metadata: any, index: number) => (
-              <BlogCard key={index} data={metadata} />
-            ))}
-          </div>
+      {data.storage.backgroundImageDark && (
+        <div className="sm:h-background max-sm:h-background-mobile absolute hidden w-full dark:flex">
+          <Image
+            src={data.storage.backgroundImageDark.src}
+            alt="bakground image"
+            fill
+            className="h-full w-full object-cover"
+          />
         </div>
       )}
+      {data.storage.backgroundImageLight && (
+        <div className="sm:h-background max-sm:h-background-mobile absolute w-full dark:hidden">
+          <Image
+            src={data.storage.backgroundImageLight.src}
+            alt="bakground image"
+            fill
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
+      <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
+        <Navbar locale={locale} data={data} />
+        <Header data={data} />
+        <Breadcrumb />
+
+        {data.uiContent?.services && <ServicesComponent data={data} />}
+      </div>{" "}
     </>
   );
 };

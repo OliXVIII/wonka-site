@@ -1,10 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
-
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,7 +20,19 @@ module.exports = {
     },
     extend: {
       animation: {
-        'spin-slow': 'spin 15s linear infinite',
+        "spin-slow": "spin 15s linear infinite",
+      },
+      colors: {
+        dark: "#1A202C",
+        light: "white",
+      },
+      borderColor: {
+        dark: "#1A202C",
+        light: "white",
+      },
+      height: {
+        background: "calc(69vh + 4rem)",
+        "background-mobile": "calc(80vh + 4rem)",
       },
     },
   },
@@ -55,7 +66,7 @@ module.exports = {
   //   },
   // ],
   plugins: [
-    require('@tailwindcss/container-queries'),
+    require("@tailwindcss/container-queries"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
