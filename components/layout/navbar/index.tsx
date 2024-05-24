@@ -10,6 +10,7 @@ import { LocaleDetails, localesDetails } from "@/types/languages";
 import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
+import { createLink } from "@/lib/create-link";
 
 type NavbarProps = {
   data: DataType;
@@ -30,7 +31,7 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
     <Suspense fallback={<div>Loading...</div>}>
       <nav className="relative flex h-16 items-center justify-between py-2">
         <div className="block flex-none md:hidden">
-          <MobileMenu menu={menu} searchbar={searchbar} />
+          <MobileMenu menu={menu} searchbar={searchbar} locale={locale} />
         </div>
 
         <div className="flex w-full items-center">
@@ -65,11 +66,7 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
                 {menu.map((item: MenuContent) => (
                   <li key={item.title}>
                     <Link
-                      href={
-                        !item.passHref
-                          ? `/${locale.path + item.path}`
-                          : item.path
-                      }
+                      href={createLink(item, locale)}
                       className="whitespace-nowrap underline-offset-4"
                     >
                       {item.title}

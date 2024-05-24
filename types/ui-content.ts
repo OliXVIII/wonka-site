@@ -3,7 +3,7 @@ import { Language, Locale } from "./languages";
 export type MenuContent = {
   title: string;
   path: string;
-  passHref?: boolean;
+  externalLink?: boolean;
 };
 export type ServicesContent = {
   heading: string;
@@ -60,7 +60,11 @@ export const local108UIContent: Record<Language, UiContent> = {
       { title: "About", path: "/about" },
       { title: "Services", path: "/services" },
       { title: "Blog", path: "/blog" },
-      { title: "Store", path: "https://demo.vercel.store/", passHref: true },
+      {
+        title: "Store",
+        path: "https://demo.vercel.store/",
+        externalLink: true,
+      },
     ],
     readMore: "Read More",
     services: {
@@ -124,7 +128,11 @@ export const local108UIContent: Record<Language, UiContent> = {
       { title: "À propos", path: "/about" },
       { title: "Services", path: "/services" },
       { title: "Blog", path: "/blog" },
-      { title: "Boutique", path: "https://demo.vercel.store/", passHref: true },
+      {
+        title: "Boutique",
+        path: "https://demo.vercel.store/",
+        externalLink: true,
+      },
     ],
     readMore: "Voir plus",
     services: {
