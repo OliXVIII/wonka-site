@@ -4,16 +4,13 @@
 
 @layer base {
   h1 {
-    @apply text-3xl tracking-tight text-zinc-700 dark:text-zinc-100 max-xs:text-2xl lg:text-[2rem];
+    @apply text-3xl font-light tracking-tight max-xs:text-2xl lg:text-[2rem];
   }
   h2 {
-    @apply text-2xl font-normal text-zinc-700 dark:text-zinc-200 max-xxs:text-xl lg:text-[1.75rem];
+    @apply text-2xl font-normal max-xxs:text-xl lg:text-[1.75rem];
   }
   h3 {
-    @apply text-lg font-bold text-zinc-600 dark:text-zinc-200 lg:text-xl;
-  }
-  body {
-    @apply leading-[1.4rem] text-gray-600 dark:text-zinc-300;
+    @apply text-lg font-bold  lg:text-xl;
   }
   p {
     @media only screen and (max-width: 475px) {
@@ -27,11 +24,8 @@
       @apply leading-[1.2rem];
     }
   }
-  a {
-    @apply text-black dark:text-neutral-300;
-  }
-  em {
-    @apply text-zinc-700 dark:text-zinc-100;
+  body {
+    @apply text-dark dark:text-light leading-[1.4rem];
   }
   li {
     @media only screen and (max-width: 475px) {
@@ -60,6 +54,10 @@
 }
 
 @layer utilities {
+  .border-menu {
+    @apply dark:border-light rounded border-[2.5px] border-neutral-700 !py-3 max-md:border-none;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

@@ -11,10 +11,10 @@ import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import Search from "./search";
-import { Menu } from "@/types/ui-content";
+import { MenuContent } from "@/types/ui-content";
 
 type MobileMenuProps = {
-  menu: Menu[];
+  menu: MenuContent[];
   searchbar?: boolean;
 };
 
@@ -87,7 +87,7 @@ export default function MobileMenu({ menu, searchbar }: MobileMenuProps) {
                 ) : null}
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
-                    {menu.map((item: Menu) => (
+                    {menu.map((item: MenuContent) => (
                       <li
                         className="py-2 text-xl transition-colors dark:text-white"
                         key={item.title}

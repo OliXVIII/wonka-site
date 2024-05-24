@@ -1,12 +1,12 @@
 "use client";
 
-import { Menu } from "@/types/ui-content";
+import { MenuContent } from "@/types/ui-content";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const FooterMenuItem = ({ item }: { item: Menu }) => {
+const FooterMenuItem = ({ item }: { item: MenuContent }) => {
   const pathname = usePathname();
   const [active, setActive] = useState(pathname === item.path);
 
@@ -15,11 +15,11 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
   }, [pathname, item.path]);
 
   return (
-    <li className="flex justify-center items-center md:py-3">
+    <li className="flex items-center justify-center md:py-3">
       <Link
         href={item.path}
         className={clsx(
-          "flex justify-center block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm",
+          "block flex justify-center p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm",
           {
             "text-black dark:text-neutral-300": active,
           },
@@ -31,13 +31,13 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
   );
 };
 
-export default function FooterMenu({ menu }: { menu: Menu[] }) {
+export default function FooterMenu({ menu }: { menu: MenuContent[] }) {
   if (!menu.length) return null;
 
   return (
-    <nav className="flex justify-center items-center m-auto">
-      <ul className= "flex flex-col justify-center">
-        {menu.map((item: Menu) => {
+    <nav className="m-auto flex items-center justify-center">
+      <ul className="flex flex-col justify-center">
+        {menu.map((item: MenuContent) => {
           return <FooterMenuItem key={item.title} item={item} />;
         })}
       </ul>

@@ -1,10 +1,9 @@
-
-'use client';
+"use client";
 import { getCollection, getCollectionProducts } from "@/lib/shopify";
 import { Metadata } from "next";
 import { notFound, useSearchParams } from "next/navigation";
 
-import Grid from "@/components/grid";
+import Grid from "@/components/store/grid";
 import ProductGridItems from "@/components/layout/product-grid-items";
 import { defaultSort, sorting } from "@/lib/shopify/constants";
 import { Product } from "@/lib/shopify/types";
@@ -44,14 +43,13 @@ const CategoryPage = ({ params }: SearchCollectionParams) => {
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
-
   const fetchProducts = async () => {
     products = await getCollectionProducts({
       collection: params.collection,
       sortKey,
       reverse,
     });
-  }
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -67,6 +65,6 @@ const CategoryPage = ({ params }: SearchCollectionParams) => {
       )}
     </section>
   );
-}
+};
 
 export default CategoryPage;

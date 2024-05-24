@@ -6,7 +6,7 @@ import { updatePost, updatePostMetadata } from "@/lib/actions";
 import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
-import LoadingDots from "./icons/loading-dots";
+import LoadingDots from "../icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
@@ -94,7 +94,7 @@ export default function Editor({ post }: { post: PostWithSite }) {
           defaultValue={post?.title || ""}
           autoFocus
           onChange={(e) => setData({ ...data, title: e.target.value })}
-          className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+          className="dark:placeholder-text-600 font-cal border-none px-0 text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
         />
         <TextareaAutosize
           placeholder="Description"

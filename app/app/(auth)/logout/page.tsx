@@ -1,6 +1,6 @@
 import Image from "next/image";
-import LoginButton from "./login-button";
 import { Suspense } from "react";
+import LogoutButton from "@/components/dashboard/logout-button";
 
 export default function LoginPage() {
   return (
@@ -28,13 +28,13 @@ export default function LoginPage() {
         </a>
       </p>
 
-      <div className="mx-auto mt-4 w-11/12 max-w-xs sm:w-full">
+      <div className="mx-auto mt-4 w-11/12 max-w-xs text-center sm:w-full">
         <Suspense
           fallback={
             <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
           }
         >
-          <LoginButton />
+          <LogoutButton />
         </Suspense>
       </div>
     </div>
