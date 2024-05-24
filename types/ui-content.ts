@@ -46,9 +46,9 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*These statements have not been evaluated by the Yoga Administration.",
       navigation: [
-        { title: "Privicy Policy", path: "" },
-        { title: "Terms", path: "" },
-        { title: "Blog", path: "" },
+        { title: "Privacy Policy", path: "" },
+        { title: "Terms & Conditions", path: "" },
+        { title: "Blog", path: "/blog" },
         { title: "Contact Us", path: "" },
       ],
       design: "Made in Quebec",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import FooterMenu from "@/components/layout/footer/footer-menu";
 import LogoSquare from "@/components/store/logo-square";
 import { getMenu } from "@/lib/shopify";
@@ -9,13 +9,13 @@ import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
 import FooterSimple from "./footer-simple";
 // import FooterMap from "./footer-map";
-const FooterMap = dynamic(() => import('./footer-map'))
+const FooterMap = dynamic(() => import("./footer-map"));
 type FooterProps = {
   data: DataType;
 };
 
 export default async function Footer({ data }: FooterProps) {
-  const { uiContent, storage } = data;
+  const { uiContent, storage, features } = data;
   const currentYear = new Date().getFullYear();
   //const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : "");
   const skeleton =
@@ -30,7 +30,7 @@ export default async function Footer({ data }: FooterProps) {
   return (
     <footer className="relative mx-auto text-sm text-neutral-500 dark:text-neutral-400">
       <FooterSimple data={data} />
-      {uiContent.footer.type.map && <FooterMap />}
+      {features.footer.type.map && <FooterMap />}
       <div className="border-t border-neutral-200 py-10 text-sm dark:border-neutral-700">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
           <p>{copyrightName}</p>
@@ -39,7 +39,7 @@ export default async function Footer({ data }: FooterProps) {
           <p className="md:ml-auto">
             {uiContent.footer.crafted}{" "}
             <a
-              href="https://wonkasite.com"
+              // href="https://wonkasite.com"
               className="relative text-black dark:text-white"
             >
               Wonkasite

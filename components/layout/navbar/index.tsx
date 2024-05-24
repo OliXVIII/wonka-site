@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
-import Search from "./search";
+//import Search from "./search";
 import LogoSquare from "@/components/store/logo-square";
 import OpenCart from "@/components/store/cart/open-cart";
 import Cart from "@/components/store/cart";
@@ -45,7 +45,7 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
             //SEARCH BAR
             <div className="flex w-full justify-center sm:hidden">
               <div className="justify-center sm:hidden md:flex">
-                <Search />
+                {/* <Search /> */}
               </div>
             </div>
           ) : (

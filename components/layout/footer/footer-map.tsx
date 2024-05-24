@@ -1,7 +1,6 @@
 "use client";
 
-import { Loader } from "@googlemaps/js-api-loader"
-
+import { Loader } from "@googlemaps/js-api-loader";
 
 const loader = new Loader({
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -10,8 +9,12 @@ const loader = new Loader({
 
 let map: google.maps.Map;
 
+//TODO: Update deprecated loader.load() method
+
 loader.load().then(async () => {
-  const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+  const { Map } = (await google.maps.importLibrary(
+    "maps",
+  )) as google.maps.MapsLibrary;
   map = new Map(document.getElementById("map") as HTMLElement, {
     center: { lat: 46.78730136218648, lng: -71.26663597022774 },
     zoom: 15,
@@ -19,9 +22,7 @@ loader.load().then(async () => {
 });
 
 const FooterMap = () => {
-  return (
-    <div id="map" className="h-[150px] w-full"></div>
-  );
-}
+  return <div id="map" className={`h-36 w-full`}></div>;
+};
 
-export default FooterMap
+export default FooterMap;

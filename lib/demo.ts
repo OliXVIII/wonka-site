@@ -15,7 +15,8 @@ export const demoUIContent: Record<Language, UiContent> = {
     ],
     footer: {
       legal: "Demo. Tous droits réservés.",
-      notice: "*Ces déclarations n'ont pas été évaluées par le Maitre intergalactique OliLePetitFletanDansLeau.",
+      notice:
+        "*Ces déclarations n'ont pas été évaluées par le Maitre intergalactique OliLePetitFletanDansLeau.",
       navigation: [
         { title: "Politique de Confidentialité", path: "" },
         { title: "Conditions Générales", path: "" },
@@ -24,11 +25,9 @@ export const demoUIContent: Record<Language, UiContent> = {
       ],
       design: "Créé au Québec",
       crafted: "Conçu par",
-      type: {
-        map: true,
-        choice: "simple",
-      },
     },
+    readMore: "", // Add the missing property 'readMore'
+    slogan: "", // Add the missing property 'slogan'
   },
   // French
   fr: {
@@ -44,7 +43,8 @@ export const demoUIContent: Record<Language, UiContent> = {
     ],
     footer: {
       legal: "Demo. All Rights Reserved.",
-      notice: "*These statements have not been evaluated by THE MASTER OF PUPPETS, MASTER, MASTER.",
+      notice:
+        "*These statements have not been evaluated by THE MASTER OF PUPPETS, MASTER, MASTER.",
       navigation: [
         { title: "Privicy Policy", path: "" },
         { title: "Terms", path: "" },
@@ -53,11 +53,9 @@ export const demoUIContent: Record<Language, UiContent> = {
       ],
       design: "Made in Quebec",
       crafted: "Crafted by",
-      type: {
-        map: true,
-        choice: "simple",
-      },
     },
+    readMore: "", // Add the missing property 'readMore'
+    slogan: "", // Add the missing property 'slogan'
   },
 };
 

@@ -23,46 +23,45 @@ export default async function FooterSimple({ data }: FooterProps) {
   const secondhalfmenu = menu.slice(midpoint);
 
   return (
-<div className="md:flex md:justify-between h-48">
-  <div className="w-full md:w-1/3 flex justify-center border-t border-neutral-200">
-    <Suspense
-      fallback={
-        <div className="flex justify-center items-center m-auto w-[200px] gap-2">
-          {[1, 2, 3, 4, 5, 6].map((_, index) => (
-            <div key={index} className="skeleton" />
-          ))}
+    <div className="h-48 md:flex md:justify-between">
+      <div className="flex w-full justify-center border-t border-neutral-200 md:w-1/3">
+        <Suspense
+          fallback={
+            <div className="m-auto flex w-[200px] items-center justify-center gap-2">
+              {[1, 2, 3, 4, 5, 6].map((_, index) => (
+                <div key={index} className="skeleton" />
+              ))}
+            </div>
+          }
+        >
+          <FooterMenu menu={firsthalfmenu} />
+        </Suspense>
+      </div>
+      {storage.logo?.logoTitle ? (
+        <div className="flex w-full md:w-1/3 md:pt-1">
+          <Link href="/" className="relative my-auto h-[80%] max-h-40 w-full">
+            <Image
+              src={storage.logo.logoTitle.src}
+              alt="logo"
+              fill
+              className="object-contain dark:invert-[90%]"
+            />
+          </Link>
         </div>
-      }
-    >
-      <FooterMenu menu={firsthalfmenu} />
-    </Suspense>
-  </div>
-  {storage.logo?.logoTitle ? (
-    <div className="w-full md:w-1/3 flex md:pt-1">
-      <Link href="/" className="relative w-full h-full">
-        <Image
-          src={storage.logo.logoTitle.src}
-          alt="logo"
-          fill
-          className="object-contain dark:invert-[90%]"
-        />
-      </Link>
+      ) : null}
+      <div className="flex w-full justify-end border-t-0 border-neutral-200 md:w-1/3 md:border-t">
+        <Suspense
+          fallback={
+            <div className="mx-auto flex h-[188px] w-[200px] justify-center gap-2">
+              {[1, 2, 3, 4, 5, 6].map((_, index) => (
+                <div key={index} className="skeleton" />
+              ))}
+            </div>
+          }
+        >
+          <FooterMenu menu={secondhalfmenu} />
+        </Suspense>
+      </div>
     </div>
-  ) : null}
-  <div className="w-full md:w-1/3 flex justify-end border-t-0 md:border-t border-neutral-200">
-    <Suspense
-      fallback={
-        <div className="flex justify-center mx-auto h-[188px] w-[200px] gap-2">
-          {[1, 2, 3, 4, 5, 6].map((_, index) => (
-            <div key={index} className="skeleton" />
-          ))}
-        </div>
-      }
-    >
-      <FooterMenu menu={secondhalfmenu} />
-    </Suspense>
-  </div>
-</div>
-
-
-);};
+  );
+}

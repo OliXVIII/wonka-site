@@ -10,7 +10,7 @@ import Link from "next/link";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import Search from "./search";
+//import Search from "./search";
 import { MenuContent } from "@/types/ui-content";
 
 type MobileMenuProps = {
@@ -81,9 +81,7 @@ export default function MobileMenu({ menu, searchbar }: MobileMenuProps) {
                 </button>
 
                 {searchbar ? (
-                  <div className="mb-4 w-full">
-                    <Search />
-                  </div>
+                  <div className="mb-4 w-full">{/* <Search /> */}</div>
                 ) : null}
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
