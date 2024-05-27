@@ -15,11 +15,11 @@ const FooterMenuItem = ({ item }: { item: MenuContent }) => {
   }, [pathname, item.path]);
 
   return (
-    <li className="flex items-center justify-center md:py-3">
+    <li className="flex items-center justify-center md:py-2">
       <Link
         href={item.path}
         className={clsx(
-          "block flex justify-center p-2 text-lg underline-offset-4 hover:text-black dark:hover:text-neutral-300 md:inline-block md:text-sm",
+          "block flex justify-center p-1 text-lg underline-offset-4 hover:text-black dark:hover:text-neutral-300 md:inline-block md:text-sm",
           {
             "text-black dark:text-neutral-300": active,
           },

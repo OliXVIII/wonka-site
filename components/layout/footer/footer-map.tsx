@@ -22,7 +22,7 @@ loader.load().then(async () => {
 });
 
 const FooterMap = () => {
-  return <div id="map" className={`h-36 w-full`}></div>;
+  return <div id="map" className={`h-36 w-full mb-5`}></div>;
 };
 
 export default FooterMap;

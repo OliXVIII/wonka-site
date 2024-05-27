@@ -14,12 +14,20 @@ export type ServicesContent = {
   }[];
 };
 
+type ContactForm = {
+  name: string;
+  email: string;
+  cellphone: string;
+  message: string;
+}
+
 type FooterUiContent = {
   legal: string;
   notice: string;
   navigation: MenuContent[];
   design: string;
   crafted: string;
+  contactForm?: ContactForm;
 };
 
 export type UiContent = {

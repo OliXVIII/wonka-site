@@ -2,6 +2,7 @@ type FooterFeatures = {
   type: {
     map?: boolean;
     choice: "simple" | "navigational" | "interactive" | "noFooter";
+    contactForm?: boolean;
   };
 };
 
