@@ -23,11 +23,11 @@ export default async function FooterSimple({ data }: FooterProps) {
   const secondhalfmenu = menu.slice(midpoint);
 
   return (
-    <div className="h-48 md:flex md:justify-between">
-      <div className="flex w-full justify-center border-t border-neutral-200 md:w-1/3">
+    <div className="sm:flex-grow flex max-sm:flex-col md:justify-between py-5">
+      <div className="flex w-full max-sm:justify-left border-t border-neutral-200 md:w-1/3">
         <Suspense
           fallback={
-            <div className="m-auto flex w-[200px] items-center justify-center gap-2">
+            <div className="m-auto flex gap-2">
               {[1, 2, 3, 4, 5, 6].map((_, index) => (
                 <div key={index} className="skeleton" />
               ))}
@@ -49,10 +49,10 @@ export default async function FooterSimple({ data }: FooterProps) {
           </Link>
         </div>
       ) : null}
-      <div className="flex w-full justify-end border-t-0 border-neutral-200 md:w-1/3 md:border-t">
+      <div className="flex w-full max-sm:justify-right border-t-0 border-neutral-200 md:w-1/3 md:border-t">
         <Suspense
           fallback={
-            <div className="mx-auto flex h-[188px] w-[200px] justify-center gap-2">
+            <div className="m-auto flex gap-2">
               {[1, 2, 3, 4, 5, 6].map((_, index) => (
                 <div key={index} className="skeleton" />
               ))}

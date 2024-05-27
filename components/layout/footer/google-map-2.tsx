@@ -1,12 +1,13 @@
 
 import React from 'react';
+import {links} from '@/types/ui-content';
 
 export default function Map() {
   return (
-    <div className="w-full h-20 relative" >
+    <a className="w-full h-28" href={`http://maps.google.com/?q=1200${links.location}`}>
       <img className="w-full h-full"
-      src={'https://maps.googleapis.com/maps/api/staticmap?center=Cafe Temps Perdu,CA&zoom=16&size=1100x80&key=' + process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY } 
+      src={`https://maps.googleapis.com/maps/api/staticmap?center=${links.location}&zoom=15&size=1100x100&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`} 
       />
-    </div>
+    </a>
   );
 }

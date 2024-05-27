@@ -1,3 +1,4 @@
+import { SubresourceIntegrityAlgorithm } from "next/dist/build/webpack/plugins/subresource-integrity-plugin";
 import { Language, Locale } from "./languages";
 
 export type MenuContent = {
@@ -29,6 +30,14 @@ type FooterUiContent = {
   crafted: string;
   contactForm?: ContactForm;
 };
+type Links = {
+  media: {
+    facebook: string;
+    X: string;
+    instagram: string;
+  }
+  location: string;
+}
 
 export type UiContent = {
   compagnyName: string;
@@ -43,7 +52,17 @@ export type UiContent = {
   slogan2?: string;
 };
 
+export const links:Links = {
+  media: {
+    facebook: 'https://www.facebook.com/yourprofile',
+    X: 'https://x.com/yourprofile',
+    instagram: 'https://www.instagram.com/yourprofile',
+  },
+  location: "Cafe Temps Perdu, CA"
+}
+
 export const local108UIContent: Record<Language, UiContent> = {
+
   // English
   en: {
     compagnyName: "Local 108 Inc.",
