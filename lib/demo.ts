@@ -60,7 +60,6 @@ export const demoUIContent: Record<Language, UiContent> = {
 };
 
 export const storageDemo: StorageType = {
-    icon: {},
   logo: {
     navbar: {
       src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/demo%2Flogo-wonka-nobg.png?alt=media&token=2be47095-7c85-4f47-94e3-c26e873de0b3",

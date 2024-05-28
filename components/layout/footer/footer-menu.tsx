@@ -15,15 +15,12 @@ const FooterMenuItem = ({ item }: { item: MenuContent }) => {
   }, [pathname, item.path]);
 
   return (
-    <li className="flex items-center mb:justify-center max-sm:max-w md:py-2">
+    <li className="flex justify-center md:py-2">
       <Link
         href={item.path}
-        className={clsx(
-          "flex justify-center p-1 text-lg underline-offset-4 hover:text-black dark:hover:text-neutral-300 md:inline-block md:text-sm",
-          {
-            "text-black dark:text-neutral-300": active,
-          },
-        )}
+        className={
+          "flex whitespace-nowrap py-1 text-center underline-offset-4 md:inline-block"
+        }
       >
         {item.title}
       </Link>
@@ -35,12 +32,14 @@ export default function FooterMenu({ menu }: { menu: MenuContent[] }) {
   if (!menu.length) return null;
 
   return (
-    <nav className="m-auto flex items-center mb:justify-center">
-      <ul className="flex flex-col mb:justify-center">
-        {menu.map((item: MenuContent) => {
-          return <FooterMenuItem key={item.title} item={item} />;
-        })}
-      </ul>
-    </nav>
+    <div className="max-sm:justify-right flex max-md:w-1/2 min-w-fit md:w-1/3 md:border-t md:border-neutral-200">
+      <nav className="mb:justify-center m-auto flex items-center max-md:px-2">
+        <ul className="mb:justify-center flex flex-col">
+          {menu.map((item: MenuContent) => {
+            return <FooterMenuItem key={item.title} item={item} />;
+          })}
+        </ul>
+      </nav>
+    </div>
   );
 }

@@ -30,14 +30,6 @@ type FooterUiContent = {
   crafted: string;
   contactForm?: ContactForm;
 };
-type Links = {
-  media: {
-    facebook: string;
-    X: string;
-    instagram: string;
-  }
-  location: string;
-}
 
 export type UiContent = {
   compagnyName: string;
@@ -51,15 +43,6 @@ export type UiContent = {
   slogan: string;
   slogan2?: string;
 };
-
-export const links:Links = {
-  media: {
-    facebook: 'https://www.facebook.com/yourprofile',
-    X: 'https://x.com/yourprofile',
-    instagram: 'https://www.instagram.com/yourprofile',
-  },
-  location: "Cafe Temps Perdu, CA"
-}
 
 export const local108UIContent: Record<Language, UiContent> = {
 

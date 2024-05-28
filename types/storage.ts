@@ -3,35 +3,42 @@ type LogoItem = {
   aspectRatio?: number; // 1 à ..., default 1
 };
 
+export type SocialMedia ={
+    link: string; // infer type from link, ex: facebook.com/... => facebook
+}[];
+
+type LogoType = {
+  navbar?: LogoItem;
+  square?: LogoItem;
+  map?: LogoItem;
+  logoTitle?: LogoItem;
+}
+
 export type StorageType = {
-  icon: {
-    facebook?: LogoItem;
-    instagram?: LogoItem;
-    X?: LogoItem;
-  };
-  logo: {
-    navbar?: LogoItem;
-    square?: LogoItem;
-    map?: LogoItem;
-    logoTitle?: LogoItem;
-  };
+  logo: LogoType;
+  socialMedia?: SocialMedia;
+  location?: string;
   backgroundImageDark?: LogoItem;
   backgroundImageLight?: LogoItem;
   header?: LogoItem;
 };
 
 export const storageLocal108: StorageType = {
-  icon: {
-    facebook: {
-      src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/images%2Fsocial-media%2Ffacebook.png?alt=media&token=440f1bb2-e1d3-4b96-bce2-4d6fe90336ed",
+  socialMedia: [
+    {
+      link: "youtube.com",
     },
-    instagram: {
-      src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/images%2Fsocial-media%2Finstagram.png?alt=media&token=c80b7de6-bbf8-4b55-bb27-e0dd85439ac2",
+    {
+      link: "facebook.com",
     },
-    X: {
-      src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/images%2Fsocial-media%2FX.png?alt=media&token=36d44823-2343-4308-a178-a7ad3a9fd434",
-    }
-  },
+    {
+      link: "instagram.com",
+    },
+    {
+      link: "x.com",
+    },
+  ],
+  location: "Cafe Temps Perdu, CA",
   logo: {
     navbar: {
       src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fcompagny-logo.png?alt=media&token=5476600d-8963-41ce-a3be-a792ae4cc3e7",
