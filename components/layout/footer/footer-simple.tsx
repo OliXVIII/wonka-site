@@ -23,8 +23,8 @@ export default async function FooterSimple({ data }: FooterProps) {
   const secondhalfmenu = menu.slice(midpoint);
 
   return (
-    <div className="sm:flex-grow flex max-sm:flex-col md:justify-between py-5">
-      <div className="flex w-full max-sm:justify-left border-t border-neutral-200 md:w-1/3">
+    <div className="max-sm:flex-grow flex  max-sm:flex-col md:justify-between py-5">
+      <div className="flex max-sm:w-1/2 max-sm:justify-left border-t border-neutral-200 md:w-1/3">
         <Suspense
           fallback={
             <div className="m-auto flex gap-2">
@@ -38,7 +38,7 @@ export default async function FooterSimple({ data }: FooterProps) {
         </Suspense>
       </div>
       {storage.logo?.logoTitle ? (
-        <div className="flex w-full md:w-1/3 md:pt-1">
+        <div className="flex max-sm:hidden md:w-1/3 md:pt-1">
           <Link href="/" className="relative my-auto h-[80%] max-h-40 w-full">
             <Image
               src={storage.logo.logoTitle.src}
@@ -49,7 +49,7 @@ export default async function FooterSimple({ data }: FooterProps) {
           </Link>
         </div>
       ) : null}
-      <div className="flex w-full max-sm:justify-right border-t-0 border-neutral-200 md:w-1/3 md:border-t">
+      <div className="flex max-sm:w-1/2 max-sm:justify-right border-neutral-200 md:w-1/3 border-t">
         <Suspense
           fallback={
             <div className="m-auto flex gap-2">
