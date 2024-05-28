@@ -21,7 +21,7 @@ export default async function FooterSimple({ data }: FooterProps) {
   const secondhalfmenu = menu.slice(midpoint);
 
   return (
-    <div className="flex w-full py-5 max-sm:flex-grow max-sm:flex-wrap max-sm:min-h-52 max-sm:justify-center md:justify-between">
+    <div className="flex w-full py-5 max-sm:flex-grow max-sm:flex-wrap max-sm:justify-center md:justify-between">
       <FooterMenu menu={firsthalfmenu} />
       {storage.logo?.logoTitle ? (
         <div className="flex max-sm:hidden md:w-1/3 md:pt-1">

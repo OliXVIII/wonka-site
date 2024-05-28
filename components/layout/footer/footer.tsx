@@ -10,8 +10,8 @@ import Image from "next/image";
 import FooterSimple from "./footer-simple";
 import ContactForm from "./contact-form";
 import { SocialMediaComponent } from "./social-media";
-import FooterBottom from "./bottom-footer";
-import Map from "./static-google-map";
+import FooterBottom from "./footer-bottom";
+import StaticGoogleMap from "./static-google-map";
 
 // import FooterMap from "./footer-map";
 const FooterMap = dynamic(() => import("./footer-map"));
@@ -25,7 +25,7 @@ export default async function Footer({ data }: FooterProps) {
   return (
     <footer className="relative mx-auto text-sm text-neutral-500 dark:text-neutral-400 max-md:border-t max-md:border-neutral-200">
       <FooterSimple data={data} />
-      {features.footer.type.map && <Map storage={storage} />}
+      {features.footer.type.map && <StaticGoogleMap storage={storage} />}
       {storage.socialMedia && (
         <SocialMediaComponent socialMedia={storage.socialMedia} />
       )}
