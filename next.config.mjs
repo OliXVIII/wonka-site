@@ -1,7 +1,9 @@
+import MillionLint from "@million/lint";
+
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+const nextConfig = {
   experimental: {
     serverActions: {
       allowedOrigins: ["app.localhost:3000"],
@@ -36,3 +38,5 @@ module.exports = {
     return config;
   },
 };
+
+export default MillionLint.next({ rsc: true })(nextConfig);

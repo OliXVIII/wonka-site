@@ -17,10 +17,9 @@ export default function StaticGoogleMap({ storage }: MapProps) {
       <Image
         className="h-full w-full"
         alt={storage.location ?? "Map"}
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${storage.location}&zoom=15&size=1100x150&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${storage.location}&zoom=15&size=1100x100&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
         objectFit="cover"
         fill
-        quality={100}
       />
     </a>
   );

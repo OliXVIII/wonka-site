@@ -1,9 +1,29 @@
-import { SupportedSocialMedia, socialMediaIcons } from "@/types/social-media";
-import { SocialMedia } from "@/types/storage";
+import { StorageType, SocialMedia } from "@/types/storage";
+import { UiContent } from "@/types/ui-content";
 import Image from "next/image";
 //TODO: Change png icons to svg (facebook, instagram, twitter, youtube...)
 //TODO: Map social media in uiContent and display them with their icons
 //TODO: Place that type to the appropiate place in the code
+type SupportedSocialMedia = "facebook" | "instagram" | "x" | "youtube";
+
+const icon: Record<SupportedSocialMedia, { src: string; alt?: string }> = {
+  facebook: {
+    alt: "Facebook",
+    src: "/facebook.png",
+  },
+  instagram: {
+    alt: "Instagram",
+    src: "/instagram.png",
+  },
+  x: {
+    alt: "x",
+    src: "/x.svg",
+  },
+  youtube: {
+    alt: "Youtube",
+    src: "/youtube.svg",
+  },
+};
 
 const inferType = (link: string): SupportedSocialMedia | null => {
   if (link.includes("facebook")) return "facebook";
@@ -29,7 +49,8 @@ export const SocialMediaComponent = ({
 
         if (!type) return null;
 
-        const { src, alt = "" } = socialMediaIcons[type];
+        const { src, alt = "" } = icon[type];
+        console.log("src is:", src);
         return (
           <a
             key={alt}
@@ -45,10 +66,7 @@ export const SocialMediaComponent = ({
               height={32}
               className={
                 "relative h-8 w-8" +
-                (alt === "x" ? " scale-90 invert dark:invert-0" : "") +
-                (alt.toLocaleLowerCase() === "instagram"
-                  ? " scale-105 rounded-full"
-                  : "")
+                (alt === "x" ? " invert dark:invert-0" : "")
               }
             />
           </a>
