@@ -6,7 +6,7 @@ type LanguageSelectorProps = {
 
 export const LanguageSelector = ({ nextLocale }: LanguageSelectorProps) => {
   return (
-    <a href={nextLocale.path} className="m-auto uppercase">
+    <a href={"/" + nextLocale.path} className="m-auto uppercase">
       {nextLocale.languageCode}
     </a>
   );

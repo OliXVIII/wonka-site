@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ServicesComponent } from "@/components/services/services-component";
 import { Header } from "@/components/header/header";
 import Image from "next/image";
+import Footer from "@/components/layout/footer/footer";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -46,7 +47,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   return (
     <>
       {data.storage.backgroundImageDark && (
-        <div className="sm:h-background max-sm:h-background-mobile absolute hidden w-full dark:flex">
+        <div className="absolute hidden w-full dark:flex max-sm:h-background-mobile sm:h-background">
           <Image
             src={data.storage.backgroundImageDark.src}
             alt="bakground image"
@@ -56,7 +57,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       {data.storage.backgroundImageLight && (
-        <div className="sm:h-background max-sm:h-background-mobile absolute w-full dark:hidden">
+        <div className="absolute w-full dark:hidden max-sm:h-background-mobile sm:h-background">
           <Image
             src={data.storage.backgroundImageLight.src}
             alt="bakground image"
@@ -71,7 +72,8 @@ const SiteHomePage = async ({ params }: PageParams) => {
         <Breadcrumb />
 
         {data.uiContent?.services && <ServicesComponent data={data} />}
-      </div>{" "}
+      </div>
+      <Footer locale={locale} data={data} />
     </>
   );
 };

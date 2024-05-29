@@ -55,7 +55,15 @@ export async function fetchData(
   return {
     uiContent: demoUIContent[lang.languageCode],
     storage: storageDemo,
-    features: {},
+    features: {
+      borderMenuNav: true,
+      footer: {
+        type: {
+          map: false,
+          choice: "simple",
+        },
+      },
+    },
     domain: domain,
   };
 }

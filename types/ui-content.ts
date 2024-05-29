@@ -1,9 +1,10 @@
+import { SubresourceIntegrityAlgorithm } from "next/dist/build/webpack/plugins/subresource-integrity-plugin";
 import { Language, Locale } from "./languages";
 
 export type MenuContent = {
   title: string;
   path: string;
-  passHref?: boolean;
+  externalLink?: boolean;
 };
 export type ServicesContent = {
   heading: string;
@@ -14,9 +15,26 @@ export type ServicesContent = {
   }[];
 };
 
+type ContactForm = {
+  name: string;
+  email: string;
+  cellphone: string;
+  message: string;
+};
+
+type FooterUiContent = {
+  legal: string;
+  notice: string;
+  navigation: MenuContent[];
+  design: string;
+  crafted: string;
+  contactForm?: ContactForm;
+};
+
 export type UiContent = {
   compagnyName: string;
   description: string;
+  footer: FooterUiContent;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -32,13 +50,30 @@ export const local108UIContent: Record<Language, UiContent> = {
     compagnyName: "Local 108 Inc.",
     description:
       "At Local 108, we do more than yoga. We are here to help you feel good, inside and out. Our yoga classes, nutrition advice, and wellness trips are designed for anyone looking to find balance between body and mind. We believe that taking care of your health is the key to living a happy and fulfilling life.",
+    footer: {
+      legal: "All Rights Reserved.",
+      notice:
+        "*These statements have not been evaluated by the Yoga Administration.",
+      navigation: [
+        { title: "Privacy Policy", path: "/policy" },
+        { title: "Terms & Conditions", path: "/terms" },
+        { title: "Blog", path: "/blog" },
+        { title: "Contact Us", path: "/contact" },
+      ],
+      design: "Made in Quebec",
+      crafted: "Crafted by",
+    },
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
       { title: "About", path: "/about" },
       { title: "Services", path: "/services" },
       { title: "Blog", path: "/blog" },
-      { title: "Store", path: "https://demo.vercel.store/", passHref: true },
+      {
+        title: "Store",
+        path: "https://demo.vercel.store/",
+        externalLink: true,
+      },
     ],
     readMore: "Read More",
     services: {
@@ -82,20 +117,31 @@ export const local108UIContent: Record<Language, UiContent> = {
     compagnyName: "Local 108 Inc.",
     description:
       "Chez Le Local 108, nous faisons plus que du yoga. Nous sommes là pour vous aider à vous sentir bien, à l'intérieur comme à l'extérieur. Nos cours de yoga, nos conseils en nutrition et nos voyages de bien-être sont conçus pour tous ceux qui cherchent à trouver un équilibre entre le corps et l'esprit. Nous sommes convaincus que prendre soin de sa santé est la clé pour vivre une vie heureuse et épanouie.",
+    footer: {
+      legal: "Tous droits réservés.",
+      notice:
+        "*Ces déclarations n'ont pas été évaluées par l'Administration du Yoga.",
+      navigation: [
+        { title: "Politique de Confidentialité", path: "/policy" },
+        { title: "Conditions Générales", path: "/terms" },
+        { title: "Blog", path: "/blog" },
+        { title: "Contactez Nous", path: "/contact" },
+      ],
+      design: "Créé au Québec",
+      crafted: "Conçu par",
+    },
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
-
-    header: {
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Ftitle-logo-notext.png?alt=media&token=634f6948-e9d0-48ff-8c22-5fd51a8e9e88",
-      scale: 1.5,
-    },
 
     navigation: [
       { title: "À propos", path: "/about" },
       { title: "Services", path: "/services" },
       { title: "Blog", path: "/blog" },
-      { title: "Boutique", path: "https://demo.vercel.store/", passHref: true },
+      {
+        title: "Boutique",
+        path: "https://demo.vercel.store/",
+        externalLink: true,
+      },
     ],
     readMore: "Voir plus",
     services: {

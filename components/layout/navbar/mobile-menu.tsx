@@ -10,15 +10,22 @@ import Link from "next/link";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import Search from "./search";
+//import Search from "./search";
 import { MenuContent } from "@/types/ui-content";
+import { createLink } from "@/lib/create-link";
+import { LocaleDetails } from "@/types/languages";
 
 type MobileMenuProps = {
   menu: MenuContent[];
+  locale: LocaleDetails;
   searchbar?: boolean;
 };
 
-export default function MobileMenu({ menu, searchbar }: MobileMenuProps) {
+export default function MobileMenu({
+  menu,
+  searchbar,
+  locale,
+}: MobileMenuProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -81,9 +88,7 @@ export default function MobileMenu({ menu, searchbar }: MobileMenuProps) {
                 </button>
 
                 {searchbar ? (
-                  <div className="mb-4 w-full">
-                    <Search />
-                  </div>
+                  <div className="mb-4 w-full">{/* <Search /> */}</div>
                 ) : null}
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
@@ -92,7 +97,10 @@ export default function MobileMenu({ menu, searchbar }: MobileMenuProps) {
                         className="py-2 text-xl transition-colors dark:text-white"
                         key={item.title}
                       >
-                        <Link href={item.path} onClick={closeMobileMenu}>
+                        <Link
+                          href={createLink(item, locale)}
+                          onClick={closeMobileMenu}
+                        >
                           {item.title}
                         </Link>
                       </li>
