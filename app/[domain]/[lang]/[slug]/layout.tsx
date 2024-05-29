@@ -19,7 +19,7 @@ export default async function SlugLayout({ params, children }: Params) {
         <Navbar locale={locale} data={data} />
         {children}
       </div>
-      <Footer data={data} />
+      <Footer locale={locale} data={data} />
     </>
   );
 }

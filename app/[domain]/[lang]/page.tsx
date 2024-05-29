@@ -73,7 +73,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
 
         {data.uiContent?.services && <ServicesComponent data={data} />}
       </div>
-      <Footer data={data} />
+      <Footer locale={locale} data={data} />
     </>
   );
 };

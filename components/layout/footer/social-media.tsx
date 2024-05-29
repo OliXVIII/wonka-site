@@ -1,5 +1,4 @@
-import { StorageType, SocialMedia } from "@/types/storage";
-import { UiContent } from "@/types/ui-content";
+import { SocialMedia } from "@/types/storage";
 import Image from "next/image";
 //TODO: Change png icons to svg (facebook, instagram, twitter, youtube...)
 //TODO: Map social media in uiContent and display them with their icons
@@ -9,11 +8,11 @@ type SupportedSocialMedia = "facebook" | "instagram" | "x" | "youtube";
 const icon: Record<SupportedSocialMedia, { src: string; alt?: string }> = {
   facebook: {
     alt: "Facebook",
-    src: "/facebook.png",
+    src: "/facebook.svg",
   },
   instagram: {
     alt: "Instagram",
-    src: "/instagram.png",
+    src: "/instagram.svg",
   },
   x: {
     alt: "x",

@@ -55,10 +55,10 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*These statements have not been evaluated by the Yoga Administration.",
       navigation: [
-        { title: "Privacy Policy", path: "" },
-        { title: "Terms & Conditions", path: "" },
+        { title: "Privacy Policy", path: "/policy" },
+        { title: "Terms & Conditions", path: "/terms" },
         { title: "Blog", path: "/blog" },
-        { title: "Contact Us", path: "" },
+        { title: "Contact Us", path: "/contact" },
       ],
       design: "Made in Quebec",
       crafted: "Crafted by",
@@ -122,10 +122,10 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*Ces déclarations n'ont pas été évaluées par l'Administration du Yoga.",
       navigation: [
-        { title: "Politique de Confidentialité", path: "" },
-        { title: "Conditions Générales", path: "" },
+        { title: "Politique de Confidentialité", path: "/policy" },
+        { title: "Conditions Générales", path: "/terms" },
         { title: "Blog", path: "/blog" },
-        { title: "Contactez Nous", path: "" },
+        { title: "Contactez Nous", path: "/contact" },
       ],
       design: "Créé au Québec",
       crafted: "Conçu par",
