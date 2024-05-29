@@ -49,7 +49,6 @@ export const SocialMediaComponent = ({
         if (!type) return null;
 
         const { src, alt = "" } = icon[type];
-        console.log("src is:", src);
         return (
           <a
             key={alt}
