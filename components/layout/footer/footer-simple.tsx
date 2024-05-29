@@ -9,7 +9,10 @@ type FooterProps = {
   locale: LocaleDetails;
 };
 
-export default async function FooterSimple({ locale, data }: Readonly<FooterProps>) {
+export default async function FooterSimple({
+  locale,
+  data,
+}: Readonly<FooterProps>) {
   const { uiContent, storage } = data;
   const menu = await uiContent.footer.navigation;
   const midpoint = menu.length / 2;
