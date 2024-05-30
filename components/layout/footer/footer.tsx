@@ -20,7 +20,11 @@ export default async function Footer({ data, locale }: Readonly<FooterProps>) {
       {storage.socialMedia && (
         <SocialMediaComponent socialMedia={storage.socialMedia} />
       )}
-      <FooterBottom uiContent={uiContent} horizontalBanner={features.eventStyle} />
+      <FooterBottom
+        uiContent={uiContent}
+        horizontalBanner={features.eventStyle}
+        height={data.features.eventDimensions?.height} // Added null check
+      />
     </footer>
   );
 }
