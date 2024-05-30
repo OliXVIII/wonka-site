@@ -1,30 +1,30 @@
-import { createLink } from "@/lib/create-link";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
-import Image from "next/image";
-import { ReadMoreButton } from "../read-more-button";
-import { MainImageUpcoming } from "./main-image";
+import { PageComp } from "./page-component";
+import { HorizontalBanner } from "./horizontal-banner";
+import { FeaturesType } from "@/types/features";
 
 type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
   locale: LocaleDetails;
+  style: FeaturesType["eventStyle"];
+  dimensions?: {
+    width: any;
+    height: number;
+  };
 };
 
 export const UpcomingEventBanner = ({
   upcomingEvent,
   locale,
+  style,
+  dimensions
 }: UpcomingEventBannerProps) => {
   if (!upcomingEvent.images) {
     return null;
   }
-
   return (
-    <a
-      href={createLink(upcomingEvent.link, locale)}
-      className="container relative mx-auto flex h-96 w-full items-center justify-center"
-    >
-      <MainImageUpcoming upcomingEvent={upcomingEvent} banner />
-      <ReadMoreButton readMore={upcomingEvent.readMore} alignBottomRight />
-    </a>
+    (style === "pageComp" && <PageComp upcomingEvent={upcomingEvent} locale={locale} dimensions={dimensions}/>) ||
+    (style === "horizontal" && <HorizontalBanner upcomingEvent={upcomingEvent} locale={locale} dimensions={dimensions} />)
   );
 };

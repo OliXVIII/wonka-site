@@ -31,7 +31,7 @@ type FooterUiContent = {
 };
 
 export type UiContent = {
-  compagnyName: string;
+  companyName: string;
   description: string;
   footer: FooterUiContent;
   getStarted: string;
@@ -47,7 +47,7 @@ export type UiContent = {
 export const local108UIContent: Record<Language, UiContent> = {
   // English
   en: {
-    compagnyName: "Local 108 Inc.",
+    companyName: "Local 108 Inc.",
     description:
       "At Local 108, we do more than yoga. We are here to help you feel good, inside and out. Our yoga classes, nutrition advice, and wellness trips are designed for anyone looking to find balance between body and mind. We believe that taking care of your health is the key to living a happy and fulfilling life.",
     footer: {
@@ -115,7 +115,7 @@ export const local108UIContent: Record<Language, UiContent> = {
   },
   // French
   fr: {
-    compagnyName: "Local 108 Inc.",
+    companyName: "Local 108 Inc.",
     description:
       "Chez Le Local 108, nous faisons plus que du yoga. Nous sommes là pour vous aider à vous sentir bien, à l'intérieur comme à l'extérieur. Nos cours de yoga, nos conseils en nutrition et nos voyages de bien-être sont conçus pour tous ceux qui cherchent à trouver un équilibre entre le corps et l'esprit. Nous sommes convaincus que prendre soin de sa santé est la clé pour vivre une vie heureuse et épanouie.",
     footer: {

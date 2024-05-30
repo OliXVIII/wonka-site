@@ -5,7 +5,7 @@ import { UiContent } from "@/types/ui-content";
 export const demoUIContent: Record<Language, UiContent> = {
   // English
   en: {
-    compagnyName: "Demo Inc.",
+    companyName: "Demo Inc.",
     siteName: "Demo",
     mission: "My Mission for this demo site is to show how to use i18n",
     description: "My Description: This is a demo site to show how to use i18n",
@@ -31,7 +31,7 @@ export const demoUIContent: Record<Language, UiContent> = {
   },
   // French
   fr: {
-    compagnyName: "Demo Inc.",
+    companyName: "Demo Inc.",
     siteName: "Demo",
     mission:
       "Ma mission pour ce site de démonstration est de montrer comment utiliser i18n",

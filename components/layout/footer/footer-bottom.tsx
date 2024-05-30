@@ -1,12 +1,21 @@
+import { FeaturesType } from "@/types/features";
 import { UiContent } from "@/types/ui-content";
 
-export default function FooterBottom(uiContent: UiContent) {
+type FooterBottomProps = {
+  uiContent: UiContent;
+  horizontalBanner: FeaturesType["eventStyle"];
+};
+
+export default function FooterBottom({
+  uiContent,
+  horizontalBanner,
+}: Readonly<FooterBottomProps>) {
   const currentYear = new Date().getFullYear();
   const copyrightName =
     "@ " +
     currentYear.toString() +
     " " +
-    uiContent.compagnyName +
+    uiContent.companyName +
     " " +
     uiContent.footer.legal;
   return (
@@ -26,6 +35,9 @@ export default function FooterBottom(uiContent: UiContent) {
           </a>
         </p>
       </div>
+      {horizontalBanner == "horizontal" && <div className="h-44 w-screen"/>}
     </div>
+    
   );
+  
 }

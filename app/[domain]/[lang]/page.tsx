@@ -75,6 +75,8 @@ const SiteHomePage = async ({ params }: PageParams) => {
           <UpcomingEventBanner
             upcomingEvent={data.upcomingEvents[locale.languageCode]}
             locale={locale}
+            style={data.features.eventStyle}
+            dimensions={data.features.eventDimensions}
           />
         )}
         {data.uiContent?.services && <ServicesComponent data={data} />}
