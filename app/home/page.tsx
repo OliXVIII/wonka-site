@@ -1,4 +1,4 @@
-import { TopMenu } from "@/components/layout/top-menu/top-menu";
+import TopMenu from "@/components/layout/navbar/top-menu/top-menu";
 
 export default function HomePage() {
   return (

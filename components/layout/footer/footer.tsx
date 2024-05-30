@@ -4,7 +4,6 @@ import { SocialMediaComponent } from "./social-media";
 import FooterBottom from "./footer-bottom";
 import StaticGoogleMap from "./static-google-map";
 import { LocaleDetails } from "@/types/languages";
-import { local108Features } from "@/types/features";
 
 type FooterProps = {
   data: DataType;
