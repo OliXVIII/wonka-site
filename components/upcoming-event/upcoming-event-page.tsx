@@ -4,7 +4,7 @@ import { UpcomingEvent } from "@/types/upcoming-event";
 import Image from "next/image";
 import { MainImageUpcoming } from "./main-image";
 import { EventSchedule } from "./upcoming-event-schedule";
-import { Like } from "../like";
+import { BookNowButton } from "./book-now";
 
 type UpcomingEventPageProps = {
   data: DataType;
@@ -90,19 +90,17 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
           {roomOptions.map((room, i) => (
             <div
               key={i}
-              className="rounded-box my-2 p-1 shadow-md dark:shadow-inner dark:shadow-white"
+              className="my-2 rounded-box p-1 shadow-md dark:shadow-inner dark:shadow-white"
             >
               <div className="flex justify-around">
                 <h3 className="text-center text-xl">
                   {room.title} ({room.quantity} available)
                 </h3>
               </div>
-              <>
+              <div className="flex justify-between">
                 <p className="text-end text-xl smtrace:mt-4">{room.price}</p>
-                {/* <p className="mt-1 text-xs">
-                  {room.taxTPS} TPS + {room.taxTVQ} TVQ = {room.totalPrice}
-                </p> */}
-              </>
+                <BookNowButton></BookNowButton>
+              </div>
               <p className="text-center">{room.description}</p>
             </div>
           ))}
