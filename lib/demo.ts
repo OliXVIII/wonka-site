@@ -13,6 +13,7 @@ export const demoUIContent: Record<Language, UiContent> = {
       { title: "About", path: "/about" },
       { title: "Contact", path: "/contact" },
     ],
+    getStarted: "Get Started",
     footer: {
       legal: "Demo. Tous droits réservés.",
       notice:
@@ -41,6 +42,7 @@ export const demoUIContent: Record<Language, UiContent> = {
       { title: "À propos", path: "/about" },
       { title: "Contact", path: "/contact" },
     ],
+    getStarted: "Commencer",
     footer: {
       legal: "Demo. All Rights Reserved.",
       notice:
