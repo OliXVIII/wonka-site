@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "WonkasiteFont";
+  src:
+    url("/fonts/Inter-Regular.woff2") format("woff2"),
+    url("/fonts/Inter-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "WonkasiteFont";
+  src:
+    url("/fonts/Inter-Bold.woff2") format("woff2"),
+    url("/fonts/Inter-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
 @layer base {
   h1 {
     @apply text-3xl font-light tracking-tight max-xs:text-2xl lg:text-[2rem];
@@ -10,7 +28,7 @@
     @apply text-2xl font-normal max-xxs:text-xl lg:text-[1.75rem];
   }
   h3 {
-    @apply text-lg font-bold  lg:text-xl;
+    @apply text-lg font-normal  lg:text-xl;
   }
   p {
     @media only screen and (max-width: 475px) {
@@ -25,7 +43,7 @@
     }
   }
   body {
-    @apply text-dark dark:text-light leading-[1.4rem];
+    @apply leading-[1.4rem] text-dark dark:text-light;
   }
   li {
     @media only screen and (max-width: 475px) {
@@ -55,7 +73,30 @@
 
 @layer utilities {
   .border-menu {
-    @apply dark:border-light rounded border-[2.5px] border-neutral-700 !py-3 max-md:border-none;
+    @apply rounded border-[2.5px] border-neutral-700 !py-3 dark:border-light max-md:border-none;
+  }
+
+  .slogan-special {
+    --s: 21px; /* the size on the corner */
+    --t: 4px; /* the thickness of the border */
+    --g: 13px; /* the gap between the border and image */
+
+    padding: calc(var(--g) + var(--t) + 3px);
+    outline: var(--t) solid #fff; /* the color here */
+    outline-offset: calc(-1 * var(--t));
+    -webkit-mask:
+      conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
+        calc(100% - var(--s)) calc(100% - var(--s)),
+      linear-gradient(#000 0 0) content-box;
+    mask:
+      conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
+        calc(100% - var(--s)) calc(100% - var(--s)),
+      linear-gradient(#000 0 0) content-box;
+    transition: all 0.4s;
+  }
+
+  .slogan-special:hover {
+    outline-offset: calc(var(--g) / -1);
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -257,6 +298,7 @@ html {
   }
 
   body {
+    font-family: "WonkasiteFont", sans-serif;
     min-height: 100vh;
   }
 }

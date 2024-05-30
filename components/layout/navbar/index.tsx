@@ -28,63 +28,63 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
       : null;
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <nav className="relative flex h-16 items-center justify-between py-2">
-        <div className="block flex-none md:hidden">
-          <MobileMenu menu={menu} searchbar={searchbar} locale={locale} />
-        </div>
+    <nav
+      className={`flex h-16 items-center justify-between py-2 ${features.navbar.fixed ? " container fixed z-40 mx-auto" : "relative"}`}
+    >
+      <div className="block flex-none md:hidden">
+        <MobileMenu menu={menu} searchbar={searchbar} locale={locale} />
+      </div>
 
-        <div className="flex w-full items-center">
-          <Link
-            href="/"
-            className={`flex w-full items-center justify-center max-sm:ml-10 md:mx-6 md:w-auto`}
-          >
-            <LogoSquare storage={storage} />
-          </Link>
+      <div className="flex w-full items-center">
+        <Link
+          href="/"
+          className={`flex w-full items-center justify-center max-sm:ml-10 md:mx-6 md:w-auto`}
+        >
+          <LogoSquare storage={storage} />
+        </Link>
 
-          {searchbar ? (
-            //SEARCH BAR
-            <div className="flex w-full justify-center sm:hidden">
-              <div className="justify-center sm:hidden md:flex">
-                {/* <Search /> */}
-              </div>
+        {searchbar ? (
+          //SEARCH BAR
+          <div className="flex w-full justify-center sm:hidden">
+            <div className="justify-center sm:hidden md:flex">
+              {/* <Search /> */}
             </div>
-          ) : (
-            <div className="flex w-full justify-center max-md:hidden">
-              <div className="justify-center md:flex"></div>
-            </div>
-          )}
+          </div>
+        ) : (
+          <div className="flex w-full justify-center max-md:hidden">
+            <div className="justify-center md:flex"></div>
+          </div>
+        )}
 
-          {/*<div className="hidden justify-center md:flex md:w-1/3">
+        {/*<div className="hidden justify-center md:flex md:w-1/3">
           <Search />
         </div>*/}
-          <div className="flex justify-end">
-            {menu.length > 0 ? (
-              <ul
-                className={`hidden gap-10 max-sm:p-10 md:flex md:items-center md:px-10 ${features.borderMenuNav ? "border-menu mr-10" : ""}`}
-              >
-                {menu.map((item: MenuContent) => (
-                  <li key={item.title}>
-                    <Link
-                      href={createLink(item, locale)}
-                      className="whitespace-nowrap underline-offset-4"
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            {nextLocale ? <LanguageSelector nextLocale={nextLocale} /> : null}
-            <ThemeSelector menu={menu.length > 0} />
-            {searchbar ? (
-              <Suspense fallback={<OpenCart />}>
-                <Cart />
-              </Suspense>
-            ) : null}{" "}
-          </div>
+        <div className="flex justify-end">
+          {menu.length > 0 ? (
+            <ul
+              className={`hidden gap-10 max-sm:p-10 md:flex md:items-center md:px-10 ${features.borderMenuNav ? "border-menu mr-10" : ""}`}
+            >
+              {menu.map((item: MenuContent) => (
+                <li key={item.title}>
+                  <Link
+                    href={createLink(item, locale)}
+                    className="whitespace-nowrap underline-offset-4"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {nextLocale ? <LanguageSelector nextLocale={nextLocale} /> : null}
+          <ThemeSelector menu={menu.length > 0} />
+          {searchbar ? (
+            <Suspense fallback={<OpenCart />}>
+              <Cart />
+            </Suspense>
+          ) : null}{" "}
         </div>
-      </nav>
-    </Suspense>
+      </div>
+    </nav>
   );
 }

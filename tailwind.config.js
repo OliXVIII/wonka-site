@@ -26,13 +26,16 @@ module.exports = {
         dark: "#1A202C",
         light: "white",
       },
+      borderRadius: {
+        box: "11px",
+      },
       borderColor: {
         dark: "#1A202C",
         light: "white",
       },
       height: {
-        background: "calc(69vh + 4rem)",
-        "background-mobile": "calc(80vh + 4rem)",
+        header: "calc(69vh + 4rem)",
+        "header-mobile": "calc(80vh + 4rem)",
       },
     },
   },

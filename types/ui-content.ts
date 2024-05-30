@@ -1,5 +1,4 @@
-import { SubresourceIntegrityAlgorithm } from "next/dist/build/webpack/plugins/subresource-integrity-plugin";
-import { Language, Locale } from "./languages";
+import { Language } from "./languages";
 
 export type MenuContent = {
   title: string;
@@ -35,6 +34,7 @@ export type UiContent = {
   compagnyName: string;
   description: string;
   footer: FooterUiContent;
+  getStarted: string;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -63,6 +63,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       design: "Made in Quebec",
       crafted: "Crafted by",
     },
+    getStarted: "Get Started",
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
@@ -130,6 +131,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       design: "Créé au Québec",
       crafted: "Conçu par",
     },
+    getStarted: "Commencer",
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 

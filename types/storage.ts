@@ -1,26 +1,23 @@
-type LogoItem = {
-  src: string;
-  aspectRatio?: number; // 1 à ..., default 1
-};
+import { ImageItem } from "./image";
 
-export type SocialMedia ={
-    link: string; // infer type from link, ex: facebook.com/... => facebook
+export type SocialMedia = {
+  link: string; // infer type from link, ex: facebook.com/... => facebook
 }[];
 
 type LogoType = {
-  navbar?: LogoItem;
-  square?: LogoItem;
-  map?: LogoItem;
-  logoTitle?: LogoItem;
-}
+  navbar?: ImageItem;
+  square?: ImageItem;
+  map?: ImageItem;
+  logoTitle?: ImageItem;
+};
 
 export type StorageType = {
   logo: LogoType;
   socialMedia?: SocialMedia;
   location?: string;
-  backgroundImageDark?: LogoItem;
-  backgroundImageLight?: LogoItem;
-  header?: LogoItem;
+  backgroundImageDark?: ImageItem;
+  backgroundImageLight?: ImageItem;
+  header?: ImageItem;
 };
 
 export const storageLocal108: StorageType = {

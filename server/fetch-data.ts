@@ -8,18 +8,24 @@ import { LocaleDetails } from "@/types/languages";
 import { StorageType, storageLocal108 } from "@/types/storage";
 import { demoUIContent, storageDemo } from "@/lib/demo";
 import { FeaturesType, local108Features } from "@/types/features";
+import {
+  LocaleUpcomingEvent,
+  UpcomingEvent,
+  upcomingEventsLocal108,
+} from "@/types/upcoming-event";
 
 export type DataType = {
   uiContent: UiContent;
   storage: StorageType;
   features: FeaturesType;
   domain: string;
+  upcomingEvents: LocaleUpcomingEvent;
 };
 
 export async function fetchData(
   domain: string,
   lang: LocaleDetails,
-): Promise<DataType> {
+): Promise<DataType | null> {
   console.log("fetchData", domain, lang);
   // const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
   //   ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
@@ -34,6 +40,7 @@ export async function fetchData(
         uiContent: local108UIContent[lang.languageCode],
         storage: storageLocal108,
         features: local108Features,
+        upcomingEvents: upcomingEventsLocal108,
         domain: domain,
       };
     }
@@ -48,22 +55,10 @@ export async function fetchData(
         uiContent: data.uiContent as UiContent,
         storage: data.storage,
         features: data.features,
+        upcomingEvents: data.upcomingEvents,
         domain: domain,
       };
     }
   }
-  return {
-    uiContent: demoUIContent[lang.languageCode],
-    storage: storageDemo,
-    features: {
-      borderMenuNav: true,
-      footer: {
-        type: {
-          map: false,
-          choice: "simple",
-        },
-      },
-    },
-    domain: domain,
-  };
+  return null;
 }

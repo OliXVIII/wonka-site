@@ -7,7 +7,7 @@ import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ServicesComponent } from "@/components/services/services-component";
 import { Header } from "@/components/header/header";
 import Image from "next/image";
-import Footer from "@/components/layout/footer/footer";
+import { UpcomingEventBanner } from "@/components/upcoming-event/upcoming-event-banner";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -47,7 +47,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   return (
     <>
       {data.storage.backgroundImageDark && (
-        <div className="absolute hidden w-full dark:flex max-sm:h-background-mobile sm:h-background">
+        <div className="max-sm:h-header -mobile sm:h-header absolute hidden w-full dark:flex ">
           <Image
             src={data.storage.backgroundImageDark.src}
             alt="bakground image"
@@ -57,7 +57,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       {data.storage.backgroundImageLight && (
-        <div className="absolute w-full dark:hidden max-sm:h-background-mobile sm:h-background">
+        <div className="max-sm:h-header -mobile sm:h-header absolute w-full dark:hidden ">
           <Image
             src={data.storage.backgroundImageLight.src}
             alt="bakground image"
@@ -71,9 +71,14 @@ const SiteHomePage = async ({ params }: PageParams) => {
         <Header data={data} />
         <Breadcrumb />
 
+        {data?.upcomingEvents && (
+          <UpcomingEventBanner
+            upcomingEvent={data.upcomingEvents[locale.languageCode]}
+            locale={locale}
+          />
+        )}
         {data.uiContent?.services && <ServicesComponent data={data} />}
       </div>
-      <Footer locale={locale} data={data} />
     </>
   );
 };
