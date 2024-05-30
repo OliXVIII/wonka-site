@@ -24,7 +24,7 @@ export type FeaturesType = {
 export const local108Features: FeaturesType = {
   eventStyle: "horizontal",
   eventDimensions: {
-    height: 48, //44 by default
+    height: 44, //44 by default
     width: "screen", //screen by default for horizontal and full for PageComp
   },
   borderMenuNav: true,
