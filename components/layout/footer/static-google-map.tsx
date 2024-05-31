@@ -13,11 +13,12 @@ export default function StaticGoogleMap({ storage }: MapProps) {
     <a
       className="relative flex h-28 w-screen dark:invert-[91%]"
       href={`http://maps.google.com/?q=1200${storage.location}`}
+      target="_blank"
     >
       <Image
         className="h-full w-full object-cover"
         alt={storage.location ?? "Map"}
-        src={`https://maps.googleapis.com/maps/api/staticmap?center=${storage.location}&zoom=15&size=1100x150&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${storage.location}&zoom=14&scale=2&size=1100x150&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&markers=color:cornflowerblue|${storage.location}`}
         fill
         quality={100}
       />
