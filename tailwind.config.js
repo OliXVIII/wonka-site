@@ -19,8 +19,15 @@ module.exports = {
       smtrace: "640px",
     },
     extend: {
+      keyframes: {
+        fadeInFromBottom: {
+          '0%': { opacity: 0, transform: 'translateY(100%)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+      },
       animation: {
         "spin-slow": "spin 15s linear infinite",
+        fadeInFromBottom: 'fadeInFromBottom 1s ease-out forwards',
       },
       colors: {
         dark: "#1A202C",
