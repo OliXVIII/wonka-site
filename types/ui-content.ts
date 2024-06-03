@@ -180,7 +180,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       ],
     },
     siteName: "Local 108",
-    slogan: "Sentez-vous bien, à l'intérieur",
+    slogan: "Sentez-vous bien, à l'intérieur ",
     slogan2: "comme à l'extérieur",
   },
 };

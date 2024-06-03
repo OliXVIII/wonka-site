@@ -7,7 +7,7 @@ import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ServicesComponent } from "@/components/services/services-component";
 import { Header } from "@/components/header/header";
 import Image from "next/image";
-import { UpcomingEventBanner } from "@/components/upcoming-event/upcoming-event-banner";
+import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -47,7 +47,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   return (
     <>
       {data.storage.backgroundImageDark && (
-        <div className="max-sm:h-header -mobile sm:h-header absolute hidden w-full dark:flex ">
+        <div className="-mobile absolute hidden w-full dark:flex max-sm:h-header sm:h-header ">
           <Image
             src={data.storage.backgroundImageDark.src}
             alt="bakground image"
@@ -57,7 +57,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       {data.storage.backgroundImageLight && (
-        <div className="max-sm:h-header -mobile sm:h-header absolute w-full dark:hidden ">
+        <div className="-mobile absolute w-full dark:hidden max-sm:h-header sm:h-header ">
           <Image
             src={data.storage.backgroundImageLight.src}
             alt="bakground image"
@@ -76,7 +76,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
             upcomingEvent={data.upcomingEvents[locale.languageCode]}
             locale={locale}
             style={data.features.eventStyle}
-            dimensions={data.features.eventDimensions}
+            dimensions={data.features.bannerSize}
           />
         )}
         {data.uiContent?.services && <ServicesComponent data={data} />}
