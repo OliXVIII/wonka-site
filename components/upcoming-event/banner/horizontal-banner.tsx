@@ -19,7 +19,7 @@ export const HorizontalBanner = ({
   return (
     <a
       href={createLink(upcomingEvent.link, locale)}
-      className={`fixed bottom-0 right-0 ${dimensions == "small" ? `h-36` : dimensions == "medium" ? `h-44` : ""} 
+      className={`fixed bottom-0 hidden right-0 ${dimensions == "small" ? `h-36` : dimensions == "medium" ? `h-44` : ""} 
           z-50 flex w-screen items-end justify-end`}
     >
       <div className="absolute inset-0 h-full w-full">

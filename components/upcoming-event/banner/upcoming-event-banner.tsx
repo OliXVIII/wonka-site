@@ -3,7 +3,7 @@ import { UpcomingEvent } from "@/types/upcoming-event";
 import { PageComp } from "./page-component";
 import { HorizontalBanner } from "./horizontal-banner";
 import { FeaturesType } from "@/types/features";
-// import { BannerWrapper } from "./wrapper";
+import { BannerWrapper } from "./wrapper";
 
 type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
@@ -29,15 +29,15 @@ export const UpcomingEventBanner = ({
         dimensions={dimensions}
       />
     )) || (
-
-        style === "horizontal" && (
+      <BannerWrapper>
+        {style === "horizontal" && (
           <HorizontalBanner
             upcomingEvent={upcomingEvent}
             locale={locale}
             dimensions={dimensions}
           />
-        )
-
+        )}
+      </BannerWrapper>
     )
   );
 };
