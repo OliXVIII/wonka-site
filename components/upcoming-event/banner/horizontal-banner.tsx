@@ -16,11 +16,12 @@ export const HorizontalBanner = ({
   locale,
   dimensions,
 }: UpcomingEventBannerCompProps) => {
+  const className = `fixed bottom-0 hidden right-0 ${dimensions === "small" ? "h-36" : dimensions === "medium" ? "h-44" : ""}`;
+
   return (
     <a
       href={createLink(upcomingEvent.link, locale)}
-      className={`fixed bottom-0 hidden right-0 ${dimensions == "small" ? `h-36` : dimensions == "medium" ? `h-44` : ""} 
-          z-50 flex w-screen items-end justify-end`}
+      className={`fixed bottom-0 hidden right-0 ${className} z-50 flex w-screen items-end justify-end`}
     >
       <div className="absolute inset-0 h-full w-full">
         <MainImageUpcoming upcomingEvent={upcomingEvent} banner />

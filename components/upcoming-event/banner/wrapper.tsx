@@ -6,13 +6,13 @@ type WrapperProps = {
   children: React.ReactNode;
 };
 
-export function BannerWrapper({ children }: WrapperProps) {
+export function BannerWrapper({ children }: Readonly<WrapperProps>) {
   const bannerWrapperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 400 && bannerWrapperRef.current) {
-        bannerWrapperRef.current.classList.add("fadeInFromBottom", "block");
+        bannerWrapperRef.current.classList.add("animate-fade-up", "animate-once", "animate-ease-out", "block");
       }
     };
 
