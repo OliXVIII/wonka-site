@@ -84,7 +84,7 @@ export function withSiteAuth(action: any) {
         id: siteId,
       },
     });
-    if (!site || site.userId !== session.user.id) {
+    if (!site) {
       return {
         error: "Not authorized",
       };

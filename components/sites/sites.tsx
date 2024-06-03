@@ -10,9 +10,7 @@ export default async function Sites({ limit }: { limit?: number }) {
     redirect("/login");
   }
   const sites = await prisma.site.findMany({
-    where: {
-      user: {},
-    },
+    where: {},
     orderBy: {
       createdAt: "asc",
     },
