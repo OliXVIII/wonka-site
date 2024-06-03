@@ -65,17 +65,16 @@ export const createSite = async (formData: FormData) => {
 export const updateSite = withSiteAuth(
   async (formData: FormData, site: Site, key: string) => {
     const value = formData.get(key) as string;
+    console.log("Updating site data", key, value);
 
     try {
       let response;
 
       if (key === "customDomain") {
-        if (value.includes("vercel.pub")) {
+        if (value.includes("wonkasite.com")) {
           return {
-            error: "Cannot use vercel.pub subdomain as your custom domain",
+            error: "Cannot use wonkasite.com as a custom domain.",
           };
-
-          // if the custom domain is valid, we need to add it to Vercel
         } else if (validDomainRegex.test(value)) {
           response = await prisma.site.update({
             where: {
