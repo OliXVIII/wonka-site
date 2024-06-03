@@ -4,13 +4,13 @@ import { UiContent } from "@/types/ui-content";
 type FooterBottomProps = {
   uiContent: UiContent;
   horizontalBanner: FeaturesType["eventStyle"];
-  height: number | undefined;
+  dimensions: FeaturesType["eventDimensions"];
 };
 
 export default function FooterBottom({
   uiContent,
   horizontalBanner,
-  height,
+  dimensions,
 }: Readonly<FooterBottomProps>) {
   const currentYear = new Date().getFullYear();
   const copyrightName =
@@ -20,8 +20,13 @@ export default function FooterBottom({
     uiContent.companyName +
     " " +
     uiContent.footer.legal;
+    
+
   return (
-    <div className={`1mt-5 border-t py-10 text-sm ${horizontalBanner == "horizontal" ? `mb-${height ?? 44} w-screen` : ""}`}>
+    <div className={`mt-5 border-t py-10 text-sm ${horizontalBanner == "horizontal" ? 
+  (dimensions?.dimensions == "small" ? `mb-${dimensions.small}` : 
+  dimensions?.dimensions == "medium" ? `mb-${dimensions.medium}` : 
+  "" ): ""}`}>
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
         <p>{copyrightName}</p>
         <hr className="mx-4 hidden h-4 w-[1px] border-l md:inline-block" />

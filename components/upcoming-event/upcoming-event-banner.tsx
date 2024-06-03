@@ -8,10 +8,7 @@ type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
   locale: LocaleDetails;
   style: FeaturesType["eventStyle"];
-  dimensions?: {
-    width: any;
-    height: number;
-  };
+  dimensions?: FeaturesType["eventDimensions"];
 };
 
 export const UpcomingEventBanner = ({

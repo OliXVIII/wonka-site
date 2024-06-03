@@ -23,7 +23,7 @@ export default async function Footer({ data, locale }: Readonly<FooterProps>) {
       <FooterBottom
         uiContent={uiContent}
         horizontalBanner={features.eventStyle}
-        height={data.features.eventDimensions?.height} // Added null check
+        dimensions={data.features.eventDimensions}
       />
     </footer>
   );

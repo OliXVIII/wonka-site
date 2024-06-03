@@ -13,9 +13,10 @@ type NavbarFeatures = {
 export type FeaturesType = {
   eventStyle?: "pageComp" | "horizontal" | "vertical";
   eventDimensions?: {
-    height: number; //44 by default
-    width: any; //screen by default for horizontal and full for PageComp
-  }
+    dimensions: "small" | "medium";
+    small: string;
+    medium: string;
+  };
   borderMenuNav: boolean;
   footer: FooterFeatures;
   navbar: NavbarFeatures;
@@ -24,8 +25,9 @@ export type FeaturesType = {
 export const local108Features: FeaturesType = {
   eventStyle: "horizontal",
   eventDimensions: {
-    height: 44,
-    width: "screen",
+    dimensions: "small",
+    small: "36",
+    medium: "44",
   },
   borderMenuNav: true,
   footer: {
