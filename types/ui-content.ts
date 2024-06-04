@@ -31,7 +31,7 @@ type FooterUiContent = {
 };
 
 export type UiContent = {
-  available: string;
+  available?: string;
   companyName: string;
   description: string;
   bookNow?: string;
