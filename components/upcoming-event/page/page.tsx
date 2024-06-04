@@ -6,6 +6,7 @@ import { EventSchedule } from "./schedule";
 import { BookNowButton } from "./book-now";
 import { BottomImages } from "./bottom-images";
 import { OfferComponent } from "./offer";
+import { ReserveModal } from "./reserve-modal";
 
 type UpcomingEventPageProps = {
   data: DataType;
@@ -42,8 +43,12 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
       <p className="text-center">{upcomingEventsLocale.date}</p>
 
       <BottomImages upcomingEventsLocale={upcomingEventsLocale} />
-      <div className="my-8 flex max-sm:flex-col">
-        <OfferComponent upcomingEventsLocale={upcomingEventsLocale} />
+      <div className="my-8 flex max-md:flex-col">
+        <OfferComponent
+          upcomingEventsLocale={upcomingEventsLocale}
+          uiContent={data.uiContent}
+        />
+        <ReserveModal />
       </div>
 
       <EventSchedule upcomingEvent={upcomingEventsLocale} />

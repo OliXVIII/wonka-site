@@ -1,24 +1,69 @@
 import { Offer, UpcomingEvent } from "@/types/upcoming-event";
 import { BookNowButton } from "./book-now";
+import { UiContent } from "@/types/ui-content";
+import { taxByCountry } from "@/lib/tax";
+import { RegionCode } from "@/types/region";
 
-const OfferInfo = ({ room }: { room: Offer }) => (
-  <div key={room.title} className="my-2 h-full rounded-box p-1 max-sm:min-h-44">
-    <div className="justify-around">
-      <h3 className="text-center text-xl">{room.title}</h3>
-      <p className="text-center text-xl">({room.quantity} available)</p>
+const addDollarSignByCountry = (
+  price: number | string,
+  country: RegionCode,
+) => {
+  if (country === "CA") {
+    return `${price}$`;
+  } else if (country === "US") {
+    return `$${price}`;
+  }
+  return `${price}`;
+};
+
+const OfferInfo = ({
+  room,
+  uiContent,
+  mobile,
+}: {
+  room: Offer;
+  uiContent: UiContent;
+  mobile?: boolean;
+}) => {
+  const tax = (room.price * taxByCountry.CA.Quebec) / 100;
+  const total = room.price + tax;
+  return (
+    <div
+      key={room.title}
+      className={
+        "m-2 flex h-full min-h-64 flex-col rounded-box p-1 py-2 shadow-sm dark:shadow-inner dark:shadow-white max-md:w-1/2 max-md:shadow-md" +
+        (mobile ? " md:hidden" : "")
+      }
+    >
+      <div className="justify-around">
+        <h3 className="text-center text-xl">{room.title}</h3>
+        <p className="text-center text-xl">
+          ({room.quantity} {uiContent.available})
+        </p>
+      </div>
+      <p className="flex flex-grow flex-col justify-center text-center">
+        {room.description}
+      </p>
+      <div className="flex flex-col justify-center pb-4 pt-2">
+        <p className="text-center text-xl">
+          {addDollarSignByCountry(total.toFixed(2), "CA" as RegionCode)}
+        </p>
+        <p className="text-center text-xs">
+          {addDollarSignByCountry(room.price.toFixed(1), "CA" as RegionCode)} +{" "}
+          {addDollarSignByCountry(tax.toFixed(2), "CA" as RegionCode)} (taxes)
+        </p>
+      </div>
+      <BookNowButton bookNow={uiContent.bookNow} />
     </div>
-    <div className="flex justify-between">
-      <p className="text-end text-xl smtrace:mt-4">{room.price}</p>
-    </div>
-    <p className="text-center">{room.description}</p>
-    <BookNowButton />
-  </div>
-);
+  );
+};
 
 export const OfferComponent = ({
   upcomingEventsLocale,
+  uiContent,
 }: {
   upcomingEventsLocale: UpcomingEvent;
+  uiContent: UiContent;
 }) => {
   if (
     !upcomingEventsLocale.offerOptions ||
@@ -33,46 +78,38 @@ export const OfferComponent = ({
           {upcomingEventsLocale.description}
         </p>
         <div className="mx-auto flex w-full flex-col sm:w-1/2 sm:px-[2%] md:px-[5%]">
-          <div className="my-2 rounded-box p-1 shadow-md dark:shadow-inner dark:shadow-white">
-            <div className="flex justify-around">
-              <h3 className="text-center text-xl">
-                {upcomingEventsLocale.offerOptions[0].title} (
-                {upcomingEventsLocale.offerOptions[0].quantity} available)
-              </h3>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-end text-xl smtrace:mt-4">
-                {upcomingEventsLocale.offerOptions[0].price}
-              </p>
-              <BookNowButton />
-            </div>
-            <p className="text-center">
-              {upcomingEventsLocale.offerOptions[0].description}
-            </p>
-          </div>
+          <OfferInfo
+            room={upcomingEventsLocale.offerOptions[0]}
+            uiContent={uiContent}
+          />
         </div>
       </>
     );
   } else if (upcomingEventsLocale.offerOptions.length === 2) {
-    const divClass =
-      "mx-auto flex sm:w-full sm:flex-col sm:w-1/3 sm:px-3 md:px-5";
+    const divClass = "mx-auto flex md:flex-col md:w-1/3 sm:px-3 md:px-5";
     return (
       <>
         <div
-          className={`max-sm:flex ${divClass} border-dark dark:border-light max-sm:flex sm:border-r`}
+          className={`max-md:flex ${divClass} border-dark dark:border-light max-md:mb-8 max-md:w-full md:border-r`}
         >
-          <div className={`max-sm:w-1/2 sm:h-full`}>
-            <OfferInfo room={upcomingEventsLocale.offerOptions[0]} />
-          </div>
-          <div className="max-sm:w-1/2 sm:hidden">
-            <OfferInfo room={upcomingEventsLocale.offerOptions[1]} />
-          </div>
+          <OfferInfo
+            room={upcomingEventsLocale.offerOptions[0]}
+            uiContent={uiContent}
+          />
+          <OfferInfo
+            room={upcomingEventsLocale.offerOptions[1]}
+            uiContent={uiContent}
+            mobile
+          />
         </div>
         <p className={`${divClass}`}>{upcomingEventsLocale.description}</p>
         <div
-          className={`${divClass} border-dark dark:border-light max-sm:hidden sm:border-l `}
+          className={`${divClass} border-dark dark:border-light max-md:hidden sm:border-l`}
         >
-          <OfferInfo room={upcomingEventsLocale.offerOptions[1]} />
+          <OfferInfo
+            room={upcomingEventsLocale.offerOptions[1]}
+            uiContent={uiContent}
+          />
         </div>
       </>
     );

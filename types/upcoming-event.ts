@@ -16,11 +16,21 @@ type RetreatSchedule = {
 
 export type Offer = {
   description: string;
-  price: string;
+  price: number;
   quantity: number;
   title: string;
   totalPrice: string;
   tax?: boolean;
+};
+
+type MetadataType = {
+  title: string;
+  description: string;
+  openGraph?: {
+    title?: string;
+    description?: string;
+    image: string;
+  };
 };
 
 export type UpcomingEvent = {
@@ -29,6 +39,7 @@ export type UpcomingEvent = {
   logo: LogoUpcomingEvent;
   retreatSchedule?: RetreatSchedule;
   link: MenuContent;
+  metadata: MetadataType;
   location: string;
   readMore: string;
   offerOptions?: Offer[];
@@ -45,7 +56,7 @@ const roomOptions: Record<Language, Offer[]> = {
     {
       title: "4-Person Room",
       quantity: 12,
-      price: "$720",
+      price: 720,
       tax: true,
       totalPrice: "$827.82",
       description: "Room for four people",
@@ -53,7 +64,7 @@ const roomOptions: Record<Language, Offer[]> = {
     {
       title: "2-Person Room",
       quantity: 3,
-      price: "$770",
+      price: 770,
       tax: true,
       totalPrice: "$885.31",
       description: "Room for two people",
@@ -63,7 +74,7 @@ const roomOptions: Record<Language, Offer[]> = {
     {
       title: "Chambre 4 Personnes",
       quantity: 12,
-      price: "$720",
+      price: 720,
       tax: true,
       totalPrice: "$827.82",
       description: "Chambre pour quatre personnes",
@@ -71,7 +82,7 @@ const roomOptions: Record<Language, Offer[]> = {
     {
       title: "Chambre 2 Personnes",
       quantity: 3,
-      price: "$770",
+      price: 770,
       tax: true,
       totalPrice: "$885.31",
       description: "Chambre pour deux personnes",
@@ -129,73 +140,73 @@ const local108ImagesFr: ImageItem[] = [
 
 const retreatScheduleFr: RetreatSchedule = [
   {
-    day: "1ère Journée",
+    day: "1ère journée",
     events: [
       { time: "17h00", description: "Arrivée des participants" },
       {
         time: "18h00",
         description:
-          "Présentation de la retraite à Local 108, Rencontre avec l'équipe : Maï, Js et Pam",
+          "Présentation de la retraite à Local 108, rencontre avec l'équipe : Maï, Js et Pam",
       },
-      { time: "19h30", description: "Souper - Soupe et Petits Repas" },
+      { time: "19h30", description: "Souper - soupe et petits repas" },
       {
         time: "20h15",
-        description: "Introduction aux Chakras Muladhara et Svadhistana",
+        description: "Introduction aux chakras Muladhara et Svadhistana",
         subEvents: [
-          "Cérémonie de Feu et Enracinement (pieds nus), Intentions pour la Retraite (à l'extérieur)",
-          "Méditation, Intentions pour la Retraite, Lâcher Prise, Bain Sonore (Salle Quartz)",
+          "Cérémonie de feu et enracinement (pieds nus), intentions pour la retraite (à l'extérieur)",
+          "Méditation, intentions pour la retraite, lâcher prise, bain sonore (salle quartz)",
         ],
       },
     ],
   },
   {
-    day: "2ème Journée",
+    day: "2ème journée",
     events: [
       {
         time: "6h00",
         description:
-          "Marche Méditative Silencieuse et Méditation du Chakra Manipura au Lac",
+          "Marche méditative silencieuse et méditation du chakra Manipura au lac",
       },
       {
         time: "7h30",
-        description: "Salutation au Soleil - Yoga Vitalité (Recharge)",
+        description: "Salutation au soleil - yoga vitalité (recharge)",
       },
       {
         time: "8h45 - 10h00",
         description:
-          "Nutri Lab - Smoothies et Explication du Petit Déjeuner par JS et Mai à Local 108",
+          "Nutri Lab - smoothies et explication du petit déjeuner par JS et Mai à Local 108",
       },
       { time: "11h30", description: "Pilates avec Pam" },
-      { time: "13h00 - 14h30", description: "Dîner et Temps pour Discuter" },
+      { time: "13h00 - 14h30", description: "Dîner et temps pour discuter" },
       {
         time: "15h00 - 16h45",
         description:
-          "Atelier de Nutrition Ayurvédique avec une Professeure Invitée",
+          "Atelier de nutrition ayurvédique avec une professeure invitée",
       },
-      { time: "17h00", description: "Atelier de Création Anahata avec Mai" },
+      { time: "17h00", description: "Atelier de création Anahata avec Mai" },
       { time: "18h30 - 19h45", description: "Souper" },
       {
         time: "20h00",
         description:
-          "Vishuddha et Ajna - Rituel de la Voix Intérieure et de l'Abondance avec Tambours et Mantras (Salle Quartz)",
+          "Vishuddha et Ajna - rituel de la voix intérieure et de l'abondance avec tambours et mantras (salle quartz)",
       },
     ],
   },
   {
-    day: "3ème Journée",
+    day: "3ème journée",
     events: [
       {
         time: "8h30",
-        description: "Petit Déjeuner Nutri Lab (Similaire au Jour Précédent)",
+        description: "Petit déjeuner Nutri Lab (similaire au jour précédent)",
       },
-      { time: "10h00 - 11h45", description: "Atelier de Yoga" },
+      { time: "10h00 - 11h45", description: "Atelier de yoga" },
       {
         time: "12h00 - 13h00",
         description:
-          "Sahasrara : Les Mille Pétales - Intégration des Chakras, Retours et Mots de Clôture",
+          "Sahasrara : les mille pétales - intégration des chakras, retours et mots de clôture",
       },
-      { time: "13h00", description: "Dîner Final" },
-      { time: "15h00", description: "Fête de Danse Transe Yoga Sans Alcool" },
+      { time: "13h00", description: "Diner final" },
+      { time: "15h00", description: "Fête de danse transe yoga sans alcool" },
     ],
   },
 ];
@@ -286,6 +297,12 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
       title: "Upcoming Event",
       path: "/upcoming/le-temple",
     },
+    metadata: {
+      title:
+        "Le Temple - Nutrition, Yoga and Pilates Retreat 2024 (by Local 108)",
+      description:
+        "Join us for an enlightening three-day retreat designed to balance and activate your chakras through a series of workshops including yoga, Pilates, meditation, and nutritional guidance. Experience unique ceremonies like fire rituals, sound baths, and a special 'Yoga Trance Dance Party'. Embrace the serene environment and our supportive community to rediscover and rejuvenate your spiritual and physical wellness.",
+    },
     date: "June 15th, 2022",
     readMore: "See Event",
     logo: {
@@ -304,11 +321,16 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
   },
   fr: {
     time: "Le premier jour commence à 17h; l'évènement dure 3 jours.",
-    title: "Le Temple - Retraite 2024",
+    title: "Le Temple - Retraite Nutrition-Yoga-Pilates 2024",
     slogan: "Débloquez votre univers intérieur",
     description:
       "Rejoignez-nous pour une retraite éclairante de trois jours conçue pour équilibrer et activer vos chakras à travers une série d'ateliers comprenant du yoga, du Pilates, de la méditation et des conseils nutritionnels. Vivez des cérémonies uniques comme des rituels de feu, des bains sonores et une 'Fête de danse de transe de yoga' spéciale. Embrassez l'environnement serein et notre communauté solidaire pour redécouvrir et revitaliser votre bien-être spirituel et physique.",
-
+    metadata: {
+      title:
+        "Le Temple - Retraite nutrition, yoga et pilates 2024 (offerte par Local 108)",
+      description:
+        "Rejoignez-nous pour une retraite éclairante de trois jours conçue pour équilibrer et activer vos chakras à travers une série d'ateliers comprenant du yoga, du Pilates, de la méditation et des conseils nutritionnels. Vivez des cérémonies uniques comme des rituels de feu, des bains sonores et une 'Fête de danse de transe de yoga' spéciale. Embrassez l'environnement serein et notre communauté solidaire pour redécouvrir et revitaliser votre bien-être spirituel et physique.",
+    },
     link: {
       title: "Évènement à Venir",
       path: "/upcoming/le-temple",
