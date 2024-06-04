@@ -27,7 +27,7 @@ export const local108Features: FeaturesType = {
   borderMenuNav: true,
   footer: {
     type: {
-      map: true,
+      map: false,
       choice: "simple",
     },
   },
