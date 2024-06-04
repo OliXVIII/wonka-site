@@ -1,6 +1,7 @@
 type FooterFeatures = {
   type: {
     map?: boolean;
+    location: string,
     choice: "simple" | "navigational" | "interactive" | "noFooter";
     contactForm?: boolean;
   };
@@ -27,7 +28,8 @@ export const local108Features: FeaturesType = {
   borderMenuNav: true,
   footer: {
     type: {
-      map: false,
+      map: true,
+      location: "Cafe Du Monde, CA",
       choice: "simple",
     },
   },

@@ -37,7 +37,6 @@ export type UiContent = {
   bookNow?: string;
   footer: FooterUiContent;
   getStarted: string;
-  location?: string;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -46,6 +45,7 @@ export type UiContent = {
   slogan: string;
   slogan2?: string;
 };
+
 
 export const local108UIContent: Record<Language, UiContent> = {
   // English
@@ -70,18 +70,17 @@ export const local108UIContent: Record<Language, UiContent> = {
     },
     bookNow: "Book Now",
     getStarted: "Get Started",
-    location: "Cafe Temps Perdu, CA",
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
-      { title: "About", path: "/about" },
+      // { title: "About", path: "/about" },
       { title: "Services", path: "/services" },
-      { title: "Blog", path: "/blog" },
-      {
-        title: "Store",
-        path: "https://demo.vercel.store/",
-        externalLink: true,
-      },
+      // { title: "Blog", path: "/blog" },
+      // {
+      //   title: "Store",
+      //   path: "https://demo.vercel.store/",
+      //   externalLink: true,
+      // },
     ],
     readMore: "Read More",
     services: {
@@ -131,29 +130,30 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*Ces déclarations n'ont pas été évaluées par l'Administration du Yoga.",
       navigation: [
-        { title: "Politique de Confidentialité", path: "/policy" },
-        { title: "Conditions Générales", path: "/terms" },
-        { title: "Blog", path: "/blog" },
-        { title: "Contactez Nous", path: "/contact" },
+        { title: "Le Temple", path: "/upcoming/le-temple" },
+        { title: "Services", path: "/services"}
+        // { title: "Politique de Confidentialité", path: "/policy" },
+        // { title: "Conditions Générales", path: "/terms" },
+        // { title: "Blog", path: "/blog" },
+        // { title: "Contactez Nous", path: "/contact" },
       ],
       design: "Créé au Québec",
       crafted: "Conçu par",
     },
     bookNow: "Réserver maintenant",
     getStarted: "Commencer",
-    location: "Cafe Temps Perdu, CA",
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 
     navigation: [
-      { title: "À propos", path: "/about" },
+      // { title: "À propos", path: "/about" },
       { title: "Services", path: "/services" },
-      { title: "Blog", path: "/blog" },
-      {
-        title: "Boutique",
-        path: "https://demo.vercel.store/",
-        externalLink: true,
-      },
+      // { title: "Blog", path: "/blog" },
+      // {
+      //   title: "Boutique",
+      //   path: "https://demo.vercel.store/",
+      //   externalLink: true,
+      // },
     ],
     readMore: "Voir plus",
     services: {
