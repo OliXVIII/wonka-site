@@ -13,7 +13,7 @@ type NavbarFeatures = {
 export type FeaturesType = {
   banner?: {
     style: "horizontal" | "vertical" | "section";
-    size: "small" | "medium";
+    size?: "small" | "medium";
   };
   borderMenuNav: boolean;
   footer: FooterFeatures;
@@ -22,8 +22,7 @@ export type FeaturesType = {
 
 export const local108Features: FeaturesType = {
   banner: {
-    style: "horizontal",
-    size: "small",
+    style: "section",
   },
   borderMenuNav: true,
   footer: {
