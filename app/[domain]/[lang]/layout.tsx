@@ -19,7 +19,6 @@ export default async function SiteLayout({ params, children }: Params) {
   }
 
   // Optional: Redirect to custom domain if it exists
-  console.log(domain);
   if (
     domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
     !domain.includes(".localhost") &&
