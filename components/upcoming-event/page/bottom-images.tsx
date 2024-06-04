@@ -10,7 +10,7 @@ export const BottomImages = ({
     <ul className="flex flex-wrap justify-between overflow-x-auto md:mx-5">
       {upcomingEventsLocale.images?.map((event, i) =>
         !event.main ? (
-          <li key={i} className="max-sm:min-w-[32%] xs:w-1/4">
+          <li key={i} className="max-sm:w-1/2 xs:w-1/4">
             <div className="relative aspect-square p-2.5 max-xs:p-1 lg:p-5">
               <Image
                 src={event.src}

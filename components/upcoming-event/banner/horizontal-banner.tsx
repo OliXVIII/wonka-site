@@ -7,26 +7,19 @@ import { FeaturesType } from "@/types/features";
 
 type UpcomingEventBannerCompProps = {
   upcomingEvent: UpcomingEvent;
-  locale: LocaleDetails;
-  dimensions?: FeaturesType["bannerSize"];
+  dimensionsClass: string;
 };
 
 export const HorizontalBanner = ({
   upcomingEvent,
-  locale,
-  dimensions,
+  dimensionsClass,
 }: UpcomingEventBannerCompProps) => {
-  const dimensionsClass = `${dimensions === "small" ? "h-36" : dimensions === "medium" ? "h-44" : ""}`;
-
   return (
-    <a
-      href={createLink(upcomingEvent.link, locale)}
-      className={`fixed bottom-0 hidden right-0 ${className} z-50 flex w-screen items-end justify-end`}
-    >
-      <div className="absolute inset-0 h-full w-full">
+    <>
+      <div className={`${dimensionsClass} absolute inset-0 h-full w-full`}>
         <MainImageUpcoming upcomingEvent={upcomingEvent} banner />
       </div>
       <ReadMoreButton readMore={upcomingEvent.readMore} />
-    </a>
+    </>
   );
 };

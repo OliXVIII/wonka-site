@@ -3,7 +3,8 @@ import { UpcomingEvent } from "@/types/upcoming-event";
 import { PageComp } from "./page-component";
 import { HorizontalBanner } from "./horizontal-banner";
 import { FeaturesType } from "@/types/features";
-import { BannerWrapper } from "./wrapper";
+import { BannerWrapper } from "./horizontal-wrapper";
+import { createLink } from "@/lib/create-link";
 
 type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
@@ -21,23 +22,33 @@ export const UpcomingEventBanner = ({
   if (!upcomingEvent.images) {
     return null;
   }
-  return (
-    (style === "pageComp" && (
+  let dimensionsClass = "";
+  if (dimensions === "small") {
+    dimensionsClass = "max-md:h-28 md:h-36";
+  } else if (dimensions === "medium") {
+    dimensionsClass = "max-md:h-28 md:h-44";
+  }
+
+  if (style === "horizontal") {
+    return (
+      <BannerWrapper
+        dimensionsClass={dimensionsClass}
+        href={createLink(upcomingEvent.link, locale)}
+      >
+        <HorizontalBanner
+          upcomingEvent={upcomingEvent}
+          dimensionsClass={dimensionsClass}
+        />
+      </BannerWrapper>
+    );
+  } else if (style === "pageComp") {
+    return (
       <PageComp
         upcomingEvent={upcomingEvent}
         locale={locale}
         dimensions={dimensions}
       />
-    )) || (
-      <BannerWrapper>
-        {style === "horizontal" && (
-          <HorizontalBanner
-            upcomingEvent={upcomingEvent}
-            locale={locale}
-            dimensions={dimensions}
-          />
-        )}
-      </BannerWrapper>
-    )
-  );
+    );
+  }
+  return null;
 };

@@ -9,17 +9,29 @@ type LogoUpcomingEvent = {
   height: number;
 };
 
+type RetreatSchedule = {
+  day: string;
+  events: { time: string; description: string; subEvents?: string[] }[];
+}[];
+
+export type Offer = {
+  description: string;
+  price: string;
+  quantity: number;
+  title: string;
+  totalPrice: string;
+  tax?: boolean;
+};
+
 export type UpcomingEvent = {
   date: string;
   images?: ImageItem[];
   logo: LogoUpcomingEvent;
-  retreatSchedule?: {
-    day: string;
-    events: { time: string; description: string; subEvents?: string[] }[];
-  }[];
+  retreatSchedule?: RetreatSchedule;
   link: MenuContent;
   location: string;
   readMore: string;
+  offerOptions?: Offer[];
   time: string;
   title: string;
   slogan: string;
@@ -27,6 +39,45 @@ export type UpcomingEvent = {
 };
 
 export type LocaleUpcomingEvent = Record<Language, UpcomingEvent>;
+
+const roomOptions: Record<Language, Offer[]> = {
+  en: [
+    {
+      title: "4-Person Room",
+      quantity: 12,
+      price: "$720",
+      tax: true,
+      totalPrice: "$827.82",
+      description: "Room for four people",
+    },
+    {
+      title: "2-Person Room",
+      quantity: 3,
+      price: "$770",
+      tax: true,
+      totalPrice: "$885.31",
+      description: "Room for two people",
+    },
+  ],
+  fr: [
+    {
+      title: "Chambre 4 Personnes",
+      quantity: 12,
+      price: "$720",
+      tax: true,
+      totalPrice: "$827.82",
+      description: "Chambre pour quatre personnes",
+    },
+    {
+      title: "Chambre 2 Personnes",
+      quantity: 3,
+      price: "$770",
+      tax: true,
+      totalPrice: "$885.31",
+      description: "Chambre pour deux personnes",
+    },
+  ],
+};
 
 const local108ImagesEn: ImageItem[] = [
   {
@@ -76,150 +127,150 @@ const local108ImagesFr: ImageItem[] = [
   },
 ];
 
-const retreatScheduleFr = [
+const retreatScheduleFr: RetreatSchedule = [
   {
-    day: "1ière Journée",
+    day: "1ère Journée",
     events: [
-      { time: "17h", description: "Arrivée des participants" },
+      { time: "17h00", description: "Arrivée des participants" },
       {
-        time: "18h",
+        time: "18h00",
         description:
-          "Présentation de la retraite, Local 108, l'équipe. Maï, Js et Pam (petit speech).",
+          "Présentation de la retraite à Local 108, Rencontre avec l'équipe : Maï, Js et Pam",
       },
-      { time: "19h30", description: "Souper - soupe, petits repas" },
+      { time: "19h30", description: "Souper - Soupe et Petits Repas" },
       {
         time: "20h15",
-        description:
-          "Chakra Muladhara - Chakra Svadhistana (explication de chaque chakra)",
+        description: "Introduction aux Chakras Muladhara et Svadhistana",
         subEvents: [
-          "Cérémonie de feu, Enracinement (pieds nus), intentions pour la retraite (À l'extérieur)",
-          "Méditation, intentions pour la retraite, lâcher prise. Bain sonore. (Dans la Salle avec les pierres de quartz)",
+          "Cérémonie de Feu et Enracinement (pieds nus), Intentions pour la Retraite (à l'extérieur)",
+          "Méditation, Intentions pour la Retraite, Lâcher Prise, Bain Sonore (Salle Quartz)",
         ],
       },
     ],
   },
   {
-    day: "2ième Journée",
+    day: "2ème Journée",
     events: [
       {
         time: "6h00",
         description:
-          "Marche méditation silencieuse et méditation de chakra Manipura au lac",
+          "Marche Méditative Silencieuse et Méditation du Chakra Manipura au Lac",
       },
       {
         time: "7h30",
-        description: "Salutation Soleil - Yoga Vitalité (recharge)",
+        description: "Salutation au Soleil - Yoga Vitalité (Recharge)",
       },
       {
-        time: "8h45 - 10h",
+        time: "8h45 - 10h00",
         description:
-          "Nutri Lab - Smoothies and breakfast explanation by JS and Mai (LOCAL 108)",
+          "Nutri Lab - Smoothies et Explication du Petit Déjeuner par JS et Mai à Local 108",
       },
-      { time: "11h30", description: "PILATES with Pam" },
-      { time: "13h - 14h30", description: "Diner, temps pour Jaser" },
+      { time: "11h30", description: "Pilates avec Pam" },
+      { time: "13h00 - 14h30", description: "Dîner et Temps pour Discuter" },
       {
-        time: "15h - 16h45",
-        description: "Atelier de Nutrition Ayurvédique (professeure invitée)",
+        time: "15h00 - 16h45",
+        description:
+          "Atelier de Nutrition Ayurvédique avec une Professeure Invitée",
       },
-      {
-        time: "17h",
-        description: "Atelier de création ANAHATA (hosted by Mai)",
-      },
+      { time: "17h00", description: "Atelier de Création Anahata avec Mai" },
       { time: "18h30 - 19h45", description: "Souper" },
       {
-        time: "20h",
+        time: "20h00",
         description:
-          "Vishuddha et Ajna - Inner Voice and Abundance Ritual (tambour et mantras) (In the quartz room)",
+          "Vishuddha et Ajna - Rituel de la Voix Intérieure et de l'Abondance avec Tambours et Mantras (Salle Quartz)",
       },
     ],
   },
   {
-    day: "3ième Journée",
+    day: "3ème Journée",
     events: [
       {
         time: "8h30",
-        description: "Nutri Lab Breakfast (same concept as previous day)",
+        description: "Petit Déjeuner Nutri Lab (Similaire au Jour Précédent)",
       },
-      { time: "10h - 11h45", description: "Yoga Workshop" },
+      { time: "10h00 - 11h45", description: "Atelier de Yoga" },
       {
-        time: "12h - 1pm",
+        time: "12h00 - 13h00",
         description:
-          "Sahasrara les milles pétales - Chakra integration, feedback, closing words",
+          "Sahasrara : Les Mille Pétales - Intégration des Chakras, Retours et Mots de Clôture",
       },
-      { time: "13h00", description: "Final diner" },
-      { time: "15h", description: "Non-alcoholic YOGA TRANSE DANCE PARTY" },
+      { time: "13h00", description: "Dîner Final" },
+      { time: "15h00", description: "Fête de Danse Transe Yoga Sans Alcool" },
     ],
   },
 ];
-const retreatScheduleEn = [
+
+const retreatScheduleEn: RetreatSchedule = [
   {
-    day: "1st Day",
+    day: "Day 1",
     events: [
-      { time: "5pm", description: "Arrival of participants" },
+      { time: "5:00 PM", description: "Participant Arrival" },
       {
-        time: "6pm",
+        time: "6:00 PM",
         description:
-          "Introduction to the retreat, Local 108, the team. Maï, Js and Pam (small speech).",
+          "Retreat Introduction at Local 108, Meet the Team: Maï, Js, and Pam",
       },
-      { time: "7:30pm", description: "Dinner - soup, small meals" },
+      { time: "7:30 PM", description: "Dinner - Soup and Light Meals" },
       {
-        time: "8:15pm",
-        description:
-          "Chakra Muladhara - Chakra Svadhistana (explanation of each chakra)",
+        time: "8:15 PM",
+        description: "Chakra Muladhara & Chakra Svadhistana Introduction",
         subEvents: [
-          "Fire ceremony, Grounding (barefoot), intentions for the retreat (Outside)",
-          "Meditation, intentions for the retreat, letting go. Sound bath. (In the room with the quartz stones)",
+          "Fire Ceremony and Grounding (barefoot), Retreat Intentions (Outdoors)",
+          "Meditation, Retreat Intentions, Letting Go, Sound Bath (Quartz Room)",
         ],
       },
     ],
   },
   {
-    day: "2nd Day",
+    day: "Day 2",
     events: [
       {
-        time: "6am",
+        time: "6:00 AM",
         description:
-          "Silent meditation walk and Manipura chakra meditation at the lake",
+          "Silent Meditation Walk and Manipura Chakra Meditation by the Lake",
       },
       {
-        time: "7:30am",
-        description: "Sun Salutation - Vitality Yoga (recharge)",
+        time: "7:30 AM",
+        description: "Sun Salutation - Vitality Yoga (Recharge)",
       },
       {
-        time: "8:45 - 10am",
+        time: "8:45 - 10:00 AM",
         description:
-          "Nutri Lab - Smoothies and breakfast explanation by JS and Mai (LOCAL 108)",
+          "Nutri Lab - Smoothies and Breakfast Explanation by JS and Mai at Local 108",
       },
-      { time: "11:30am", description: "PILATES with Pam" },
-      { time: "1pm - 2:30pm", description: "Lunch, time to chat" },
+      { time: "11:30 AM", description: "Pilates with Pam" },
+      { time: "1:00 - 2:30 PM", description: "Lunch and Social Time" },
       {
-        time: "3pm - 4:45pm",
-        description: "Ayurvedic Nutrition Workshop (guest teacher)",
+        time: "3:00 - 4:45 PM",
+        description: "Ayurvedic Nutrition Workshop with Guest Teacher",
       },
-      { time: "5pm", description: "ANAHATA creation workshop (hosted by Mai)" },
-      { time: "6:30 - 7:45pm", description: "Dinner" },
+      { time: "5:00 PM", description: "Anahata Creation Workshop with Mai" },
+      { time: "6:30 - 7:45 PM", description: "Dinner" },
       {
-        time: "8pm",
+        time: "8:00 PM",
         description:
-          "Vishuddha and Ajna - Inner Voice and Abundance Ritual (drum and mantras) (In the quartz room)",
+          "Vishuddha and Ajna - Inner Voice and Abundance Ritual with Drums and Mantras (Quartz Room)",
       },
     ],
   },
   {
-    day: "3rd Day",
+    day: "Day 3",
     events: [
       {
-        time: "8:30am",
-        description: "Nutri Lab Breakfast (same concept as previous day)",
+        time: "8:30 AM",
+        description: "Nutri Lab Breakfast (Similar to Previous Day)",
       },
-      { time: "10am - 11:45am", description: "Yoga Workshop" },
+      { time: "10:00 - 11:45 AM", description: "Yoga Workshop" },
       {
-        time: "12pm - 1pm",
+        time: "12:00 - 1:00 PM",
         description:
-          "Sahasrara the thousand petals - Chakra integration, feedback, closing words",
+          "Sahasrara: The Thousand Petals - Chakra Integration, Feedback, Closing Words",
       },
-      { time: "1pm", description: "Final dinner" },
-      { time: "3pm", description: "Non-alcoholic YOGA TRANSE DANCE PARTY" },
+      { time: "1:00 PM", description: "Final Dinner" },
+      {
+        time: "3:00 PM",
+        description: "Non-Alcoholic Yoga Trance Dance Party",
+      },
     ],
   },
 ];
@@ -248,6 +299,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
 
     location: "Local 108 Studio",
     retreatSchedule: retreatScheduleEn,
+    offerOptions: roomOptions.en,
     images: local108ImagesEn,
   },
   fr: {
@@ -273,6 +325,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     },
     location: "Studio Local 108",
     retreatSchedule: retreatScheduleFr,
+    offerOptions: roomOptions.fr,
     images: local108ImagesFr,
   },
 };

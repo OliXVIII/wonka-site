@@ -14,7 +14,7 @@ export default async function Footer({ data, locale }: Readonly<FooterProps>) {
   const { uiContent, storage, features } = data;
 
   return (
-    <footer className="relative mx-auto max-w-[100vw] text-sm max-md:border-t">
+    <footer className="relative mx-auto max-w-full text-sm max-md:border-t xl:!max-w-screen-2xl">
       <FooterSimple locale={locale} data={data} />
       {features.footer.type.map && uiContent.location && (
         <StaticGoogleMap location={uiContent.location} />

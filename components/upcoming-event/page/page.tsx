@@ -5,32 +5,12 @@ import { MainImageUpcoming } from "./main-image";
 import { EventSchedule } from "./schedule";
 import { BookNowButton } from "./book-now";
 import { BottomImages } from "./bottom-images";
+import { OfferComponent } from "./offer";
 
 type UpcomingEventPageProps = {
   data: DataType;
   locale: LocaleDetails;
 };
-
-const roomOptions = [
-  {
-    title: "4-Person Room",
-    quantity: 12,
-    price: "$720",
-    taxTPS: "$36",
-    taxTVQ: "$71.82",
-    totalPrice: "$827.82",
-    description: "Room for four people",
-  },
-  {
-    title: "2-Person Room",
-    quantity: 3,
-    price: "$770",
-    taxTPS: "$38.5",
-    taxTVQ: "$76.81",
-    totalPrice: "$885.31",
-    description: "Room for two people",
-  },
-];
 
 export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
   const { upcomingEvents } = data;
@@ -62,31 +42,8 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
       <p className="text-center">{upcomingEventsLocale.date}</p>
 
       <BottomImages upcomingEventsLocale={upcomingEventsLocale} />
-      <div className="flex max-sm:flex-col">
-        <p className="my-10 text-justify sm:w-1/2">
-          {upcomingEventsLocale.description}
-        </p>
-
-        {/* Room options */}
-        <div className="mx-auto flex w-full flex-col sm:w-1/2 sm:px-[2%] md:px-[5%]">
-          {roomOptions.map((room, i) => (
-            <div
-              key={i}
-              className="my-2 rounded-box p-1 shadow-md dark:shadow-inner dark:shadow-white"
-            >
-              <div className="flex justify-around">
-                <h3 className="text-center text-xl">
-                  {room.title} ({room.quantity} available)
-                </h3>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-end text-xl smtrace:mt-4">{room.price}</p>
-                <BookNowButton></BookNowButton>
-              </div>
-              <p className="text-center">{room.description}</p>
-            </div>
-          ))}
-        </div>
+      <div className="my-8 flex max-sm:flex-col">
+        <OfferComponent upcomingEventsLocale={upcomingEventsLocale} />
       </div>
 
       <EventSchedule upcomingEvent={upcomingEventsLocale} />

@@ -15,7 +15,7 @@ export const ServicesComponent = ({ data }: ServicesComponentProps) => {
   }
 
   return (
-    <section className="py-20">
+    <section className="py-10 sm:pt-28">
       <h2 className="mb-12 text-4xl font-light tracking-[-0.1rem]">
         {services.heading}
         <span className="ml-0.5 align-super text-sm font-bold">
@@ -33,7 +33,7 @@ export const ServicesComponent = ({ data }: ServicesComponentProps) => {
                 src={service.image}
                 alt={service.title}
                 fill
-                className="rounded-box h-full w-full scale-100 object-cover object-center brightness-90 transition-transform duration-500 ease-in-out group-hover:scale-110 dark:brightness-[0.85]"
+                className="h-full w-full scale-100 rounded-box object-cover object-center brightness-90 transition-transform duration-500 ease-in-out group-hover:scale-110 dark:brightness-[0.85]"
               />
             </div>
             <div className="absolute inset-0 flex h-full flex-col rounded-b-lg bg-gradient-to-t from-[#000000] to-transparent p-5">
