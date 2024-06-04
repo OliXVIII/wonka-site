@@ -11,16 +11,20 @@ type NavbarFeatures = {
 };
 
 export type FeaturesType = {
-  eventStyle?: "pageComp" | "horizontal" | "vertical";
-  bannerSize?: "small" | "medium";
+  banner?: {
+    style: "horizontal" | "vertical" | "section";
+    size: "small" | "medium";
+  };
   borderMenuNav: boolean;
   footer: FooterFeatures;
   navbar: NavbarFeatures;
 };
 
 export const local108Features: FeaturesType = {
-  eventStyle: "horizontal",
-  bannerSize: "small",
+  banner: {
+    style: "horizontal",
+    size: "small",
+  },
   borderMenuNav: true,
   footer: {
     type: {

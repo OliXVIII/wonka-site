@@ -8,18 +8,21 @@ import { FeaturesType } from "@/types/features";
 type UpcomingEventBannerCompProps = {
   upcomingEvent: UpcomingEvent;
   locale: LocaleDetails;
-  dimensions?: FeaturesType["bannerSize"];
+  banner: FeaturesType["banner"];
 };
 
-export const PageComp = ({
+export const SectionBanner = ({
   upcomingEvent,
   locale,
-  dimensions,
+  banner,
 }: UpcomingEventBannerCompProps) => {
+  if (!banner) {
+    return null;
+  }
   return (
     <a
       href={createLink(upcomingEvent.link, locale)}
-      className={`container relative mx-auto flex ${dimensions === "small" ? "h-40" : dimensions === "medium" ? "h-44" : ""} w-full items-center justify-center`}
+      className={`container relative mx-auto flex ${banner.size === "small" ? "h-40" : banner.size === "medium" ? "h-44" : ""} w-full items-center justify-center`}
     >
       <MainImageUpcoming upcomingEvent={upcomingEvent} />
       <ReadMoreButton readMore={upcomingEvent.readMore} alignBottomRight />

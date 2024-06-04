@@ -35,6 +35,7 @@ type MetadataType = {
 
 export type UpcomingEvent = {
   date: string;
+  cta: string;
   images?: ImageItem[];
   logo: LogoUpcomingEvent;
   retreatSchedule?: RetreatSchedule;
@@ -289,6 +290,7 @@ const retreatScheduleEn: RetreatSchedule = [
 export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
   en: {
     time: "First day starts at 17h; event lasts 3 days.",
+    cta: "Book Now - Limited Availability",
     title: "Le Temple - 2024 Retreat",
     slogan: "Unlock Your Inner Universe",
     description:
@@ -321,6 +323,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
   },
   fr: {
     time: "Le premier jour commence à 17h; l'évènement dure 3 jours.",
+    cta: "Réservez maintenant - Disponibilité limitée",
     title: "Le Temple - Retraite Nutrition-Yoga-Pilates 2024",
     slogan: "Débloquez votre univers intérieur",
     description:

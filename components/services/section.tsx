@@ -2,15 +2,15 @@ import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
 import { ReadMoreButton } from "../read-more-button";
 
-type ServicesComponentProps = {
+type ServicesSectionProps = {
   data: DataType;
 };
 
-export const ServicesComponent = ({ data }: ServicesComponentProps) => {
+export const ServicesSection = ({ data }: ServicesSectionProps) => {
   const { uiContent } = data;
-  const { services, readMore } = uiContent;
+  const { services } = uiContent;
 
-  if (!services || !services.services.length) {
+  if (!services?.services.length) {
     return null;
   }
 

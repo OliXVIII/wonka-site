@@ -1,6 +1,6 @@
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
-import { PageComp } from "./page-component";
+import { SectionBanner } from "./section-banner";
 import { HorizontalBanner } from "./horizontal-banner";
 import { FeaturesType } from "@/types/features";
 import { BannerWrapper } from "./horizontal-wrapper";
@@ -9,27 +9,29 @@ import { createLink } from "@/lib/create-link";
 type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
   locale: LocaleDetails;
-  style: FeaturesType["eventStyle"];
-  dimensions?: FeaturesType["bannerSize"];
+  banner: FeaturesType["banner"];
 };
 
 export const UpcomingEventBanner = ({
   upcomingEvent,
   locale,
-  style,
-  dimensions,
+  banner,
 }: UpcomingEventBannerProps) => {
+  if (!banner) {
+    return null;
+  }
+
   if (!upcomingEvent.images) {
     return null;
   }
   let dimensionsClass = "";
-  if (dimensions === "small") {
-    dimensionsClass = "max-md:h-28 md:h-36";
-  } else if (dimensions === "medium") {
-    dimensionsClass = "max-md:h-28 md:h-44";
+  if (banner.size === "small") {
+    dimensionsClass = "max-md:h-banner-mobile md:h-banner-small";
+  } else if (banner.size === "medium") {
+    dimensionsClass = "max-md:h-banner-mobile md:h-banner-medium";
   }
 
-  if (style === "horizontal") {
+  if (banner.style === "horizontal") {
     return (
       <BannerWrapper
         dimensionsClass={dimensionsClass}
@@ -41,12 +43,12 @@ export const UpcomingEventBanner = ({
         />
       </BannerWrapper>
     );
-  } else if (style === "pageComp") {
+  } else if (banner.style === "section") {
     return (
-      <PageComp
+      <SectionBanner
         upcomingEvent={upcomingEvent}
         locale={locale}
-        dimensions={dimensions}
+        banner={banner}
       />
     );
   }

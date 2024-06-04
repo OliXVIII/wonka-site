@@ -12,11 +12,13 @@ export const EventSchedule = ({ upcomingEvent }: EventScheduleType) => {
   }
 
   return (
-    <div className="min-h-screen p-5">
+    <div className="mt-8 min-h-screen">
       {retreatSchedule.map((day, index) => (
         <div key={index} className="mb-12">
-          <h3 className="mb-4 text-center font-normal">{day.day}</h3>
-          <ul>
+          <h3 className="mb-4 text-center font-normal underline underline-offset-4">
+            {day.day}
+          </h3>
+          <ul className="shadow-md dark:shadow-sm sm:mx-[10%]">
             {day.events.map((event, idx) => (
               <li
                 key={idx}

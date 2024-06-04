@@ -31,13 +31,13 @@ const OfferInfo = ({
     <div
       key={room.title}
       className={
-        "m-2 flex h-full min-h-64 flex-col rounded-box p-1 py-2 shadow-sm dark:shadow-inner dark:shadow-white max-md:w-1/2 max-md:shadow-md" +
-        (mobile ? " md:hidden" : "")
+        "flex h-full min-h-72 flex-col rounded-box p-1 py-2 shadow-sm dark:shadow-inner dark:shadow-white max-md:w-1/2 max-md:shadow-md sm:m-2 sm:py-4" +
+        (mobile ? " max-sm:ml-4 md:hidden" : "")
       }
     >
       <div className="justify-around">
-        <h3 className="text-center text-xl">{room.title}</h3>
-        <p className="text-center text-xl">
+        <h3 className="text-xlæ text-center">{room.title}</h3>
+        <p className="text-center text-base">
           ({room.quantity} {uiContent.available})
         </p>
       </div>
@@ -102,7 +102,9 @@ export const OfferComponent = ({
             mobile
           />
         </div>
-        <p className={`${divClass}`}>{upcomingEventsLocale.description}</p>
+        <p className={`${divClass} my-auto`}>
+          {upcomingEventsLocale.description}
+        </p>
         <div
           className={`${divClass} border-dark dark:border-light max-md:hidden sm:border-l`}
         >
