@@ -1,5 +1,6 @@
 import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
+import { Button } from "@nextui-org/button";
 
 type HeaderProps = {
   data: DataType;
@@ -44,6 +45,7 @@ export const Header = ({ data }: HeaderProps) => {
             />
           </div>
         ) : null}
+        
         <div className="my-auto mt-16 h-12 w-36 rounded-md bg-transparent max-sm:ml-auto max-sm:mt-0 max-sm:h-28 max-xs:h-16" />
         {/* <button className="my-auto mt-16 h-12 w-36 r/ounded-md bg-dark text-light hover:bg-green-700 dark:bg-light dark:text-dark max-sm:ml-auto max-sm:mt-0 max-sm:h-28 max-xs:h-16">
           {getStarted}

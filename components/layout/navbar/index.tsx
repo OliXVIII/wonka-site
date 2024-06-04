@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
+import { Suspense } from "react";
+import { Button } from "@nextui-org/button";
 //import Search from "./search";
 import LogoSquare from "@/components/store/logo-square";
 import OpenCart from "@/components/store/cart/open-cart";
@@ -11,6 +12,7 @@ import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
 import { createLink } from "@/lib/create-link";
+import Login from "@/components/auth/login";
 
 type NavbarProps = {
   data: DataType;
@@ -73,6 +75,7 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
                     {item.title}
                   </Link>
                 </li>
+
               ))}
             </ul>
           ) : null}
@@ -83,6 +86,7 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
               <Cart />
             </Suspense>
           ) : null}{" "}
+          <Login />
         </div>
       </div>
     </nav>
