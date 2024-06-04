@@ -10,9 +10,10 @@ export function BannerWrapper({ children }: Readonly<WrapperProps>) {
   const bannerWrapperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log(window.scrollY, bannerWrapperRef.current);
     const handleScroll = () => {
-      if (window.scrollY >= 400 && bannerWrapperRef.current) {
-        bannerWrapperRef.current.classList.add("animate-fade-up", "animate-once", "animate-ease-out", "block");
+      if (window.scrollY >= 100 && bannerWrapperRef.current) {
+        bannerWrapperRef.current.classList.add("!block");
       }
     };
 
@@ -23,5 +24,5 @@ export function BannerWrapper({ children }: Readonly<WrapperProps>) {
     };
   }, []);
 
-  return <div ref={bannerWrapperRef}>{children}</div>;
+  return <div className="hidden banner-fade-in" ref={bannerWrapperRef}>{children}</div>;
 }

@@ -19,8 +19,17 @@ module.exports = {
       smtrace: "640px",
     },
     extend: {
+      keyframes: {
+        'banner-fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
       animation: {
-        "spin-slow": "spin 15s linear infinite",
+        "spin-slow": "spin 1s linear infinite",
+      },
+      animate: {
+        "banner-fade-in": "banner-fade-in 1s ease-in-out",
       },
       colors: {
         dark: "#1A202C",
