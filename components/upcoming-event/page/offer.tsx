@@ -3,18 +3,7 @@ import { BookNowButton } from "./book-now";
 import { UiContent } from "@/types/ui-content";
 import { taxByCountry } from "@/lib/tax";
 import { RegionCode } from "@/types/region";
-
-const addDollarSignByCountry = (
-  price: number | string,
-  country: RegionCode,
-) => {
-  if (country === "CA") {
-    return `${price}$`;
-  } else if (country === "US") {
-    return `$${price}`;
-  }
-  return `${price}`;
-};
+import { priceByCountry } from "@/lib/price-by-country";
 
 const OfferInfo = ({
   room,
@@ -46,11 +35,11 @@ const OfferInfo = ({
       </p>
       <div className="flex flex-col justify-center pb-4 pt-2">
         <p className="text-center text-xl">
-          {addDollarSignByCountry(total.toFixed(2), "CA" as RegionCode)}
+          {priceByCountry(total, "CA" as RegionCode)}
         </p>
         <p className="text-center text-xs">
-          {addDollarSignByCountry(room.price.toFixed(1), "CA" as RegionCode)} +{" "}
-          {addDollarSignByCountry(tax.toFixed(2), "CA" as RegionCode)} (taxes)
+          {priceByCountry(room.price, "CA" as RegionCode)} +{" "}
+          {priceByCountry(tax, "CA" as RegionCode)} (taxes)
         </p>
       </div>
       <BookNowButton bookNow={uiContent.bookNow} />
@@ -102,7 +91,7 @@ export const OfferComponent = ({
             mobile
           />
         </div>
-        <p className={`${divClass} my-auto`}>
+        <p className={`${divClass} my-auto text-justify`}>
           {upcomingEventsLocale.description}
         </p>
         <div

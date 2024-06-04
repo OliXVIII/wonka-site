@@ -30,23 +30,33 @@ type FooterUiContent = {
   contactForm?: ContactForm;
 };
 
+export type FormFields = {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  submit: string;
+  submitSuccess?: string;
+};
+
 export type UiContent = {
   available?: string;
+  bookNow?: string;
   companyName: string;
   description: string;
-  bookNow?: string;
   footer: FooterUiContent;
+  form?: FormFields;
   getStarted: string;
-  ourNextTrip?: string;
+  location?: string;
   mission: string;
   navigation: MenuContent[];
+  ourNextTrip?: string;
   readMore: string;
   services?: ServicesContent;
   siteName: string;
   slogan: string;
   slogan2?: string;
 };
-
 
 export const local108UIContent: Record<Language, UiContent> = {
   // English
@@ -71,18 +81,16 @@ export const local108UIContent: Record<Language, UiContent> = {
     },
     bookNow: "Book Now",
     getStarted: "Get Started",
+    location: "Cafe Temps Perdu, CA",
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
-      // { title: "About", path: "/about" },
-      { title: "Services", path: "/services" },
       { title: "Le Temple", path: "/upcoming/le-temple" },
+      { title: "Services", path: "/services" },
+      // { title: "Politique de Confidentialité", path: "/policy" },
+      // { title: "Conditions Générales", path: "/terms" },
       // { title: "Blog", path: "/blog" },
-      // {
-      //   title: "Store",
-      //   path: "https://demo.vercel.store/",
-      //   externalLink: true,
-      // },
+      // { title: "Contactez Nous", path: "/contact" },
     ],
     readMore: "Read More",
     ourNextTrip: "Our Next Trip",
@@ -121,6 +129,14 @@ export const local108UIContent: Record<Language, UiContent> = {
     },
     siteName: "Local 108",
     slogan: "Feel Good, Inside and Out",
+    form: {
+      name: "Full Name",
+      email: "Email Address",
+      phone: "Phone",
+      message: "Message",
+      submit: "Book Now",
+      submitSuccess: "Booking sent successfully",
+    },
   },
   // French
   fr: {
@@ -134,7 +150,7 @@ export const local108UIContent: Record<Language, UiContent> = {
         "*Ces déclarations n'ont pas été évaluées par l'Administration du Yoga.",
       navigation: [
         { title: "Le Temple", path: "/upcoming/le-temple" },
-        { title: "Services", path: "/services"}
+        { title: "Services", path: "/services" },
         // { title: "Politique de Confidentialité", path: "/policy" },
         // { title: "Conditions Générales", path: "/terms" },
         // { title: "Blog", path: "/blog" },
@@ -145,6 +161,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     },
     bookNow: "Réserver maintenant",
     getStarted: "Commencer",
+    location: "Cafe Temps Perdu, CA",
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 
@@ -197,5 +214,13 @@ export const local108UIContent: Record<Language, UiContent> = {
     siteName: "Local 108",
     slogan: "Sentez-vous bien, à l'intérieur ",
     slogan2: "comme à l'extérieur",
+    form: {
+      name: "Nom complet",
+      email: "Adresse email",
+      phone: "Téléphone",
+      message: "Message",
+      submit: "Réserver maintenant",
+      submitSuccess: "Réservation envoyée avec succès",
+    },
   },
 };

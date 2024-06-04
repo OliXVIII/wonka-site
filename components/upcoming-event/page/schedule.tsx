@@ -14,7 +14,10 @@ export const EventSchedule = ({ upcomingEvent }: EventScheduleType) => {
   return (
     <div className="mt-8 min-h-screen">
       {retreatSchedule.map((day, index) => (
-        <div key={index} className="mb-12">
+        <div
+          key={index}
+          className={index !== retreatSchedule.length - 1 ? "mb-12" : ""}
+        >
           <h3 className="mb-4 text-center font-normal underline underline-offset-4">
             {day.day}
           </h3>

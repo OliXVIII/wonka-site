@@ -1,6 +1,7 @@
 "use client";
 import { UpcomingEvent } from "@/types/upcoming-event";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export const ImageModale = ({
@@ -9,9 +10,10 @@ export const ImageModale = ({
   upComingEvent: UpcomingEvent;
 }) => {
   //Adding #index=index to the URL
-  const index = new URLSearchParams(window.location.hash.substring(1)).get(
-    "index",
-  ) as unknown as number;
+  const path = usePathname();
+  const index = path.includes("#index=")
+    ? (path.split("#index=")[1] as unknown as number)
+    : null;
   // Make a hook that listens to url changes to detect if we add #index=index to the URL
   useEffect(() => {
     if (!index) {

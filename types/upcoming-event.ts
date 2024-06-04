@@ -60,7 +60,7 @@ const roomOptions: Record<Language, Offer[]> = {
       price: 720,
       tax: true,
       totalPrice: "$827.82",
-      description: "Room for four people",
+      description: "Superpose beds, this room is both conforable and immersive",
     },
     {
       title: "2-Person Room",
@@ -68,7 +68,8 @@ const roomOptions: Record<Language, Offer[]> = {
       price: 770,
       tax: true,
       totalPrice: "$885.31",
-      description: "Room for two people",
+      description:
+        "Double bed for two people, this room is perfect for couples or friends",
     },
   ],
   fr: [
@@ -78,7 +79,8 @@ const roomOptions: Record<Language, Offer[]> = {
       price: 720,
       tax: true,
       totalPrice: "$827.82",
-      description: "Chambre pour quatre personnes",
+      description:
+        "Lits superposés, cette chambre est à la fois confortable et immersive",
     },
     {
       title: "Chambre 2 Personnes",
@@ -86,7 +88,7 @@ const roomOptions: Record<Language, Offer[]> = {
       price: 770,
       tax: true,
       totalPrice: "$885.31",
-      description: "Chambre pour deux personnes",
+      description: "Lit double pour deux personnes, idéal pour les couples",
     },
   ],
 };

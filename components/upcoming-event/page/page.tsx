@@ -44,12 +44,15 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
       <p className="text-center">{upcomingEventsLocale.date}</p>
 
       <BottomImages upcomingEventsLocale={upcomingEventsLocale} />
-      <div className="my-8 flex max-md:flex-col">
+      <div className="my-10 flex max-md:flex-col">
         <OfferComponent
           upcomingEventsLocale={upcomingEventsLocale}
           uiContent={data.uiContent}
         />
-        <ReserveModal />
+        <ReserveModal
+          upcomingEvent={upcomingEventsLocale}
+          uiContent={data.uiContent}
+        />
       </div>
 
       <EventSchedule upcomingEvent={upcomingEventsLocale} />

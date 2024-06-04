@@ -6,7 +6,7 @@ export const CTAUpcomingEvent = ({
   upcomingEvent: UpcomingEvent;
 }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex hidden items-center justify-center">
       <button className="bg-primary rounded-lg px-4 py-2 text-white">
         {upcomingEvent.cta}
       </button>
