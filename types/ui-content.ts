@@ -75,6 +75,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     navigation: [
       // { title: "About", path: "/about" },
       { title: "Services", path: "/services" },
+      { title: "Le Temple", path: "/upcoming/le-temple" },
       // { title: "Blog", path: "/blog" },
       // {
       //   title: "Store",
@@ -148,6 +149,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     navigation: [
       // { title: "À propos", path: "/about" },
       { title: "Services", path: "/services" },
+      { title: "Le Temple", path: "/upcoming/le-temple" },
       // { title: "Blog", path: "/blog" },
       // {
       //   title: "Boutique",
