@@ -1,14 +1,14 @@
 "use client";
 // import { orama, parseSorting } from "@/lib/orama";
-import { Product } from "@/lib/shopify/types";
-import { useSearchParams } from "next/navigation";
-import Grid from "../store/grid";
-import ProductGridItems from "./product-grid-items";
+// import { Product } from "@/lib/shopify/types";
+// import { useSearchParams } from "next/navigation";
+// import Grid from "../store/grid";
+// import ProductGridItems from "./product-grid-items";
 
 export const SearchComponent = async () => {
-  const searchParams = useSearchParams();
-  const sort = searchParams.get("sort") || "relevance";
-  const searchValue = searchParams.get("q") || "";
+  // const searchParams = useSearchParams();
+  // const sort = searchParams.get("sort") || "relevance";
+  // const searchValue = searchParams.get("q") || "";
 
   // const products = await orama.search({
   //   term: searchValue,

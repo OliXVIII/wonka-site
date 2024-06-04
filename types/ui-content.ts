@@ -35,6 +35,7 @@ export type UiContent = {
   description: string;
   footer: FooterUiContent;
   getStarted: string;
+  location?: string;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -50,6 +51,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     companyName: "Local 108 Inc.",
     description:
       "At Local 108, we do more than yoga. We are here to help you feel good, inside and out. Our yoga classes, nutrition advice, and wellness trips are designed for anyone looking to find balance between body and mind. We believe that taking care of your health is the key to living a happy and fulfilling life.",
+
     footer: {
       legal: "All Rights Reserved.",
       notice:
@@ -64,6 +66,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       crafted: "Crafted by",
     },
     getStarted: "Get Started",
+    location: "Cafe Temps Perdu, CA",
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
@@ -132,6 +135,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       crafted: "Conçu par",
     },
     getStarted: "Commencer",
+    location: "Cafe Temps Perdu, CA",
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 

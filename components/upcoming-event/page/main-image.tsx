@@ -32,7 +32,7 @@ export const MainImageUpcoming = ({
           src={upcomingEvent.logo.textImage ?? upcomingEvent.logo.image}
           width={300}
           height={300}
-          className="rounded-box absolute right-2 top-2 z-50 aspect-auto w-fit object-cover invert max-sm:h-28"
+          className="absolute right-2 top-2 z-50 aspect-auto w-fit rounded-box object-cover invert max-sm:h-28"
         />
       )}
     </>

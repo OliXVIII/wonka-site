@@ -13,6 +13,34 @@ export type PageParams = {
   params: { domain: string; lang: Locale };
 };
 
+export async function generateMetadata({ params }: PageParams) {
+  const domain = decodeURIComponent(params.domain);
+  const locale = localesDetails[params.lang] ?? defaultLocale;
+  const [data] = await Promise.all([fetchData(domain, locale)]);
+
+  const uiContent = data?.uiContent;
+  const storage = data?.storage;
+
+  return {
+    title: uiContent?.companyName ?? uiContent?.siteName ?? "Home",
+    description: uiContent?.mission ?? uiContent?.description ?? "",
+    openGraph: {
+      images: [
+        {
+          url: storage?.header?.src,
+          width: 800,
+          height: 600,
+          alt:
+            storage?.header?.alt ??
+            uiContent?.companyName ??
+            uiContent?.siteName ??
+            "Home",
+        },
+      ],
+    },
+  };
+}
+
 export async function generateStaticParams() {
   const allSites = await prisma.site.findMany({
     select: {
@@ -47,7 +75,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   return (
     <>
       {data.storage.backgroundImageDark && (
-        <div className="-mobile absolute hidden w-full dark:flex max-sm:h-header sm:h-header ">
+        <div className="absolute hidden w-full dark:flex max-md:h-header-mobile md:h-header ">
           <Image
             src={data.storage.backgroundImageDark.src}
             alt="bakground image"
@@ -57,7 +85,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       {data.storage.backgroundImageLight && (
-        <div className="-mobile absolute w-full dark:hidden max-sm:h-header sm:h-header ">
+        <div className="absolute w-full dark:hidden max-md:h-header-mobile md:h-header ">
           <Image
             src={data.storage.backgroundImageLight.src}
             alt="bakground image"

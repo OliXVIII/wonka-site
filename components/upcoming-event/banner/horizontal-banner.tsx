@@ -1,7 +1,7 @@
 import { createLink } from "@/lib/create-link";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
-import { MainImageUpcoming } from "../main-image";
+import { MainImageUpcoming } from "../page/main-image";
 import { ReadMoreButton } from "../../read-more-button";
 import { FeaturesType } from "@/types/features";
 
@@ -21,7 +21,7 @@ export const HorizontalBanner = ({
   return (
     <a
       href={createLink(upcomingEvent.link, locale)}
-      className={`fixed bottom-0 hidden right-0 ${className} z-50 flex w-screen items-end justify-end`}
+      className={`fixed bottom-0 right-0 hidden ${className} z-50 flex w-screen items-end justify-end`}
     >
       <div className="absolute inset-0 h-full w-full">
         <MainImageUpcoming upcomingEvent={upcomingEvent} banner />

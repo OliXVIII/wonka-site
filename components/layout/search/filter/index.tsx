@@ -1,6 +1,7 @@
 import { SortFilterItem } from "@/lib/shopify/constants";
 import FilterItemDropdown from "./dropdown";
 import { FilterItem } from "./item";
+import { Suspense } from "react";
 
 export type ListItem = SortFilterItem | PathFilterItem;
 export type PathFilterItem = { title: string; path: string };
@@ -23,7 +24,7 @@ export default function FilterList({
   title?: string;
 }) {
   return (
-    <>
+    <Suspense>
       <nav>
         {title ? (
           <h3 className="hidden text-xs text-neutral-500 md:block">{title}</h3>
@@ -35,6 +36,6 @@ export default function FilterList({
           <FilterItemDropdown list={list} />
         </ul>
       </nav>
-    </>
+    </Suspense>
   );
 }

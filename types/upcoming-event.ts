@@ -233,7 +233,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
       "Join us for an enlightening three-day retreat designed to balance and activate your chakras through a series of workshops including yoga, Pilates, meditation, and nutritional guidance. Experience unique ceremonies like fire rituals, sound baths, and a special 'Yoga Trance Dance Party'. Embrace the serene environment and our supportive community to rediscover and rejuvenate your spiritual and physical wellness.",
     link: {
       title: "Upcoming Event",
-      path: "/upcoming/event",
+      path: "/upcoming/le-temple",
     },
     date: "June 15th, 2022",
     readMore: "See Event",
@@ -259,7 +259,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
 
     link: {
       title: "Évènement à Venir",
-      path: "/upcoming/evenement",
+      path: "/upcoming/le-temple",
     },
     date: "15 juin 2022",
     readMore: "Voir l'évènement",

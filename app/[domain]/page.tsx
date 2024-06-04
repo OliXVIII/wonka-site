@@ -5,7 +5,7 @@ import { RegionCode } from "@/types/region";
 
 const Page = async () => {
   const headersList = headers();
-  const clientAddress = headersList.get("x-forwarded-for") || "192.0.2.1"; // Default IP if not found
+  const clientAddress = headersList.get("x-forwarded-for") ?? "192.0.2.1"; // Default IP if not found
   let countryCode = "CA"; // Default to Canada
   let defaultLocale = "en"; // Default language
 
@@ -14,7 +14,7 @@ const Page = async () => {
       `https://ipinfo.io/${clientAddress}/json?token=<YOUR_TOKEN>`,
     );
     const data = await response.json();
-    countryCode = data.country || countryCode;
+    countryCode = data.country ?? countryCode;
     // Verify that it exist in RegionCode
     if (!Object.values(RegionCode).includes(countryCode as RegionCode)) {
       countryCode = "CA";
