@@ -99,17 +99,19 @@ const SiteHomePage = async ({ params }: PageParams) => {
         <Header data={data} />
         <Breadcrumb />
 
-        {data?.upcomingEvents && (
-          <UpcomingEventBanner
-            upcomingEvent={data.upcomingEvents[locale.languageCode]}
-            locale={locale}
-            banner={data.features.banner}
-          />
-        )}
-        {data.uiContent?.services && <ServicesSection data={data} />}
-      </div>
-    </>
-  );
-};
 
-export default SiteHomePage;
+        {data.uiContent?.services && <ServicesSection data={data} />}
+                {data?.upcomingEvents && data?.uiContent?.ourNextTrip ? (
+                  <UpcomingEventBanner
+                    upcomingEvent={data.upcomingEvents[locale.languageCode]}
+                    locale={locale}
+                    banner={data.features.banner}
+                    header={data.uiContent.ourNextTrip}
+                  />
+                ) : null}
+              </div>
+            </>
+          );
+        };
+
+        export default SiteHomePage;

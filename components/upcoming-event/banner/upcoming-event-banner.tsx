@@ -10,12 +10,14 @@ type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;
   locale: LocaleDetails;
   banner: FeaturesType["banner"];
+  header: string;
 };
 
 export const UpcomingEventBanner = ({
   upcomingEvent,
   locale,
   banner,
+  header,
 }: UpcomingEventBannerProps) => {
   if (!banner) {
     return null;
@@ -45,11 +47,17 @@ export const UpcomingEventBanner = ({
     );
   } else if (banner.style === "section") {
     return (
+      <>
+      <h2 className="mb-12 text-4xl font-light tracking-[-0.1rem]">
+        {header}
+      </h2>
       <SectionBanner
         upcomingEvent={upcomingEvent}
         locale={locale}
         banner={banner}
       />
+      </>
+      
     );
   }
   return null;

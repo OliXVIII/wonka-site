@@ -37,6 +37,7 @@ export type UiContent = {
   bookNow?: string;
   footer: FooterUiContent;
   getStarted: string;
+  ourNextTrip?: string;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -84,6 +85,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       // },
     ],
     readMore: "Read More",
+    ourNextTrip: "Our Next Trip",
     services: {
       heading: "Our Services",
       services: [
@@ -158,6 +160,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       // },
     ],
     readMore: "Voir plus",
+    ourNextTrip: "Notre prochain voyage",
     services: {
       heading: "Nos Services",
       services: [
