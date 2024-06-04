@@ -17,15 +17,18 @@ export const addDomainToVercel = async (domain: string) => {
         Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
         "Content-Type": "application/json",
       },
+      // The AUTH_BEARER_TOKEN expire every year so you need to update it
       body: JSON.stringify({
         name: domain,
         // Optional: Redirect www. to root domain
-        // ...(domain.startsWith("www.") && {
-        //   redirect: domain.replace("www.", ""),
-        // }),
+        ...(domain.startsWith("www.") && {
+          redirect: domain.replace("www.", ""),
+        }),
       }),
     },
-  ).then((res) => res.json());
+  ).then((res) => {
+    res.json();
+  });
 };
 
 export const removeDomainFromVercelProject = async (domain: string) => {

@@ -7,11 +7,39 @@ import { Breadcrumb } from "@/components/layout/breadcrumb";
 import { ServicesComponent } from "@/components/services/services-component";
 import { Header } from "@/components/header/header";
 import Image from "next/image";
-import { UpcomingEventBanner } from "@/components/upcoming-event/upcoming-event-banner";
+import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
 };
+
+export async function generateMetadata({ params }: PageParams) {
+  const domain = decodeURIComponent(params.domain);
+  const locale = localesDetails[params.lang] ?? defaultLocale;
+  const [data] = await Promise.all([fetchData(domain, locale)]);
+
+  const uiContent = data?.uiContent;
+  const storage = data?.storage;
+
+  return {
+    title: uiContent?.companyName ?? uiContent?.siteName ?? "Home",
+    description: uiContent?.mission ?? uiContent?.description ?? "",
+    openGraph: {
+      images: [
+        {
+          url: storage?.header?.src,
+          width: 800,
+          height: 600,
+          alt:
+            storage?.header?.alt ??
+            uiContent?.companyName ??
+            uiContent?.siteName ??
+            "Home",
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const allSites = await prisma.site.findMany({
@@ -47,7 +75,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   return (
     <>
       {data.storage.backgroundImageDark && (
-        <div className="max-sm:h-header -mobile sm:h-header absolute hidden w-full dark:flex ">
+        <div className="absolute hidden w-full dark:flex max-md:h-header-mobile md:h-header ">
           <Image
             src={data.storage.backgroundImageDark.src}
             alt="bakground image"
@@ -57,7 +85,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       {data.storage.backgroundImageLight && (
-        <div className="max-sm:h-header -mobile sm:h-header absolute w-full dark:hidden ">
+        <div className="absolute w-full dark:hidden max-md:h-header-mobile md:h-header ">
           <Image
             src={data.storage.backgroundImageLight.src}
             alt="bakground image"
@@ -75,6 +103,8 @@ const SiteHomePage = async ({ params }: PageParams) => {
           <UpcomingEventBanner
             upcomingEvent={data.upcomingEvents[locale.languageCode]}
             locale={locale}
+            style={data.features.eventStyle}
+            dimensions={data.features.bannerSize}
           />
         )}
         {data.uiContent?.services && <ServicesComponent data={data} />}

@@ -1,53 +1,47 @@
 import { notFound } from "next/navigation";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import { fetchData } from "@/server/fetch-data";
-import { UpcomingEventPage } from "@/components/upcoming-event/upcoming-event-page";
+import { UpcomingEventPage } from "@/components/upcoming-event/page/page";
 
-export async function generateMetadata({
-  params,
-}: {
+type SlugPageParams = {
   params: { domain: string; lang: Locale; slug: string[] };
-}) {
+};
+
+export async function generateMetadata({ params }: SlugPageParams) {
   const domain = decodeURIComponent(params.domain);
-  const slug = decodeURIComponent(params.slug.join("/"));
+  const locale = localesDetails[params.lang] ?? defaultLocale;
+  const [data] = await Promise.all([fetchData(domain, locale)]);
 
-  // const [data, siteData] = await Promise.all([
-  //   getPostData(domain, slug),
-  //   getSiteData(domain),
-  // ]);
-  // if (!data || !siteData) {
-  //   return null;
-  // }
-  // const { title, description } = data;
-
-  //TODO: Get the title and description from the domain and slug
-  const title = "Title";
-  const description = "Description";
+  const uiContent = data?.uiContent;
+  const storage = data?.storage;
 
   return {
-    title,
-    description,
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      creator: "@vercel",
+    title: uiContent?.companyName ?? uiContent?.siteName ?? "Home",
+    description: uiContent?.mission ?? uiContent?.description ?? "",
+    openGraph: {
+      images: [
+        {
+          url: storage?.thumbnail ?? storage?.header?.src,
+          width: 800,
+          height: 600,
+          alt:
+            storage?.header?.alt ??
+            uiContent?.companyName ??
+            uiContent?.siteName ??
+            "Home",
+        },
+      ],
     },
-    // Optional: Set canonical URL to custom domain if it exists
-    // ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
-    //   siteData.customDomain && {
-    //     alternates: {
-    //       canonical: `https://${siteData.customDomain}/${params.slug}`,
-    //     },
-    //   }),
   };
 }
+// ...(params.domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) &&
+//   siteData.customDomain && {
+//     alternates: {
+//       canonical: `https://${siteData.customDomain}/${params.slug}`,
+//     },
+//   }),
 
-export default async function Page({
-  params,
-}: {
-  params: { domain: string; lang: Locale; slug: string[] };
-}) {
+export default async function Page({ params }: SlugPageParams) {
   const { slug } = params;
   const domain = decodeURIComponent(params.domain);
   const locale = localesDetails[params.lang] ?? defaultLocale;

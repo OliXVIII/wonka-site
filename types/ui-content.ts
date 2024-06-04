@@ -31,10 +31,13 @@ type FooterUiContent = {
 };
 
 export type UiContent = {
-  compagnyName: string;
+  available?: string;
+  companyName: string;
   description: string;
+  bookNow?: string;
   footer: FooterUiContent;
   getStarted: string;
+  location?: string;
   mission: string;
   navigation: MenuContent[];
   readMore: string;
@@ -47,9 +50,11 @@ export type UiContent = {
 export const local108UIContent: Record<Language, UiContent> = {
   // English
   en: {
-    compagnyName: "Local 108 Inc.",
+    available: "available",
+    companyName: "Local 108 Inc.",
     description:
       "At Local 108, we do more than yoga. We are here to help you feel good, inside and out. Our yoga classes, nutrition advice, and wellness trips are designed for anyone looking to find balance between body and mind. We believe that taking care of your health is the key to living a happy and fulfilling life.",
+
     footer: {
       legal: "All Rights Reserved.",
       notice:
@@ -63,7 +68,9 @@ export const local108UIContent: Record<Language, UiContent> = {
       design: "Made in Quebec",
       crafted: "Crafted by",
     },
+    bookNow: "Book Now",
     getStarted: "Get Started",
+    location: "Cafe Temps Perdu, CA",
     mission: "Our mission is to help you feel good, inside and out.",
 
     navigation: [
@@ -115,7 +122,8 @@ export const local108UIContent: Record<Language, UiContent> = {
   },
   // French
   fr: {
-    compagnyName: "Local 108 Inc.",
+    available: "disponible",
+    companyName: "Local 108 Inc.",
     description:
       "Chez Le Local 108, nous faisons plus que du yoga. Nous sommes là pour vous aider à vous sentir bien, à l'intérieur comme à l'extérieur. Nos cours de yoga, nos conseils en nutrition et nos voyages de bien-être sont conçus pour tous ceux qui cherchent à trouver un équilibre entre le corps et l'esprit. Nous sommes convaincus que prendre soin de sa santé est la clé pour vivre une vie heureuse et épanouie.",
     footer: {
@@ -131,7 +139,9 @@ export const local108UIContent: Record<Language, UiContent> = {
       design: "Créé au Québec",
       crafted: "Conçu par",
     },
+    bookNow: "Réserver maintenant",
     getStarted: "Commencer",
+    location: "Cafe Temps Perdu, CA",
     mission:
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 
@@ -180,7 +190,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       ],
     },
     siteName: "Local 108",
-    slogan: "Sentez-vous bien, à l'intérieur",
+    slogan: "Sentez-vous bien, à l'intérieur ",
     slogan2: "comme à l'extérieur",
   },
 };

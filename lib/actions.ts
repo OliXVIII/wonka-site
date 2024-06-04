@@ -7,8 +7,10 @@ import { withPostAuth, withSiteAuth } from "./auth";
 import { getSession } from "@/lib/auth";
 import {
   addDomainToVercel,
+  getApexDomain,
   // getApexDomain,
   removeDomainFromVercelProject,
+  removeDomainFromVercelTeam,
   // removeDomainFromVercelTeam,
   validDomainRegex,
 } from "@/lib/domains";
@@ -38,11 +40,6 @@ export const createSite = async (formData: FormData) => {
         name,
         description,
         subdomain,
-        user: {
-          connect: {
-            id: session.user.id,
-          },
-        },
       },
     });
     await revalidateTag(
@@ -65,17 +62,16 @@ export const createSite = async (formData: FormData) => {
 export const updateSite = withSiteAuth(
   async (formData: FormData, site: Site, key: string) => {
     const value = formData.get(key) as string;
+    console.log("Updating site data", key, value);
 
     try {
       let response;
 
       if (key === "customDomain") {
-        if (value.includes("vercel.pub")) {
+        if (value.includes("wonkasite.com")) {
           return {
-            error: "Cannot use vercel.pub subdomain as your custom domain",
+            error: "Cannot use wonkasite.com as a custom domain.",
           };
-
-          // if the custom domain is valid, we need to add it to Vercel
         } else if (validDomainRegex.test(value)) {
           response = await prisma.site.update({
             where: {
@@ -85,10 +81,10 @@ export const updateSite = withSiteAuth(
               customDomain: value,
             },
           });
+          console.log("Adding domain to Vercel", response);
           await Promise.all([
-            addDomainToVercel(value),
             // Optional: add www subdomain as well and redirect to apex domain
-            // addDomainToVercel(`www.${value}`),
+            addDomainToVercel(`www.${value}`),
           ]);
 
           // empty value means the user wants to remove the custom domain
@@ -107,7 +103,7 @@ export const updateSite = withSiteAuth(
         if (site.customDomain && site.customDomain !== value) {
           response = await removeDomainFromVercelProject(site.customDomain);
 
-          /* Optional: remove domain from Vercel team 
+          //Optional: remove domain from Vercel team
 
           // first, we need to check if the apex domain is being used by other sites
           const apexDomain = getApexDomain(`https://${site.customDomain}`);
@@ -133,12 +129,8 @@ export const updateSite = withSiteAuth(
           } else {
             // this is the only site using this apex domain
             // so we can remove it entirely from our Vercel team
-            await removeDomainFromVercelTeam(
-              site.customDomain
-            );
+            await removeDomainFromVercelTeam(site.customDomain);
           }
-          
-          */
         }
       } else if (key === "image" || key === "logo") {
         if (!process.env.BLOB_READ_WRITE_TOKEN) {

@@ -14,7 +14,7 @@ type LogoType = {
 export type StorageType = {
   logo: LogoType;
   socialMedia?: SocialMedia;
-  location?: string;
+  thumbnail?: string;
   backgroundImageDark?: ImageItem;
   backgroundImageLight?: ImageItem;
   header?: ImageItem;
@@ -35,7 +35,8 @@ export const storageLocal108: StorageType = {
       link: "x.com",
     },
   ],
-  location: "Cafe Temps Perdu, CA",
+  thumbnail:
+    "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fcompagny-logo.png?alt=media&token=5476600d-8963-41ce-a3be-a792ae4cc3e7",
   logo: {
     navbar: {
       src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fcompagny-logo.png?alt=media&token=5476600d-8963-41ce-a3be-a792ae4cc3e7",

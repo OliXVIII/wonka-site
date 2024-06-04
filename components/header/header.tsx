@@ -10,7 +10,7 @@ export const Header = ({ data }: HeaderProps) => {
   const { slogan, slogan2, mission, siteName, getStarted } = uiContent;
 
   return (
-    <header className="h-header max-sm:h-header  -mobile flex flex-col items-center justify-center px-8 py-4">
+    <header className="-mt-16 flex flex-col items-center justify-center px-8 py-4 pt-16 max-sm:h-header-mobile sm:h-header">
       <h1 className="z-10 mt-12 text-center max-sm:ml-auto sm:items-center">
         {slogan}
         {slogan2 || null}
