@@ -22,7 +22,7 @@ export const SectionBanner = ({
   return (
     <a
       href={createLink(upcomingEvent.link, locale)}
-      className={`container relative mx-auto mt-10 flex h-96 w-full items-center justify-center`}
+      className={`container relative mx-auto mt-10 flex h-52 w-full items-center justify-center md:h-72 xl:h-96`}
     >
       <MainImageUpcoming upcomingEvent={upcomingEvent} />
       <ReadMoreButton readMore={upcomingEvent.readMore} alignBottomRight />

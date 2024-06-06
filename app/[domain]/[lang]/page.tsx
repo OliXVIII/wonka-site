@@ -8,6 +8,7 @@ import { ServicesSection } from "@/components/services/section";
 import { Header } from "@/components/header/header";
 import Image from "next/image";
 import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
+import Footer from "@/components/layout/footer/footer";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -109,6 +110,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
           />
         ) : null}
       </div>
+      <Footer locale={locale} data={data} />
     </>
   );
 };
