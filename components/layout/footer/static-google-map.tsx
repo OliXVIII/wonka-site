@@ -13,6 +13,7 @@ export default function StaticGoogleMap({ location }: MapProps) {
       className="relative flex h-28 max-w-full dark:brightness-75"
       href={`http://maps.google.com/?q=1200${location}`}
       target="_blank"
+      id="map"
     >
       <Image
         className="object-cover"

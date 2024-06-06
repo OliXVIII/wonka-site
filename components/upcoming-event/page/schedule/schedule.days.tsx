@@ -1,10 +1,10 @@
 import { UpcomingEvent } from "@/types/upcoming-event";
 
-type EventScheduleType = {
+export const ScheduleDays = ({
+  upcomingEvent,
+}: {
   upcomingEvent: UpcomingEvent;
-};
-
-export const EventSchedule = ({ upcomingEvent }: EventScheduleType) => {
+}) => {
   const { retreatSchedule } = upcomingEvent;
 
   if (!retreatSchedule) {
@@ -12,22 +12,22 @@ export const EventSchedule = ({ upcomingEvent }: EventScheduleType) => {
   }
 
   return (
-    <div className="mt-8 min-h-screen">
+    <>
       {retreatSchedule.map((day, index) => (
         <div
           key={index}
-          className={index !== retreatSchedule.length - 1 ? "mb-12" : ""}
+          className="scroll-snap-align-start w-full flex-shrink-0"
         >
           <h3 className="mb-4 text-center font-normal underline underline-offset-4">
             {day.day}
           </h3>
-          <ul className="shadow-md dark:shadow-sm sm:mx-[10%]">
+          <ul className="mx-auto flex h-full w-full flex-col justify-center px-[20%]">
             {day.events.map((event, idx) => (
               <li
                 key={idx}
-                className="mb-4 p-4 shadow-md dark:shadow-sm dark:shadow-white"
+                className="mb-4 w-full p-2 shadow-md dark:shadow-sm dark:shadow-white"
               >
-                <p className="">
+                <p>
                   {event.time} - {event.description}
                 </p>
                 {event.subEvents && (
@@ -42,6 +42,6 @@ export const EventSchedule = ({ upcomingEvent }: EventScheduleType) => {
           </ul>
         </div>
       ))}
-    </div>
+    </>
   );
 };

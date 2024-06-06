@@ -27,7 +27,7 @@ export const ImageModale = ({
 
     dialog.showModal();
   }, [index]);
-  console.log(index);
+
   if (!upComingEvent.images || !index) {
     return null;
   }

@@ -3,6 +3,7 @@ import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import { fetchData } from "@/server/fetch-data";
 import { UpcomingEventPage } from "@/components/upcoming-event/page/page";
 import { ServicesPage } from "@/components/services/page";
+import Footer from "@/components/layout/footer/footer";
 
 type SlugPageParams = {
   params: { domain: string; lang: Locale; slug: string[] };
@@ -53,9 +54,19 @@ export default async function Page({ params }: SlugPageParams) {
   }
 
   if (slug[0] === "upcoming") {
-    return <UpcomingEventPage data={data} locale={locale} />;
+    return (
+      <>
+        <UpcomingEventPage data={data} locale={locale} />
+        <Footer locale={locale} data={data} upcoming={true} />
+      </>
+    );
   } else if (slug[0] === "services") {
-    return <ServicesPage uiContent={data.uiContent} storage={data.storage} />;
+    return (
+      <>
+        <ServicesPage uiContent={data.uiContent} storage={data.storage} />
+        <Footer locale={locale} data={data} upcoming={true} />
+      </>
+    );
   }
   return (
     <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">

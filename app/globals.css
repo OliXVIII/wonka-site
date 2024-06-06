@@ -5,15 +5,6 @@
 @font-face {
   font-family: "WonkasiteFont";
   src:
-    url("/fonts/Inter-Regular.woff2") format("woff2"),
-    url("/fonts/Inter-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "WonkasiteFont";
-  src:
     url("/fonts/Inter-Bold.woff2") format("woff2"),
     url("/fonts/Inter-Bold.woff") format("woff");
   font-weight: 700;
@@ -44,6 +35,9 @@
   }
   body {
     @apply leading-[1.4rem] text-dark dark:text-light;
+  }
+  input {
+    @apply focus:!border-green-700 focus:shadow-none focus:outline-none focus:ring-1 focus:!ring-green-700;
   }
   li {
     @media only screen and (max-width: 475px) {
@@ -280,6 +274,7 @@ html {
   background: var(--background);
   text-transform: var(--root-text-transform);
   scroll-padding-top: 4.5rem;
+  scroll-behavior: smooth;
 
   @media all and (min-width: 1024px) {
     font-size: calc(var(--root-font-size) * 1.15);

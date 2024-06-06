@@ -16,9 +16,15 @@ type NavbarProps = {
   data: DataType;
   locale: LocaleDetails;
   searchbar?: boolean;
+  slug: string;
 };
 
-export default function Navbar({ locale, data, searchbar }: NavbarProps) {
+export default function Navbar({
+  locale,
+  data,
+  searchbar,
+  slug = "",
+}: NavbarProps) {
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
   const menu = uiContent.navigation;
@@ -76,7 +82,9 @@ export default function Navbar({ locale, data, searchbar }: NavbarProps) {
               ))}
             </ul>
           ) : null}
-          {nextLocale ? <LanguageSelector nextLocale={nextLocale} /> : null}
+          {nextLocale ? (
+            <LanguageSelector nextLocale={nextLocale} slug={slug} />
+          ) : null}
           <ThemeSelector menu={menu.length > 0} />
           {searchbar ? (
             <Suspense fallback={<OpenCart />}>
