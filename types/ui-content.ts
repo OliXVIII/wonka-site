@@ -30,16 +30,32 @@ type FooterUiContent = {
   contactForm?: ContactForm;
 };
 
+export type FormFields = {
+  name: string;
+  email: string;
+  people: string;
+  phone: string;
+  message: string;
+  submit: string;
+  submitSuccess?: string;
+  foodPreferences?: string;
+  allergies?: string;
+};
+
 export type UiContent = {
   available?: string;
+  bookNow?: string;
   companyName: string;
   description: string;
-  bookNow?: string;
   footer: FooterUiContent;
+  form?: FormFields;
+  checkout: string;
+  checkoutAfter: string;
   getStarted: string;
   location?: string;
   mission: string;
   navigation: MenuContent[];
+  ourNextTrip?: string;
   readMore: string;
   services?: ServicesContent;
   siteName: string;
@@ -60,10 +76,17 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*These statements have not been evaluated by the Yoga Administration.",
       navigation: [
-        { title: "Privacy Policy", path: "/policy" },
-        { title: "Terms & Conditions", path: "/terms" },
-        { title: "Blog", path: "/blog" },
-        { title: "Contact Us", path: "/contact" },
+        // { title: "Le Temple", path: "/upcoming/le-temple" },
+        // { title: "Services", path: "/services" },
+        // {
+        //   title: "Store",
+        //   path: "https://demo.vercel.store/",
+        //   externalLink: true,
+        // },
+        // // { title: "Privacy Policy", path: "/policy" },
+        // // { title: "Terms of Service", path: "/terms" },
+        // // { title: "Blog", path: "/blog" },
+        // // { title: "Contact Us", path: "/contact" },
       ],
       design: "Made in Quebec",
       crafted: "Crafted by",
@@ -72,18 +95,19 @@ export const local108UIContent: Record<Language, UiContent> = {
     getStarted: "Get Started",
     location: "Cafe Temps Perdu, CA",
     mission: "Our mission is to help you feel good, inside and out.",
+    checkout: "Checkout",
+    checkoutAfter: "Welcome aboard! We will contact you shortly.",
 
     navigation: [
-      { title: "About", path: "/about" },
+      { title: "Le Temple", path: "/upcoming/le-temple" },
       { title: "Services", path: "/services" },
-      { title: "Blog", path: "/blog" },
-      {
-        title: "Store",
-        path: "https://demo.vercel.store/",
-        externalLink: true,
-      },
+      // { title: "Politique de Confidentialité", path: "/policy" },
+      // { title: "Conditions Générales", path: "/terms" },
+      // { title: "Blog", path: "/blog" },
+      // { title: "Contactez Nous", path: "/contact" },
     ],
     readMore: "Read More",
+    ourNextTrip: "Our Next Trip",
     services: {
       heading: "Our Services",
       services: [
@@ -119,11 +143,24 @@ export const local108UIContent: Record<Language, UiContent> = {
     },
     siteName: "Local 108",
     slogan: "Feel Good, Inside and Out",
+    form: {
+      name: "Full Name",
+      email: "Email Address",
+      phone: "Phone",
+      people: "Number of People",
+      message: "Message",
+      submit: "Book Now",
+      submitSuccess: "Booking sent successfully",
+      foodPreferences: "Food Preferences",
+      allergies: "Allergies",
+    },
   },
   // French
   fr: {
     available: "disponible",
     companyName: "Local 108 Inc.",
+    checkout: "Paiement",
+    checkoutAfter: "Bienvenue à bord! Nous vous contacterons sous peu.",
     description:
       "Chez Le Local 108, nous faisons plus que du yoga. Nous sommes là pour vous aider à vous sentir bien, à l'intérieur comme à l'extérieur. Nos cours de yoga, nos conseils en nutrition et nos voyages de bien-être sont conçus pour tous ceux qui cherchent à trouver un équilibre entre le corps et l'esprit. Nous sommes convaincus que prendre soin de sa santé est la clé pour vivre une vie heureuse et épanouie.",
     footer: {
@@ -131,10 +168,12 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*Ces déclarations n'ont pas été évaluées par l'Administration du Yoga.",
       navigation: [
-        { title: "Politique de Confidentialité", path: "/policy" },
-        { title: "Conditions Générales", path: "/terms" },
-        { title: "Blog", path: "/blog" },
-        { title: "Contactez Nous", path: "/contact" },
+        { title: "Le Temple", path: "/upcoming/le-temple" },
+        { title: "Services", path: "/services" },
+        // { title: "Politique de Confidentialité", path: "/policy" },
+        // { title: "Conditions Générales", path: "/terms" },
+        // { title: "Blog", path: "/blog" },
+        // { title: "Contactez Nous", path: "/contact" },
       ],
       design: "Créé au Québec",
       crafted: "Conçu par",
@@ -146,16 +185,18 @@ export const local108UIContent: Record<Language, UiContent> = {
       "Notre mission est de vous aider à vous sentir bien, à l'intérieur comme à l'extérieur.",
 
     navigation: [
-      { title: "À propos", path: "/about" },
-      { title: "Services", path: "/services" },
-      { title: "Blog", path: "/blog" },
-      {
-        title: "Boutique",
-        path: "https://demo.vercel.store/",
-        externalLink: true,
-      },
+      // { title: "À propos", path: "/about" },
+      // { title: "Services", path: "/services" },
+      // { title: "Le Temple", path: "/upcoming/le-temple" },
+      // // { title: "Blog", path: "/blog" },
+      // {
+      //   title: "Boutique",
+      //   path: "https://demo.vercel.store/",
+      //   externalLink: true,
+      // },
     ],
     readMore: "Voir plus",
+    ourNextTrip: "Notre prochain voyage",
     services: {
       heading: "Nos Services",
       services: [
@@ -192,5 +233,16 @@ export const local108UIContent: Record<Language, UiContent> = {
     siteName: "Local 108",
     slogan: "Sentez-vous bien, à l'intérieur ",
     slogan2: "comme à l'extérieur",
+    form: {
+      name: "Nom complet",
+      email: "Adresse email",
+      people: "Nombre de personnes",
+      phone: "Téléphone",
+      message: "Message",
+      submit: "Réserver maintenant",
+      submitSuccess: "Réservation envoyée avec succès",
+      foodPreferences: "Préférences alimentaires",
+      allergies: "Allergies",
+    },
   },
 };

@@ -28,10 +28,5 @@ export default async function SiteLayout({ params, children }: Params) {
     return redirect(`https://${data.customDomain}`);
   }
 
-  return (
-    <>
-      {children}
-      <Footer locale={locale} data={data} />
-    </>
-  );
+  return <>{children}</>;
 }
