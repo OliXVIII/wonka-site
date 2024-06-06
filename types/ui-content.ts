@@ -76,17 +76,12 @@ export const local108UIContent: Record<Language, UiContent> = {
       notice:
         "*These statements have not been evaluated by the Yoga Administration.",
       navigation: [
-        // { title: "Le Temple", path: "/upcoming/le-temple" },
-        // { title: "Services", path: "/services" },
-        // {
-        //   title: "Store",
-        //   path: "https://demo.vercel.store/",
-        //   externalLink: true,
-        // },
-        // // { title: "Privacy Policy", path: "/policy" },
-        // // { title: "Terms of Service", path: "/terms" },
-        // // { title: "Blog", path: "/blog" },
-        // // { title: "Contact Us", path: "/contact" },
+        { title: "Le Temple", path: "/upcoming/le-temple" },
+        { title: "Services", path: "/services" },
+        // { title: "Privacy Policy", path: "/policy" },
+        // { title: "Terms of Service", path: "/terms" },
+        // { title: "Blog", path: "/blog" },
+        // { title: "Contact Us", path: "/contact" },
       ],
       design: "Made in Quebec",
       crafted: "Crafted by",
@@ -99,8 +94,13 @@ export const local108UIContent: Record<Language, UiContent> = {
     checkoutAfter: "Welcome aboard! We will contact you shortly.",
 
     navigation: [
-      { title: "Le Temple", path: "/upcoming/le-temple" },
-      { title: "Services", path: "/services" },
+      // { title: "Le Temple", path: "/upcoming/le-temple" },
+      // { title: "Services", path: "/services" },
+      // {
+      //   title: "Store",
+      //   path: "https://demo.vercel.store/",
+      //   externalLink: true,
+      // },
       // { title: "Politique de Confidentialité", path: "/policy" },
       // { title: "Conditions Générales", path: "/terms" },
       // { title: "Blog", path: "/blog" },
