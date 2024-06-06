@@ -21,7 +21,7 @@ export const ScheduleDays = ({
           <h3 className="mb-4 text-center font-normal underline underline-offset-4">
             {day.day}
           </h3>
-          <ul className="mx-auto flex h-full w-full flex-col justify-center px-[20%]">
+          <ul className="mx-auto flex h-full w-full flex-col justify-center px-[20%] max-xs:px-[12%]">
             {day.events.map((event, idx) => (
               <li
                 key={idx}

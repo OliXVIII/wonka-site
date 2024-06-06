@@ -301,12 +301,12 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     title: "LEVEL - Nutrition-Yoga-Pilates 2024 Retreat",
     slogan: "Unlock Your Inner Universe",
     description:
-      "Join us for an enlightening three-day retreat designed to balance and activate your chakras through a series of workshops including yoga, Pilates, meditation, and nutritional guidance. Experience unique ceremonies like fire rituals, sound baths, and a special 'Yoga Trance Dance Party'. Embrace the serene environment and our supportive community to rediscover and rejuvenate your spiritual and physical wellness.",
+      "We offer two types of accommodation to suit your needs: shared rooms for four people, ideal for those looking to share their experience, and double rooms for those who prefer a more intimate space. Each option provides the comfort and tranquility needed to fully enjoy the wellness activities offered. To reserve your spot and choose your room type, please contact jeanst@local-108.com. We look forward to welcoming you and sharing this enriching adventure together.",
     introduction: `I present to you my yoga retreat project, LEVEL 📿
 
 Our main goal is focused on nutrition and integral yoga practice, offering activities that contribute to overall well-being.
 
-This is my first project as co-founder of Local 108, in collaboration with @letemple_sanctuaire, an exceptional place just 26 minutes from Quebec. What awaits you:
+This is my first project as co-founder of Local 108, in collaboration with @letemple_sanctuaire, an exceptional place less than an hour away from Quebec. What awaits you:
 - Cacao Ceremony: A sacred ritual to open the heart and awaken the senses.
 - Food-Focused Yoga: Use yoga to improve digestion and nutrient assimilation, promoting overall well-being.
 - Superfoods and Functional Nutrition: Learn how specific foods can positively influence your chakras and vital energy.
@@ -353,9 +353,10 @@ For more information on planning, pricing, and to book, please write to jeanst@l
     slogan: "Débloquez votre univers intérieur",
     introduction: `Je vous présente mon projet de retraites de yoga, LEVEL 📿
 
-Notre objectif principal est axé sur la nutrition et la pratique intégrale du yoga, offrant des activités qui contribuent à un bien-être global.
+Notre objectif principal est axé sur la nutrition et la pratique intégrale du yoga, offrant des activités qui contribuent à un bien-être global. C'est mon premier projet en tant que co-fondatrice de Local 108, en collaboration avec le @letemple_sanctuaire, un lieu exceptionnel à moins d'une heure de Québec.
 
-C'est mon premier projet en tant que co-fondatrice de Local 108, en collaboration avec le @letemple_sanctuaire, un lieu exceptionnel à seulement 26 minutes de Québec. Ce qui vous attend:
+Au programme :
+
 - Cérémonie de Cacao : Un rituel sacré pour ouvrir le cœur et éveiller les sens.
 - Yoga Focalisé sur l'Alimentation : Utilisez le yoga pour améliorer la digestion et l'assimilation des nutriments, favorisant ainsi un bien-être global.
 - Super Aliments et Nutrition Fonctionnelle : Apprenez comment des aliments spécifiques peuvent influencer positivement vos chakras et votre énergie vitale.
@@ -368,7 +369,7 @@ C'est mon premier projet en tant que co-fondatrice de Local 108, en collaboratio
 
 Pour plus d'informations sur la planification, les prix et pour réserver, veuillez écrire à jeanst@local-108.com.`,
     description:
-      "Rejoignez-nous pour une retraite éclairante de trois jours conçue pour équilibrer et activer vos chakras à travers une série d'ateliers comprenant du yoga, du Pilates, de la méditation et des conseils nutritionnels. Vivez des cérémonies uniques comme des rituels de feu, des bains sonores et une 'Fête de danse de transe de yoga' spéciale. Embrassez l'environnement serein et notre communauté solidaire pour redécouvrir et revitaliser votre bien-être spirituel et physique.",
+      "Nous proposons deux types d'hébergement pour s'adapter à vos besoins : des chambres partagées pour quatre personnes, idéales pour ceux qui cherchent à partager leur expérience, et des chambres doubles pour ceux qui préfèrent un espace plus intime. Chaque option offre le confort et la tranquillité nécessaires pour profiter pleinement des activités bien-être proposées. Pour réserver votre place et choisir votre type de chambre, veuillez contacter jeanst@local-108.com. Nous sommes impatients de vous accueillir et de partager cette aventure enrichissante ensemble.",
     metadata: {
       title:
         "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024 (Organisé par Local 108)",
