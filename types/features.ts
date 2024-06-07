@@ -1,7 +1,7 @@
 type FooterFeatures = {
   type: {
     map?: boolean;
-    location: string,
+    location: string;
     choice: "simple" | "navigational" | "interactive" | "noFooter";
     contactForm?: boolean;
   };
@@ -23,7 +23,7 @@ export type FeaturesType = {
 
 export const local108Features: FeaturesType = {
   banner: {
-    style: "section",
+    style: "horizontal",
   },
   borderMenuNav: true,
   footer: {
