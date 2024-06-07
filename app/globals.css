@@ -5,15 +5,6 @@
 @font-face {
   font-family: "WonkasiteFont";
   src:
-    url("/fonts/Inter-Regular.woff2") format("woff2"),
-    url("/fonts/Inter-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "WonkasiteFont";
-  src:
     url("/fonts/Inter-Bold.woff2") format("woff2"),
     url("/fonts/Inter-Bold.woff") format("woff");
   font-weight: 700;
@@ -44,6 +35,9 @@
   }
   body {
     @apply leading-[1.4rem] text-dark dark:text-light;
+  }
+  input {
+    @apply focus:!border-green-700 focus:shadow-none focus:outline-none focus:ring-1 focus:!ring-green-700;
   }
   li {
     @media only screen and (max-width: 475px) {
@@ -92,7 +86,6 @@
       conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
         calc(100% - var(--s)) calc(100% - var(--s)),
       linear-gradient(#000 0 0) content-box;
-    transition: all 0.4s;
   }
 
   .slogan-special:hover {
@@ -138,7 +131,7 @@
   --width-homepage-choice-title: 10rem;
   --font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial,
     sans-serif;
-  --root-font-size: 15px;
+  --root-font-size: 16px;
   --font-size-small: 14px;
   --font-size-medium: 16px;
   --font-size-large: 36px;
@@ -280,6 +273,7 @@ html {
   background: var(--background);
   text-transform: var(--root-text-transform);
   scroll-padding-top: 4.5rem;
+  scroll-behavior: smooth;
 
   @media all and (min-width: 1024px) {
     font-size: calc(var(--root-font-size) * 1.15);

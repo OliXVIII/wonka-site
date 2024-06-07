@@ -41,7 +41,7 @@ export const Header = ({ data }: HeaderProps) => {
               alt="logo header"
               fill
               style={{ transform: `scale(${storage.header.aspectRatio ?? 1})` }}
-              className={`max-w-[100vw] object-contain dark:invert-[90%] max-sm:!scale-100`}
+              className={`max-w-[100vw] object-contain dark:invert-[88%] max-sm:!scale-100`}
             />
           </div>
         ) : null}

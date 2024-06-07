@@ -2,15 +2,15 @@ import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
 import { ReadMoreButton } from "../read-more-button";
 
-type ServicesComponentProps = {
+type ServicesSectionProps = {
   data: DataType;
 };
 
-export const ServicesComponent = ({ data }: ServicesComponentProps) => {
+export const ServicesSection = ({ data }: ServicesSectionProps) => {
   const { uiContent } = data;
-  const { services, readMore } = uiContent;
+  const { services } = uiContent;
 
-  if (!services || !services.services.length) {
+  if (!services?.services.length) {
     return null;
   }
 
@@ -37,7 +37,7 @@ export const ServicesComponent = ({ data }: ServicesComponentProps) => {
               />
             </div>
             <div className="absolute inset-0 flex h-full flex-col rounded-b-lg bg-gradient-to-t from-[#000000] to-transparent p-5">
-              <ReadMoreButton readMore={uiContent.readMore} />
+              {/* <ReadMoreButton readMore={uiContent.readMore} /> */}
 
               <div className="flex-grow">
                 {/* This div will take up all available space between the button and the content below */}

@@ -3,6 +3,7 @@ import Navbar from "@/components/layout/navbar";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import { fetchData } from "@/server/fetch-data";
 import { notFound } from "next/navigation";
+import Footer from "@/components/layout/footer/footer";
 
 export type Params = {
   readonly params: { domain: string; lang: Locale };
@@ -19,8 +20,9 @@ export default async function StoreLayout({ params, children }: Params) {
 
   return (
     <>
-      <Navbar locale={locale} data={data} searchbar={true} />
+      <Navbar locale={locale} data={data} searchbar={true} slug={""} />
       {children}
+      <Footer locale={locale} data={data} upcoming={true} />
     </>
   );
 }

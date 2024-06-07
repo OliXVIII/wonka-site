@@ -1,7 +1,5 @@
 "use client";
 
-import { createLink } from "@/lib/create-link";
-import { FeaturesType } from "@/types/features";
 import { useEffect, useRef } from "react";
 
 type WrapperProps = {
@@ -37,7 +35,7 @@ export function BannerWrapper({
   return (
     <a
       href={href}
-      className={`fixed bottom-0 right-0 hidden ${dimensionsClass} z-40 w-screen items-end justify-end`}
+      className={`fixed bottom-0 right-0 hidden ${dimensionsClass} z-40 w-screen items-end justify-end border-t-2 border-dark dark:border-t dark:border-light`}
       ref={bannerWrapperRef}
     >
       {children}

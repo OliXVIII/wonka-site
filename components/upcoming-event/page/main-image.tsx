@@ -24,7 +24,7 @@ export const MainImageUpcoming = ({
         className={`${banner ? "object-cover" : "object-fill md:rounded-xl"}`}
       />
       <div
-        className={`absolute inset-0 bg-gradient-to-l from-[#000000cc] to-transparent ${banner ? "" : "rounded-r-box"}`}
+        className={`absolute inset-0 bg-gradient-to-l from-[#000000cc] to-transparent ${banner ? "" : "sm:rounded-r-box"}`}
       />
       {upcomingEvent.logo.image && banner ? (
         <div className="relative h-full">
@@ -36,13 +36,22 @@ export const MainImageUpcoming = ({
           />
         </div>
       ) : (
-        <Image
-          alt={upcomingEvent.title}
-          src={upcomingEvent.logo.textImage ?? upcomingEvent.logo.image}
-          width={300}
-          height={300}
-          className="absolute right-2 top-2 z-50 aspect-auto w-fit rounded-box object-cover invert max-sm:h-24"
-        />
+        <>
+          <Image
+            alt={upcomingEvent.title}
+            src={upcomingEvent.logo.textImage ?? upcomingEvent.logo.image}
+            width={200}
+            height={200}
+            className="absolute z-50 aspect-auto  rounded-box object-cover invert max-sm:right-2 max-sm:top-2 max-sm:h-20 max-sm:w-auto sm:right-6 sm:top-6"
+          />
+          <Image
+            alt={upcomingEvent.title}
+            src={upcomingEvent.logo.image}
+            width={200}
+            height={200}
+            className="absolute left-6 top-0 z-50 aspect-auto h-36 w-auto rounded-b-box bg-black object-cover opacity-35 dark:invert max-sm:h-20"
+          />
+        </>
       )}
     </>
   );

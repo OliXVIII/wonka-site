@@ -8,25 +8,32 @@ import { LocaleDetails } from "@/types/languages";
 type FooterProps = {
   data: DataType;
   locale: LocaleDetails;
+  upcoming?: boolean;
 };
 
-export default async function Footer({ data, locale }: Readonly<FooterProps>) {
-  const { uiContent, storage, features } = data;
+export default async function Footer({
+  data,
+  locale,
+  upcoming,
+}: Readonly<FooterProps>) {
+  const { uiContent, storage, features, upcomingEvents } = data;
 
   return (
-    <footer className="relative mx-auto max-w-full text-sm max-md:border-t xl:!max-w-screen-2xl">
+    <footer className="relative mx-auto mt-16 max-w-full text-sm max-md:border-t xl:!max-w-screen-2xl">
       <FooterSimple locale={locale} data={data} />
-      {features.footer.type.map && uiContent.location && (
-        <StaticGoogleMap location={uiContent.location} />
+      {features.footer.type.map && data.features.footer.type.location && (
+        <StaticGoogleMap
+          location={
+            upcoming
+              ? upcomingEvents[locale.languageCode].location
+              : data.features.footer.type.location
+          }
+        />
       )}
       {storage.socialMedia && (
         <SocialMediaComponent socialMedia={storage.socialMedia} />
       )}
-      <FooterBottom
-        uiContent={uiContent}
-        horizontalBanner={features.eventStyle}
-        dimensions={data.features.bannerSize}
-      />
+      <FooterBottom uiContent={uiContent} banner={data.features.banner} />
     </footer>
   );
 }

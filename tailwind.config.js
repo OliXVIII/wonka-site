@@ -20,10 +20,16 @@ module.exports = {
     },
     extend: {
       keyframes: {
-        'banner-fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        "banner-fade-in": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
+      },
+      spacing: {
+        "banner-mobile": "6rem",
+        "banner-small": "7.12rem",
+        "banner-medium": "8.5rem",
+        "banner-large": "9.5rem",
       },
       animation: {
         "spin-slow": "spin 1s linear infinite",
@@ -32,14 +38,15 @@ module.exports = {
         "banner-fade-in": "banner-fade-in 1s ease-in-out",
       },
       colors: {
-        dark: "#1A202C",
+        dark: "#212121",
+        "dark-light": "#707172",
         light: "white",
       },
       borderRadius: {
         box: "11px",
       },
       borderColor: {
-        dark: "#1A202C",
+        dark: "#212121",
         light: "white",
       },
       height: {

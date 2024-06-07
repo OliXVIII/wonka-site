@@ -11,7 +11,6 @@ export const config = {
      * 5. all folder files inside /public (e.g. /static/images/image.png
      */
     "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
-    
   ],
 };
 
@@ -91,5 +90,14 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    (path.includes("en-CA") || path.includes("fr-CA"))
+  ) {
+    return NextResponse.rewrite(
+      new URL(`/${hostname}${path.slice(0, 6)}/upcoming/le-temple`, req.url),
+    );
+  }
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }

@@ -20,7 +20,7 @@ export default async function FooterSimple({
   const secondHalfMenu = menu.slice(midpoint);
 
   return (
-    <div className="flex w-full py-5 max-sm:flex-grow max-sm:flex-wrap max-sm:justify-center md:justify-between">
+    <div className="flex min-h-32 w-full pt-5 max-sm:flex-grow max-sm:flex-wrap max-sm:justify-center md:justify-between">
       <FooterMenu locale={locale} menu={firstHalfMenu} />
       {storage.logo?.logoTitle ? (
         <div className="flex max-sm:hidden md:w-1/3 md:pt-1">
@@ -29,7 +29,7 @@ export default async function FooterSimple({
               src={storage.logo.logoTitle.src}
               alt="logo"
               fill
-              className="object-contain dark:invert-[90%]"
+              className="object-contain dark:invert-[88%]"
             />
           </Link>
         </div>

@@ -21,20 +21,6 @@ export type StorageType = {
 };
 
 export const storageLocal108: StorageType = {
-  socialMedia: [
-    {
-      link: "youtube.com",
-    },
-    {
-      link: "facebook.com",
-    },
-    {
-      link: "instagram.com",
-    },
-    {
-      link: "x.com",
-    },
-  ],
   thumbnail:
     "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fcompagny-logo.png?alt=media&token=5476600d-8963-41ce-a3be-a792ae4cc3e7",
   logo: {

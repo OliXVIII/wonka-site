@@ -1,6 +1,7 @@
 type FooterFeatures = {
   type: {
     map?: boolean;
+    location: string;
     choice: "simple" | "navigational" | "interactive" | "noFooter";
     contactForm?: boolean;
   };
@@ -11,20 +12,24 @@ type NavbarFeatures = {
 };
 
 export type FeaturesType = {
-  eventStyle?: "pageComp" | "horizontal" | "vertical";
-  bannerSize?: "small" | "medium";
+  banner?: {
+    style: "horizontal" | "vertical" | "section";
+    size?: "small" | "medium";
+  };
   borderMenuNav: boolean;
   footer: FooterFeatures;
   navbar: NavbarFeatures;
 };
 
 export const local108Features: FeaturesType = {
-  eventStyle: "horizontal",
-  bannerSize: "small",
+  banner: {
+    style: "horizontal",
+  },
   borderMenuNav: true,
   footer: {
     type: {
       map: true,
+      location: "Cafe Du Monde, CA",
       choice: "simple",
     },
   },
