@@ -42,27 +42,27 @@ export async function generateMetadata({ params }: PageParams) {
   };
 }
 
-export async function generateStaticParams() {
-  const allSites = await prisma.site.findMany({
-    select: {
-      subdomain: true,
-      customDomain: true,
-    },
-  });
+// export async function generateStaticParams() {
+//   const allSites = await prisma.site.findMany({
+//     select: {
+//       subdomain: true,
+//       customDomain: true,
+//     },
+//   });
 
-  const allPaths = allSites
-    .flatMap(({ subdomain, customDomain }: any) => [
-      subdomain && {
-        domain: `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
-      },
-      customDomain && {
-        domain: customDomain,
-      },
-    ])
-    .filter(Boolean);
+//   const allPaths = allSites
+//     .flatMap(({ subdomain, customDomain }: any) => [
+//       subdomain && {
+//         domain: `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
+//       },
+//       customDomain && {
+//         domain: customDomain,
+//       },
+//     ])
+//     .filter(Boolean);
 
-  return allPaths;
-}
+//   return allPaths;
+// }
 
 const SiteHomePage = async ({ params }: PageParams) => {
   const domain = decodeURIComponent(params.domain);
