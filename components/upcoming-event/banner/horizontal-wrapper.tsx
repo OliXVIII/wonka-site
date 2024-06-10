@@ -18,7 +18,7 @@ export function BannerWrapper({
   useEffect(() => {
     console.log(window.scrollY, bannerWrapperRef.current);
     const handleScroll = () => {
-      if (window.scrollY >= 500 && bannerWrapperRef.current) {
+      if (window.scrollY >= 400 && bannerWrapperRef.current) {
         bannerWrapperRef.current.classList.add("!flex");
       } else if (window.scrollY < 500 && bannerWrapperRef.current) {
         bannerWrapperRef.current.classList.remove("!flex");

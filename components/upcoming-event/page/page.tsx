@@ -18,6 +18,10 @@ type UpcomingEventPageProps = {
 export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
   const { upcomingEvents } = data;
 
+  if (!upcomingEvents) {
+    return null;
+  }
+
   const upcomingEventsLocale: UpcomingEvent =
     upcomingEvents[locale.languageCode];
 
@@ -34,9 +38,6 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         <>
           <div className="my-3 flex max-md:absolute max-md:left-0 max-md:z-10 max-md:h-[50vmax] max-md:w-full max-sm:h-[30vmax] max-xs:h-[30vmax] md:relative md:m-8 md:aspect-video">
             <MainImageUpcoming upcomingEvent={upcomingEventsLocale} />
-            <p className="slogan-special bottom-0 mx-auto mb-4 mt-auto w-fit pb-2 pr-2 text-center font-bold text-white max-sm:scale-90">
-              {upcomingEventsLocale.slogan}
-            </p>
           </div>
           <div className="relative my-3 max-md:h-[50vmax] max-sm:h-[35vmax] max-xs:h-[30vmax] md:hidden"></div>
         </>

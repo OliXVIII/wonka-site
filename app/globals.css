@@ -63,6 +63,23 @@
   progress::-webkit-progress-value {
     @apply rounded-full bg-slate-600 dark:bg-slate-400;
   }
+  :root,
+  .light {
+    --neutral: #ffffff;
+    --neutral-accent: #3d4451;
+    --neutral-contrast: #000000;
+    --primary: #570df8;
+    --secondary: #f000b8;
+    --tertiary: #37cdbe;
+  }
+  .dark {
+    --neutral: #1a202c;
+    --neutral-accent: #2d3748;
+    --neutral-contrast: #e2e8f0;
+    --primary: #805ad5;
+    --secondary: #f687b3;
+    --tertiary: #4fd1c5;
+  }
 }
 
 @layer utilities {

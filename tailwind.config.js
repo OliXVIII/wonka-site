@@ -40,7 +40,7 @@ module.exports = {
       colors: {
         dark: "#212121",
         "dark-light": "#707172",
-        light: "white",
+        light: "#fdf7ec",
       },
       borderRadius: {
         box: "11px",
