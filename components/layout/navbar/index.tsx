@@ -13,6 +13,7 @@ import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
 import { createLink } from "@/lib/create-link";
 import Login from "@/components/auth/login";
+import { LoginButton } from "@/components/login/button";
 
 type NavbarProps = {
   data: DataType;
@@ -94,7 +95,7 @@ export default function Navbar({
               <Cart />
             </Suspense>
           ) : null}{" "}
-          <Login />
+          <LoginButton />
         </div>
       </div>
     </nav>
