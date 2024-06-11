@@ -190,7 +190,7 @@ export default function Nav({ children }: { children: ReactNode }) {
                 href={href}
                 className={`flex items-center space-x-3 ${
                   isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
-                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`}
+                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-light dark:hover:bg-stone-700 dark:active:bg-stone-800`}
               >
                 {icon}
                 <span className="text-sm font-medium">{name}</span>
@@ -206,7 +206,7 @@ export default function Nav({ children }: { children: ReactNode }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800"
+                className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-light dark:hover:bg-stone-700 dark:active:bg-stone-800"
               >
                 <div className="flex items-center space-x-3">
                   {icon}

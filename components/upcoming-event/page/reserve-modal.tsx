@@ -129,15 +129,15 @@ export const ReserveModal = ({
           ref={modalRef}
         >
           <form
-            className="mx-auto flex max-w-lg justify-center rounded-lg bg-white p-8 shadow-xl max-xs:w-full xs:min-w-[70%] xl:min-w-[60%] 2xl:min-w-[50%]"
+            className="relative mx-auto flex max-w-lg justify-center rounded-lg bg-light p-8 shadow-xl max-sm:p-6 max-xs:w-full xs:min-w-[70%] xl:min-w-[60%] 2xl:min-w-[50%]"
             ref={outsideRef}
             onSubmit={handleSubmitEmail}
           >
             <RowImages upcomingEventsLocale={upcomingEvent} vertical />
             <div className="max-w-full font-sans text-base font-normal leading-tight text-black lg:px-[2%]">
               <div className="flex flex-col">
-                <div className="mb-6 flex flex-wrap items-baseline justify-between gap-8">
-                  <span className="text-xl font-bold">{offer.title}</span>
+                <div className="mb-6 flex flex-wrap items-baseline justify-between gap-8 max-sm:gap-2">
+                  <span className="pr-3 text-xl font-bold">{offer.title}</span>
                   <span className="mr-8 text-xl font-bold">
                     {priceByCountry(total)}
                   </span>
@@ -149,7 +149,7 @@ export const ReserveModal = ({
                     <span className="text-red-500">*</span>
                   </label>
                   <input
-                    className="rounded-lg border border-gray-300 px-3 py-2"
+                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                     id="name"
                     name="name"
                     placeholder={uiContent.form?.name}
@@ -163,7 +163,7 @@ export const ReserveModal = ({
                     <span className="text-red-500">*</span>
                   </label>
                   <input
-                    className="rounded-lg border border-gray-300 px-3 py-2"
+                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                     id="email"
                     name="email"
                     placeholder={uiContent.form?.email}
@@ -180,7 +180,7 @@ export const ReserveModal = ({
                     <span className="text-red-500">*</span>
                   </label>
                   <input
-                    className="rounded-lg border border-gray-300 px-3 py-2"
+                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                     id="phone"
                     name="phone"
                     placeholder={uiContent.form?.phone}
@@ -196,7 +196,7 @@ export const ReserveModal = ({
                     {uiContent.form?.people}
                   </label>
                   <input
-                    className="rounded-lg border border-gray-300 px-3 py-2"
+                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                     id="people"
                     name="people"
                     placeholder={uiContent.form?.people}
@@ -217,7 +217,7 @@ export const ReserveModal = ({
                           {uiContent.form?.foodPreferences}
                         </label>
                         <input
-                          className="mr-1 rounded-lg border border-gray-300 px-3 py-2"
+                          className="mr-1 rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                           id="food-preference"
                           name="food-preference"
                           placeholder="Ex: Vegan, etc."
@@ -231,7 +231,7 @@ export const ReserveModal = ({
                           {uiContent.form?.allergies}
                         </label>
                         <input
-                          className="ml-1 rounded-lg border border-gray-300 px-3 py-2"
+                          className="ml-1 rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                           id="allergies"
                           name="allergies"
                           placeholder={uiContent.form?.allergies}
@@ -240,7 +240,7 @@ export const ReserveModal = ({
                     </div>
                   )}
 
-                <div className="mb-4 flex flex-col max-xs:mb-2">
+                <div className="mb-4 flex flex-col max-sm:hidden max-xs:mb-2">
                   <label
                     className="mb-2 text-sm font-semibold"
                     htmlFor="message"
@@ -248,7 +248,7 @@ export const ReserveModal = ({
                     {uiContent.form?.message}
                   </label>
                   <textarea
-                    className="rounded-lg border border-gray-300 px-3 py-2"
+                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
                     id="message"
                     name="message"
                     placeholder={uiContent.form?.message}
@@ -260,14 +260,25 @@ export const ReserveModal = ({
               <div className="mt-6 flex justify-center text-center">
                 <button
                   className={
-                    "rounded-full bg-green-700 px-12 py-2 font-bold text-white transition-colors hover:bg-green-800 max-lg:px-8"
+                    "rounded-full bg-green-700 px-12 py-2 font-bold text-light transition-colors hover:bg-green-800 max-lg:px-8 max-sm:py-1.5"
                   }
                   type="submit"
                 >
                   {text}
                 </button>
               </div>
-            </div>
+            </div>{" "}
+            <button
+              className="absolute right-4 top-4 text-3xl"
+              onClick={() => {
+                modalRef.current?.close();
+                const url = new URL(window.location.href);
+                url.searchParams.delete("reserve-modal");
+                window.history.replaceState({}, "", url.toString());
+              }}
+            >
+              X
+            </button>
           </form>
         </dialog>
       )}

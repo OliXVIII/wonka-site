@@ -79,7 +79,7 @@ export default function Search() {
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         defaultValue={searchParams?.get("q") || ""}
-        className="w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-transparent dark:text-white dark:placeholder:text-neutral-400"
+        className="w-full rounded-lg border bg-light px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-transparent dark:text-light dark:placeholder:text-neutral-400"
       />
       <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
         <MagnifyingGlassIcon className="h-4" />
@@ -87,7 +87,7 @@ export default function Search() {
       {showSearchResults && (
         <ul
           ref={searchResultsRef}
-          className="nextra-scrollbar absolute inset-x-0 top-full z-20 mt-2 max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] min-h-[100px] w-full overflow-auto overscroll-contain rounded-xl border border-gray-200 bg-white py-2.5 text-gray-100 shadow-xl contrast-more:border contrast-more:border-gray-900 dark:border-neutral-800 dark:bg-neutral-900 contrast-more:dark:border-gray-50 md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] ltr:md:left-auto rtl:md:right-auto"
+          className="nextra-scrollbar absolute inset-x-0 top-full z-20 mt-2 max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] min-h-[100px] w-full overflow-auto overscroll-contain rounded-xl border border-gray-200 bg-light py-2.5 text-gray-100 shadow-xl contrast-more:border contrast-more:border-gray-900 dark:border-neutral-800 dark:bg-neutral-900 contrast-more:dark:border-gray-50 md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] ltr:md:left-auto rtl:md:right-auto"
         >
           {searchResults.count ? (
             searchResults?.hits?.map((product) => (

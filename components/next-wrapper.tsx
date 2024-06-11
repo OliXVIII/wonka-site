@@ -3,15 +3,11 @@
 import { useRef } from "react";
 import { UpcomingEvent } from "@/types/upcoming-event";
 
-type EventScheduleType = {
-  upcomingEvent: UpcomingEvent;
+type NextWrapperType = {
   children: React.ReactNode;
 };
 
-export const EventSchedule = ({
-  upcomingEvent,
-  children,
-}: EventScheduleType) => {
+export const NextWrapper = ({ children }: NextWrapperType) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
@@ -33,7 +29,7 @@ export const EventSchedule = ({
   };
 
   return (
-    <div className="relative mt-8 flex flex-col items-center">
+    <div className="relative mt-2 flex flex-col items-center">
       <div
         ref={scrollRef}
         className="scroll-snap-x flex w-full overflow-hidden"
@@ -41,7 +37,7 @@ export const EventSchedule = ({
         {children}
       </div>
       <button
-        className="absolute left-0 top-[50%] z-10 bg-light dark:bg-dark dark:fill-light"
+        className="absolute left-0 top-[calc(50%-1rem)] z-10 -ml-3 rounded-lg bg-light fill-dark dark:bg-dark dark:fill-light"
         onClick={scrollLeft}
       >
         <svg
@@ -62,7 +58,7 @@ export const EventSchedule = ({
         </svg>
       </button>
       <button
-        className="absolute right-0 top-[50%] z-10 bg-light dark:bg-dark dark:fill-light"
+        className="absolute right-0 top-[calc(50%-1rem)] z-10 -mr-3 rounded-lg bg-light fill-dark dark:bg-dark dark:fill-light"
         onClick={scrollRight}
       >
         <svg

@@ -28,13 +28,13 @@ export default function PostCard({
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />
           {!data.published && (
-            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-light px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
               Draft
             </span>
           )}
         </div>
         <div className="border-t border-stone-200 p-4 dark:border-stone-700">
-          <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white dark:text-white">
+          <h3 className="font-cal my-0 truncate text-xl font-bold tracking-wide dark:text-light dark:text-white">
             {data.title}
           </h3>
           <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">

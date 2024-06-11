@@ -64,7 +64,7 @@ export default async function Page({ params }: SlugPageParams) {
     return (
       <>
         <ServicesPage uiContent={data.uiContent} storage={data.storage} />
-        <Footer locale={locale} data={data} upcoming={true} />
+        <Footer locale={locale} data={data} />
       </>
     );
   }

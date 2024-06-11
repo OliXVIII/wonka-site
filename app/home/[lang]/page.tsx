@@ -3,7 +3,7 @@ import { DataType } from "@/server/fetch-data";
 import { Locale, localesDetails } from "@/types/languages";
 
 type HomePageProps = {
-  lang: Locale;
+  params: { lang: Locale };
 };
 
 const data: DataType = {
@@ -54,8 +54,8 @@ const data: DataType = {
   upcomingEvents: undefined,
 };
 
-export default function HomePage({ lang }: HomePageProps) {
-  const locale = localesDetails[lang];
+const HomePage = ({ params }: HomePageProps) => {
+  const locale = localesDetails[params.lang];
 
   return (
     <div className="flex flex-col">
@@ -63,4 +63,6 @@ export default function HomePage({ lang }: HomePageProps) {
       <h1 className="text-3xl font-bold">Home Page</h1>
     </div>
   );
-}
+};
+
+export default HomePage;

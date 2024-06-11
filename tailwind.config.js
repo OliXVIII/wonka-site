@@ -38,15 +38,15 @@ module.exports = {
         "banner-fade-in": "banner-fade-in 1s ease-in-out",
       },
       colors: {
-        dark: "#212121",
-        "dark-light": "#707172",
+        dark: "#3f2a1a",
+        "dark-light": "#5f4b2d",
         light: "#fdf7ec",
       },
       borderRadius: {
         box: "11px",
       },
       borderColor: {
-        dark: "#212121",
+        dark: "#3f2a1a",
         light: "white",
       },
       height: {

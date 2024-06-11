@@ -11,7 +11,7 @@ export const priceByCountry = (
     return "";
   }
   if (country === "CA") {
-    return `${(+price).toFixed(2)}$ CAD`;
+    return `${(+price).toFixed(2)}$`;
   } else if (country === "US") {
     return `$${(+price).toFixed(2)}`;
   }

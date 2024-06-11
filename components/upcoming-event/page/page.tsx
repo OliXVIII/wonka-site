@@ -2,7 +2,7 @@ import { DataType } from "@/server/fetch-data";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
 import { MainImageUpcoming } from "./main-image";
-import { EventSchedule } from "./schedule/schedule";
+import { NextWrapper } from "../../next-wrapper";
 import { BookNowButton } from "./book-now";
 import { RowImages } from "./row-images";
 import { OfferComponent } from "./offer";
@@ -68,9 +68,9 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         />
       </div>
 
-      <EventSchedule upcomingEvent={upcomingEventsLocale}>
+      <NextWrapper>
         <ScheduleDays upcomingEvent={upcomingEventsLocale} />
-      </EventSchedule>
+      </NextWrapper>
       <CTAUpcomingEvent upcomingEvent={upcomingEventsLocale} />
     </>
   );

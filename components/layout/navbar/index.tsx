@@ -11,9 +11,8 @@ import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
 import { createLink } from "@/lib/create-link";
-import Login from "@/components/auth/login";
-import { LoginButton } from "@/components/login/button";
 import Image from "next/image";
+import { LoginButton } from "@/components/login/button";
 
 type NavbarProps = {
   data: DataType;
@@ -112,12 +111,12 @@ export default function Navbar({
               <Suspense fallback={<OpenCart />}>
                 <Cart />
               </Suspense>
-            ) : null}{" "}
+            ) : null}
             <LoginButton />
           </div>
         </div>
       </nav>
-      <div className="h-16"></div>
+      {features.navbar.fixed ?? <div className="h-16"></div>}
     </>
   );
 }
