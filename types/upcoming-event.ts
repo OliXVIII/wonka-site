@@ -66,13 +66,13 @@ const roomOptions: Record<Language, Offer[]> = {
       stripe: "https://buy.stripe.com/3csdUN2mW8074Ss4gk",
     },
     {
-      title: "2-Person Room (whole room)",
+      title: "Single Bed in 2-Person Room",
       quantity: 3,
-      price: 1300, // Prix total pour deux nuits pour la chambre entière
+      price: 650, // Prix total pour deux nuits par lit
       tax: true,
       description:
-        "Double bed for two people, perfect for couples or friends. Includes 7 meals, 2 nights, and 10 activities. Price is for the entire room for two nights.",
-      stripe: "https://buy.stripe.com/cN23g9aTseov5Ww28e",
+        "Double bed for two people, perfect for couples or friends. Includes 7 meals, 2 nights, and 10 activities. Price is for a single bed in a 2-person room for two nights.",
+      stripe: "https://buy.stripe.com/fZedUN3r0bcj1GgfZ5",
     },
   ],
   fr: [
@@ -86,13 +86,13 @@ const roomOptions: Record<Language, Offer[]> = {
         "Lits superposés, cette chambre est confortable et immersive. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour une place dans une chambre de 4 personnes pour deux nuits.",
     },
     {
-      title: "Chambre 2 personnes (chambre entière)",
-      stripe: "https://buy.stripe.com/cN23g9aTseov5Ww28e",
+      title: "Place individuelle dans chambre 2 personnes",
+      stripe: "https://buy.stripe.com/fZedUN3r0bcj1GgfZ5",
       quantity: 3,
-      price: 1300, // Prix total pour deux nuits pour la chambre entière
+      price: 650, // Prix total pour deux nuits pour la chambre entière
       tax: true,
       description:
-        "Lit double pour deux personnes, idéal pour les couples. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour la chambre entière pour deux nuits.",
+        "Lit double pour deux personnes, idéal pour les couples. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour une place dans une chambre de 2 personnes pour deux nuits.",
     },
   ],
 };
@@ -127,6 +127,10 @@ const local108ImagesEn: ImageItem[] = [
     src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445372623_1011651013898278_3801536994229325511_n.jpg?alt=media&token=c388d161-308e-4a97-acb1-f9bdb8d71c07",
     alt: "Healty Meal",
   },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2FFood.jpg?alt=media&token=82655bd0-80ac-4680-a0a1-0878845e3a51",
+    alt: "Healty Meal",
+  },
 ];
 
 const local108ImagesFr: ImageItem[] = [
@@ -157,6 +161,10 @@ const local108ImagesFr: ImageItem[] = [
   },
   {
     src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445372623_1011651013898278_3801536994229325511_n.jpg?alt=media&token=c388d161-308e-4a97-acb1-f9bdb8d71c07",
+    alt: "Repas santé",
+  },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2FFood.jpg?alt=media&token=82655bd0-80ac-4680-a0a1-0878845e3a51",
     alt: "Repas santé",
   },
 ];
@@ -314,23 +322,31 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     title: "LEVEL - Nutrition-Yoga-Pilates 2024 Retreat",
     slogan: "Unlock Your Inner Universe",
     description:
-      "We offer two accommodation types: shared four-person rooms, perfect for those eager to share their experience, and private double rooms for a more intimate setting. Both options include meals, wellness activities, and additional perks to enhance your stay. To book your spot and select your room type, please contact jeanst@local-108.com. We look forward to welcoming you to this enriching adventure.",
-    introduction: `I present to you my yoga retreat project, LEVEL 📿
+      "We offer two accommodation types: shared four-person rooms, perfect for those eager to share their experience, and private double rooms for a more intimate setting. Both options include meals, wellness activities, and additional perks to enhance your stay. We look forward to welcoming you to this enriching adventure.",
+    introduction: `
+    Dive into an oasis of serenity and well-being just minutes away from the vibrant city of Quebec!
+    
+    Local 108 is thrilled to invite you to our nutrition and yoga retreat, a unique journey through the chakras, the energy centers of the human body. During this retreat, we will explore each chakra and its unique qualities, in a peaceful and enriching setting.
+    
+    • Breakfasts: 2 buffet breakfasts with a variety of delicious and healthy options,
+    
+    • Nutrition Lab: Participation in 2 nutrition workshops, with local products included. (Offered by the nutritionist)
+    
+    • Dinner: 2 gourmet dinners prepared by our chef, who will be present on site, with vegetarian and allergy-friendly options as well.
+    
+    • Drinks: 3 health drinks available, and herbal teas available throughout the retreat.
+    
+    • Included Activities:
+      o Ayurveda Workshop. (Guest teacher from Montreal) o Yoga Master Classes (Senior Vinyasa Yoga Teacher)
+      o Abundance, Fire, and Cacao Ceremonies
+      o Sound Bath (Guest teacher)
+      o Writing Workshop o 1 Pilates class and 3 yoga classes
+      o Meditation by the lake
+      
+    Don't miss the opportunity to participate in a yoga retreat focused on nutrition and yoga practice in a peaceful natural setting. Spots are limited, come experience this dream location.
 
-Our main goal is focused on nutrition and integral yoga practice, offering activities that contribute to overall well-being.
-
-This is my first project as co-founder of Local 108, in collaboration with @letemple_sanctuaire, an exceptional place less than an hour away from Quebec. What awaits you:
-- Cacao Ceremony: A sacred ritual to open the heart and awaken the senses.
-- Food-Focused Yoga: Use yoga to improve digestion and nutrient assimilation, promoting overall well-being.
-- Superfoods and Functional Nutrition: Learn how specific foods can positively influence your chakras and vital energy.
-- Local 108 Nutrition Labs: Practical experiences with local ingredients to nourish your body and soul.
-- Introduction to Ayurveda Science: Understand how this ancient science is related to diet, health, and Doshas balance.
-- Yoga and Pilates Classes: Physical practices to strengthen the body and balance energy centers.
-- Meditation, Mantras, and Drums: Techniques to calm the mind and harmonize chakras.
-- Sound Bath and Ayurvedic Massages: Sound therapies and massages to unlock and revitalize your energy.
-- Fire and Abundance Ceremonies: Rituals to purify and attract abundance into your life.
-
-For more information on planning, pricing, and to book, please write to jeanst@local-108.com.`,
+    For 2-payment options, please contact the following email: Jeanst@local-108.com.
+      `,
     link: {
       title: "Upcoming Event",
       path: "/upcoming/le-temple",
@@ -354,7 +370,7 @@ For more information on planning, pricing, and to book, please write to jeanst@l
       height: 80,
     },
 
-    retreatSchedule: retreatScheduleEn,
+    // retreatSchedule: retreatScheduleEn,
     offerOptions: roomOptions.en,
     images: local108ImagesEn,
     path: "/upcoming/le-temple",
@@ -364,25 +380,30 @@ For more information on planning, pricing, and to book, please write to jeanst@l
     cta: "Réservez maintenant - Disponibilité limitée",
     title: "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024",
     slogan: "Débloquez votre univers intérieur",
-    introduction: `Je vous présente mon projet de retraites de yoga, LEVEL 📿
+    introduction: `Plongez dans un oasis de sérénité et de bien-être à seulement quelques minutes de la vibrante ville de Québec !
+    
+Local 108 est ravi de vous inviter à notre retraite de nutrition et yoga, un voyage unique à travers les chakras, les centres d'énergie du corps humain. Pendant cette retraite, nous explorerons chaque chakra et ses qualités uniques, dans un cadre paisible et enrichissant.
 
-Notre objectif principal est axé sur la nutrition et la pratique intégrale du yoga, offrant des activités qui contribuent à un bien-être global. C'est mon premier projet en tant que co-fondatrice de Local 108, en collaboration avec le @letemple_sanctuaire, un lieu exceptionnel à moins d'une heure de Québec.
+• Déjeuners : 2 déjeuners buffet avec une variété d'options délicieuses et saines,
 
-Au programme :
+• Laboratoire de nutrition : Participation à 2 ateliers de nutrition, avec des produits locaux inclus. (Offert par la nutritionniste)
 
-- Cérémonie de Cacao : Un rituel sacré pour ouvrir le cœur et éveiller les sens.
-- Yoga Focalisé sur l'Alimentation : Utilisez le yoga pour améliorer la digestion et l'assimilation des nutriments, favorisant ainsi un bien-être global.
-- Super Aliments et Nutrition Fonctionnelle : Apprenez comment des aliments spécifiques peuvent influencer positivement vos chakras et votre énergie vitale.
-- Laboratoires de Nutrition Local 108 : Expériences pratiques avec des ingrédients locaux pour nourrir votre corps et votre âme.
-- Introduction à la Science de l'Ayurveda : Comprenez comment cette ancienne science est reliée à l'alimentation, à la santé et à l'équilibre des Doshas.
-- Classes de Yoga et Pilates : Pratiques physiques pour renforcer le corps et équilibrer les centres énergétiques.
-- Méditation, Mantras et Tambours : Techniques pour apaiser l'esprit et harmoniser les chakras.
-- Sound Bath et Massages Ayurvédiques : Thérapies sonores et massages pour débloquer et revitaliser votre énergie.
-- Cérémonies de Feu et d'Abondance : Rituels pour purifier et attirer l'abondance dans votre vie.
+• Dîner : 2 dîners gastronomiques préparés par notre chef, qui sera présent sur place, avec des options aussi végétariennes et antiallergiques.
 
-Pour plus d'informations sur la planification, les prix et pour réserver, veuillez écrire à jeanst@local-108.com.`,
+• Boissons : 3 boissons santé à disposition, et des tisanes disponibles pendant toute la retraite.
+
+• Activités incluses :
+  o Atelier d'Ayurveda. (Professeure invitée de Montréal) o Master classes de yoga (Professeure senior en Vinyasa Yoga)
+  o Cérémonies d'abondance, de feu et de cacao
+  o Bain de son (Sound bath, professeur invité)
+  o Atelier d'écriture o 1 cours de Pilates et de 3 classes de yoga
+  o Méditation au bord du lac
+
+Ne manquez pas l'opportunité de participer à une retraite de yoga axée sur la nutrition et la pratique du yoga dans un environnement paisible en pleine nature. Les places sont limitées, venez vivre cette expérience dans un lieu de rêve.
+
+Pour des options de paiement en 2 versements, veuillez contacter le courriel suivant : Jeanst@local-108.com`,
     description:
-      "Nous proposons deux types d'hébergement : des chambres partagées pour quatre personnes, idéales pour ceux désirant partager leur expérience, et des chambres doubles pour plus d'intimité. Chaque option inclut les repas, les activités bien-être, et des petits plus pour enrichir votre séjour. Pour réserver votre place et choisir votre type de chambre, contactez jeanst@local-108.com. Nous sommes impatients de vous accueillir pour cette aventure enrichissante.",
+      "Nous proposons deux types d'hébergement : des chambres partagées pour quatre personnes, idéales pour ceux désirant partager leur expérience, et des chambres doubles pour plus d'intimité. Chaque option inclut les repas, les activités bien-être, et des petits plus pour enrichir votre séjour. Nous sommes impatients de vous accueillir pour cette aventure enrichissante.",
     metadata: {
       title:
         "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024 (Organisé par Local 108)",
@@ -405,7 +426,7 @@ Pour plus d'informations sur la planification, les prix et pour réserver, veuil
       width: 80,
       height: 80,
     },
-    retreatSchedule: retreatScheduleFr,
+    // retreatSchedule: retreatScheduleFr,
     offerOptions: roomOptions.fr,
     images: local108ImagesFr,
     path: "/upcoming/le-temple",

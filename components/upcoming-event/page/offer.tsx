@@ -48,12 +48,12 @@ const OfferInfo = ({
         {room.description}
       </p>
       <div className="flex flex-col justify-center pb-4 pt-2">
-        <p className="text-center text-xl">
-          {priceByCountry(total, "CA" as RegionCode)}
-        </p>
-        <p className="text-center text-xs">
+        <p className="text-center text-lg">
           {priceByCountry(room.price, "CA" as RegionCode)} +{" "}
           {priceByCountry(tax, "CA" as RegionCode)} (taxes)
+        </p>
+        <p className="text-center text-xs">
+          {priceByCountry(total, "CA" as RegionCode)}
         </p>
       </div>
       <BookNowButton bookNow={uiContent.bookNow} />
@@ -90,7 +90,8 @@ export const OfferComponent = ({
       </>
     );
   } else if (upcomingEventsLocale.offerOptions.length === 2) {
-    const divClass = "mx-auto flex md:flex-col md:w-[30%] sm:px-2 md:px-3";
+    const divClass =
+      "mx-auto flex md:flex-col md:w-[35%] lg:w-[30%] sm:px-2 md:px-3";
     return (
       <>
         <div
@@ -109,7 +110,7 @@ export const OfferComponent = ({
             mobile
           />
         </div>
-        <p className={`${divClass} my-auto text-justify md:w-[40%]`}>
+        <p className={`${divClass} my-auto text-justify md:w-[30%]`}>
           {upcomingEventsLocale.description}
         </p>
         <div

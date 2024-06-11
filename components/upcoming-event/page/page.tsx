@@ -68,9 +68,11 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         />
       </div>
 
-      <NextWrapper>
-        <ScheduleDays upcomingEvent={upcomingEventsLocale} />
-      </NextWrapper>
+      {upcomingEventsLocale.retreatSchedule && (
+        <NextWrapper>
+          <ScheduleDays upcomingEvent={upcomingEventsLocale} />
+        </NextWrapper>
+      )}
       <CTAUpcomingEvent upcomingEvent={upcomingEventsLocale} />
     </>
   );
