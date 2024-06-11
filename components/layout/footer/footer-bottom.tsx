@@ -4,11 +4,13 @@ import { UiContent } from "@/types/ui-content";
 type FooterBottomProps = {
   uiContent: UiContent;
   banner: FeaturesType["banner"];
+  upcoming?: boolean;
 };
 
 export default function FooterBottom({
   uiContent,
   banner,
+  upcoming,
 }: Readonly<FooterBottomProps>) {
   const currentYear = new Date().getFullYear();
   const copyrightName =
@@ -19,16 +21,16 @@ export default function FooterBottom({
     " " +
     uiContent.footer.legal;
 
-  const bannerSize = banner?.size ?? "";
-  let bannerClass = "";
-  if (bannerSize === "small") {
-    bannerClass = "max-md:mb-banner-mobile mb-banner-small";
-  } else if (bannerSize === "medium") {
-    bannerClass = "max-md:mb-banner-mobile mb-banner-medium";
+  let dimensionsClass = "max-md:mb-banner-mobile md:mb-banner-small"; //default small
+
+  if (banner?.size === "medium") {
+    dimensionsClass = "max-md:mb-banner-mobile md:mb-banner-medium";
   }
 
   return (
-    <div className={`border-t py-10 text-sm ${bannerClass}`}>
+    <div
+      className={`border-t py-10 text-sm ${banner?.style === "horizontal" && !upcoming ? dimensionsClass : ""}`}
+    >
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
         <p>{copyrightName}</p>
         <hr className="mx-4 hidden h-4 w-[1px] border-l md:inline-block" />

@@ -45,13 +45,13 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
           <AlertCircle
             fill="#FBBF24"
             stroke="currentColor"
-            className="text-white dark:text-black"
+            className="text-light dark:text-black"
           />
         ) : (
           <XCircle
             fill="#DC2626"
             stroke="currentColor"
-            className="text-white dark:text-black"
+            className="text-light dark:text-black"
           />
         )}
         <p className="text-lg font-semibold dark:text-white">{status}</p>
@@ -104,8 +104,8 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               onClick={() => setRecordType("A")}
               className={`${
                 recordType == "A"
-                  ? "border-black text-black dark:border-white dark:text-white"
-                  : "border-white text-stone-400 dark:border-black dark:text-stone-600"
+                  ? "border-black text-black dark:border-light dark:text-white"
+                  : "border-light text-stone-400 dark:border-black dark:text-stone-600"
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               A Record{!subdomain && " (recommended)"}
@@ -115,8 +115,8 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               onClick={() => setRecordType("CNAME")}
               className={`${
                 recordType == "CNAME"
-                  ? "border-black text-black dark:border-white dark:text-white"
-                  : "border-white text-stone-400 dark:border-black dark:text-stone-600"
+                  ? "border-black text-black dark:border-light dark:text-white"
+                  : "border-light text-stone-400 dark:border-black dark:text-stone-600"
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
               CNAME Record{subdomain && " (recommended)"}

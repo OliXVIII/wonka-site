@@ -5,4 +5,5 @@ export type ImageItem = {
   height?: number;
   main?: boolean;
   width?: number;
+  inceptionLogo?: boolean;
 };

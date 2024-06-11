@@ -29,7 +29,7 @@ export function Gallery({
   const previousUrl = createUrl(pathname, previousSearchParams);
 
   const buttonClassName =
-    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center";
+    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-light flex items-center justify-center";
 
   return (
     <>
@@ -47,7 +47,7 @@ export function Gallery({
 
         {images.length > 1 ? (
           <div className="absolute bottom-[15%] flex w-full justify-center">
-            <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80">
+            <div className="mx-auto flex h-11 items-center rounded-full border border-light bg-neutral-50/80 text-neutral-500 backdrop-blur dark:border-black dark:bg-neutral-900/80">
               <Link
                 aria-label="Previous product image"
                 href={previousUrl}

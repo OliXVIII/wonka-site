@@ -41,7 +41,7 @@ export const ImageModale = ({
         type="button"
         id="close"
         aria-label="close"
-        className="m-auto bg-white p-8"
+        className="m-auto bg-light p-8"
       >
         <div className="flex flex-col items-center">
           <Image

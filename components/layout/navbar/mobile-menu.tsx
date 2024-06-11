@@ -22,7 +22,7 @@ type MobileMenuProps = {
 
 let MyDialogPanel = forwardRef(function (props: any, ref: any) {
   return (
-    <DialogPanel className="max-w-xl bg-white p-12" ref={ref} {...props} />
+    <DialogPanel className="max-w-xl bg-light p-12" ref={ref} {...props} />
   );
 });
 
@@ -55,7 +55,7 @@ export default function MobileMenu({
       <button
         onClick={openMobileMenu}
         aria-label="Open mobile menu"
-        className="flex h-11 w-11 items-center justify-center rounded-md text-black transition-colors dark:border-neutral-700 dark:text-white max-md:mx-4 md:hidden"
+        className="flex h-11 w-11 items-center justify-center rounded-md text-black transition-colors dark:border-neutral-700 dark:text-light max-md:mx-4 md:hidden"
       >
         <Bars3Icon className="h-6 w-6" />
       </button>
@@ -76,7 +76,7 @@ export default function MobileMenu({
           leave="transition-all ease-in-out duration-200"
           leaveFrom="translate-x-0"
           leaveTo="translate-x-[-100%]"
-          className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-72 max-w-full flex-col bg-white pb-6 dark:bg-black"
+          className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-72 max-w-full flex-col bg-light pb-6 dark:bg-black"
         >
           <div className="p-4">
             <button

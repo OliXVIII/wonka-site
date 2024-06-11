@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ImageModale } from "./images-modal";
 import { Suspense } from "react";
 import { ImageItem } from "@/types/image";
+import { NextWrapper } from "@/components/next-wrapper";
 
 const RowImage = ({
   event,
@@ -33,6 +34,7 @@ const RowImage = ({
         />
       ) : (
         <>
+          <div className="h-5"></div>
           <div className={`relative aspect-square w-full`}>
             <Image
               src={event.src}
@@ -40,7 +42,7 @@ const RowImage = ({
               fill={!event.width && !event.height}
               width={event.width}
               height={event.height}
-              className="rounded-3xl p-2.5 max-sm:p-1.5 md:rounded-[3rem] lg:p-5"
+              className="rounded-3xl object-cover p-2.5 max-sm:p-1.5 md:rounded-[3rem] lg:p-5"
             />
           </div>
           <p className="text-center">{event.alt}</p>
@@ -57,11 +59,28 @@ export const RowImages = ({
   upcomingEventsLocale: UpcomingEvent;
   vertical?: boolean;
 }) => {
-  return (
+  //make pack of 4 images list from upcomingEventsLocale.images, like [[img1, img2, img3, img4], [img5, img6, img7, img8], ...
+  if (!upcomingEventsLocale.images) {
+    return null;
+  }
+  //remove event.main from the list
+  const images = upcomingEventsLocale.images.filter((event) => !event.main);
+  function chunkArrayInGroups(arr: ImageItem[], size: number) {
+    let result = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
+  }
+
+  const imagePacks = chunkArrayInGroups(images, 4);
+  console.log(imagePacks);
+
+  return vertical ? (
     <div
-      className={`flex flex-wrap items-center ${vertical ? "overflow-y w-full flex-col max-lg:hidden" : "overflow-x-auto md:mx-5"} justify-between`}
+      className={`overflow-y flex w-full flex-col flex-wrap items-center justify-between max-lg:hidden`}
     >
-      {upcomingEventsLocale.images?.map((event, i) =>
+      {imagePacks[0].map((event, i) =>
         !event.main ? (
           <RowImage key={i} event={event} vertical={vertical} index={i} />
         ) : null,
@@ -70,5 +89,18 @@ export const RowImages = ({
         <ImageModale upComingEvent={upcomingEventsLocale} />
       </Suspense>
     </div>
+  ) : (
+    <NextWrapper>
+      {imagePacks.map((pack, i) => (
+        <div
+          key={i}
+          className={`scroll-snap-align-start flex w-full flex-shrink-0 flex-wrap items-center ${vertical ? "overflow-y w-full flex-col max-lg:hidden" : "overflow-x-auto md:px-5"}`}
+        >
+          {pack.map((event, i) => (
+            <RowImage key={i} event={event} vertical={vertical} index={i} />
+          ))}
+        </div>
+      ))}
+    </NextWrapper>
   );
 };

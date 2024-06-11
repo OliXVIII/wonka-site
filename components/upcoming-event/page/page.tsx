@@ -2,7 +2,7 @@ import { DataType } from "@/server/fetch-data";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
 import { MainImageUpcoming } from "./main-image";
-import { EventSchedule } from "./schedule/schedule";
+import { NextWrapper } from "../../next-wrapper";
 import { BookNowButton } from "./book-now";
 import { RowImages } from "./row-images";
 import { OfferComponent } from "./offer";
@@ -17,6 +17,10 @@ type UpcomingEventPageProps = {
 
 export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
   const { upcomingEvents } = data;
+
+  if (!upcomingEvents) {
+    return null;
+  }
 
   const upcomingEventsLocale: UpcomingEvent =
     upcomingEvents[locale.languageCode];
@@ -34,9 +38,6 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         <>
           <div className="my-3 flex max-md:absolute max-md:left-0 max-md:z-10 max-md:h-[50vmax] max-md:w-full max-sm:h-[30vmax] max-xs:h-[30vmax] md:relative md:m-8 md:aspect-video">
             <MainImageUpcoming upcomingEvent={upcomingEventsLocale} />
-            <p className="slogan-special bottom-0 mx-auto mb-4 mt-auto w-fit pb-2 pr-2 text-center font-bold text-white max-sm:scale-90">
-              {upcomingEventsLocale.slogan}
-            </p>
           </div>
           <div className="relative my-3 max-md:h-[50vmax] max-sm:h-[35vmax] max-xs:h-[30vmax] md:hidden"></div>
         </>
@@ -67,9 +68,9 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         />
       </div>
 
-      <EventSchedule upcomingEvent={upcomingEventsLocale}>
+      <NextWrapper>
         <ScheduleDays upcomingEvent={upcomingEventsLocale} />
-      </EventSchedule>
+      </NextWrapper>
       <CTAUpcomingEvent upcomingEvent={upcomingEventsLocale} />
     </>
   );

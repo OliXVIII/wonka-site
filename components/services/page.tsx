@@ -14,9 +14,9 @@ export const ServicesPage = ({ uiContent, storage }: ServicesPageProps) => {
         {uiContent.services?.services?.map((service, index) => (
           <div
             key={service.title}
-            className={`flex flex-col md:flex-row ${index % 2 !== 0 && "md:flex-row-reverse"} shadow-lg rounded-lg overflow-hidden dark:shadow-sm dark:shadow-white`}
+            className={`flex flex-col md:flex-row ${index % 2 !== 0 && "md:flex-row-reverse"} overflow-hidden rounded-lg shadow-lg dark:shadow-sm dark:shadow-light`}
           >
-            <div className="relative md:w-1/2 w-full aspect-video">
+            <div className="relative aspect-video w-full md:w-1/2">
               <Image
                 src={service.image}
                 alt={service.title}
@@ -24,9 +24,13 @@ export const ServicesPage = ({ uiContent, storage }: ServicesPageProps) => {
                 className="object-cover"
               />
             </div>
-            <div className="flex flex-col justify-center p-8 md:w-1/2 w-full ">
-              <h3 className="text-center text-3xl font-semibold text-gray-800 dark:text-gray-200 mb-4">{service.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-lg">{service.description}</p>
+            <div className="flex w-full flex-col justify-center p-8 md:w-1/2 ">
+              <h3 className="mb-4 text-center text-3xl font-semibold text-gray-800 dark:text-gray-200">
+                {service.title}
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-400">
+                {service.description}
+              </p>
             </div>
           </div>
         ))}

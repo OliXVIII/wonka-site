@@ -8,7 +8,7 @@ type FooterFeatures = {
 };
 
 type NavbarFeatures = {
-  fixed: boolean;
+  fixed?: boolean;
 };
 
 export type FeaturesType = {

@@ -129,7 +129,7 @@ export const ReserveModal = ({
           ref={modalRef}
         >
           <form
-            className="mx-auto flex max-w-lg justify-center rounded-lg bg-white p-8 shadow-xl max-xs:w-full xs:min-w-[70%] xl:min-w-[60%] 2xl:min-w-[50%]"
+            className="mx-auto flex max-w-lg justify-center rounded-lg bg-light p-8 shadow-xl max-xs:w-full xs:min-w-[70%] xl:min-w-[60%] 2xl:min-w-[50%]"
             ref={outsideRef}
             onSubmit={handleSubmitEmail}
           >
@@ -260,7 +260,7 @@ export const ReserveModal = ({
               <div className="mt-6 flex justify-center text-center">
                 <button
                   className={
-                    "rounded-full bg-green-700 px-12 py-2 font-bold text-white transition-colors hover:bg-green-800 max-lg:px-8"
+                    "rounded-full bg-green-700 px-12 py-2 font-bold text-light transition-colors hover:bg-green-800 max-lg:px-8"
                   }
                   type="submit"
                 >

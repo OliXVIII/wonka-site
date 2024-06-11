@@ -24,7 +24,7 @@ export default async function Footer({
       {features.footer.type.map && data.features.footer.type.location && (
         <StaticGoogleMap
           location={
-            upcoming
+            upcoming && upcomingEvents
               ? upcomingEvents[locale.languageCode].location
               : data.features.footer.type.location
           }
@@ -33,7 +33,7 @@ export default async function Footer({
       {storage.socialMedia && (
         <SocialMediaComponent socialMedia={storage.socialMedia} />
       )}
-      <FooterBottom uiContent={uiContent} banner={data.features.banner} />
+      <FooterBottom uiContent={uiContent} banner={data.features.banner} upcoming={upcoming} />
     </footer>
   );
 }

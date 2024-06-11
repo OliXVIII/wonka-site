@@ -26,10 +26,9 @@ export const UpcomingEventBanner = ({
   if (!upcomingEvent.images) {
     return null;
   }
-  let dimensionsClass = "";
-  if (banner.size === "small") {
-    dimensionsClass = "max-md:h-banner-mobile md:h-banner-small";
-  } else if (banner.size === "medium") {
+  let dimensionsClass = "max-md:h-banner-mobile md:h-banner-small"; //default small
+
+  if (banner.size === "medium") {
     dimensionsClass = "max-md:h-banner-mobile md:h-banner-medium";
   }
 
@@ -48,16 +47,15 @@ export const UpcomingEventBanner = ({
   } else if (banner.style === "section") {
     return (
       <>
-      <h2 className="mb-12 text-4xl font-light tracking-[-0.1rem]">
-        {header}
-      </h2>
-      <SectionBanner
-        upcomingEvent={upcomingEvent}
-        locale={locale}
-        banner={banner}
-      />
+        <h2 className="mb-12 text-4xl font-light tracking-[-0.1rem]">
+          {header}
+        </h2>
+        <SectionBanner
+          upcomingEvent={upcomingEvent}
+          locale={locale}
+          banner={banner}
+        />
       </>
-      
     );
   }
   return null;

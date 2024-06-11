@@ -17,7 +17,7 @@ export type DataType = {
   storage: StorageType;
   features: FeaturesType;
   domain: string;
-  upcomingEvents: LocaleUpcomingEvent;
+  upcomingEvents?: LocaleUpcomingEvent;
   customDomain?: string;
 };
 

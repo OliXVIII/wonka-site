@@ -20,7 +20,6 @@ export type Offer = {
   price: number;
   quantity: number;
   title: string;
-  totalPrice: string;
   tax?: boolean;
 };
 
@@ -58,44 +57,42 @@ export type LocaleUpcomingEvent = Record<Language, UpcomingEvent>;
 const roomOptions: Record<Language, Offer[]> = {
   en: [
     {
-      title: "4-Person Room",
+      title: "Single Bed in 4-Person Room",
       quantity: 12,
-      price: 720,
+      price: 625, // Prix total pour deux nuits par lit
       tax: true,
-      totalPrice: "$827.82",
-      description: "Superpose beds, this room is both conforable and immersive",
+      description:
+        "Bunk beds, this room is comfortable and immersive. Includes 7 meals, 2 nights, and 10 activities. Price is for a single bed in a 4-person room for two nights.",
       stripe: "https://buy.stripe.com/8wMbMF0eOfszfx6147",
     },
     {
-      title: "2-Person Room",
+      title: "2-Person Room (whole room)",
       quantity: 3,
-      stripe: "https://buy.stripe.com/cN2bMF1iS2FN98IaEF",
-      price: 770,
+      price: 1300, // Prix total pour deux nuits pour la chambre entière
       tax: true,
-      totalPrice: "$885.31",
       description:
-        "Double bed for two people, this room is perfect for couples or friends",
+        "Double bed for two people, perfect for couples or friends. Includes 7 meals, 2 nights, and 10 activities. Price is for the entire room for two nights.",
+      stripe: "https://buy.stripe.com/cN2bMF1iS2FN98IaEF",
     },
   ],
   fr: [
     {
-      title: "Chambre 4 Personnes",
+      title: "Place individuelle dans chambre 4 personnes",
       stripe: "https://buy.stripe.com/8wMbMF0eOfszfx6147",
       quantity: 12,
-      price: 720,
+      price: 625, // Prix total pour deux nuits par lit
       tax: true,
-      totalPrice: "$827.82",
       description:
-        "Lits superposés, cette chambre est à la fois confortable et immersive",
+        "Lits superposés, cette chambre est confortable et immersive. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour une place dans une chambre de 4 personnes pour deux nuits.",
     },
     {
-      title: "Chambre 2 Personnes",
+      title: "Chambre 2 personnes (chambre entière)",
       stripe: "https://buy.stripe.com/cN2bMF1iS2FN98IaEF",
       quantity: 3,
-      price: 770,
+      price: 1300, // Prix total pour deux nuits pour la chambre entière
       tax: true,
-      totalPrice: "$885.31",
-      description: "Lit double pour deux personnes, idéal pour les couples",
+      description:
+        "Lit double pour deux personnes, idéal pour les couples. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour la chambre entière pour deux nuits.",
     },
   ],
 };
@@ -122,6 +119,14 @@ const local108ImagesEn: ImageItem[] = [
     src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fupcoming%2Fle-temple%2F441521421_845440597416435_6942327833745152053_n%20(1).jpg?alt=media&token=a7732820-c63c-40e0-acc2-d696c7964a84",
     alt: "Rooms",
   },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445375912_1913078055813062_9014981935830814493_n.jpg?alt=media&token=8f39fce0-b0bb-4a2e-b090-e4c78c522150",
+    alt: "Healty Meal",
+  },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445372623_1011651013898278_3801536994229325511_n.jpg?alt=media&token=c388d161-308e-4a97-acb1-f9bdb8d71c07",
+    alt: "Healty Meal",
+  },
 ];
 
 const local108ImagesFr: ImageItem[] = [
@@ -145,6 +150,14 @@ const local108ImagesFr: ImageItem[] = [
   {
     src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2Fupcoming%2Fle-temple%2F441521421_845440597416435_6942327833745152053_n%20(1).jpg?alt=media&token=a7732820-c63c-40e0-acc2-d696c7964a84",
     alt: "Chambres",
+  },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445375912_1913078055813062_9014981935830814493_n.jpg?alt=media&token=8f39fce0-b0bb-4a2e-b090-e4c78c522150",
+    alt: "Repas santé",
+  },
+  {
+    src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/local-108%2F445372623_1011651013898278_3801536994229325511_n.jpg?alt=media&token=c388d161-308e-4a97-acb1-f9bdb8d71c07",
+    alt: "Repas santé",
   },
 ];
 
@@ -301,7 +314,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     title: "LEVEL - Nutrition-Yoga-Pilates 2024 Retreat",
     slogan: "Unlock Your Inner Universe",
     description:
-      "We offer two types of accommodation to suit your needs: shared rooms for four people, ideal for those looking to share their experience, and double rooms for those who prefer a more intimate space. Each option provides the comfort and tranquility needed to fully enjoy the wellness activities offered. To reserve your spot and choose your room type, please contact jeanst@local-108.com. We look forward to welcoming you and sharing this enriching adventure together.",
+      "We offer two accommodation types: shared four-person rooms, perfect for those eager to share their experience, and private double rooms for a more intimate setting. Both options include meals, wellness activities, and additional perks to enhance your stay. To book your spot and select your room type, please contact jeanst@local-108.com. We look forward to welcoming you to this enriching adventure.",
     introduction: `I present to you my yoga retreat project, LEVEL 📿
 
 Our main goal is focused on nutrition and integral yoga practice, offering activities that contribute to overall well-being.
@@ -369,7 +382,7 @@ Au programme :
 
 Pour plus d'informations sur la planification, les prix et pour réserver, veuillez écrire à jeanst@local-108.com.`,
     description:
-      "Nous proposons deux types d'hébergement pour s'adapter à vos besoins : des chambres partagées pour quatre personnes, idéales pour ceux qui cherchent à partager leur expérience, et des chambres doubles pour ceux qui préfèrent un espace plus intime. Chaque option offre le confort et la tranquillité nécessaires pour profiter pleinement des activités bien-être proposées. Pour réserver votre place et choisir votre type de chambre, veuillez contacter jeanst@local-108.com. Nous sommes impatients de vous accueillir et de partager cette aventure enrichissante ensemble.",
+      "Nous proposons deux types d'hébergement : des chambres partagées pour quatre personnes, idéales pour ceux désirant partager leur expérience, et des chambres doubles pour plus d'intimité. Chaque option inclut les repas, les activités bien-être, et des petits plus pour enrichir votre séjour. Pour réserver votre place et choisir votre type de chambre, contactez jeanst@local-108.com. Nous sommes impatients de vous accueillir pour cette aventure enrichissante.",
     metadata: {
       title:
         "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024 (Organisé par Local 108)",
