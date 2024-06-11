@@ -37,7 +37,7 @@ export const NextWrapper = ({ children }: NextWrapperType) => {
         {children}
       </div>
       <button
-        className="absolute left-0 top-[calc(50%-1rem)] z-10 bg-light fill-dark dark:bg-dark dark:fill-light"
+        className="absolute left-0 top-[calc(50%-1rem)] z-10 -ml-3 rounded-lg bg-light fill-dark dark:bg-dark dark:fill-light"
         onClick={scrollLeft}
       >
         <svg
@@ -58,7 +58,7 @@ export const NextWrapper = ({ children }: NextWrapperType) => {
         </svg>
       </button>
       <button
-        className="absolute right-0 top-[50%] z-10 bg-light fill-dark dark:bg-dark dark:fill-light"
+        className="absolute right-0 top-[calc(50%-1rem)] z-10 -mr-3 rounded-lg bg-light fill-dark dark:bg-dark dark:fill-light"
         onClick={scrollRight}
       >
         <svg

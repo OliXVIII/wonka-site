@@ -94,7 +94,7 @@ export const RowImages = ({
       {imagePacks.map((pack, i) => (
         <div
           key={i}
-          className={`scroll-snap-align-start flex w-full flex-shrink-0 flex-wrap items-center ${vertical ? "overflow-y w-full flex-col max-lg:hidden" : "overflow-x-auto md:px-5"}`}
+          className={`scroll-snap-align-start flex w-full flex-shrink-0 flex-wrap items-center overflow-x-auto max-md:px-3.5 md:px-5`}
         >
           {pack.map((event, i) => (
             <RowImage key={i} event={event} vertical={vertical} index={i} />

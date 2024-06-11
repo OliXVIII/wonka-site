@@ -63,7 +63,7 @@ const roomOptions: Record<Language, Offer[]> = {
       tax: true,
       description:
         "Bunk beds, this room is comfortable and immersive. Includes 7 meals, 2 nights, and 10 activities. Price is for a single bed in a 4-person room for two nights.",
-      stripe: "https://buy.stripe.com/8wMbMF0eOfszfx6147",
+      stripe: "https://buy.stripe.com/3csdUN2mW8074Ss4gk",
     },
     {
       title: "2-Person Room (whole room)",
@@ -72,13 +72,13 @@ const roomOptions: Record<Language, Offer[]> = {
       tax: true,
       description:
         "Double bed for two people, perfect for couples or friends. Includes 7 meals, 2 nights, and 10 activities. Price is for the entire room for two nights.",
-      stripe: "https://buy.stripe.com/cN2bMF1iS2FN98IaEF",
+      stripe: "https://buy.stripe.com/cN23g9aTseov5Ww28e",
     },
   ],
   fr: [
     {
       title: "Place individuelle dans chambre 4 personnes",
-      stripe: "https://buy.stripe.com/8wMbMF0eOfszfx6147",
+      stripe: "https://buy.stripe.com/3csdUN2mW8074Ss4gk",
       quantity: 12,
       price: 625, // Prix total pour deux nuits par lit
       tax: true,
@@ -87,7 +87,7 @@ const roomOptions: Record<Language, Offer[]> = {
     },
     {
       title: "Chambre 2 personnes (chambre entière)",
-      stripe: "https://buy.stripe.com/cN2bMF1iS2FN98IaEF",
+      stripe: "https://buy.stripe.com/cN23g9aTseov5Ww28e",
       quantity: 3,
       price: 1300, // Prix total pour deux nuits pour la chambre entière
       tax: true,

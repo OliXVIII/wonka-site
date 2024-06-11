@@ -26,8 +26,8 @@ const OfferInfo = ({
       href={`?reserve-modal=true&selected=${index}`}
       key={room.title}
       className={
-        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-lg:px-1 max-md:w-1/2 max-md:shadow-md max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
-        (mobile ? " max-sm:ml-4 md:hidden" : "")
+        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-lg:px-1 max-md:w-1/2 max-md:w-full max-md:shadow-md max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
+        (mobile ? " max-sm:mt-3.5 md:hidden" : "")
       }
     >
       <div className="justify-around">
@@ -94,7 +94,7 @@ export const OfferComponent = ({
     return (
       <>
         <div
-          className={`max-md:flex ${divClass} border-dark-light dark:border-light max-md:mb-8 max-md:w-full md:border-r`}
+          className={`max-md:flex max-md:flex-col ${divClass} border-dark-light dark:border-light max-md:mb-8 max-md:w-full md:border-r`}
         >
           <OfferInfo
             room={upcomingEventsLocale.offerOptions[0]}
