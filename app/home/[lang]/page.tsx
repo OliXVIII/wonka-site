@@ -1,6 +1,8 @@
 import Navbar from "@/components/layout/navbar";
 import { DataType } from "@/server/fetch-data";
 import { Locale, localesDetails } from "@/types/languages";
+import { useSession } from "next-auth/react";
+import { Session } from "./session";
 
 type HomePageProps = {
   params: { lang: Locale };
@@ -30,7 +32,8 @@ const data: DataType = {
   storage: {
     logo: {
       navbar: {
-        src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
+        src: "",
+        //src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
         aspectRatio: 1,
         inceptionLogo: true,
       },
@@ -53,15 +56,19 @@ const data: DataType = {
   domain: "",
   upcomingEvents: undefined,
 };
-
 const HomePage = ({ params }: HomePageProps) => {
   const locale = localesDetails[params.lang];
 
   return (
+    <div className="flex">
     <div className="flex flex-col">
-      <Navbar data={data} locale={locale} inceptionLogo />
-      <h1 className="text-3xl font-bold">Home Page</h1>
+      <Navbar data={data} locale={locale} />
     </div>
+    <div className="flex flex-col justify-center m-auto pt-52">
+      <Session />
+    </div>
+    </div>
+    
   );
 };
 
