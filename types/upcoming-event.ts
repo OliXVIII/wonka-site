@@ -324,10 +324,15 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     description:
       "We offer two accommodation types: shared four-person rooms, perfect for those eager to share their experience, and private double rooms for a more intimate setting. Both options include meals, wellness activities, and additional perks to enhance your stay. We look forward to welcoming you to this enriching adventure.",
     introduction: `
-    Dive into an oasis of serenity and well-being just minutes away from the vibrant city of Quebec!
+    Dive into an oasis of serenity and well-being just minutes away from the city of Quebec!
     
     Local 108 is thrilled to invite you to our nutrition and yoga retreat, a unique journey through the chakras, the energy centers of the human body. During this retreat, we will explore each chakra and its unique qualities, in a peaceful and enriching setting.
     
+    All-inclusive package: 3-day Yoga Retreat, 2 nights, 7 meals, 10 wellness activities, and more.
+
+    Included:
+    • Welcome Dinner: Dinner for all participants upon arrival, with vegetarian and allergy-friendly options.
+
     • Breakfasts: 2 buffet breakfasts with a variety of delicious and healthy options,
     
     • Nutrition Lab: Participation in 2 nutrition workshops, with local products included. (Offered by the nutritionist)
@@ -337,7 +342,8 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     • Drinks: 3 health drinks available, and herbal teas available throughout the retreat.
     
     • Included Activities:
-      o Ayurveda Workshop. (Guest teacher from Montreal) o Yoga Master Classes (Senior Vinyasa Yoga Teacher)
+      o Ayurveda Workshop. (Guest teacher from Montreal)
+      o Yoga Master Classes (Senior Vinyasa Yoga Teacher)
       o Abundance, Fire, and Cacao Ceremonies
       o Sound Bath (Guest teacher)
       o Writing Workshop o 1 Pilates class and 3 yoga classes
@@ -345,8 +351,7 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
       
     Don't miss the opportunity to participate in a yoga retreat focused on nutrition and yoga practice in a peaceful natural setting. Spots are limited, come experience this dream location.
 
-    For 2-payment options, please contact the following email: Jeanst@local-108.com.
-      `,
+    For 2-payment options, please contact the following email: Jeanst@local-108.com.`,
     link: {
       title: "Upcoming Event",
       path: "/upcoming/le-temple",
@@ -380,9 +385,14 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
     cta: "Réservez maintenant - Disponibilité limitée",
     title: "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024",
     slogan: "Débloquez votre univers intérieur",
-    introduction: `Plongez dans un oasis de sérénité et de bien-être à seulement quelques minutes de la vibrante ville de Québec !
+    introduction: `Plongez dans un oasis de sérénité et de bien-être à seulement quelques minutes de la ville de Québec !
     
 Local 108 est ravi de vous inviter à notre retraite de nutrition et yoga, un voyage unique à travers les chakras, les centres d'énergie du corps humain. Pendant cette retraite, nous explorerons chaque chakra et ses qualités uniques, dans un cadre paisible et enrichissant.
+
+Forfait tout compris: Retraite de Yoga de 3 jours, 2 nuits, 7 repas, 10 activités bien-être, et plus encore.
+
+Inclus:
+• Le souper de bienvenue: Souper pour tous les participants à leur arrivée, avec des options végétariennes et antiallergiques.
 
 • Déjeuners : 2 déjeuners buffet avec une variété d'options délicieuses et saines,
 
@@ -393,7 +403,8 @@ Local 108 est ravi de vous inviter à notre retraite de nutrition et yoga, un vo
 • Boissons : 3 boissons santé à disposition, et des tisanes disponibles pendant toute la retraite.
 
 • Activités incluses :
-  o Atelier d'Ayurveda. (Professeure invitée de Montréal) o Master classes de yoga (Professeure senior en Vinyasa Yoga)
+  o Atelier d'Ayurveda. (Professeure invitée de Montréal)
+  o Master classes de yoga (Professeure senior en Vinyasa Yoga)
   o Cérémonies d'abondance, de feu et de cacao
   o Bain de son (Sound bath, professeur invité)
   o Atelier d'écriture o 1 cours de Pilates et de 3 classes de yoga
