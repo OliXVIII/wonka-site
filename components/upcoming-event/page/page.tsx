@@ -3,12 +3,11 @@ import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
 import { MainImageUpcoming } from "./main-image";
 import { NextWrapper } from "../../next-wrapper";
-import { BookNowButton } from "./book-now";
 import { RowImages } from "./row-images";
 import { OfferComponent } from "./offer";
 import { ReserveModal } from "./reserve-modal";
 import { CTAUpcomingEvent } from "./cta";
-import { ScheduleDays } from "./schedule/schedule.days";
+import { ScheduleDays } from "./schedule/schedule-days";
 
 type UpcomingEventPageProps = {
   data: DataType;
