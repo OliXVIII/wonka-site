@@ -57,42 +57,59 @@ export type LocaleUpcomingEvent = Record<Language, UpcomingEvent>;
 const roomOptions: Record<Language, Offer[]> = {
   en: [
     {
-      title: "Single Bed in 4-Person Room",
+      title: "All-Inclusive Package\n(2 NIGHTS, 3 DAYS)",
       quantity: 12,
       price: 625, // Prix total pour deux nuits par lit
       tax: true,
-      description:
-        "Bunk beds, this room is comfortable and immersive. Includes 7 meals, 2 nights, and 10 activities. Price is for a single bed in a 4-person room for two nights.",
+      description: `Accommodation:
+- Meals
+- Activities
+- Individual spot in a 4-person room
+
+STARTING AT: 625 $ + taxes`,
       stripe: "https://buy.stripe.com/3csdUN2mW8074Ss4gk",
     },
     {
-      title: "Single Bed in 2-Person Room",
+      title: "All-Inclusive Package\n(2 NIGHTS, 3 DAYS)",
       quantity: 3,
       price: 650, // Prix total pour deux nuits par lit
       tax: true,
-      description:
-        "Double bed for two people, perfect for couples or friends. Includes 7 meals, 2 nights, and 10 activities. Price is for a single bed in a 2-person room for two nights.",
+      description: `Accommodation:
+- Meals
+- Activities
+- Individual spot in a 2-person room
+
+STARTING AT: 650 $ + taxes`,
       stripe: "https://buy.stripe.com/fZedUN3r0bcj1GgfZ5",
     },
   ],
   fr: [
     {
-      title: "Place individuelle dans chambre 4 personnes",
+      title: `Forfait tout inclus\n(2 NUITS, 3 JOURS)`,
       stripe: "https://buy.stripe.com/3csdUN2mW8074Ss4gk",
       quantity: 12,
       price: 625, // Prix total pour deux nuits par lit
       tax: true,
-      description:
-        "Lits superposés, cette chambre est confortable et immersive. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour une place dans une chambre de 4 personnes pour deux nuits.",
+      description: `Hébergement:
+- Repas
+- Activités
+- Place individuelle dans une chambre de 4 personnes
+
+À PARTIR DE : 625 $ + taxes
+`,
     },
     {
-      title: "Place individuelle dans chambre 2 personnes",
+      title: "Forfait tout inclus\n(2 NUITS, 3 JOURS)",
       stripe: "https://buy.stripe.com/fZedUN3r0bcj1GgfZ5",
       quantity: 3,
       price: 650, // Prix total pour deux nuits pour la chambre entière
       tax: true,
-      description:
-        "Lit double pour deux personnes, idéal pour les couples. Inclut 7 repas, 2 nuits et 10 activités. Le prix est pour une place dans une chambre de 2 personnes pour deux nuits.",
+      description: `Hébergement:
+- Repas
+- Activités
+- Place individuelle dans une chambre de 2 personnes
+
+        À PARTIR DE : 650 $ + taxes`,
     },
   ],
 };
@@ -410,11 +427,9 @@ Inclus:
   o Atelier d'écriture o 1 cours de Pilates et de 3 classes de yoga
   o Méditation au bord du lac
 
-Ne manquez pas l'opportunité de participer à une retraite de yoga axée sur la nutrition et la pratique du yoga dans un environnement paisible en pleine nature. Les places sont limitées, venez vivre cette expérience dans un lieu de rêve.
-
-Pour des options de paiement en 2 versements, veuillez contacter le courriel suivant : Jeanst@local-108.com`,
+Ne manquez pas l'opportunité de participer à une retraite de yoga axée sur la nutrition et la pratique du yoga dans un environnement paisible en pleine nature. Les places sont limitées, venez vivre cette expérience dans un lieu de rêve.`,
     description:
-      "Nous proposons deux types d'hébergement : des chambres partagées pour quatre personnes, idéales pour ceux désirant partager leur expérience, et des chambres doubles pour plus d'intimité. Chaque option inclut les repas, les activités bien-être, et des petits plus pour enrichir votre séjour. Nous sommes impatients de vous accueillir pour cette aventure enrichissante.",
+      "Nous proposons deux types d'hébergement : des chambres partagées pour quatre personnes, idéales pour ceux désirant partager leur expérience, et des chambres doubles pour plus d'intimité. Chaque option inclut les repas, les activités bien-être, et des petits plus pour enrichir votre séjour. Nous sommes impatients de vous accueillir pour cette aventure enrichissante.\n\nPour des options de paiement en 2 versements, veuillez contacter le courriel suivant : Jeanst@local-108.com",
     metadata: {
       title:
         "LEVEL - Retraite Nutrition-Yoga-Équilibre 2024 (Organisé par Local 108)",
