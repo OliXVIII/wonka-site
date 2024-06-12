@@ -52,7 +52,7 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
       <p className="pb-4 text-center">{upcomingEventsLocale.date}</p>
 
       <RowImages upcomingEventsLocale={upcomingEventsLocale} />
-      <p className="my-10 whitespace-pre-wrap text-justify leading-5">
+      <p className="left my-10 whitespace-pre-wrap text-justify leading-5">
         {upcomingEventsLocale.introduction}
       </p>
 

@@ -363,7 +363,8 @@ export const upcomingEventsLocal108: Record<Language, UpcomingEvent> = {
       o Yoga Master Classes (Senior Vinyasa Yoga Teacher)
       o Abundance, Fire, and Cacao Ceremonies
       o Sound Bath (Guest teacher)
-      o Writing Workshop o 1 Pilates class and 3 yoga classes
+      o Writing Workshop
+      o 1 Pilates class and 3 yoga classes
       o Meditation by the lake
       
     Don't miss the opportunity to participate in a yoga retreat focused on nutrition and yoga practice in a peaceful natural setting. Spots are limited, come experience this dream location.
@@ -424,7 +425,8 @@ Inclus:
   o Master classes de yoga (Professeure senior en Vinyasa Yoga)
   o Cérémonies d'abondance, de feu et de cacao
   o Bain de son (Sound bath, professeur invité)
-  o Atelier d'écriture o 1 cours de Pilates et de 3 classes de yoga
+  o Atelier d'écriture
+  o 1 cours de Pilates et de 3 classes de yoga
   o Méditation au bord du lac
 
 Ne manquez pas l'opportunité de participer à une retraite de yoga axée sur la nutrition et la pratique du yoga dans un environnement paisible en pleine nature. Les places sont limitées, venez vivre cette expérience dans un lieu de rêve.`,
