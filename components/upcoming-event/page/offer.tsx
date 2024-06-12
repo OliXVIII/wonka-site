@@ -26,7 +26,7 @@ const OfferInfo = ({
       href={`?reserve-modal=true&selected=${index}`}
       key={room.title}
       className={
-        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-lg:px-1 max-md:w-1/2 max-md:w-full max-md:shadow-md max-sm:min-h-72 max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
+        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 px-1 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-md:w-full max-md:px-4 max-md:shadow-md max-sm:min-h-72 max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
         (mobile ? " max-sm:mt-3.5 md:hidden" : "")
       }
     >

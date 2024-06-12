@@ -109,7 +109,7 @@ STARTING AT: 650 $ + taxes`,
 - Activités
 - Place individuelle dans une chambre de 2 personnes
 
-        À PARTIR DE : 650 $ + taxes`,
+À PARTIR DE : 650 $ + taxes`,
     },
   ],
 };
