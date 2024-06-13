@@ -32,11 +32,11 @@ export default function Navbar({
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
   const menu = uiContent.navigation;
+  const profileMenu = uiContent.profileMenu;
   const nextLocale =
     locale?.nextLanguage && locale.nextLanguage !== locale.path
       ? localesDetails[locale.nextLanguage]
       : null;
-
   return (
     <>
       <nav
@@ -112,7 +112,9 @@ export default function Navbar({
                 <Cart />
               </Suspense>
             ) : null}
-            <LoginButton />
+            {profileMenu?.length ? (
+              <LoginButton profileMenu={profileMenu} locale={locale} />
+            ) : null}
           </div>
         </div>
       </nav>

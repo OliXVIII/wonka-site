@@ -2,22 +2,30 @@
 
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
+import { MenuContent } from "@/types/ui-content";
+import { LocaleDetails } from "@/types/languages";
+import { ProfileModal } from "../layout/navbar/profile-menu/profile-modal";
 
-export const LoginButton = () => {
+type LoginProps = {
+  profileMenu: MenuContent[];
+  locale: LocaleDetails;
+}
+
+export const LoginButton = (
+  { profileMenu, locale }: LoginProps
+) => {
   const { data: session } = useSession();
-
+  console.log("Profile menu", profileMenu);
   return (
     <>
-    {session ? 
-    null
-    :
     <div className="relative z-50 h-10 w-10">
+      {session ? 
+      <ProfileModal menu={profileMenu} locale={locale}/>
+      : 
       <button onClick={() => signIn("google")}>
         <Image alt="login" src="/login.svg" fill />
-      </button>
+      </button>}
     </div>
-    }
     </>
   );
 };

@@ -28,17 +28,23 @@ const data: DataType = {
     readMore: "",
     siteName: "Wonkasite",
     slogan: "Focus on your business, we take care of the rest",
+    profileMenu: [
+      { title: "Profile", path: "/profile" },
+      { title: "Settings", path: "/settings" },
+      { title: "Sign Out", path: "/sign-out" },
+  ],
   },
   storage: {
     logo: {
       navbar: {
         src: "",
-        //src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
+        // src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
         aspectRatio: 1,
         inceptionLogo: true,
       },
     },
   },
+  
   features: {
     navbar: {
       fixed: true,
