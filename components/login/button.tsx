@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
+import Login from "@/public/login.svg";
 import Image from "next/image";
 import { MenuContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
@@ -17,15 +18,13 @@ export const LoginButton = (
   const { data: session } = useSession();
   console.log("Profile menu", profileMenu);
   return (
-    <>
-    <div className="relative z-50 h-10 w-10">
+    <div className="h-10 w-10">
       {session ? 
-      <ProfileModal menu={profileMenu} locale={locale}/>
+      <ProfileModal menu={profileMenu}/>
       : 
       <button onClick={() => signIn("google")}>
-        <Image alt="login" src="/login.svg" fill />
+        <Login className="h-10 w-10" />
       </button>}
     </div>
-    </>
   );
 };
