@@ -23,7 +23,7 @@ export const ProfileItem = () => {
 
   return (
     <>
-      <div className="flex h-full w-full px-8">
+      <div className="flex h-full w-full px-8 my-4">
           <div className="m-auto flex flex-col whitespace-nowrap">
             <div className="mb-4">
               <div className="flex items-center font-bold pb-3 border-b border-dark dark:border-light">
@@ -41,7 +41,7 @@ export const ProfileItem = () => {
               </div>
             </div>
           
-          <div className="mb-4 flex h-10 w-full rounded-md">
+          <div className="flex h-10 w-full rounded-md">
             <button
               onClick={() => signOut()}
               className="flex items-center font-bold"
