@@ -2,21 +2,19 @@
 
 import LogOut from "@/public/log-out.svg";
 import Setting from "@/public/setting.svg";
-import Arrow from "@/public/arrow-menu.svg";
-import { MenuContent } from "@/types/ui-content";
+// import Arrow from "@/public/arrow-menu.svg";
+// import { MenuContent } from "@/types/ui-content";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+// import Image from "next/image";
 
-type ImageContent = {
-  image: string;
-  menu: MenuContent[];
-};
+// type ImageContent = {
+//   image: string;
+//   menu: MenuContent[];
+// };
 
-type UserProps = {
-  userMenu: MenuContent[];
-};
-
-const testImage: ImageProps = {};
+// type UserProps = {
+//   userMenu: MenuContent[];
+// };
 
 export const ProfileItem = () => {
   const { data: session } = useSession();
