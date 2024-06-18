@@ -4,9 +4,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import  { dbAdmin } from '@/lib/firebase-admin'; // Adjust the import path as necessary
+import { checkAdmin } from './check-admin';
+import { searchUserByEmail } from './admin-function/search-user-by-email';
 
 // Define the loginAction function
-export async function loginAction(req: NextRequest) {
+export async function loginAction(req: NextRequest, userId: string, domain: string) {
   // Get the authentication token
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
@@ -26,7 +28,8 @@ export async function loginAction(req: NextRequest) {
     const userData = userSnapshot.data() ?? {};
 
     // Verify special authorization levels
-    if (userData.authorizationLevel && userData.authorizationLevel === 'special') {
+    console.log('UserId:', userId);
+    if (await checkAdmin(domain, userId)) {
       // User has special authorization, return the user data
       return new NextResponse(JSON.stringify(userData), {
         status: 200,
@@ -42,14 +45,14 @@ export async function loginAction(req: NextRequest) {
     await usersRef.doc(token.sub || '').set({
       email: token.email,
       name: token.name,
-      authorizationLevel: 'basic', // Assign a default authorization level
+      role: 'client', // Assign a default authorization level
     });
 
     // Return the newly created user data
     return new NextResponse(JSON.stringify({
       email: token.email,
       name: token.name,
-      authorizationLevel: 'basic',
+      role: 'client', // Assign a default role
     }), {
       status: 201,
       headers: {

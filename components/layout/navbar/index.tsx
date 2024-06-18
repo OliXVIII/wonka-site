@@ -20,6 +20,7 @@ type NavbarProps = {
   slug?: string;
   searchbar?: boolean;
   inceptionLogo?: boolean;
+  domain: string;
 };
 
 export default function Navbar({
@@ -28,6 +29,7 @@ export default function Navbar({
   searchbar,
   slug = "",
   inceptionLogo,
+  domain,
 }: NavbarProps) {
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
@@ -113,7 +115,7 @@ export default function Navbar({
               </Suspense>
             ) : null}
             {profileMenu?.length ? (
-              <LoginButton profileMenu={profileMenu} locale={locale} />
+              <LoginButton domain={domain} profileMenu={profileMenu} locale={locale} />
             ) : null}
           </div>
         </div>

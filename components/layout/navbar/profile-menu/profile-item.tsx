@@ -5,6 +5,7 @@ import Setting from "@/public/setting.svg";
 import Arrow from "@/public/arrow-menu.svg";
 // import { MenuContent } from "@/types/ui-content";
 import { signOut, useSession } from "next-auth/react";
+import { checkAdmin } from "@/server/check-admin";
 // import Image from "next/image";
 
 // type ImageContent = {
@@ -16,8 +17,9 @@ import { signOut, useSession } from "next-auth/react";
 //   userMenu: MenuContent[];
 // };
 
-export const ProfileItem = () => {
+export const ProfileItem = (domain: string) => {
   const { data: session } = useSession();
+  const admin = checkAdmin(domain, session?.user?.id as string);
 
   return (
     <>
@@ -32,9 +34,15 @@ export const ProfileItem = () => {
                 />
                 <span className="pl-3">{session?.user?.name}</span>
               </div>
+              {admin ?
               <div className="flex items-center pt-3 ">
                 <Setting className="h-8 w-8" />
-                <span className="pl-3">Admin (optionnel)</span>
+                <span className="pl-3">Admin</span>
+                <Arrow className="h-8 w-8 justify-end" />
+              </div> : null }
+              <div className="flex items-center pt-3 ">
+                <Setting className="h-8 w-8" />
+                <span className="pl-3">UserId: {session?.user?.id}</span>
                 <Arrow className="h-8 w-8 justify-end" />
               </div>
             </div>

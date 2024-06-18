@@ -22,9 +22,10 @@ export const useOutsideClickClose = (
 
 type ProfileModalProps = {
   menu: MenuContent[];
+  domain: string;
 };
 
-export const ProfileModal = ({ menu }: ProfileModalProps) => {
+export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
   const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
   const { data: session } = useSession();
@@ -43,7 +44,7 @@ export const ProfileModal = ({ menu }: ProfileModalProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button>
-        <ProfileItem />
+        <ProfileItem domain={domain}/>
       </dialog>
 
       <button
