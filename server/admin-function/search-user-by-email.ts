@@ -1,27 +1,37 @@
 "use server";
 
-import { db } from "@/lib/firebase";
+import { dbAdmin } from "@/lib/firebase-admin";
 import { checkAdmin } from "../check-admin";
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
 
 // Function to simulate fetching user data
-export const searchUserByEmail = async (domain: string, email: string, loggedInUserId: string) => {
-    try {
-      // Check if the logged-in user has an admin role
-      const admin = await checkAdmin(domain, loggedInUserId);
-  
+export const searchUserByEmail = async (domain: string, email: string, loggedInUserId: string): Promise<DocumentData | null> => {
+  try {
+    // Check if the logged-in user has an admin role
+    const adminRole = await checkAdmin(domain, loggedInUserId);
+
+    if (adminRole) {
       // User has admin role, fetch the user data
-      const collectionRef = collection(db, `domain/${domain}/users`);
-      const emailQuery = query(collectionRef, where(`email`, '==', email));
-      let emailSnap = await getDocs(emailQuery);
+      const collectionRef = dbAdmin.collection(`domain/${domain}/users`);
+      const emailQuery = collectionRef.where('email', '==', email);
+      const emailSnap: QuerySnapshot = await emailQuery.get();
+
       if (!emailSnap.empty) {
-          const documentId = emailSnap.docs[0].id;
-          const docRef = doc(db, `domain/${domain}/users/${documentId}`)
-          return docRef;
+        const userData = emailSnap.docs[0].data();
+        return {
+          id: emailSnap.docs[0].id,
+          ...userData,
+        };
       } else {
         console.log('No matching documents found');
+        return null;
       }
-    } catch (error) {
-      console.error('Error searching user by email:', error);
+    } else {
+      console.log('User does not have admin role');
+      return null;
     }
-  };
+  } catch (error) {
+    console.error('Error searching user by email:', error);
+    return null;
+  }
+};

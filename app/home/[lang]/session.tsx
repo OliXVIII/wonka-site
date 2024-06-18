@@ -31,7 +31,7 @@ export const Session = () => {
             Sign Out
           </button>
           <button
-            onClick={() => checkAdmin('local-108', session.user?.id as string)}
+            onClick={() => setAdmin('local-108', "itsneazh47@gmail.com", session.user?.id as string)}
             className="rounded-lg border border-black bg-blue-400 px-5 py-1"
           >
             Test Fetch
