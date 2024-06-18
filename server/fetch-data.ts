@@ -11,6 +11,8 @@ import {
   LocaleUpcomingEvent,
   upcomingEventsLocal108,
 } from "@/types/upcoming-event";
+import { log } from "console";
+import { checkAdmin } from "./check-admin";
 
 export type DataType = {
   uiContent: UiContent;
@@ -20,6 +22,7 @@ export type DataType = {
   upcomingEvents?: LocaleUpcomingEvent;
   customDomain?: string;
   profileMenu?: MenuContent[];
+  users?: any;
 }
 
 export async function fetchData(
@@ -52,7 +55,6 @@ export async function fetchData(
   }
 
   const data = docSnap.data();
-
   if (data?.uiContent) {
     console.log("Document data:", docSnap.data());
     return {
@@ -61,6 +63,7 @@ export async function fetchData(
       features: data.features,
       upcomingEvents: data.upcomingEvents,
       domain: domain,
+      users: data.users,
     };
   } else {
     console.log("No such document!");

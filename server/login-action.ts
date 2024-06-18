@@ -3,7 +3,7 @@
 // Import necessary utilities from Next.js and Firebase
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import dbAdmin from '@/server/firebase-admin'; // Adjust the import path as necessary
+import  { dbAdmin } from '@/lib/firebase-admin'; // Adjust the import path as necessary
 
 // Define the loginAction function
 export async function loginAction(req: NextRequest) {
@@ -17,11 +17,13 @@ export async function loginAction(req: NextRequest) {
 
   // Access the Firestore database
   const usersRef = dbAdmin.collection('users');
-  const userSnapshot = await usersRef.doc(token.sub).get();
+  console.log(usersRef);
+
+  const userSnapshot = await usersRef.doc(token.sub || '').get();
 
   // Check if the user already exists
   if (userSnapshot.exists) {
-    const userData = userSnapshot.data();
+    const userData = userSnapshot.data() ?? {};
 
     // Verify special authorization levels
     if (userData.authorizationLevel && userData.authorizationLevel === 'special') {
@@ -37,7 +39,7 @@ export async function loginAction(req: NextRequest) {
     return new NextResponse('Access Denied', { status: 403 });
   } else {
     // User does not exist, create a new user entry
-    await usersRef.doc(token.sub).set({
+    await usersRef.doc(token.sub || '').set({
       email: token.email,
       name: token.name,
       authorizationLevel: 'basic', // Assign a default authorization level

@@ -20,6 +20,6 @@ const app: App = getApps().length
     });
 
 export const dbAdmin: Firestore = getFirestore(app);
-
+`
 // Move the db.settings() call outside of the conditional statement
-dbAdmin.settings({ ignoreUndefinedProperties: true });
+
