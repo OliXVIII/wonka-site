@@ -7,6 +7,17 @@ const nextConfig = {
       allowedOrigins: ["app.localhost:3000"],
     },
   },
+
+  experimental: {
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
+  },
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

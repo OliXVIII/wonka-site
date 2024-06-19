@@ -46,6 +46,12 @@ export const Session = () => {
           <h1 className="text-3xl font-bold text-red-500">
             You're not logged in
           </h1>
+          <button
+            onClick={() => handleLogin("local-108")}  
+            className="rounded-lg border border-black bg-blue-400 px-5 py-1"
+          >
+            Test Fetch
+          </button>
           <div className="flex space-x-5"></div>
         </>
       )}
