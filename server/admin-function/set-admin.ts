@@ -5,6 +5,8 @@ import { dbAdmin } from "@/lib/firebase-admin";
 
 export const setAdmin = async (domain: string, email: string, loggedInUserId: string): Promise<void> => {
   try {
+
+    console.log('setAdmin:', domain, email, loggedInUserId);
     // Fetch the user data
     const userDoc = await searchUserByEmail(domain, email, loggedInUserId);
 

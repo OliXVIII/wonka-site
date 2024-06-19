@@ -12,7 +12,7 @@ import {
   upcomingEventsLocal108,
 } from "@/types/upcoming-event";
 import { log } from "console";
-import { checkAdmin } from "./check-admin";
+import { checkAdmin } from "./admin-function/check-admin";
 
 export type DataType = {
   uiContent: UiContent;

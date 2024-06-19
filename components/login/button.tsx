@@ -11,18 +11,19 @@ import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
 type LoginProps = {
   profileMenu: MenuContent[];
   locale: LocaleDetails;
+  domain: string;
+  admin?: boolean;
 }
 
 export const LoginButton = (
-  { domain, profileMenu, locale }: LoginProps
+  { domain, profileMenu, locale, admin }: LoginProps
 ) => {
   const { data: session } = useSession();
-  console.log("Profile menu", profileMenu);
   return (    <div className="h-10 w-10">
       {session ? 
-      <ProfileModal menu={profileMenu} domain={domain}/>
+      <ProfileModal menu={profileMenu} domain={domain} admin={admin}/>
       : 
-      <button onClick={() => handleLogin(domain)}>
+      <button onClick={() => signIn('google')}>
         <Login className="h-10 w-10" />
       </button>}
     </div>

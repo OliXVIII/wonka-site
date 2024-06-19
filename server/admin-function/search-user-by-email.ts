@@ -1,12 +1,14 @@
 "use server";
 
 import { dbAdmin } from "@/lib/firebase-admin";
-import { checkAdmin } from "../check-admin";
+import { checkAdmin } from "./check-admin";
 import { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
 
 // Function to simulate fetching user data
 export const searchUserByEmail = async (domain: string, email: string, loggedInUserId: string): Promise<DocumentData | null> => {
   try {
+
+    console.log('searchUserByEmail:', domain, email, loggedInUserId)
     // Check if the logged-in user has an admin role
     const adminRole = await checkAdmin(domain, loggedInUserId);
 

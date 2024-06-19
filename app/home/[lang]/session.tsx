@@ -1,11 +1,15 @@
 "use client";
 
+import { handleLogin } from "@/components/layout/navbar/profile-menu/handle-login";
 import { searchUserByEmail } from "@/server/admin-function/search-user-by-email";
 import { setAdmin } from "@/server/admin-function/set-admin";
-import { checkAdmin } from "@/server/check-admin";
+import { checkAdmin } from "@/server/admin-function/check-admin";
 import { fetchData, testFetchUser } from "@/server/fetch-data";
+import { loginAction } from "@/server/login-action";
 import { defaultLocale } from "@/types/languages";
 import { signOut, useSession } from "next-auth/react";
+import { userExist } from "@/server/admin-function/user-exist";
+import { AddUser } from "@/server/admin-function/add-user";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -31,7 +35,7 @@ export const Session = () => {
             Sign Out
           </button>
           <button
-            onClick={() => setAdmin('local-108', "itsneazh47@gmail.com", session.user?.id as string)}
+            onClick={() => handleLogin("local-108")}  
             className="rounded-lg border border-black bg-blue-400 px-5 py-1"
           >
             Test Fetch
@@ -42,8 +46,7 @@ export const Session = () => {
           <h1 className="text-3xl font-bold text-red-500">
             You're not logged in
           </h1>
-          <div className="flex space-x-5">
-          </div>
+          <div className="flex space-x-5"></div>
         </>
       )}
     </>
