@@ -10,6 +10,7 @@ import { defaultLocale } from "@/types/languages";
 import { signOut, useSession } from "next-auth/react";
 import { userExist } from "@/server/admin-function/user-exist";
 import { addUser } from "@/server/admin-function/add-user";
+import { LoginButton } from "@/components/login/button";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -46,12 +47,7 @@ export const Session = () => {
           <h1 className="text-3xl font-bold text-red-500">
             You're not logged in
           </h1>
-          <button
-            onClick={() => handleLogin("local-108")}  
-            className="rounded-lg border border-black bg-blue-400 px-5 py-1"
-          >
-            Test Fetch
-          </button>
+          <LoginButton domain={"local-108"}/>
           <div className="flex space-x-5"></div>
         </>
       )}

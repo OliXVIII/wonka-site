@@ -38,7 +38,7 @@ const data: DataType = {
     logo: {
       navbar: {
         src: "",
-        // src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
+        src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
         aspectRatio: 1,
         inceptionLogo: true,
       },
@@ -68,7 +68,7 @@ const HomePage = ({ params }: HomePageProps) => {
   return (
     <div className="flex">
     <div className="flex flex-col">
-      <Navbar data={data} locale={locale} admin={true}/>
+      <Navbar domain={"local-108"} data={data} locale={locale} admin={true}/>
     </div>
     <div className="flex flex-col justify-center m-auto pt-52">
       <Session />

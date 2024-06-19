@@ -117,7 +117,7 @@ export default function Navbar({
               </Suspense>
             ) : null}
             {profileMenu?.length ? (
-              <LoginButton domain={domain} profileMenu={profileMenu} locale={locale} admin={admin}/>
+              <LoginButton domain={domain} profileMenu={profileMenu} admin={admin}/>
             ) : null}
           </div>
         </div>

@@ -7,23 +7,31 @@ import { MenuContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
 import { ProfileModal } from "../layout/navbar/profile-menu/profile-modal";
 import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
+import { useEffect } from "react";
 
 type LoginProps = {
-  profileMenu: MenuContent[];
-  locale: LocaleDetails;
+  profileMenu?: MenuContent[];
   domain: string;
   admin?: boolean;
 }
 
 export const LoginButton = (
-  { domain, profileMenu, locale, admin }: LoginProps
+  { domain, profileMenu, admin }: LoginProps
 ) => {
   const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+    handleLogin(domain, session);}
+  }, [session, domain]);
+
+  const initiateLogin = async () => {
+    await signIn("google");
+  };
   return (    <div className="h-10 w-10">
-      {session ? 
-      <ProfileModal menu={profileMenu} domain={domain} admin={admin}/>
+      {session ? (profileMenu ?
+      <ProfileModal menu={profileMenu} domain={domain} admin={admin}/> : null)
       : 
-      <button onClick={() => signIn('google')}>
+      <button onClick={initiateLogin}>
         <Login className="h-10 w-10" />
       </button>}
     </div>
