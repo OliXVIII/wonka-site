@@ -9,7 +9,7 @@ import { loginAction } from "@/server/login-action";
 import { defaultLocale } from "@/types/languages";
 import { signOut, useSession } from "next-auth/react";
 import { userExist } from "@/server/admin-function/user-exist";
-import { AddUser } from "@/server/admin-function/add-user";
+import { addUser } from "@/server/admin-function/add-user";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -34,12 +34,12 @@ export const Session = () => {
           >
             Sign Out
           </button>
-          <button
-            onClick={() => handleLogin("local-108")}  
+          {/* <button
+            onClick={() => addUser("local-108", 'test@gmail.com', "TEST ID", "Test User")}  
             className="rounded-lg border border-black bg-blue-400 px-5 py-1"
           >
-            Test Fetch
-          </button>
+            HAD UZER TWO DATA
+          </button> */}
         </>
       ) : (
         <>

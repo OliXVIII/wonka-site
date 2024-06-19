@@ -1,17 +1,16 @@
 "use server";
 
 import { dbAdmin } from "@/lib/firebase-admin";
-import { log } from "console";
-import { QuerySnapshot } from "firebase-admin/firestore";
 import { userExist } from "./user-exist";
 
 interface User {
     UserId: string
     email: string;
     name: string;
+    imageUrl: string;
 }
 
-export const AddUser = async (domain: string, email:string, userId:string, name:string): Promise<boolean> => {
+export const addUser = async (domain: string, email:string, userId:string, name:string, imageURL:string): Promise<boolean> => {
   try {
 
     console.log('Add-user:', domain, userId);
@@ -27,6 +26,7 @@ export const AddUser = async (domain: string, email:string, userId:string, name:
         userId,
         email,
         name,
+        imageURL,
     }
     await collectionRef.doc(userId).set(userData);
     console.log('User added');
