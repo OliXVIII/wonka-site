@@ -26,7 +26,7 @@ type ProfileModalProps = {
   admin?: boolean;
 };
 
-export const ProfileModal = ({ domain, menu, admin }: ProfileModalProps) => {
+export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
   const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
   const { data: session } = useSession();
@@ -45,7 +45,7 @@ export const ProfileModal = ({ domain, menu, admin }: ProfileModalProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button>
-        <ProfileItem domain={domain} admin={admin}/>
+        <ProfileItem domain={domain}/>
       </dialog>
 
       <button

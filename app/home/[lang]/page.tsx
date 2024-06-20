@@ -68,7 +68,7 @@ const HomePage = ({ params }: HomePageProps) => {
   return (
     <div className="flex">
     <div className="flex flex-col">
-      <Navbar domain={"local-108"} data={data} locale={locale} admin={true}/>
+      <Navbar domain={"local-108"} data={data} locale={locale}/>
     </div>
     <div className="flex flex-col justify-center m-auto pt-52">
       <Session />

@@ -19,12 +19,11 @@ import { checkAdmin } from "@/server/admin-function/check-admin";
 
 type ProfileItemProps = {
   domain: string;
-  admin?: boolean;
 };
 
-export const ProfileItem = ({ domain, admin }: ProfileItemProps) => {
+export const ProfileItem = ({ domain}: ProfileItemProps) => {
   const { data: session } = useSession();
-  // const admin = checkAdmin(domain, session?.user?.id as string);
+  const admin = session?.user?.role === "admin";
 
   return (
     <>
@@ -46,11 +45,6 @@ export const ProfileItem = ({ domain, admin }: ProfileItemProps) => {
                 <Arrow className="h-8 w-8 justify-end" />
               </div>
             ) : null}
-            <div className="flex items-center pt-3 ">
-              <Setting className="h-8 w-8" />
-              <span className="pl-3">UserId: {session?.user?.id}</span>
-              <Arrow className="h-8 w-8 justify-end" />
-            </div>
           </div>
 
           <div className="flex h-10 w-full rounded-md">

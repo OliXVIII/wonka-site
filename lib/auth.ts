@@ -1,8 +1,12 @@
+"use server";
+
+import { dbAdmin } from "./firebase-admin";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
+import { getUserRole } from "@/server/admin-function/get-user-role";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -64,10 +68,13 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: async ({ session, token }) => {
+      const role = await getUserRole("local-108", session?.user?.email ?? "");
+      console.log("Role: ", role);
       session.user = {
         ...session.user,
         // @ts-expect-error
         id: token.sub,
+        role: role,
         // @ts-expect-error
         username: token?.user?.username || token?.user?.gh_username,
       };

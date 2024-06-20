@@ -11,6 +11,7 @@ import { signOut, useSession } from "next-auth/react";
 import { userExist } from "@/server/admin-function/user-exist";
 import { addUser } from "@/server/admin-function/add-user";
 import { LoginButton } from "@/components/login/button";
+import { getUserRole } from "@/server/admin-function/get-user-role";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -34,6 +35,11 @@ export const Session = () => {
             className="rounded-lg border border-black bg-red-400 px-5 py-1"
           >
             Sign Out
+          </button><button
+            onClick={() => getUserRole("local-108", "ncastonguay01@gmail.com")}
+            className="rounded-lg border border-black bg-red-400 px-5 py-1"
+          >
+            Test
           </button>
           {/* <button
             onClick={() => addUser("local-108", 'test@gmail.com', "TEST ID", "Test User")}  
@@ -41,13 +47,16 @@ export const Session = () => {
           >
             HAD UZER TWO DATA
           </button> */}
+          <p>
+            {session.user?.role}
+          </p>
         </>
       ) : (
         <>
           <h1 className="text-3xl font-bold text-red-500">
             You're not logged in
           </h1>
-          <LoginButton domain={"local-108"}/>
+          
           <div className="flex space-x-5"></div>
         </>
       )}
