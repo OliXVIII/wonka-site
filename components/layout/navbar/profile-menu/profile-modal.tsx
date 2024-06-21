@@ -36,15 +36,15 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
     <>
       <dialog
         ref={modalRef}
-        className="mr-5 mt-16 shadow-profile shadow-dark dark:shadow-light rounded-lg"
+        className="mr-5 mt-16 shadow-profile shadow-dark dark:shadow-light dark:bg-dark-light bg-light rounded-lg"
       >
-        <button
+        {/* <button
           className="flex h-11 w-11 items-center pb-2 pl-2"
           onClick={() => modalRef.current?.close()}
           aria-label="Close mobile menu"
         >
           <XMarkIcon className="h-6 w-6" />
-        </button>
+        </button> */}
         <ProfileItem domain={domain}/>
       </dialog>
 

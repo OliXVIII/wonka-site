@@ -42,9 +42,9 @@
       font-size: 0.9rem;
     }
   }
-  svg {
+  /* svg {
     @apply fill-dark  dark:fill-light ;
-  }
+  } */
   progress.appearance-none {
     /* Remove default browser styling */
     -webkit-appearance: none;

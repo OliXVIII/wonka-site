@@ -36,7 +36,7 @@ export const LoginButton = ({ domain, profileMenu}: LoginProps) => {
         ) : null
       ) : (
         <button onClick={initiateLogin}>
-          <Login className="h-10 w-10" />
+          <Login className="h-10 w-10 stroke-dark dark:stroke-light" />
         </button>
       )}
     </div>
