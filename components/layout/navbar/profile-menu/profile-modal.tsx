@@ -2,9 +2,7 @@
 
 import { MenuContent } from "@/types/ui-content";
 import { useEffect, useRef, RefObject } from "react";
-import { LocaleDetails } from "@/types/languages";
-import { signOut, useSession } from "next-auth/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useSession } from "next-auth/react";
 import { ProfileItem } from "./profile-item";
 
 // TODO: Make it work for contact us
@@ -23,7 +21,6 @@ export const useOutsideClickClose = (
 type ProfileModalProps = {
   menu: MenuContent[];
   domain: string;
-  admin?: boolean;
 };
 
 export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
@@ -36,7 +33,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
     <>
       <dialog
         ref={modalRef}
-        className="mr-5 mt-16 shadow-profile shadow-dark dark:shadow-light dark:bg-dark-light bg-light rounded-lg"
+        className="mr-5 mt-16 shadow-profile shadow-dark dark:shadow-dark-light dark:bg-dark-light bg-light rounded-lg"
       >
         {/* <button
           className="flex h-11 w-11 items-center pb-2 pl-2"
@@ -45,7 +42,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button> */}
-        <ProfileItem domain={domain}/>
+        <ProfileItem menu={menu} domain={domain}/>
       </dialog>
 
       <button

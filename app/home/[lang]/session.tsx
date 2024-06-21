@@ -1,16 +1,6 @@
 "use client";
 
-import { handleLogin } from "@/components/layout/navbar/profile-menu/handle-login";
-import { searchUserByEmail } from "@/server/admin-function/search-user-by-email";
-import { setAdmin } from "@/server/admin-function/set-admin";
-import { checkAdmin } from "@/server/admin-function/check-admin";
-import { fetchData, testFetchUser } from "@/server/fetch-data";
-import { loginAction } from "@/server/login-action";
-import { defaultLocale } from "@/types/languages";
 import { signOut, useSession } from "next-auth/react";
-import { userExist } from "@/server/admin-function/user-exist";
-import { addUser } from "@/server/admin-function/add-user";
-import { LoginButton } from "@/components/login/button";
 import { getUserRole } from "@/server/admin-function/get-user-role";
 
 export const Session = () => {

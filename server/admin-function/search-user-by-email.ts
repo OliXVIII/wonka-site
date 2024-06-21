@@ -1,7 +1,6 @@
 "use server";
 
 import { dbAdmin } from "@/lib/firebase-admin";
-import { checkAdmin } from "./check-admin";
 import { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
 
 // Function to simulate fetching user data

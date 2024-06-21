@@ -110,7 +110,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     ],
     profileMenu: [
       { title: "Profile", path: "/profile" },
-      { title: "Settings", path: "/settings" },
+      { title: "Admin", path: "/admin" },
       { title: "Sign Out", path: "/sign-out" },
     ],
     readMore: "Read More",
@@ -204,7 +204,7 @@ export const local108UIContent: Record<Language, UiContent> = {
     ],
     profileMenu: [
       { title: "Profil", path: "/profile" },
-      { title: "Paramètres", path: "/settings" },
+      { title: "Administration", path: "/settings" },
       { title: "Déconnexion", path: "/sign-out" },
     ],
     readMore: "Voir plus",

@@ -29,10 +29,10 @@ const data: DataType = {
     siteName: "Wonkasite",
     slogan: "Focus on your business, we take care of the rest",
     profileMenu: [
-      { title: "Profile", path: "/profile" },
-      { title: "Settings", path: "/settings" },
-      { title: "Sign Out", path: "/sign-out" },
-  ],
+      { title: "Profil", path: "/profile" },
+      { title: "Administration", path: "/admin" },
+      { title: "Déconnexion", path: "/sign-out" },
+    ],
   },
   storage: {
     logo: {
@@ -71,7 +71,6 @@ const HomePage = ({ params }: HomePageProps) => {
       <Navbar domain={"local-108"} data={data} locale={locale}/>
     </div>
     <div className="flex flex-col justify-center m-auto pt-52">
-      <Session />
     </div>
     </div>
     
