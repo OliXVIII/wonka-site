@@ -3,8 +3,7 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
-import { getUser, getUserRole } from "@/server/admin-function/get-user";
-import { dbAdmin } from "./firebase-admin";
+import { getUser } from "@/server/admin-function/get-user";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
