@@ -4,7 +4,6 @@ import { dbAdmin } from "@/lib/firebase-admin";
 import { DocumentData } from "firebase-admin/firestore";
 
 export async function getUser(domain: string, userId: string): Promise<DocumentData | null> {
-    console.log("Starting getUser");
   
     try {
       const docRef = dbAdmin.doc(`domain/${domain}/users/${userId}`);

@@ -15,7 +15,6 @@ export const addUser = async (domain: string, email:string, userId:string, name:
     const collectionRef = dbAdmin.collection(`domain/${domain}/users`);
     console.log('Add-user:', domain, userId);
     if (await collectionRef.doc(userId).get().then(doc => doc.exists)){
-      console.log('User Exists!');
       return false;
     }
     else {
