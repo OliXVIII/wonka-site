@@ -42,7 +42,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button> */}
-        <ProfileItem menu={menu} domain={domain}/>
+        <ProfileItem menu={menu}/>
       </dialog>
 
       <button

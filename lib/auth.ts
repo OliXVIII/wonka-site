@@ -3,7 +3,8 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
-import { getUserRole } from "@/server/admin-function/get-user-role";
+import { getUser, getUserRole } from "@/server/admin-function/get-user";
+import { dbAdmin } from "./firebase-admin";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -59,22 +60,31 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: async ({ token, user }) => {
-      if (user) {
-        token.user = user;
+      const userDb = await getUser("local-108", token.sub as string);
+      if (userDb) {
+          return {
+            ...token,
+            name: userDb.name,
+            email: userDb.email,
+            image: userDb.imageURL,
+            id: userDb.id,
+            role: userDb.role,
+          }
+        }
+      return {
+          ...token,
+          id: user.id,
       }
-      return token;
     },
     session: async ({ session, token }) => {
-      const role = await getUserRole("local-108", session?.user?.email ?? "");
-      console.log("Role: ", role);
-      session.user = {
-        ...session.user,
-        // @ts-expect-error
-        id: token.sub,
-        role: role,
-        // @ts-expect-error
-        username: token?.user?.username || token?.user?.gh_username,
-      };
+        session.user = {
+          ...session.user,
+          image: token.image,
+          id: token.sub,
+          email: token.email,
+          role: token.role || "user",
+          username: token?.user?.username || token?.user?.gh_username,
+      }
       return session;
     },
   },

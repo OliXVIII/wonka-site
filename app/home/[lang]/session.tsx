@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { getUserRole } from "@/server/admin-function/get-user-role";
+import { getUserRole } from "@/server/admin-function/get-user";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -25,7 +25,8 @@ export const Session = () => {
             className="rounded-lg border border-black bg-red-400 px-5 py-1"
           >
             Sign Out
-          </button><button
+          </button>
+          <button
             onClick={() => getUserRole("local-108", "ncastonguay01@gmail.com")}
             className="rounded-lg border border-black bg-red-400 px-5 py-1"
           >
@@ -37,16 +38,14 @@ export const Session = () => {
           >
             HAD UZER TWO DATA
           </button> */}
-          <p>
-            {session.user?.role}
-          </p>
+          <p>{session.user?.role}</p>
         </>
       ) : (
         <>
           <h1 className="text-3xl font-bold text-red-500">
             You're not logged in
           </h1>
-          
+
           <div className="flex space-x-5"></div>
         </>
       )}

@@ -30,7 +30,7 @@ export default function Navbar({
   slug = "",
   inceptionLogo,
   domain,
-}: NavbarProps) {
+}: Readonly<NavbarProps>) {
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
   const menu = uiContent.navigation;
@@ -88,7 +88,7 @@ export default function Navbar({
           {/*<div className="hidden justify-center md:flex md:w-1/3">
           <Search />
         </div>*/}
-          <div className="flex justify-end">
+          <div className="flex justify-end pr-3">
             {menu.length > 0 ? (
               <ul
                 className={`hidden gap-10 max-sm:p-10 md:flex md:items-center md:px-10 ${features.borderMenuNav ? "border-menu mr-10" : ""}`}

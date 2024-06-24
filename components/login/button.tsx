@@ -15,9 +15,10 @@ type LoginProps = {
 export const LoginButton = ({ domain, profileMenu}: LoginProps) => {
   const { data: session, status } = useSession(); // update session with role
   console.log("LoginButton: ", status);
-  console.log("Session: ", session)
-;  useEffect(() => {
+  console.log("Session: ", session);
+    useEffect(() => {
     if (status === "authenticated") {
+      console.log("User is authenticated.");
       handleLogin(domain, session);
     }
   }, [status, session, domain]);
