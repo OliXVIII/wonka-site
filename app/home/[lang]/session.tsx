@@ -1,7 +1,7 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { getUserRole } from "@/server/admin-function/get-user";
+import { getUser } from "@/server/admin-function/get-user";
 
 export const Session = () => {
   const { data: session } = useSession();
@@ -27,7 +27,7 @@ export const Session = () => {
             Sign Out
           </button>
           <button
-            onClick={() => getUserRole("local-108", "ncastonguay01@gmail.com")}
+            onClick={() => getUser("local-108", "ncastonguay01@gmail.com")}
             className="rounded-lg border border-black bg-red-400 px-5 py-1"
           >
             Test
