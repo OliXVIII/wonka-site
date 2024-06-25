@@ -1,8 +1,6 @@
 import Navbar from "@/components/layout/navbar";
 import { DataType } from "@/server/fetch-data";
 import { Locale, localesDetails } from "@/types/languages";
-import { useSession } from "next-auth/react";
-import { Session } from "./session";
 
 type HomePageProps = {
   params: { lang: Locale };
@@ -43,7 +41,6 @@ const data: DataType = {
       },
     },
   },
-
   features: {
     navbar: {
       fixed: true,

@@ -26,13 +26,13 @@ const OfferInfo = ({
       href={`?reserve-modal=true&selected=${index}`}
       key={room.title}
       className={
-        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-lg:px-1 max-md:w-1/2 max-md:w-full max-md:shadow-md max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
+        "flex h-full min-h-96 flex-col rounded-box bg-dark/10 px-1 py-2 shadow-sm shadow-dark dark:bg-light/[0.08] dark:shadow-none max-md:w-full max-md:px-4 max-md:shadow-md max-sm:min-h-72 max-xs:min-h-80 sm:my-4 md:min-h-96 md:py-5 lg:m-2" +
         (mobile ? " max-sm:mt-3.5 md:hidden" : "")
       }
     >
       <div className="justify-around">
         <h3
-          className={`px-3 text-xl max-xs:px-1 ${left ? "max-sm:text-center" : "text-end max-sm:text-center"}`}
+          className={`whitespace-pre-wrap px-3 text-xl max-xs:px-1 ${left ? "max-sm:text-center" : "text-end max-sm:text-center"}`}
         >
           {room.title}
         </h3>
@@ -43,12 +43,12 @@ const OfferInfo = ({
         </p>
       </div>
       <p
-        className={`flex flex-grow flex-col justify-center p-2 max-xs:p-1 ${left ? "sm:text-end" : ""}`}
+        className={`flex flex-grow  flex-col justify-center whitespace-pre-wrap p-2 max-xs:p-1 ${left ? "sm:text-end" : ""}`}
       >
         {room.description}
       </p>
       <div className="flex flex-col justify-center pb-4 pt-2">
-        <p className="text-center text-xl">
+        <p className="text-center text-lg">
           {priceByCountry(total, "CA" as RegionCode)}
         </p>
         <p className="text-center text-xs">
@@ -90,7 +90,8 @@ export const OfferComponent = ({
       </>
     );
   } else if (upcomingEventsLocale.offerOptions.length === 2) {
-    const divClass = "mx-auto flex md:flex-col md:w-[30%] sm:px-2 md:px-3";
+    const divClass =
+      "mx-auto flex md:flex-col md:w-[35%] lg:w-[30%] sm:px-2 md:px-3";
     return (
       <>
         <div
@@ -109,7 +110,9 @@ export const OfferComponent = ({
             mobile
           />
         </div>
-        <p className={`${divClass} my-auto text-justify md:w-[40%]`}>
+        <p
+          className={`${divClass} my-auto whitespace-pre-wrap text-justify md:w-[30%]`}
+        >
           {upcomingEventsLocale.description}
         </p>
         <div

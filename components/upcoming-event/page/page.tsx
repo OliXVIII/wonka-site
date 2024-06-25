@@ -3,6 +3,7 @@ import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
 import { MainImageUpcoming } from "./main-image";
 import { NextWrapper } from "../../next-wrapper";
+import { BookNowButton } from "./book-now";
 import { RowImages } from "./row-images";
 import { OfferComponent } from "./offer";
 import { ReserveModal } from "./reserve-modal";
@@ -51,7 +52,7 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
       <p className="pb-4 text-center">{upcomingEventsLocale.date}</p>
 
       <RowImages upcomingEventsLocale={upcomingEventsLocale} />
-      <p className="my-10 whitespace-pre-wrap text-justify leading-5">
+      <p className="left my-10 whitespace-pre-wrap text-justify leading-5">
         {upcomingEventsLocale.introduction}
       </p>
 
@@ -67,9 +68,11 @@ export const UpcomingEventPage = ({ data, locale }: UpcomingEventPageProps) => {
         />
       </div>
 
-      <NextWrapper>
-        <ScheduleDays upcomingEvent={upcomingEventsLocale} />
-      </NextWrapper>
+      {upcomingEventsLocale.retreatSchedule && (
+        <NextWrapper>
+          <ScheduleDays upcomingEvent={upcomingEventsLocale} />
+        </NextWrapper>
+      )}
       <CTAUpcomingEvent upcomingEvent={upcomingEventsLocale} />
     </>
   );

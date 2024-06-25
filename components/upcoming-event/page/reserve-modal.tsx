@@ -136,20 +136,20 @@ export const ReserveModal = ({
             <RowImages upcomingEventsLocale={upcomingEvent} vertical />
             <div className="max-w-full font-sans text-base font-normal leading-tight text-black lg:px-[2%]">
               <div className="flex flex-col">
-                <div className="mb-6 flex flex-wrap items-baseline justify-between gap-8 max-sm:gap-2">
+                <div className="mb-6 flex flex-wrap items-baseline justify-between">
                   <span className="pr-3 text-xl font-bold">{offer.title}</span>
-                  <span className="mr-8 text-xl font-bold">
+                  <span className="mr-3 w-full text-end text-xl font-bold">
                     {priceByCountry(total)}
                   </span>
                 </div>
                 {/* Your form elements here */}
-                <div className="mb-4 flex flex-col max-xs:mb-2">
+                <div className=" mb-2 flex flex-col">
                   <label className="mb-2 text-sm font-semibold" htmlFor="name">
                     {uiContent.form?.name}{" "}
                     <span className="text-red-500">*</span>
                   </label>
                   <input
-                    className="rounded-lg border border-gray-300 px-3 py-2 max-sm:py-1.5"
+                    className="rounded-lg border border-gray-300 px-3 py-1.5"
                     id="name"
                     name="name"
                     placeholder={uiContent.form?.name}
@@ -157,7 +157,7 @@ export const ReserveModal = ({
                     type="text"
                   />
                 </div>
-                <div className="mb-4 flex flex-col max-xs:mb-2">
+                <div className=" mb-2 flex flex-col">
                   <label className="mb-2 text-sm font-semibold" htmlFor="email">
                     {uiContent.form?.email}{" "}
                     <span className="text-red-500">*</span>
@@ -171,7 +171,7 @@ export const ReserveModal = ({
                     type="email"
                   />
                 </div>
-                <div className="mb-4 flex flex-col max-xs:mb-2">
+                <div className=" mb-2 flex flex-col">
                   <label
                     className="mb-2 text-sm font-semibold"
                     htmlFor="phone-number"
@@ -188,7 +188,7 @@ export const ReserveModal = ({
                     type="tel"
                   />
                 </div>
-                {/* <div className="mb-4 flex flex-col max-xs:mb-2">
+                {/* <div className=" flex flex-col mb-2">
                   <label
                     className="mb-2 text-sm font-semibold"
                     htmlFor="people"
@@ -209,7 +209,7 @@ export const ReserveModal = ({
                 {uiContent.form?.foodPreferences &&
                   uiContent.form?.allergies && (
                     <div className="flex justify-around max-xs:flex-col">
-                      <div className="mb-4 flex flex-col max-xs:mb-2">
+                      <div className=" mb-2 flex flex-col">
                         <label
                           className="mb-2 text-sm font-semibold"
                           htmlFor="food-preference"
@@ -223,7 +223,7 @@ export const ReserveModal = ({
                           placeholder="Ex: Vegan, etc."
                         />
                       </div>
-                      <div className="mb-4 flex flex-col max-xs:mb-2">
+                      <div className=" mb-2 flex flex-col">
                         <label
                           className="mb-2 text-sm font-semibold"
                           htmlFor="allergies"
@@ -240,7 +240,7 @@ export const ReserveModal = ({
                     </div>
                   )}
 
-                <div className="mb-4 flex flex-col max-sm:hidden max-xs:mb-2">
+                <div className=" mb-2 flex flex-col max-sm:hidden">
                   <label
                     className="mb-2 text-sm font-semibold"
                     htmlFor="message"
