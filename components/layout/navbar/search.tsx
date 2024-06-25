@@ -39,7 +39,7 @@ export default function Search() {
         .then((results) => setSearchResults(results || undefined))
         .catch(console.log);
     }
-  }, [searchValue]);
+  }, [searchValue, isSearchPage, router]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -4,6 +4,7 @@ import { MenuContent } from "@/types/ui-content";
 import { useEffect, useRef, RefObject } from "react";
 import { useSession } from "next-auth/react";
 import { ProfileItem } from "./profile-item";
+import Image from "next/image";
 
 // TODO: Make it work for contact us
 
@@ -13,7 +14,7 @@ export const useOutsideClickClose = (
 ) => {
   useEffect(() => {
     if (dialogRef.current?.open) {
-    document.addEventListener("click", () => dialogRef?.current?.close());
+      document.addEventListener("click", () => dialogRef?.current?.close());
     }
   });
 };
@@ -33,7 +34,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
     <>
       <dialog
         ref={modalRef}
-        className="mr-5 mt-16 shadow-profile shadow-dark dark:shadow-dark-light dark:bg-dark-light bg-light rounded-lg"
+        className="mr-5 mt-16 rounded-lg bg-light shadow-profile shadow-dark dark:bg-dark-light dark:shadow-dark-light"
       >
         {/* <button
           className="flex h-11 w-11 items-center pb-2 pl-2"
@@ -42,7 +43,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         >
           <XMarkIcon className="h-6 w-6" />
         </button> */}
-        <ProfileItem menu={menu}/>
+        <ProfileItem menu={menu} />
       </dialog>
 
       <button
@@ -50,7 +51,9 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         aria-label="Profile modal"
         className="flex h-10 w-10 items-center justify-center rounded-md"
       >
-        <img
+        <Image
+          alt="User Image"
+          fill
           src={session?.user?.image as string}
           className="object-fit z-40 h-10 w-10 rounded-full"
         />

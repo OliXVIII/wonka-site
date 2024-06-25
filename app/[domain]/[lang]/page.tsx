@@ -96,7 +96,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
-        <Navbar locale={locale} data={data} slug={""} />
+        <Navbar domain={domain} locale={locale} data={data} slug={""} />
         <Header data={data} />
         <Breadcrumb />
 

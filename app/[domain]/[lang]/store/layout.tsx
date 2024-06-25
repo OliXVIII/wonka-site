@@ -20,7 +20,13 @@ export default async function StoreLayout({ params, children }: Params) {
 
   return (
     <>
-      <Navbar locale={locale} data={data} searchbar={true} slug={""} />
+      <Navbar
+        domain={data.domain}
+        locale={locale}
+        data={data}
+        searchbar={true}
+        slug={""}
+      />
       {children}
       <Footer locale={locale} data={data} upcoming={true} />
     </>

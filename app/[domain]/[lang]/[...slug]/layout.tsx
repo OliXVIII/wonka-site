@@ -20,7 +20,12 @@ export default async function SlugLayout({ params, children }: Params) {
 
   return (
     <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
-      <Navbar locale={locale} data={data} slug={params.slug.join("/")} />
+      <Navbar
+        domain={params.domain}
+        locale={locale}
+        data={data}
+        slug={params.slug.join("/")}
+      />
       {children}
     </div>
   );

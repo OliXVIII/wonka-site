@@ -37,14 +37,13 @@ const data: DataType = {
   storage: {
     logo: {
       navbar: {
-        src: "",
         src: "https://firebasestorage.googleapis.com/v0/b/wonkasite-d43b5.appspot.com/o/wonkasite%2Flogo-wonka-nobg.png?alt=media&token=abf6a1fa-95a8-45bf-adaf-e935e9b9b221",
         aspectRatio: 1,
         inceptionLogo: true,
       },
     },
   },
-  
+
   features: {
     navbar: {
       fixed: true,
@@ -67,13 +66,11 @@ const HomePage = ({ params }: HomePageProps) => {
 
   return (
     <div className="flex">
-    <div className="flex flex-col">
-      <Navbar domain={"local-108"} data={data} locale={locale}/>
+      <div className="flex flex-col">
+        <Navbar domain={"local-108"} data={data} locale={locale} />
+      </div>
+      <div className="m-auto flex flex-col justify-center pt-52"></div>
     </div>
-    <div className="flex flex-col justify-center m-auto pt-52">
-    </div>
-    </div>
-    
   );
 };
 
