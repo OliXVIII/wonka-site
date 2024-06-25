@@ -2,14 +2,6 @@
 
 import { dbAdmin } from "@/lib/firebase-admin";
 
-interface User {
-    UserId: string
-    email: string;
-    name: string;
-    imageUrl: string
-    role: string;
-}
-
 export const addUser = async (domain: string, email:string, userId:string, name:string, imageURL:string): Promise<boolean> => {
   try {
     const collectionRef = dbAdmin.collection(`domain/${domain}/users`);
