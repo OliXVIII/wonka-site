@@ -11,10 +11,6 @@ type ProfileItemProps = {
   menu: MenuContent[];
 };
 
-// icon trop gros
-// cr centre gris pas sa margin
-//enlever les width?
-
 export const ProfileItem = ({ menu }: ProfileItemProps) => {
   const { data: session } = useSession();
   const admin = session?.user?.role === "admin";
@@ -32,12 +28,15 @@ export const ProfileItem = ({ menu }: ProfileItemProps) => {
       <div className="flex flex-col whitespace-nowrap">
         <div className="mb-4">
           <div className="flex w-72 items-center rounded-lg p-3 shadow-sm shadow-black dark:bg-dark">
-            <Image
-              fill
-              src={session?.user?.image as string}
-              alt="User Image"
-              className="h-10 w-10 rounded-full"
-            />
+            <div className="relative h-10 w-10">
+              <Image
+                fill
+                src={session?.user?.image as string}
+                alt="User Image"
+                sizes="32px"
+                className="rounded-lg"
+              />
+            </div>
 
             <span className="pl-3 font-bold">{session?.user?.name}</span>
           </div>
@@ -50,7 +49,7 @@ export const ProfileItem = ({ menu }: ProfileItemProps) => {
           ) : null}
         </div>
 
-        <div className="mb-3 mt-32 flex h-10 w-full rounded-md pb-1 pl-3">
+        <div className="my-3 flex h-10 w-full rounded-md pl-3">
           <button onClick={() => signOut()} className="flex items-center">
             <LogOut className="h-6 w-6" />
             <span className="pl-3">{signOutMenu?.title}</span>

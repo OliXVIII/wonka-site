@@ -36,26 +36,20 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         ref={modalRef}
         className="mr-5 mt-16 rounded-lg bg-light shadow-profile shadow-dark dark:bg-dark-light dark:shadow-dark-light"
       >
-        {/* <button
-          className="flex h-11 w-11 items-center pb-2 pl-2"
-          onClick={() => modalRef.current?.close()}
-          aria-label="Close mobile menu"
-        >
-          <XMarkIcon className="h-6 w-6" />
-        </button> */}
         <ProfileItem menu={menu} />
       </dialog>
 
       <button
         onClick={() => modalRef.current?.showModal()}
         aria-label="Profile modal"
-        className="flex h-10 w-10 items-center justify-center rounded-md"
+        className="relative flex h-10 w-10 items-center justify-center rounded-md"
       >
         <Image
           alt="User Image"
           fill
           src={session?.user?.image as string}
-          className="object-fit z-40 h-10 w-10 rounded-full"
+          className="object-fit z-40 rounded-full"
+          sizes="32px"
         />
       </button>
     </>

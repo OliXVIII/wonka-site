@@ -26,6 +26,7 @@ const nextConfig = {
       { hostname: "abs.twimg.com" },
       { hostname: "pbs.twimg.com" },
       { hostname: "avatar.vercel.sh" },
+      { hostname: "*" },
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",

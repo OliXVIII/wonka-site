@@ -10,11 +10,11 @@ import { useEffect } from "react";
 type LoginProps = {
   profileMenu: MenuContent[];
   domain: string;
-}
+};
 
-export const LoginButton = ({ domain, profileMenu}: LoginProps) => {
+export const LoginButton = ({ domain, profileMenu }: LoginProps) => {
   const { data: session, status } = useSession();
-    useEffect(() => {
+  useEffect(() => {
     if (status === "authenticated") {
       handleLogin(domain, session);
     }
@@ -27,10 +27,10 @@ export const LoginButton = ({ domain, profileMenu}: LoginProps) => {
   return (
     <div className="h-10 w-10">
       {session ? (
-          <ProfileModal menu={profileMenu} domain={domain}/>
-        ) : (
+        <ProfileModal menu={profileMenu} domain={domain} />
+      ) : (
         <button onClick={initiateLogin}>
-          <Login className="h-10 w-10 stroke-dark dark:stroke-light" />
+          <Login className="h-10 w-10 !fill-none" />
         </button>
       )}
     </div>

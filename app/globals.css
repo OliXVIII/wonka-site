@@ -42,9 +42,9 @@
       font-size: 0.9rem;
     }
   }
-  /* svg {
-    @apply fill-dark  dark:fill-light ;
-  } */
+  svg {
+    @apply fill-dark  stroke-dark dark:fill-dark dark:stroke-light;
+  }
   progress.appearance-none {
     /* Remove default browser styling */
     -webkit-appearance: none;
