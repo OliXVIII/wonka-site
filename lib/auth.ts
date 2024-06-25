@@ -12,26 +12,28 @@ export const authOptions: NextAuthOptions = {
     GitHubProvider({
       clientId: process.env.AUTH_GITHUB_ID as string,
       clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-      profile(profile) {
-        return {
+      profile(profile, tokens) {
+        return Promise.resolve({
           id: profile.id.toString(),
           name: profile.name || profile.login,
           gh_username: profile.login,
           email: profile.email,
           image: profile.avatar_url,
-        };
+          role: "user",
+        });
       },
     }),
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
-      profile(profile) {
+      profile(profile, tokens) {
         return {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-        }
+          role: "user",
+        };
       },
     }),
   ],
@@ -61,39 +63,46 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, user }) => {
       const userDb = await getUser("local-108", token.sub as string);
       if (userDb) {
-          return {
-            ...token,
-            name: userDb.name,
-            email: userDb.email,
-            image: userDb.imageURL,
-            id: userDb.id,
-            role: userDb.role,
-          }
-        }
-      return {
+        return {
           ...token,
-          id: user.id,
+          name: userDb.name,
+          email: userDb.email,
+          image: userDb.imageURL,
+          id: userDb.id,
+          role: userDb.role,
+        };
       }
+      return {
+        ...token,
+        id: user.id,
+      };
     },
     session: async ({ session, token }) => {
-        session.user = {
-          ...session.user,
-          image: token.image,
-          id: token.sub,
-          email: token.email,
-          role: token.role || "user",
-          username: token?.user?.username || token?.user?.gh_username,
-      }
+      session.user = {
+        ...session.user,
+        image: token.image as string,
+        id: token.sub as string,
+        email: token.email,
+        role: (token.role as string) || "user",
+        username: token?.username || token?.gh_username,
+      } as {
+        id: string;
+        role: string;
+        name?: string | null | undefined;
+        email?: string | null | undefined;
+        image?: string | null | undefined;
+        username?: string | null | undefined;
+      };
       return session;
     },
   },
 };
 
-export async function getSession() {
+export function getSession() {
   return getServerSession(authOptions) as Promise<any | null>;
 }
 
-export async function withSiteAuth(action: any) {
+export function withSiteAuth(action: any) {
   return async (
     formData: FormData | null,
     siteId: string,
@@ -120,7 +129,7 @@ export async function withSiteAuth(action: any) {
   };
 }
 
-export async function withPostAuth(action: any) {
+export function withPostAuth(action: any) {
   return async (
     formData: FormData | null,
     postId: string,
