@@ -302,11 +302,11 @@ html {
   }
 
   @media only screen and (min-width: 2049px) {
-    font-size: calc(var(--root-font-size) * 1.45);
+    font-size: calc(var(--root-font-size) * 1.35);
   }
 
   @media only screen and (min-width: 2561px) {
-    font-size: calc(var(--root-font-size) * 2.3);
+    font-size: calc(var(--root-font-size) * 1.45);
   }
 
   body {

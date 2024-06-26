@@ -49,7 +49,14 @@ export async function fetchData(
 
     if (!docSnap.exists()) {
       console.log("No such document!");
-      return null;
+      return {
+        uiContent: local108UIContent[lang.languageCode],
+        storage: storageLocal108,
+        features: local108Features,
+        upcomingEvents: upcomingEventsLocal108,
+        domain: domain,
+        customDomain: "local-108.com",
+      };
     }
 
     const data = docSnap.data();
