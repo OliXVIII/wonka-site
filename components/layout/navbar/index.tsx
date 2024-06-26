@@ -6,7 +6,7 @@ import LogoSquare from "@/components/store/logo-square";
 import OpenCart from "@/components/store/cart/open-cart";
 import Cart from "@/components/store/cart";
 import { MenuContent } from "@/types/ui-content";
-import { LocaleDetails, localesDetails } from "@/types/languages";
+import { LocaleDetails, defaultLocale, localesDetails } from "@/types/languages";
 import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
@@ -52,27 +52,27 @@ export default function Navbar({
         </div>
 
         <div className="flex w-full items-center">
-          {inceptionLogo ? (
-            <div>
-              <a
-                className="absolute top-0 mx-auto mt-1.5 h-20 w-20 max-sm:animate-spin-slow max-xs:left-1 max-xs:mt-3 max-xs:h-20 max-xs:w-20 sm:hover:animate-spin-slow"
-                href={`/`}
-              >
-                <Image
-                  src={storage?.logo?.navbar?.src ?? ""}
-                  alt="logo"
-                  fill
-                  className="dark:invert"
-                />
-              </a>
-            </div>
-          ) : (
+          {!inceptionLogo ? (
             <Link
               href="/"
               className={`flex w-full items-center justify-center max-sm:ml-10 md:mx-6 md:w-auto`}
             >
               <LogoSquare storage={storage} />
             </Link>
+          ) : (
+            <div>
+              <a
+                className="absolute top-0 mx-auto mt-1 h-24 w-24 max-sm:animate-spin-slow max-xs:left-1 max-xs:mt-3 max-xs:h-20 max-xs:w-20 sm:hover:animate-spin-slow"
+                href={`/`}
+              >
+                <Image
+                  src={storage?.logo?.navbar?.src ?? "/homepage/logo.png"}
+                  alt="logo"
+                  fill
+                  className="dark:invert"
+                />
+              </a>
+            </div>
           )}
 
           {searchbar ? (
@@ -119,6 +119,7 @@ export default function Navbar({
             ) : null}
             {features.profile ? (
               <LoginButton
+              lang={locale.path}
                 staticUiContent={staticUiContent}
                 uiContent={uiContent}
                 domain={domain}
