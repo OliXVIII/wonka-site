@@ -22,7 +22,7 @@ type NavbarProps = {
   searchbar?: boolean;
   inceptionLogo?: boolean;
   domain: string;
-  staticUiContent: StaticUiContent
+  staticUiContent: StaticUiContent;
 };
 
 export default function Navbar({
@@ -32,7 +32,7 @@ export default function Navbar({
   slug = "",
   inceptionLogo,
   domain,
-  staticUiContent
+  staticUiContent,
 }: Readonly<NavbarProps>) {
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
@@ -66,7 +66,7 @@ export default function Navbar({
                 href={`/`}
               >
                 <Image
-                  src={storage?.logo?.navbar?.src || "/homepage/logo.png"}
+                  src={storage?.logo?.navbar?.src ?? "/homepage/logo.png"}
                   alt="logo"
                   fill
                   className="dark:invert"
@@ -118,7 +118,11 @@ export default function Navbar({
               </Suspense>
             ) : null}
             {features.profile ? (
-              <LoginButton staticUiContent={staticUiContent} uiContent={uiContent} domain={domain}/>
+              <LoginButton
+                staticUiContent={staticUiContent}
+                uiContent={uiContent}
+                domain={domain}
+              />
             ) : null}
           </div>
         </div>
