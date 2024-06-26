@@ -32,7 +32,7 @@ module.exports = {
         "banner-large": "9.5rem",
       },
       animation: {
-        "spin-slow": "spin 1s linear infinite",
+        "spin-slow": "spin 10s linear infinite",
       },
       animate: {
         "banner-fade-in": "banner-fade-in 1s ease-in-out",
@@ -54,7 +54,7 @@ module.exports = {
         "header-mobile": "calc(80vh + 4rem)",
       },
       boxShadow: {
-        "profile": "0 2px 12px rgba(0, 0, 0, 0.2)",
+        profile: "0 2px 12px rgba(0, 0, 0, 0.2)",
       },
       variants: {},
     },

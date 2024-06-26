@@ -8,39 +8,38 @@ type HomePageProps = {
 };
 const staticUiContent: Record<Language, StaticUiContent> = {
   fr: {
-      profileMenu: [
-          {
-              title: "Profil",
-              path: "/profile",
-          },
-          {
-              title: "Administration",
-              path: "/admin",
-          },
-          {
-              title: "Déconnexion",
-              path: "/logout",
-          },
-      ],
+    profileMenu: [
+      {
+        title: "Profil",
+        path: "/profile",
+      },
+      {
+        title: "Administration",
+        path: "/admin",
+      },
+      {
+        title: "Déconnexion",
+        path: "/logout",
+      },
+    ],
   },
   en: {
-      profileMenu: [
-          {
-              title: "Profile",
-              path: "/profile",
-          },
-          {
-              title: "Admin",
-              path: "/admin",
-          },
-          {
-              title: "Sign Out",
-              path: "/logout",
-          },
-      ],
-  }
-}
-
+    profileMenu: [
+      {
+        title: "Profile",
+        path: "/profile",
+      },
+      {
+        title: "Admin",
+        path: "/admin",
+      },
+      {
+        title: "Sign Out",
+        path: "/logout",
+      },
+    ],
+  },
+};
 
 const data: DataType = {
   uiContent: {
@@ -95,11 +94,16 @@ const HomePage = ({ params }: HomePageProps) => {
   return (
     <>
       <div className="flex flex-col">
-        <Navbar staticUiContent={staticUiContent[locale.languageCode]} domain={"local-108"} data={data} locale={locale} />
+        <Navbar
+          staticUiContent={staticUiContent[locale.languageCode]}
+          domain={"local-108"}
+          data={data}
+          locale={locale}
+          inceptionLogo={true}
+        />
       </div>
       <div className="m-auto flex flex-col justify-center pt-52"></div>
     </>
-      
   );
 };
 

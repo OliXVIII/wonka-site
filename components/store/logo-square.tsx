@@ -26,7 +26,8 @@ export default function LogoSquare({ storage, size }: LogoSquareProps) {
           src={storage.logo.navbar.src}
           alt="logo"
           fill
-          className="object-cover dark:invert-[88%]"
+          quality={100}
+          className="object-contain dark:invert-[88%]"
         />
       ) : null}
     </div>

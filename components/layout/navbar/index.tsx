@@ -52,27 +52,27 @@ export default function Navbar({
         </div>
 
         <div className="flex w-full items-center">
-          {!inceptionLogo ? (
-            <Link
-              href="/"
-              className={`flex w-full items-center justify-center max-sm:ml-10 md:mx-6 md:w-auto`}
-            >
-              <LogoSquare storage={storage} />
-            </Link>
-          ) : (
+          {inceptionLogo ? (
             <div>
               <a
-                className="absolute top-0 mx-auto mt-1 h-24 w-24 max-sm:animate-spin-slow max-xs:left-1 max-xs:mt-3 max-xs:h-20 max-xs:w-20 sm:hover:animate-spin-slow"
+                className="absolute top-0 mx-auto mt-1.5 h-20 w-20 max-sm:animate-spin-slow max-xs:left-1 max-xs:mt-3 max-xs:h-20 max-xs:w-20 sm:hover:animate-spin-slow"
                 href={`/`}
               >
                 <Image
-                  src={storage?.logo?.navbar?.src ?? "/homepage/logo.png"}
+                  src={storage?.logo?.navbar?.src ?? ""}
                   alt="logo"
                   fill
                   className="dark:invert"
                 />
               </a>
             </div>
+          ) : (
+            <Link
+              href="/"
+              className={`flex w-full items-center justify-center max-sm:ml-10 md:mx-6 md:w-auto`}
+            >
+              <LogoSquare storage={storage} />
+            </Link>
           )}
 
           {searchbar ? (
