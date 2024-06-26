@@ -19,7 +19,7 @@ const staticUiContent: Record<Language, StaticUiContent> = {
           },
           {
               title: "Déconnexion",
-              path: "",
+              path: "/logout",
           },
       ],
   },
@@ -35,7 +35,7 @@ const staticUiContent: Record<Language, StaticUiContent> = {
           },
           {
               title: "Sign Out",
-              path: "",
+              path: "/logout",
           },
       ],
   }

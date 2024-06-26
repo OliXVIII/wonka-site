@@ -18,7 +18,7 @@ export const staticUiContent: Record<Language, StaticUiContent> = {
             },
             {
                 title: "Déconnexion",
-                path: "",
+                path: "/logout",
             },
         ],
     },
@@ -34,7 +34,7 @@ export const staticUiContent: Record<Language, StaticUiContent> = {
             },
             {
                 title: "Sign Out",
-                path: "",
+                path: "/logout",
             },
         ],
     }

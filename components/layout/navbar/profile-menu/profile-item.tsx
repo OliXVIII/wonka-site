@@ -36,7 +36,7 @@ export const ProfileItem = ({ staticUiContent, uiContent }: ProfileItemProps) =>
           {menu.length > 0 ?
             menu.map((item) => {
               console.log(item.title);
-              if ((item.title === "Administration" || item.title === "Admin") && admin) {
+              if ((item.path === "/admin") && admin) {
                 return (
                   <div key={item.title} className="flex items-center pl-3 pt-7">
                     <Setting className="h-7 w-7" />
@@ -46,7 +46,7 @@ export const ProfileItem = ({ staticUiContent, uiContent }: ProfileItemProps) =>
                 );
               }
 
-              if (item.title === "Déconnexion" || item.title === "Sign Out") {
+              if (item.path === "/logout") {
                 return (
                   <div key={item.title} className="my-3 flex h-10 w-full rounded-md pl-3">
                     <button onClick={() => signOut()} className="flex items-center">
