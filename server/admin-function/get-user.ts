@@ -12,11 +12,10 @@ export async function getUser(domain: string, userId: string): Promise<DocumentD
       if (userData) {
         return userData;
       } else {
-        console.log('No such user document!');
         return null;
       }
     } catch (error) {
-      console.error('Error getting user document:', error);
+      console.error('get-user.ts Error getting user document:', error);
       return null;
     }
   }

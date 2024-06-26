@@ -1,12 +1,13 @@
 "use client";
 
-import { MenuContent, UiContent } from "@/types/ui-content";
+import { UiContent } from "@/types/ui-content";
 import { useEffect, useRef, RefObject } from "react";
 import { useSession } from "next-auth/react";
-import { ProfileItem } from "./profile-item";
 import Image from "next/image";
+import { StaticUiContent } from "@/types/static-ui-content";
+import dynamic from "next/dynamic";
 
-// TODO: Make it work for contact us
+const ProfileItem = dynamic(() => import('./profile-item'));
 
 export const useOutsideClickClose = (
   dialogRef: RefObject<HTMLDialogElement>,
@@ -22,9 +23,10 @@ export const useOutsideClickClose = (
 type ProfileModalProps = {
   uiContent: UiContent
   domain: string;
+  staticUiContent: StaticUiContent;
 };
 
-export const ProfileModal = ({ domain, uiContent }: ProfileModalProps) => {
+export const ProfileModal = ({ domain, uiContent, staticUiContent }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
   const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
   const { data: session } = useSession();
@@ -34,9 +36,9 @@ export const ProfileModal = ({ domain, uiContent }: ProfileModalProps) => {
     <>
       <dialog
         ref={modalRef}
-        className="mr-5 mt-16 rounded-lg bg-light shadow-profile shadow-dark dark:bg-dark-light dark:shadow-dark-light"
+        className="mr-5 mt-16 rounded-lg bg-light shadow-profile dark:bg-dark-light"
       >
-        <ProfileItem uiContent={uiContent} />
+        <ProfileItem uiContent={uiContent} staticUiContent={staticUiContent} />
       </dialog>
 
       <button

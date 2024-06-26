@@ -56,7 +56,6 @@ export type UiContent = {
   location?: string;
   mission: string;
   navigation: MenuContent[];
-  profileMenu: MenuContent[];
   ourNextTrip?: string;
   readMore: string;
   services?: ServicesContent;
@@ -107,11 +106,6 @@ export const local108UIContent: Record<Language, UiContent> = {
       // { title: "Conditions Générales", path: "/terms" },
       // { title: "Blog", path: "/blog" },
       // { title: "Contactez Nous", path: "/contact" },
-    ],
-    profileMenu: [
-      { title: "Profile", path: "/profile" },
-      { title: "Admin", path: "/admin" },
-      { title: "Sign Out", path: "/sign-out" },
     ],
     readMore: "Read More",
     ourNextTrip: "Our Next Trip",
@@ -201,11 +195,6 @@ export const local108UIContent: Record<Language, UiContent> = {
       //   path: "https://demo.vercel.store/",
       //   externalLink: true,
       // },
-    ],
-    profileMenu: [
-      { title: "Profil", path: "/profile" },
-      { title: "Administration", path: "/settings" },
-      { title: "Déconnexion", path: "/sign-out" },
     ],
     readMore: "Voir plus",
     ourNextTrip: "Notre prochain voyage",

@@ -1,10 +1,46 @@
 import Navbar from "@/components/layout/navbar";
 import { DataType } from "@/server/fetch-data";
-import { Locale, localesDetails } from "@/types/languages";
+import { Language, Locale, localesDetails } from "@/types/languages";
+import { StaticUiContent } from "@/types/static-ui-content";
 
 type HomePageProps = {
   params: { lang: Locale };
 };
+const staticUiContent: Record<Language, StaticUiContent> = {
+  fr: {
+      profileMenu: [
+          {
+              title: "Profil",
+              path: "/profile",
+          },
+          {
+              title: "Administration",
+              path: "/admin",
+          },
+          {
+              title: "Déconnexion",
+              path: "",
+          },
+      ],
+  },
+  en: {
+      profileMenu: [
+          {
+              title: "Profile",
+              path: "/profile",
+          },
+          {
+              title: "Admin",
+              path: "/admin",
+          },
+          {
+              title: "Sign Out",
+              path: "",
+          },
+      ],
+  }
+}
+
 
 const data: DataType = {
   uiContent: {
@@ -26,11 +62,6 @@ const data: DataType = {
     readMore: "",
     siteName: "Wonkasite",
     slogan: "Focus on your business, we take care of the rest",
-    profileMenu: [
-      { title: "Profil", path: "/profile" },
-      { title: "Administration", path: "/admin" },
-      { title: "Déconnexion", path: "/sign-out" },
-    ],
   },
   storage: {
     logo: {
@@ -42,6 +73,7 @@ const data: DataType = {
     },
   },
   features: {
+    profile: true,
     navbar: {
       fixed: true,
     },
@@ -60,14 +92,14 @@ const data: DataType = {
 };
 const HomePage = ({ params }: HomePageProps) => {
   const locale = localesDetails[params.lang];
-
   return (
-    <div className="flex">
+    <>
       <div className="flex flex-col">
-        <Navbar domain={"local-108"} data={data} locale={locale} />
+        <Navbar staticUiContent={staticUiContent[locale.languageCode]} domain={"local-108"} data={data} locale={locale} />
       </div>
       <div className="m-auto flex flex-col justify-center pt-52"></div>
-    </div>
+    </>
+      
   );
 };
 

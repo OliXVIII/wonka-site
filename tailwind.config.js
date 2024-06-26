@@ -54,7 +54,7 @@ module.exports = {
         "header-mobile": "calc(80vh + 4rem)",
       },
       boxShadow: {
-        "profile": "0 2px 12px var(--shadow-2)",
+        "profile": "0 2px 12px rgba(0, 0, 0, 0.2)",
       },
       variants: {},
     },

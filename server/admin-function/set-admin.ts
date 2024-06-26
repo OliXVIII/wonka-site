@@ -3,6 +3,7 @@
 import { searchUserByEmail } from "@/server/admin-function/search-user-by-email";
 import { dbAdmin } from "@/lib/firebase-admin";
 
+// Function to set a user as admin
 export const setAdmin = async (
   domain: string,
   email: string,
@@ -22,7 +23,7 @@ export const setAdmin = async (
       return false;
     }
   } catch (error) {
-    console.error("Error setting user as admin:", error);
+    console.error("set-admin.ts Error setting user as admin:", error);
     return false;
   }
 };

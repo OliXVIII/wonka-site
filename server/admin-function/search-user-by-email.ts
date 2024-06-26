@@ -6,11 +6,6 @@ import { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
 // Function to simulate fetching user data
 export const searchUserByEmail = async (domain: string, email: string): Promise<DocumentData | null | undefined> => {
   try {
-
-    console.log('searchUserByEmail:', domain, email)
-    // Check if the logged-in user has an admin role
-
-      // User has admin role, fetch the user data
       const collectionRef = dbAdmin.collection(`domain/${domain}/users`);
       const emailQuery = collectionRef.where('email', '==', email);
       const emailSnap: QuerySnapshot = await emailQuery.get();
@@ -23,6 +18,7 @@ export const searchUserByEmail = async (domain: string, email: string): Promise<
         };
       } 
   } catch (error) {
+    console.error('search-user-by-email.ts Error getting user document:', error);
     return null;
   }
 };

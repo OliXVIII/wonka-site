@@ -13,6 +13,7 @@ export const verifyUserAdmin = async (domain: string, userId:string): Promise<bo
     }
     return false;
   } catch (error) {
+    console.error('check-admin.ts Error getting user document:', error);
     return false;
   }
 };

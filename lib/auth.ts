@@ -80,10 +80,10 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
-        image: token.image as string,
-        id: token.sub as string,
+        image: token.image,
+        id: token.sub,
         email: token.email,
-        role: (token.role as string) || "user",
+        role: (token.role) || "user",
         username: token?.username || token?.gh_username,
       } as {
         id: string;

@@ -2,7 +2,7 @@
 
 import { dbAdmin } from "@/lib/firebase-admin";
 
-export const addUser = async (domain: string, email:string, userId:string, name:string, imageURL:string): Promise<boolean> => {
+export const addUser = async (domain: string, email:string, userId:string, name:string, imageURL:string): Promise<void> => {
   try {
     const collectionRef = dbAdmin.collection(`domain/${domain}/users`);
     
@@ -14,9 +14,8 @@ export const addUser = async (domain: string, email:string, userId:string, name:
         role: 'user',
     }
     await collectionRef.doc(userId).set(userData);
-    return true;
 
   } catch (error) {
-    return false;
+    console.error('add-user.ts Error adding user:', error);
   }
 };

@@ -3,7 +3,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-import { MenuContent, UiContent, local108UIContent } from "@/types/ui-content";
+import { UiContent, local108UIContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
 import { StorageType, storageLocal108 } from "@/types/storage";
 import { FeaturesType, local108Features } from "@/types/features";
@@ -19,7 +19,6 @@ export type DataType = {
   domain: string;
   upcomingEvents?: LocaleUpcomingEvent;
   customDomain?: string;
-  profileMenu?: MenuContent[];
   users?: any;
 }
 

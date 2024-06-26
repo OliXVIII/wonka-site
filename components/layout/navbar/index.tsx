@@ -13,6 +13,7 @@ import { LanguageSelector } from "./language-selector";
 import { createLink } from "@/lib/create-link";
 import Image from "next/image";
 import { LoginButton } from "@/components/login/button";
+import { StaticUiContent, staticUiContent } from "@/types/static-ui-content";
 
 type NavbarProps = {
   data: DataType;
@@ -21,6 +22,7 @@ type NavbarProps = {
   searchbar?: boolean;
   inceptionLogo?: boolean;
   domain: string;
+  staticUiContent: StaticUiContent
 };
 
 export default function Navbar({
@@ -30,11 +32,12 @@ export default function Navbar({
   slug = "",
   inceptionLogo,
   domain,
+  staticUiContent
 }: Readonly<NavbarProps>) {
   const { uiContent, storage, features } = data;
   // const menu = await getMenu("next-js-frontend-header-menu");
   const menu = uiContent.navigation;
-  const profileMenu = uiContent.profileMenu;
+  const lang = locale.languageCode;
   const nextLocale =
     locale?.nextLanguage && locale.nextLanguage !== locale.path
       ? localesDetails[locale.nextLanguage]
@@ -114,8 +117,8 @@ export default function Navbar({
                 <Cart />
               </Suspense>
             ) : null}
-            {profileMenu?.length ? (
-              <LoginButton uiContent={uiContent} domain={domain}/>
+            {features.profile ? (
+              <LoginButton staticUiContent={staticUiContent} uiContent={uiContent} domain={domain}/>
             ) : null}
           </div>
         </div>
