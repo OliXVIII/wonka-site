@@ -82,10 +82,10 @@ export const authOptions: NextAuthOptions = {
       session.user = {
         ...session.user,
         image: token.image,
-        id: token.sub,
+        id: token.id,
         email: token.email,
-        role: (token.role) || "user",
-        username: token?.username || token?.gh_username,
+        role: token.role ?? "user",
+        username: token?.username ?? token?.gh_username,
       } as {
         id: string;
         role: string;
