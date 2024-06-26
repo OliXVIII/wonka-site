@@ -6,17 +6,16 @@ import { UiContent } from "@/types/ui-content";
 import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
 import { useEffect } from "react";
 import { StaticUiContent } from "@/types/static-ui-content";
-import dynamic from "next/dynamic";
-
-const ProfileModal = dynamic(() => import("../layout/navbar/profile-menu/profile-modal"), { ssr: false })
+import ProfileModal from "../layout/navbar/profile-menu/profile-modal";
 
 type LoginProps = {
   uiContent: UiContent
   domain: string
   staticUiContent: StaticUiContent
+  lang: string
 };
 
-export const LoginButton = ({ staticUiContent, uiContent, domain }: LoginProps) => {
+export const LoginButton = ({ staticUiContent, uiContent, domain, lang }: LoginProps) => {
   const { data: session, status } = useSession();
   console.log(session);
   useEffect(() => {
@@ -26,7 +25,7 @@ export const LoginButton = ({ staticUiContent, uiContent, domain }: LoginProps) 
   }, [status, session, domain]);
 
   const initiateLogin = async () => {
-    await signIn("google");
+    await signIn("google", { callbackUrl: `${window.location.origin}/${lang}` });
   };
 
   return (

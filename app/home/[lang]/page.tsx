@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/navbar";
 import { DataType } from "@/server/fetch-data";
-import { Language, Locale, localesDetails } from "@/types/languages";
+import { Language, Locale, defaultLocale, localesDetails } from "@/types/languages";
 import { StaticUiContent } from "@/types/static-ui-content";
 
 type HomePageProps = {
@@ -90,7 +90,7 @@ const data: DataType = {
   upcomingEvents: undefined,
 };
 const HomePage = ({ params }: HomePageProps) => {
-  const locale = localesDetails[params.lang];
+  const locale = localesDetails[params.lang] ?? defaultLocale;
   return (
     <>
       <div className="flex flex-col">

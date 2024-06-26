@@ -69,7 +69,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   const domain = decodeURIComponent(params.domain);
   const locale = localesDetails[params.lang] ?? defaultLocale;
   const [data] = await Promise.all([fetchData(domain, locale)]);
-  const staticUiContent_ = staticUiContent[locale.languageCode]
+  const staticUiContents = staticUiContent[locale.languageCode];
 
   if (!data) {
     notFound();
@@ -98,7 +98,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
-        <Navbar staticUiContent={staticUiContent_} domain={domain} locale={locale} data={data} slug={""} />
+        <Navbar staticUiContent={staticUiContents} domain={domain} locale={locale} data={data} slug={""} />
         <Header data={data} />
         <Breadcrumb />
 
