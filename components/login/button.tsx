@@ -3,10 +3,12 @@
 import { signIn, useSession } from "next-auth/react";
 import Login from "@/public/profile/login.svg";
 import { UiContent } from "@/types/ui-content";
-import { ProfileModal } from "../layout/navbar/profile-menu/profile-modal";
 import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
 import { useEffect } from "react";
 import { StaticUiContent } from "@/types/static-ui-content";
+import dynamic from "next/dynamic";
+
+const ProfileModal = dynamic(() => import("../layout/navbar/profile-menu/profile-modal"), { ssr: false })
 
 type LoginProps = {
   uiContent: UiContent

@@ -3,11 +3,10 @@
 import { UiContent } from "@/types/ui-content";
 import { useEffect, useRef, RefObject } from "react";
 import { useSession } from "next-auth/react";
+import { ProfileItem } from "./profile-item";
 import Image from "next/image";
 import { StaticUiContent } from "@/types/static-ui-content";
-import dynamic from "next/dynamic";
 
-const ProfileItem = dynamic(() => import('./profile-item'));
 
 export const useOutsideClickClose = (
   dialogRef: RefObject<HTMLDialogElement>,
@@ -25,8 +24,7 @@ type ProfileModalProps = {
   domain: string;
   staticUiContent: StaticUiContent;
 };
-
-export const ProfileModal = ({ domain, uiContent, staticUiContent }: ProfileModalProps) => {
+const ProfileModal = ({ domain, uiContent, staticUiContent }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
   const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
   const { data: session } = useSession();
@@ -57,3 +55,5 @@ export const ProfileModal = ({ domain, uiContent, staticUiContent }: ProfileModa
     </>
   );
 };
+
+export default ProfileModal;
