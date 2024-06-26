@@ -88,10 +88,10 @@ export const authOptions: NextAuthOptions = {
       } as {
         id: string;
         role: string;
-        name?: string | null | undefined;
-        email?: string | null | undefined;
-        image?: string | null | undefined;
-        username?: string | null | undefined;
+        name: string;
+        email: string;
+        image: string;
+        username: string;
       };
       return session;
     },

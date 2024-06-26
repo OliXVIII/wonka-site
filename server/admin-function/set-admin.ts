@@ -6,7 +6,7 @@ import { dbAdmin } from "@/lib/firebase-admin";
 export const setAdmin = async (
   domain: string,
   email: string,
-): Promise<void> => {
+): Promise<boolean> => {
   try {
     // Fetch the user data
     const userDoc = await searchUserByEmail(domain, email);
@@ -17,11 +17,12 @@ export const setAdmin = async (
       await userDocRef.update({
         role: "admin",
       });
-      console.log("User role set as admin");
+      return true;
     } else {
-      console.log("No matching documents found");
+      return false;
     }
   } catch (error) {
     console.error("Error setting user as admin:", error);
+    return false;
   }
 };

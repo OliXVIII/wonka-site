@@ -4,14 +4,15 @@ import LogOut from "@/public/log-out.svg";
 import Setting from "@/public/setting.svg";
 import Arrow from "@/public/arrow-menu.svg";
 import { signOut, useSession } from "next-auth/react";
-import { MenuContent } from "@/types/ui-content";
+import { UiContent } from "@/types/ui-content";
 import Image from "next/image";
 
 type ProfileItemProps = {
-  menu: MenuContent[];
+  uiContent: UiContent,
 };
 
-export const ProfileItem = ({ menu }: ProfileItemProps) => {
+export const ProfileItem = ({ uiContent }: ProfileItemProps) => {
+  const menu = uiContent.profileMenu;
   const { data: session } = useSession();
   const admin = session?.user?.role === "admin";
   const year = new Date().getFullYear();

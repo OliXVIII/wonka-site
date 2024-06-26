@@ -2,17 +2,17 @@
 
 import { signIn, useSession } from "next-auth/react";
 import Login from "@/public/login.svg";
-import { MenuContent } from "@/types/ui-content";
+import { UiContent } from "@/types/ui-content";
 import { ProfileModal } from "../layout/navbar/profile-menu/profile-modal";
 import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
 import { useEffect } from "react";
 
 type LoginProps = {
-  profileMenu: MenuContent[];
-  domain: string;
+  uiContent: UiContent
+  domain: string
 };
 
-export const LoginButton = ({ domain, profileMenu }: LoginProps) => {
+export const LoginButton = ({ uiContent, domain }: LoginProps) => {
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status === "authenticated") {
@@ -25,14 +25,14 @@ export const LoginButton = ({ domain, profileMenu }: LoginProps) => {
   };
 
   return (
-    <div className="h-10 w-10">
+    <>
       {session ? (
-        <ProfileModal menu={profileMenu} domain={domain} />
-      ) : (
-        <button onClick={initiateLogin}>
+         <ProfileModal uiContent={uiContent} domain={domain} />
+       ) : (
+         <button onClick={initiateLogin} className="h-10 w-10">
           <Login className="h-10 w-10 !fill-none" />
-        </button>
-      )}
-    </div>
+         </button>
+       )}
+    </>
   );
 };

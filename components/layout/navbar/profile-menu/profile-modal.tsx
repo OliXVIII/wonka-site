@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuContent } from "@/types/ui-content";
+import { MenuContent, UiContent } from "@/types/ui-content";
 import { useEffect, useRef, RefObject } from "react";
 import { useSession } from "next-auth/react";
 import { ProfileItem } from "./profile-item";
@@ -20,11 +20,11 @@ export const useOutsideClickClose = (
 };
 
 type ProfileModalProps = {
-  menu: MenuContent[];
+  uiContent: UiContent
   domain: string;
 };
 
-export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
+export const ProfileModal = ({ domain, uiContent }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
   const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
   const { data: session } = useSession();
@@ -36,7 +36,7 @@ export const ProfileModal = ({ domain, menu }: ProfileModalProps) => {
         ref={modalRef}
         className="mr-5 mt-16 rounded-lg bg-light shadow-profile shadow-dark dark:bg-dark-light dark:shadow-dark-light"
       >
-        <ProfileItem menu={menu} />
+        <ProfileItem uiContent={uiContent} />
       </dialog>
 
       <button

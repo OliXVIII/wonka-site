@@ -28,7 +28,7 @@ type FooterUiContent = {
   design: string;
   crafted: string;
   contactForm?: ContactForm;
-  profileMenu?: MenuContent[];
+  
 };
 
 export type FormFields = {
@@ -56,7 +56,7 @@ export type UiContent = {
   location?: string;
   mission: string;
   navigation: MenuContent[];
-  profileMenu?: MenuContent[];
+  profileMenu: MenuContent[];
   ourNextTrip?: string;
   readMore: string;
   services?: ServicesContent;

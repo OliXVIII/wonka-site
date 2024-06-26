@@ -10,7 +10,7 @@ export const handleLogin = async (domain: string, session: any) => {
         const name = session.user.name as string;
         const image = session.user.image as string;
   
-        const result = await addUser(domain, email, userId, name, image);
+        await addUser(domain, email, userId, name, image);
 
       }
     } catch (error) {

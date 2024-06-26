@@ -11,8 +11,6 @@ import {
   LocaleUpcomingEvent,
   upcomingEventsLocal108,
 } from "@/types/upcoming-event";
-import { log } from "console";
-import { checkAdmin } from "./admin-function/check-admin";
 
 export type DataType = {
   uiContent: UiContent;
