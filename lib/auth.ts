@@ -61,6 +61,7 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt: async ({ token, user }) => {
+      //TODO remove local-108 hardcoded
       const userDb = await getUser("local-108", token.sub as string);
       if (userDb) {
         return {
