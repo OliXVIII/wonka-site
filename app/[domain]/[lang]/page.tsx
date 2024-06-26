@@ -9,6 +9,7 @@ import { Header } from "@/components/header/header";
 import Image from "next/image";
 import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
 import Footer from "@/components/layout/footer/footer";
+import { staticUiContent } from "@/types/static-ui-content";
 
 export type PageParams = {
   params: { domain: string; lang: Locale };
@@ -68,6 +69,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
   const domain = decodeURIComponent(params.domain);
   const locale = localesDetails[params.lang] ?? defaultLocale;
   const [data] = await Promise.all([fetchData(domain, locale)]);
+  const staticUiContent_ = staticUiContent[locale.languageCode]
 
   if (!data) {
     notFound();
@@ -96,7 +98,7 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
-        <Navbar domain={domain} locale={locale} data={data} slug={""} />
+        <Navbar staticUiContent={staticUiContent_} domain={domain} locale={locale} data={data} slug={""} />
         <Header data={data} />
         <Breadcrumb />
 
