@@ -18,6 +18,7 @@ type LoginProps = {
 
 export const LoginButton = ({ staticUiContent, uiContent, domain }: LoginProps) => {
   const { data: session, status } = useSession();
+  console.log(session);
   useEffect(() => {
     if (status === "authenticated") {
       handleLogin(domain, session);
