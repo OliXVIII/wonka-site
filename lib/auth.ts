@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token }) => {
       //TODO remove local-108 hardcoded
       const userDb = await getUser("local-108", token.sub as string);
       if (userDb) {
@@ -68,11 +68,12 @@ export const authOptions: NextAuthOptions = {
           ...token,
           name: userDb.name,
           email: userDb.email,
-          image: userDb.imageURL,
+          picture: userDb.imageURL,
           id: userDb.id,
           role: userDb.role,
         };
       } else {
+        console.log("token", token);
         return {
           ...token,
         };
@@ -81,11 +82,12 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
-        image: token.image as string,
-        id: token.id as string,
+        image: token.picture as string,
+        id: token.sub as string,
         email: token.email as string,
         role: (token.role as string) ?? "user",
       };
+      console.log("session", session.user);
       return session;
     },
   },
