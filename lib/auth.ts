@@ -71,8 +71,7 @@ export const authOptions: NextAuthOptions = {
           sub: userDb.id,
           role: userDb.role,
         };
-      }
-      if (user) {
+      } else if (user) {
         token.user = user;
       }
       return token;
