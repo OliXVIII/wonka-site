@@ -1,8 +1,7 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { getUser } from "@/server/admin-function/get-user";
 
@@ -10,20 +9,20 @@ const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    GitHubProvider({
-      clientId: process.env.AUTH_GITHUB_ID as string,
-      clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-      profile(profile, tokens) {
-        return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          gh_username: profile.login,
-          email: profile.email,
-          image: profile.avatar_url,
-          role: "user",
-        };
-      },
-    }),
+    // GitHubProvider({
+    //   clientId: process.env.AUTH_GITHUB_ID as string,
+    //   clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+    //   profile(profile, tokens) {
+    //     return Promise.resolve({
+    //       id: profile.id.toString(),
+    //       name: profile.name || profile.login,
+    //       gh_username: profile.login,
+    //       email: profile.email,
+    //       image: profile.avatar_url,
+    //       role: "user",
+    //     });
+    //   },
+    // }),
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
@@ -38,131 +37,117 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: `/login`,
-    verifyRequest: `/login`,
-    error: "/login", // Error code passed in query string as ?error=
-  },
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
-  cookies: {
-    sessionToken: {
-      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-        domain: VERCEL_DEPLOYMENT
-          ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-          : undefined,
-        secure: VERCEL_DEPLOYMENT,
-      },
-    },
-  },
+  // pages: {
+  //   signIn: `/login`,
+  //   verifyRequest: `/login`,
+  //   error: "/login", // Error code passed in query string as ?error=
+  // },
+  // adapter: PrismaAdapter(prisma),
+  // session: { strategy: "jwt" },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //       // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+  //       domain: VERCEL_DEPLOYMENT
+  //         ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+  //         : undefined,
+  //       secure: VERCEL_DEPLOYMENT,
+  //     },
+  //   },
+  // },
   callbacks: {
-    jwt: async ({ token, account, profile, user }) => {
-      console.log("JWT callback", { token, account, profile, user });
-      if (account) {
-        if (account.provider === "google") {
-          const userDb = await getUser("google", token.sub as string);
-          if (userDb) {
-            return {
-              ...token,
-              name: userDb.name,
-              email: userDb.email,
-              picture: userDb.imageURL,
-              id: userDb.id,
-              role: userDb.role,
-            };
-          }
-        } else if (account.provider === "github") {
-          const userDb = await getUser("github", token.sub as string);
-          if (userDb) {
-            return {
-              ...token,
-              name: userDb.name,
-              email: userDb.email,
-              picture: userDb.imageURL,
-              id: userDb.id,
-              role: userDb.role,
-            };
-          }
-        }
+    jwt: async ({ token, user }) => {
+      const userDb = await getUser("local-108", token.sub as string);
+      if (userDb) {
+        return {
+          ...token,
+          name: userDb.name,
+          email: userDb.email,
+          picture: userDb.imageURL,
+          sub: userDb.id,
+          role: userDb.role,
+        };
       }
-      return token;
+      return {
+        ...token,
+      };
     },
     session: async ({ session, token }) => {
-      console.log("Session callback", { session, token });
+      console.log("session", session, "token", token);
       session.user = {
         ...session.user,
         image: token.picture as string,
         id: token.sub as string,
         email: token.email as string,
-        role: (token.role as string) ?? "user",
+        role: (token.role as string) || "user",
+        // username: token?.username || token?.gh_username,
       };
       return session;
     },
   },
 };
 
-export function getSession() {
-  return getServerSession(authOptions) as Promise<any | null>;
-}
+// export function getSession() {
+//   return getServerSession(authOptions) as Promise<any | null>;
+// }
 
-export function withSiteAuth(action: any) {
-  return async (
-    formData: FormData | null,
-    siteId: string,
-    key: string | null,
-  ) => {
-    const session = await getSession();
-    if (!session) {
-      return {
-        error: "Not authenticated",
-      };
-    }
-    const site = await prisma.site.findUnique({
-      where: {
-        id: siteId,
-      },
-    });
-    if (!site) {
-      return {
-        error: "Not authorized",
-      };
-    }
+// export function withSiteAuth(action: any) {
+//   return async (
+//     formData: FormData | null,
+//     siteId: string,
+//     key: string | null,
+//   ) => {
+//     const session = await getSession();
+//     if (!session) {
+//       return {
+//         error: "Not authenticated",
+//       };
+//     }
+//     const site = await prisma.site.findUnique({
+//       where: {
+//         id: siteId,
+//       },
+//     });
+//     if (!site) {
+//       return {
+//         error: "Not authorized",
+//       };
+//     }
 
-    return action(formData, site, key);
-  };
-}
+//     return action(formData, site, key);
+//   };
+// }
 
-export function withPostAuth(action: any) {
-  return async (
-    formData: FormData | null,
-    postId: string,
-    key: string | null,
-  ) => {
-    const session = await getSession();
-    if (!session?.user.id) {
-      return {
-        error: "Not authenticated",
-      };
-    }
-    const post = await prisma.post.findUnique({
-      where: {
-        id: postId,
-      },
-      include: {
-        site: true,
-      },
-    });
-    if (!post || post.userId !== session.user.id) {
-      return {
-        error: "Post not found",
-      };
-    }
+// export function withPostAuth(action: any) {
+//   return async (
+//     formData: FormData | null,
+//     postId: string,
+//     key: string | null,
+//   ) => {
+//     const session = await getSession();
+//     if (!session?.user.id) {
+//       return {
+//         error: "Not authenticated",
+//       };
+//     }
+//     const post = await prisma.post.findUnique({
+//       where: {
+//         id: postId,
+//       },
+//       include: {
+//         site: true,
+//       },
+//     });
+//     if (!post || post.userId !== session.user.id) {
+//       return {
+//         error: "Post not found",
+//       };
+//     }
 
-    return action(formData, post, key);
-  };
-}
+//     return action(formData, post, key);
+//   };
+// }
