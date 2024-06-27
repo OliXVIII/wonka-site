@@ -56,7 +56,7 @@ export default async function Sitemap() {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
-    ...posts.map(({ slug }) => ({
+    ...posts.map(({ slug }: { slug: string }) => ({
       url: `https://${domain}/${slug}`,
       lastModified: new Date(),
     })),
