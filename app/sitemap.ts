@@ -1,6 +1,7 @@
-import { getCollections, getPages, getProducts } from "@/lib/shopify";
 import { headers } from "next/headers";
+
 import { getPostsForSite } from "@/lib/fetchers";
+import { getCollections, getPages, getProducts } from "@/lib/shopify";
 
 type Route = {
   url: string;

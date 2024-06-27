@@ -1,8 +1,10 @@
-import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
-import PostCard from "./post-card";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { getSession } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+
+import PostCard from "./post-card";
 
 export default async function Posts({
   siteId,

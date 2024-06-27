@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { Locale, defaultLocale, localesDetails } from "@/types/languages";
-import { fetchData } from "@/server/fetch-data";
-import { UpcomingEventPage } from "@/components/upcoming-event/page/page";
-import { ServicesPage } from "@/components/services/page";
+
 import Footer from "@/components/layout/footer/footer";
+import { ServicesPage } from "@/components/services/page";
+import { UpcomingEventPage } from "@/components/upcoming-event/page/page";
+import { fetchData } from "@/server/fetch-data";
+import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 
 type SlugPageParams = {
   params: { domain: string; lang: Locale; slug: string[] };

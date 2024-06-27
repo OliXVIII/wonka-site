@@ -1,12 +1,13 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
-import { cn } from "@/lib/utils";
+import va from "@vercel/analytics";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
+
+import LoadingDots from "@/components/icons/loading-dots";
 import { deleteSite } from "@/lib/actions";
-import va from "@vercel/analytics";
+import { cn } from "@/lib/utils";
 
 export default function DeleteSiteForm({ siteName }: { siteName: string }) {
   const { id } = useParams() as { id: string };

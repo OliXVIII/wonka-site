@@ -1,23 +1,25 @@
+import Image from "next/image";
 import Link from "next/link";
-import MobileMenu from "./mobile-menu";
 import { Suspense } from "react";
+
 //import Search from "./search";
-import LogoSquare from "@/components/store/logo-square";
-import OpenCart from "@/components/store/cart/open-cart";
+import { LoginButton } from "@/components/login/button";
 import Cart from "@/components/store/cart";
-import { MenuContent } from "@/types/ui-content";
+import OpenCart from "@/components/store/cart/open-cart";
+import LogoSquare from "@/components/store/logo-square";
+import { createLink } from "@/lib/create-link";
+import { DataType } from "@/server/fetch-data";
 import {
   LocaleDetails,
   defaultLocale,
   localesDetails,
 } from "@/types/languages";
-import { DataType } from "@/server/fetch-data";
-import { ThemeSelector } from "./theme-selector/theme-selector-server";
-import { LanguageSelector } from "./language-selector";
-import { createLink } from "@/lib/create-link";
-import Image from "next/image";
-import { LoginButton } from "@/components/login/button";
 import { StaticUiContent, staticUiContent } from "@/types/static-ui-content";
+import { MenuContent } from "@/types/ui-content";
+
+import { LanguageSelector } from "./language-selector";
+import MobileMenu from "./mobile-menu";
+import { ThemeSelector } from "./theme-selector/theme-selector-server";
 
 type NavbarProps = {
   data: DataType;

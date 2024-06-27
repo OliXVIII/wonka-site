@@ -1,5 +1,6 @@
-import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
+
+import { DataType } from "@/server/fetch-data";
 
 type HeaderProps = {
   data: DataType;

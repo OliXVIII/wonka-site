@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
 import { Locale, defaultLocale, possibleLocales } from "@/types/languages";
 import { RegionCode } from "@/types/region";
 
@@ -7,7 +8,7 @@ const Page = async () => {
   const headersList = headers();
   const clientAddress = headersList.get("x-forwarded-for") ?? "192.0.2.1"; // Default IP if not found
   let countryCode = "CA"; // Default to Canada
-  let defaultLocale = "en"; // Default language
+  const defaultLocale = "en"; // Default language
 
   if (process.env.NODE_ENV !== "development") {
     const response = await fetch(

@@ -1,5 +1,7 @@
-import { Product } from "@/lib/shopify/types";
 import Link from "next/link";
+
+import { Product } from "@/lib/shopify/types";
+
 import Grid from "../store/grid";
 import { GridTileImage } from "../store/grid/tile";
 

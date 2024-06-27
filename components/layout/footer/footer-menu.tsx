@@ -1,7 +1,8 @@
+import Link from "next/link";
+
 import { createLink } from "@/lib/create-link";
 import { LocaleDetails } from "@/types/languages";
 import { MenuContent } from "@/types/ui-content";
-import Link from "next/link";
 
 type FooterMenuItemsProps = {
   readonly item: MenuContent;

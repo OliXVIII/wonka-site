@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import { StorageType } from "@/types/storage";
 import { UiContent } from "@/types/ui-content";
-import Image from "next/image";
 
 type ServicesPageProps = {
   uiContent: UiContent;

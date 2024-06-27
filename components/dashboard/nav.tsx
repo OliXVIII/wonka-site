@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   ArrowLeft,
   BarChart3,
@@ -15,14 +14,16 @@ import {
   FileCode,
   Github,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   useParams,
   usePathname,
   useSelectedLayoutSegments,
 } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useState } from "react";
+
 import { getSiteFromPostId } from "@/lib/actions";
-import Image from "next/image";
 
 const externalLinks = [
   {

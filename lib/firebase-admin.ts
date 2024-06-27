@@ -11,7 +11,9 @@ const serviceAccount = JSON.parse(
   process.env.FIREBASE_ADMIN_CREDENTIALS as string,
 );
 
-serviceAccount.private_key = (process.env.FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
+serviceAccount.private_key = (
+  process.env.FIREBASE_ADMIN_PRIVATE_KEY as string
+).replace(/\\n/g, "\n");
 
 // Import only what you need from the Firebase SDK for Firebase
 

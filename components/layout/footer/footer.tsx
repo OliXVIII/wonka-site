@@ -1,9 +1,10 @@
 import { DataType } from "@/server/fetch-data";
+import { LocaleDetails } from "@/types/languages";
+
+import FooterBottom from "./footer-bottom";
 import FooterSimple from "./footer-simple";
 import { SocialMediaComponent } from "./social-media";
-import FooterBottom from "./footer-bottom";
 import StaticGoogleMap from "./static-google-map";
-import { LocaleDetails } from "@/types/languages";
 
 type FooterProps = {
   data: DataType;
@@ -33,7 +34,11 @@ export default async function Footer({
       {storage.socialMedia && (
         <SocialMediaComponent socialMedia={storage.socialMedia} />
       )}
-      <FooterBottom uiContent={uiContent} banner={data.features.banner} upcoming={upcoming} />
+      <FooterBottom
+        uiContent={uiContent}
+        banner={data.features.banner}
+        upcoming={upcoming}
+      />
     </footer>
   );
 }

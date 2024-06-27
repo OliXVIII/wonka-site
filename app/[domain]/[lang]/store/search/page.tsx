@@ -1,6 +1,4 @@
-
 import { SearchComponent } from "@/components/layout/search-page";
-
 
 type SearchParams = {
   params: {
@@ -8,13 +6,8 @@ type SearchParams = {
   };
 };
 
-
 const SearchPage = async ({ params }: SearchParams) => {
-
-  return (
-    <SearchComponent />
-  );
-}
-
+  return <SearchComponent />;
+};
 
 export default SearchPage;

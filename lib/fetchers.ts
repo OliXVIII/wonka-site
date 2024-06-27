@@ -1,7 +1,8 @@
 import { unstable_cache } from "next/cache";
+import { compileMDX } from "next-mdx-remote/rsc";
+
 import prisma from "@/lib/prisma";
 import { replaceExamples, replaceTweets } from "@/lib/remark-plugins";
-import { compileMDX } from "next-mdx-remote/rsc";
 
 // export async function getSiteData(domain: string, lang: Locale) {
 //   return await fetchData( domain, lang );

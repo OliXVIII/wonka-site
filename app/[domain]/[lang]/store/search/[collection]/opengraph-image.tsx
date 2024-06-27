@@ -1,6 +1,7 @@
+import { ImageResponse } from "next/og";
+
 import LogoIcon from "@/components/icons/logo";
 import { getCollection } from "@/lib/shopify";
-import { ImageResponse } from "next/og";
 
 export default async function Image({
   params,

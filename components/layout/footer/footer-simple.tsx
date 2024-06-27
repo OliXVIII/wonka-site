@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
+
 import FooterMenu from "@/components/layout/footer/footer-menu";
 import { DataType } from "@/server/fetch-data";
-import Image from "next/image";
 import { LocaleDetails } from "@/types/languages";
 
 type FooterProps = {

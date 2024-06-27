@@ -1,5 +1,6 @@
-import { UpcomingEvent } from "@/types/upcoming-event";
 import Image from "next/image";
+
+import { UpcomingEvent } from "@/types/upcoming-event";
 
 export const MainImageUpcoming = ({
   upcomingEvent,

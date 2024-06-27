@@ -1,9 +1,10 @@
 "use client";
 
 import clsx from "clsx";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { ProductOption, ProductVariant } from "@/lib/shopify/types";
 import { createUrl } from "@/lib/utils";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Combination = {
   id: string;

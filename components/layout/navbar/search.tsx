@@ -1,13 +1,14 @@
 "use client";
 
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Results } from "@orama/orama";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Results } from "@orama/orama";
 import { orama, trimDescription } from "@/lib/orama";
 import { createUrl } from "@/lib/utils";
+
 import { useOutsideClick } from "./useOutsideClick";
 
 export default function Search() {

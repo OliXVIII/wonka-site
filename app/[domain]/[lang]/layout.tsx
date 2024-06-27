@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
 import { notFound, redirect } from "next/navigation";
+import { ReactNode } from "react";
+
 import { fetchData } from "@/server/fetch-data";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 export type Params = {

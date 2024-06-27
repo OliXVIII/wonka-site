@@ -1,11 +1,12 @@
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
-import { removeItem, updateItemQuantity } from "./actions";
 import LoadingDots from "@/components/icons/loading-dots";
 import { CartItem } from "@/lib/shopify/types";
+
+import { removeItem, updateItemQuantity } from "./actions";
 
 export default function EditItemQuantityButton({
   item,

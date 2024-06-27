@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { StorageType } from "@/types/storage";
 import Image from "next/image";
+
+import { StorageType } from "@/types/storage";
 
 type LogoSquareProps = {
   storage: StorageType;

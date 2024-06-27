@@ -1,6 +1,7 @@
 import { UpcomingEvent } from "@/types/upcoming-event";
-import { MainImageUpcoming } from "../page/main-image";
+
 import { ReadMoreButton } from "../../read-more-button";
+import { MainImageUpcoming } from "../page/main-image";
 
 type UpcomingEventBannerCompProps = {
   upcomingEvent: UpcomingEvent;

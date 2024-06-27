@@ -1,11 +1,12 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import LoadingDots from "@/components/icons/loading-dots";
-import { useRouter } from "next/navigation";
-
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { removeItem } from "./actions";
+
+import LoadingDots from "@/components/icons/loading-dots";
 import { CartItem } from "@/lib/shopify/types";
+
+import { removeItem } from "./actions";
 
 export default function DeleteItemButton({ item }: { item: CartItem }) {
   const router = useRouter();

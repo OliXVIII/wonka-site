@@ -1,14 +1,15 @@
-import prisma from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import { fetchData } from "@/server/fetch-data";
-import Navbar from "@/components/layout/navbar";
-import { Locale, defaultLocale, localesDetails } from "@/types/languages";
-import { Breadcrumb } from "@/components/layout/breadcrumb";
-import { ServicesSection } from "@/components/services/section";
-import { Header } from "@/components/header/header";
 import Image from "next/image";
-import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
+import { notFound } from "next/navigation";
+
+import { Header } from "@/components/header/header";
+import { Breadcrumb } from "@/components/layout/breadcrumb";
 import Footer from "@/components/layout/footer/footer";
+import Navbar from "@/components/layout/navbar";
+import { ServicesSection } from "@/components/services/section";
+import { UpcomingEventBanner } from "@/components/upcoming-event/banner/upcoming-event-banner";
+import prisma from "@/lib/prisma";
+import { fetchData } from "@/server/fetch-data";
+import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import { staticUiContent } from "@/types/static-ui-content";
 
 export type PageParams = {
@@ -98,7 +99,13 @@ const SiteHomePage = async ({ params }: PageParams) => {
         </div>
       )}
       <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
-        <Navbar staticUiContent={staticUiContents} domain={domain} locale={locale} data={data} slug={""} />
+        <Navbar
+          staticUiContent={staticUiContents}
+          domain={domain}
+          locale={locale}
+          data={data}
+          slug={""}
+        />
         <Header data={data} />
         <Breadcrumb />
 

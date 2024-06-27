@@ -1,5 +1,6 @@
-import Arrow from "@/public/arrow.svg";
 import Link from "next/link";
+
+import Arrow from "@/public/arrow.svg";
 
 export const BookNowButton = ({ bookNow }: { bookNow?: string }) => {
   return (

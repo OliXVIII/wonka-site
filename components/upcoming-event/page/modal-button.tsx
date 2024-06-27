@@ -1,7 +1,8 @@
 "use client";
 
-import { UiContent } from "@/types/ui-content";
 import { useState } from "react";
+
+import { UiContent } from "@/types/ui-content";
 
 export const ModalButton = ({ uiContent }: { uiContent: UiContent }) => {
   const [text, setText] = useState<string>(uiContent.checkout);

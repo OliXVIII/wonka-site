@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { visit } from "unist-util-visit";
 import type { Example, PrismaClient } from "@prisma/client";
+import Link from "next/link";
 import { ReactNode } from "react";
+import { visit } from "unist-util-visit";
 
 export function replaceLinks({
   href,
@@ -27,7 +27,7 @@ export function replaceLinks({
 export function replaceTweets() {
   return (tree: any) =>
     new Promise<void>(async (resolve, reject) => {
-      const nodesToChange = new Array();
+      const nodesToChange = [];
 
       visit(tree, "link", (node: any) => {
         if (
@@ -71,7 +71,7 @@ export function replaceTweets() {
 export function replaceExamples(prisma: PrismaClient) {
   return (tree: any) =>
     new Promise<void>(async (resolve, reject) => {
-      const nodesToChange = new Array();
+      const nodesToChange = [];
 
       visit(tree, "mdxJsxFlowElement", (node: any) => {
         if (node.name == "Examples") {

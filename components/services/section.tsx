@@ -1,5 +1,7 @@
-import { DataType } from "@/server/fetch-data";
 import Image from "next/image";
+
+import { DataType } from "@/server/fetch-data";
+
 import { ReadMoreButton } from "../read-more-button";
 
 type ServicesSectionProps = {
