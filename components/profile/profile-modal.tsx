@@ -58,7 +58,7 @@ const ProfileModal = ({
     <>
       <dialog
         ref={modalRef}
-        className="mr-8 mt-16 rounded-lg bg-light shadow-profile dark:bg-dark-light 2xl:mr-[(100vh-1536px)/2]"
+        className="mr-6 mt-16 rounded-lg bg-light shadow-profile dark:bg-dark-light 2xl:mr-[calc((100vw-1536px)/2)]"
       >
         <div className="flex h-fit w-full p-2.5" ref={outsideRef}>
           <ProfileItem

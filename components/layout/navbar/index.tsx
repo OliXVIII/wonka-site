@@ -49,13 +49,13 @@ export default function Navbar({
   return (
     <>
       <nav
-        className={`flex h-16 w-full items-center justify-between py-2 ${features.navbar?.fixed ? " container fixed z-40 mx-auto" : "relative"}`}
+        className={`flex h-16 w-full items-center justify-between py-2 ${features.navbar?.fixed ? " container fixed z-40 mx-auto" : "relative"} ${inceptionLogo ? "max-sm:pl-16" : ""}`}
       >
         <div className="block flex-none md:hidden">
           <MobileMenu menu={menu} searchbar={searchbar} locale={locale} />
         </div>
 
-        <div className="flex w-full items-center">
+        <div className="flex w-full items-center justify-end">
           {!inceptionLogo ? (
             <Link
               href="/"
@@ -66,7 +66,7 @@ export default function Navbar({
           ) : (
             <div>
               <a
-                className="absolute top-0 mx-auto mt-1 h-24 w-24 max-sm:animate-spin-slow max-xs:left-1 max-xs:mt-3 max-xs:h-20 max-xs:w-20 sm:hover:animate-spin-slow"
+                className="absolute left-1 top-0 mx-auto mt-1 h-24 w-24 max-sm:h-20 max-sm:w-20 max-sm:animate-spin-slow max-xs:mt-3 sm:hover:animate-spin-slow"
                 href={`/`}
               >
                 <Image
