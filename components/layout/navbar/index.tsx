@@ -49,7 +49,7 @@ export default function Navbar({
   return (
     <>
       <nav
-        className={`flex h-16 w-full items-center justify-between py-2 ${features.navbar?.fixed ? " fixed z-40 mx-auto" : "relative"}`}
+        className={`flex h-16 w-full items-center justify-between py-2 ${features.navbar?.fixed ? " container fixed z-40 mx-auto" : "relative"}`}
       >
         <div className="block flex-none md:hidden">
           <MobileMenu menu={menu} searchbar={searchbar} locale={locale} />

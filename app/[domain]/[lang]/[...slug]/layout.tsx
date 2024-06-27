@@ -20,7 +20,7 @@ export default async function SlugLayout({ params, children }: Params) {
   }
 
   return (
-    <div className="container mx-auto max-md:px-2 xl:!max-w-screen-xl">
+    <div className="container mx-auto max-md:px-2">
       <Navbar
         staticUiContent={staticUiContent[locale.languageCode]}
         domain={params.domain}

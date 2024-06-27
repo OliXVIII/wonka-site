@@ -11,7 +11,7 @@ import { StaticUiContent } from "@/types/static-ui-content";
 type HomePageProps = {
   params: { lang: Locale };
 };
-const staticUiContent: Record<Language, StaticUiContent> = {
+export const homePageStaticUiContent: Record<Language, StaticUiContent> = {
   fr: {
     profileMenu: [
       {
@@ -46,7 +46,7 @@ const staticUiContent: Record<Language, StaticUiContent> = {
   },
 };
 
-const data: DataType = {
+export const homePageData: DataType = {
   uiContent: {
     companyName: "Your Company",
     description: "Welcome to our website",
@@ -95,18 +95,8 @@ const data: DataType = {
   upcomingEvents: undefined,
 };
 const HomePage = ({ params }: HomePageProps) => {
-  const locale = localesDetails[params.lang] ?? defaultLocale;
   return (
     <>
-      <div className="flex flex-col">
-        <Navbar
-          staticUiContent={staticUiContent[locale.languageCode]}
-          domain={"local-108"}
-          data={data}
-          locale={locale}
-          inceptionLogo={true}
-        />
-      </div>
       <div className="m-auto flex flex-col justify-center pt-52"></div>
     </>
   );
