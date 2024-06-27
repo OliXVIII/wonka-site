@@ -27,7 +27,7 @@ export function replaceLinks({
 export function replaceTweets() {
   return (tree: any) =>
     new Promise<void>(async (resolve, reject) => {
-      const nodesToChange = [];
+      const nodesToChange: any[] = [];
 
       visit(tree, "link", (node: any) => {
         if (
