@@ -1,7 +1,7 @@
 import Navbar from "@/components/layout/navbar";
 import { ReactNode } from "react";
-import { homePageData, homePageStaticUiContent } from "./page";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
+import { homePageData, homePageStaticUiContent } from "@/lib/static-homepage";
 
 export default function Layout({
   children,
