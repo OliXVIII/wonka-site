@@ -14,14 +14,14 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.AUTH_GITHUB_ID as string,
       clientSecret: process.env.AUTH_GITHUB_SECRET as string,
       profile(profile, tokens) {
-        return Promise.resolve({
+        return {
           id: profile.id.toString(),
           name: profile.name || profile.login,
           gh_username: profile.login,
           email: profile.email,
           image: profile.avatar_url,
           role: "user",
-        });
+        };
       },
     }),
     GoogleProvider({
@@ -61,26 +61,39 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    jwt: async ({ token }) => {
-      //TODO remove local-108 hardcoded
-      const userDb = await getUser("local-108", token.sub as string);
-      if (userDb) {
-        return {
-          ...token,
-          name: userDb.name,
-          email: userDb.email,
-          picture: userDb.imageURL,
-          id: userDb.id,
-          role: userDb.role,
-        };
-      } else {
-        console.log("token", token);
-        return {
-          ...token,
-        };
+    jwt: async ({ token, account, profile, user }) => {
+      console.log("JWT callback", { token, account, profile, user });
+      if (account) {
+        if (account.provider === "google") {
+          const userDb = await getUser("google", token.sub as string);
+          if (userDb) {
+            return {
+              ...token,
+              name: userDb.name,
+              email: userDb.email,
+              picture: userDb.imageURL,
+              id: userDb.id,
+              role: userDb.role,
+            };
+          }
+        } else if (account.provider === "github") {
+          const userDb = await getUser("github", token.sub as string);
+          if (userDb) {
+            return {
+              ...token,
+              name: userDb.name,
+              email: userDb.email,
+              picture: userDb.imageURL,
+              id: userDb.id,
+              role: userDb.role,
+            };
+          }
+        }
       }
+      return token;
     },
     session: async ({ session, token }) => {
+      console.log("Session callback", { session, token });
       session.user = {
         ...session.user,
         image: token.picture as string,
@@ -88,7 +101,6 @@ export const authOptions: NextAuthOptions = {
         email: token.email as string,
         role: (token.role as string) ?? "user",
       };
-      console.log("session", session.user);
       return session;
     },
   },
