@@ -11,11 +11,29 @@ import { ProfileItem } from "./profile-item";
 
 export const useOutsideClickClose = (
   dialogRef: RefObject<HTMLDialogElement>,
-  outsideRef: RefObject<HTMLFormElement>,
+  outsideRef: RefObject<HTMLDivElement>,
+  buttonRef: RefObject<HTMLButtonElement>,
 ) => {
   useEffect(() => {
-    if (dialogRef.current?.open) {
-      document.addEventListener("click", () => dialogRef?.current?.close());
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+    function handleClickOutside(event: MouseEvent) {
+      // Test if click outside
+      console.log(
+        !outsideRef.current?.contains(event.target as Node),
+        !buttonRef.current?.contains(event.target as Node),
+      );
+      if (
+        !outsideRef.current?.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node) &&
+        dialogRef.current
+      ) {
+        dialogRef.current.close();
+      }
     }
   });
 };
@@ -31,9 +49,10 @@ const ProfileModal = ({
   staticUiContent,
 }: ProfileModalProps) => {
   const modalRef = useRef<HTMLDialogElement>(null); // Assign a valid RefObject<HTMLDialogElement> value to modalRef
-  const outsideRef = useRef<HTMLFormElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
+  const outsideRef = useRef<HTMLDivElement>(null); // Assign a valid RefObject<HTMLFormElement> value to outsideRef
+  const buttonRef = useRef<HTMLButtonElement>(null); // Assign a valid RefObject<HTMLButtonElement> value to buttonRef
   const { data: session } = useSession();
-  useOutsideClickClose(modalRef, outsideRef);
+  useOutsideClickClose(modalRef, outsideRef, buttonRef);
   // svg => fill-light fill-dark
   return (
     <>
@@ -41,13 +60,19 @@ const ProfileModal = ({
         ref={modalRef}
         className="mr-5 mt-16 rounded-lg bg-light shadow-profile dark:bg-dark-light"
       >
-        <ProfileItem uiContent={uiContent} staticUiContent={staticUiContent} />
+        <div className="flex h-full w-full p-2.5" ref={outsideRef}>
+          <ProfileItem
+            uiContent={uiContent}
+            staticUiContent={staticUiContent}
+          />
+        </div>
       </dialog>
 
       <button
         onClick={() => modalRef.current?.showModal()}
         aria-label="Profile modal"
         className="relative flex h-10 w-10 items-center justify-center rounded-md"
+        ref={buttonRef}
       >
         <Image
           alt="User Image"

@@ -7,8 +7,8 @@ import Login from "@/public/profile/login.svg";
 import { StaticUiContent } from "@/types/static-ui-content";
 import { UiContent } from "@/types/ui-content";
 
-import { handleLogin } from "../layout/navbar/profile-menu/handle-login";
-import ProfileModal from "../layout/navbar/profile-menu/profile-modal";
+import { handleLogin } from "./handle-login";
+import ProfileModal from "./profile-modal";
 
 type LoginProps = {
   uiContent: UiContent;

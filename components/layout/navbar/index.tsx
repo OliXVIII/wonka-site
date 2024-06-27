@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import { LoginButton } from "@/components/login/button";
+import { LoginButton } from "@/components/profile/login-button";
 import Cart from "@/components/store/cart";
 import OpenCart from "@/components/store/cart/open-cart";
 import LogoSquare from "@/components/store/logo-square";
