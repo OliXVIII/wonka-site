@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-
-//import Search from "./search";
 import { LoginButton } from "@/components/login/button";
 import Cart from "@/components/store/cart";
 import OpenCart from "@/components/store/cart/open-cart";

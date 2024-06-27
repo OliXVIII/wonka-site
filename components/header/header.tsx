@@ -6,9 +6,9 @@ type HeaderProps = {
   data: DataType;
 };
 
-export const Header = ({ data }: HeaderProps) => {
+export const Header = ({ data }: HeaderProps): JSX.Element => {
   const { uiContent, storage } = data;
-  const { slogan, slogan2, mission, siteName, getStarted } = uiContent;
+  const { slogan, slogan2, mission, siteName } = uiContent;
 
   return (
     <header className="-mt-16 flex flex-col items-center justify-center px-8 py-4 pt-16 max-sm:h-header-mobile sm:h-header">

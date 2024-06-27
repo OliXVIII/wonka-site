@@ -2,7 +2,6 @@
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-
 import { UiContent, local108UIContent } from "@/types/ui-content";
 import { LocaleDetails } from "@/types/languages";
 import { StorageType, storageLocal108 } from "@/types/storage";

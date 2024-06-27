@@ -3,7 +3,6 @@
 import { Phone } from "lucide-react";
 import React from "react";
 import PhoneInput from "react-phone-input-2";
-
 import { UiContent } from "@/types/ui-content";
 import "react-phone-input-2/lib/style.css";
 

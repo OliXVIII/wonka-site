@@ -12,7 +12,7 @@ export const runtime = "edge";
 
 export async function POST(req: Request): Promise<Response> {
   if (
-    process.env.NODE_ENV != "development" &&
+    process.env.NODE_ENV !== "development" &&
     process.env.KV_REST_API_URL &&
     process.env.KV_REST_API_TOKEN
   ) {

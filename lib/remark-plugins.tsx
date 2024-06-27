@@ -32,7 +32,7 @@ export function replaceTweets() {
       visit(tree, "link", (node: any) => {
         if (
           node.url.match(
-            /https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)([^\?])(\?.*)?/g,
+            /https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)([^?])(\?.*)?/g,
           )
         ) {
           nodesToChange.push({
@@ -71,10 +71,10 @@ export function replaceTweets() {
 export function replaceExamples(prisma: PrismaClient) {
   return (tree: any) =>
     new Promise<void>(async (resolve, reject) => {
-      const nodesToChange = [];
+      const nodesToChange: any = [];
 
       visit(tree, "mdxJsxFlowElement", (node: any) => {
-        if (node.name == "Examples") {
+        if (node.name === "Examples") {
           nodesToChange.push({
             node,
           });
