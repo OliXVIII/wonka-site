@@ -72,27 +72,19 @@ export const authOptions: NextAuthOptions = {
           id: userDb.id,
           role: userDb.role,
         };
+      } else {
+        return {
+          ...token,
+        };
       }
-      return {
-        ...token,
-        id: user.id,
-      };
     },
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
-        image: token.image,
-        id: token.id,
-        email: token.email,
-        role: token.role ?? "user",
-        username: token?.username ?? token?.gh_username,
-      } as {
-        id: string;
-        role: string;
-        name: string;
-        email: string;
-        image: string;
-        username: string;
+        image: token.image as string,
+        id: token.id as string,
+        email: token.email as string,
+        role: (token.role as string) ?? "user",
       };
       return session;
     },

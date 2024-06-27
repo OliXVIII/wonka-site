@@ -6,7 +6,11 @@ import LogoSquare from "@/components/store/logo-square";
 import OpenCart from "@/components/store/cart/open-cart";
 import Cart from "@/components/store/cart";
 import { MenuContent } from "@/types/ui-content";
-import { LocaleDetails, defaultLocale, localesDetails } from "@/types/languages";
+import {
+  LocaleDetails,
+  defaultLocale,
+  localesDetails,
+} from "@/types/languages";
 import { DataType } from "@/server/fetch-data";
 import { ThemeSelector } from "./theme-selector/theme-selector-server";
 import { LanguageSelector } from "./language-selector";
@@ -119,7 +123,7 @@ export default function Navbar({
             ) : null}
             {features.profile ? (
               <LoginButton
-              lang={locale.path}
+                lang={locale.path}
                 staticUiContent={staticUiContent}
                 uiContent={uiContent}
                 domain={domain}
