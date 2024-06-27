@@ -9,20 +9,20 @@ const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    // GitHubProvider({
-    //   clientId: process.env.AUTH_GITHUB_ID as string,
-    //   clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-    //   profile(profile, tokens) {
-    //     return Promise.resolve({
-    //       id: profile.id.toString(),
-    //       name: profile.name || profile.login,
-    //       gh_username: profile.login,
-    //       email: profile.email,
-    //       image: profile.avatar_url,
-    //       role: "user",
-    //     });
-    //   },
-    // }),
+    GitHubProvider({
+      clientId: process.env.AUTH_GITHUB_ID as string,
+      clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          gh_username: profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          role: "user",
+        };
+      },
+    }),
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
@@ -37,28 +37,28 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // pages: {
-  //   signIn: `/login`,
-  //   verifyRequest: `/login`,
-  //   error: "/login", // Error code passed in query string as ?error=
-  // },
-  // adapter: PrismaAdapter(prisma),
-  // session: { strategy: "jwt" },
-  // cookies: {
-  //   sessionToken: {
-  //     name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
-  //     options: {
-  //       httpOnly: true,
-  //       sameSite: "lax",
-  //       path: "/",
-  //       // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
-  //       domain: VERCEL_DEPLOYMENT
-  //         ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
-  //         : undefined,
-  //       secure: VERCEL_DEPLOYMENT,
-  //     },
-  //   },
-  // },
+  pages: {
+    signIn: `/login`,
+    verifyRequest: `/login`,
+    error: "/login", // Error code passed in query string as ?error=
+  },
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
+  cookies: {
+    sessionToken: {
+      name: `${VERCEL_DEPLOYMENT ? "__Secure-" : ""}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        // When working on localhost, the cookie domain must be omitted entirely (https://stackoverflow.com/a/1188145)
+        domain: VERCEL_DEPLOYMENT
+          ? `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
+          : undefined,
+        secure: VERCEL_DEPLOYMENT,
+      },
+    },
+  },
   callbacks: {
     jwt: async ({ token, user }) => {
       const userDb = await getUser("local-108", token.sub as string);
@@ -72,9 +72,10 @@ export const authOptions: NextAuthOptions = {
           role: userDb.role,
         };
       }
-      return {
-        ...token,
-      };
+      if (user) {
+        token.user = user;
+      }
+      return token;
     },
     session: async ({ session, token }) => {
       console.log("session", session, "token", token);
@@ -83,8 +84,7 @@ export const authOptions: NextAuthOptions = {
         image: token.picture as string,
         id: token.sub as string,
         email: token.email as string,
-        role: (token.role as string) || "user",
-        // username: token?.username || token?.gh_username,
+        role: (token.role as string) ?? "user",
       };
       return session;
     },
