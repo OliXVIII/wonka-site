@@ -1,3 +1,4 @@
+import { DataType } from "@/server/fetch-data";
 import { Language } from "@/types/languages";
 import { StaticUiContent } from "@/types/static-ui-content";
 
