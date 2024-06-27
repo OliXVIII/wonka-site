@@ -7,7 +7,7 @@
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
-    "lint": "eslint --ext .js --ignore-path .gitignore ."
+    "lint": "next lint"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
