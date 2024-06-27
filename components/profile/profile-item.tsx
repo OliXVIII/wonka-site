@@ -38,7 +38,6 @@ export const ProfileItem = ({
       </div>
       {menu.length > 0
         ? menu.map((item) => {
-            console.log(item.title);
             if (item.path === "/admin" && admin) {
               return (
                 <div key={item.title} className="flex items-center pl-3 pt-7">
@@ -51,18 +50,14 @@ export const ProfileItem = ({
 
             if (item.path === "/logout") {
               return (
-                <div
+                <button
                   key={item.title}
-                  className="my-3 flex h-10 w-full rounded-md pl-3"
+                  onClick={() => signOut()}
+                  className="my-3 flex h-10 w-full items-center rounded-md pl-3"
                 >
-                  <button
-                    onClick={() => signOut()}
-                    className="flex items-center"
-                  >
-                    <LogOut className="h-6 w-6" />
-                    <span className="pl-3">{item.title}</span>
-                  </button>
-                </div>
+                  <LogOut className="h-6 w-6" />
+                  <span className="pl-3">{item.title}</span>
+                </button>
               );
             }
             return null;
