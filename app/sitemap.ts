@@ -1,6 +1,7 @@
-import { getCollections, getPages, getProducts } from "@/lib/shopify";
 import { headers } from "next/headers";
+
 import { getPostsForSite } from "@/lib/fetchers";
+import { getCollections, getPages, getProducts } from "@/lib/shopify";
 
 type Route = {
   url: string;
@@ -55,7 +56,7 @@ export default async function Sitemap() {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
-    ...posts.map(({ slug }) => ({
+    ...posts.map(({ slug }: { slug: string }) => ({
       url: `https://${domain}/${slug}`,
       lastModified: new Date(),
     })),

@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
+/* @font-face {
   font-family: "WonkasiteFont";
-  src:
-    url("/fonts/Inter-Bold.woff2") format("woff2"),
-    url("/fonts/Inter-Bold.woff") format("woff");
+  src: url("https://rsms.me/inter/font-files/Inter-UI-Medium.woff2?v=3.1") format("woff2"), url("https://rsms.me/inter/font-files/Inter-UI-Medium.woff?v=3.1") format("woff");
   font-weight: 700;
   font-style: normal;
-}
+} */
 
 @layer base {
   h1 {
@@ -43,6 +41,9 @@
     @media only screen and (max-width: 475px) {
       font-size: 0.9rem;
     }
+  }
+  svg {
+    @apply fill-dark  stroke-dark dark:fill-dark dark:stroke-light;
   }
   progress.appearance-none {
     /* Remove default browser styling */
@@ -301,11 +302,11 @@ html {
   }
 
   @media only screen and (min-width: 2049px) {
-    font-size: calc(var(--root-font-size) * 1.45);
+    font-size: calc(var(--root-font-size) * 1.35);
   }
 
   @media only screen and (min-width: 2561px) {
-    font-size: calc(var(--root-font-size) * 2.3);
+    font-size: calc(var(--root-font-size) * 1.45);
   }
 
   body {

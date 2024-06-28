@@ -1,9 +1,10 @@
 import { createLink } from "@/lib/create-link";
+import { FeaturesType } from "@/types/features";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
-import { MainImageUpcoming } from "../page/main-image";
+
 import { ReadMoreButton } from "../../read-more-button";
-import { FeaturesType } from "@/types/features";
+import { MainImageUpcoming } from "../page/main-image";
 
 type UpcomingEventBannerCompProps = {
   upcomingEvent: UpcomingEvent;

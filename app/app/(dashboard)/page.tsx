@@ -1,9 +1,10 @@
 import { Suspense } from "react";
-import Sites from "@/components/sites/sites";
-import OverviewStats from "@/components/sites/overview-stats";
-import Posts from "@/components/post/posts";
+
 import PlaceholderCard from "@/components/dashboard/placeholder-card";
+import Posts from "@/components/post/posts";
 import OverviewSitesCTA from "@/components/sites/overview-sites-cta";
+import OverviewStats from "@/components/sites/overview-stats";
+import Sites from "@/components/sites/sites";
 
 export default function Overview() {
   return (

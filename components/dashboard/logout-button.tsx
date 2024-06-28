@@ -9,7 +9,7 @@ export default function LogoutButton() {
       onClick={() => {
         signOut();
         // Redirect to the login page
-        window.location.href = "/login";
+        window.location.href = "/logout";
       }}
       className="rounded-lg p-1.5 text-stone-700 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-light dark:hover:bg-stone-700 dark:active:bg-stone-800"
     >

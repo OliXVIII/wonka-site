@@ -1,10 +1,12 @@
-import { Offer, UpcomingEvent } from "@/types/upcoming-event";
-import { BookNowButton } from "./book-now";
-import { UiContent } from "@/types/ui-content";
+import Link from "next/link";
+
+import { priceByCountry } from "@/lib/price-by-country";
 import { taxByCountry } from "@/lib/tax";
 import { RegionCode } from "@/types/region";
-import { priceByCountry } from "@/lib/price-by-country";
-import Link from "next/link";
+import { UiContent } from "@/types/ui-content";
+import { Offer, UpcomingEvent } from "@/types/upcoming-event";
+
+import { BookNowButton } from "./book-now";
 
 const OfferInfo = ({
   room,

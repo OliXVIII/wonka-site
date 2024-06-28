@@ -1,8 +1,10 @@
-import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
-import PostCard from "./post-card";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { getSession } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+
+import PostCard from "./post-card";
 
 export default async function Posts({
   siteId,
@@ -31,7 +33,7 @@ export default async function Posts({
 
   return posts.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {posts.map((post) => (
+      {posts.map((post: any) => (
         <PostCard key={post.id} data={post} />
       ))}
     </div>

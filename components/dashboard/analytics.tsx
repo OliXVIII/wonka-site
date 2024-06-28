@@ -113,7 +113,7 @@ export default function AnalyticsMockup() {
               </Text>
             </Flex>
             <BarList
-              // @ts-ignore
+              // @ts-expect-error - data is not typed
               data={data.map(({ name, value, code }) => ({
                 name,
                 value,

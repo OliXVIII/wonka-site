@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { UpcomingEvent } from "@/types/upcoming-event";
 
 type NextWrapperType = {
   children: React.ReactNode;

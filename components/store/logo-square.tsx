@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { StorageType } from "@/types/storage";
 import Image from "next/image";
+
+import { StorageType } from "@/types/storage";
 
 type LogoSquareProps = {
   storage: StorageType;
@@ -11,7 +12,7 @@ export default function LogoSquare({ storage, size }: LogoSquareProps) {
   return (
     <div
       className={clsx("relative flex flex-none items-center justify-center ", {
-        "h-14 w-14 rounded-xl": !size,
+        "h-14 w-28": !size,
         "h-[30px] w-[30px] rounded-lg": size === "sm",
       })}
     >
@@ -26,9 +27,7 @@ export default function LogoSquare({ storage, size }: LogoSquareProps) {
           src={storage.logo.navbar.src}
           alt="logo"
           fill
-          style={{
-            transform: `scale(${storage.logo.navbar.aspectRatio ?? 1})`,
-          }}
+          quality={100}
           className="object-contain dark:invert-[88%]"
         />
       ) : null}

@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 import {
   addToCart,
   createCart,
@@ -7,11 +9,10 @@ import {
   removeFromCart,
   updateCart,
 } from "@/lib/shopify";
-import { cookies } from "next/headers";
 
 export const addItem = async (
   variantId: string | undefined,
-): Promise<String | undefined> => {
+): Promise<string | undefined> => {
   let cartId = cookies().get("cartId")?.value;
   let cart;
 
@@ -38,7 +39,7 @@ export const addItem = async (
 
 export const removeItem = async (
   lineId: string,
-): Promise<String | undefined> => {
+): Promise<string | undefined> => {
   const cartId = cookies().get("cartId")?.value;
 
   if (!cartId) {
@@ -59,7 +60,7 @@ export const updateItemQuantity = async ({
   lineId: string;
   variantId: string;
   quantity: number;
-}): Promise<String | undefined> => {
+}): Promise<string | undefined> => {
   const cartId = cookies().get("cartId")?.value;
 
   if (!cartId) {

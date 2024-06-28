@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useDomainStatus } from "./use-domain-status";
-import { getSubdomain } from "@/lib/domains";
 import { AlertCircle, XCircle } from "lucide-react";
+import { useState } from "react";
+
+import { getSubdomain } from "@/lib/domains";
 import { cn } from "@/lib/utils";
+
+import { useDomainStatus } from "./use-domain-status";
 
 export const InlineSnippet = ({
   className,
@@ -103,7 +105,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               type="button"
               onClick={() => setRecordType("A")}
               className={`${
-                recordType == "A"
+                recordType === "A"
                   ? "border-black text-black dark:border-light dark:text-white"
                   : "border-light text-stone-400 dark:border-black dark:text-stone-600"
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
@@ -114,7 +116,7 @@ export default function DomainConfiguration({ domain }: { domain: string }) {
               type="button"
               onClick={() => setRecordType("CNAME")}
               className={`${
-                recordType == "CNAME"
+                recordType === "CNAME"
                   ? "border-black text-black dark:border-light dark:text-white"
                   : "border-light text-stone-400 dark:border-black dark:text-stone-600"
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}

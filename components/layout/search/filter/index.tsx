@@ -1,7 +1,9 @@
+import { Suspense } from "react";
+
 import { SortFilterItem } from "@/lib/shopify/constants";
+
 import FilterItemDropdown from "./dropdown";
 import { FilterItem } from "./item";
-import { Suspense } from "react";
 
 export type ListItem = SortFilterItem | PathFilterItem;
 export type PathFilterItem = { title: string; path: string };

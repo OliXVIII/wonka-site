@@ -1,10 +1,11 @@
+import { createLink } from "@/lib/create-link";
+import { FeaturesType } from "@/types/features";
 import { LocaleDetails } from "@/types/languages";
 import { UpcomingEvent } from "@/types/upcoming-event";
-import { SectionBanner } from "./section-banner";
+
 import { HorizontalBanner } from "./horizontal-banner";
-import { FeaturesType } from "@/types/features";
 import { BannerWrapper } from "./horizontal-wrapper";
-import { createLink } from "@/lib/create-link";
+import { SectionBanner } from "./section-banner";
 
 type UpcomingEventBannerProps = {
   upcomingEvent: UpcomingEvent;

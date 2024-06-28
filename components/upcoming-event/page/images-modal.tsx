@@ -1,8 +1,9 @@
 "use client";
-import { UpcomingEvent } from "@/types/upcoming-event";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+
+import { UpcomingEvent } from "@/types/upcoming-event";
 
 export const ImageModale = ({
   upComingEvent,

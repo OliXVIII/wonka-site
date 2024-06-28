@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
 import { Post } from "@prisma/client";
-import { updatePost, updatePostMetadata } from "@/lib/actions";
-import { Editor as NovelEditor } from "novel";
-import TextareaAutosize from "react-textarea-autosize";
-import { cn } from "@/lib/utils";
-import LoadingDots from "../icons/loading-dots";
 import { ExternalLink } from "lucide-react";
+import { Editor as NovelEditor } from "novel";
+import { useEffect, useState, useTransition } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
+
+import { updatePost, updatePostMetadata } from "@/lib/actions";
+import { cn } from "@/lib/utils";
+
+import LoadingDots from "../icons/loading-dots";
 
 type PostWithSite = Post & { site: { subdomain: string | null } | null };
 
 export default function Editor({ post }: { post: PostWithSite }) {
-  let [isPendingSaving, startTransitionSaving] = useTransition();
-  let [isPendingPublishing, startTransitionPublishing] = useTransition();
+  const [isPendingSaving, startTransitionSaving] = useTransition();
+  const [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<PostWithSite>(post);
   const [hydrated, setHydrated] = useState(false);
 

@@ -15,7 +15,7 @@ export const ThemeSelector = ({ menu }: ThemeSelectorProps) => {
     >
       <button
         type="button"
-        className="bg-dark/65 rounded-full p-2 dark:hidden"
+        className="rounded-full bg-dark/65 p-2 dark:hidden"
         onClick={() => setTheme("dark")}
         aria-labelledby="theme-selector"
         aria-label="Theme Selector"
@@ -42,13 +42,13 @@ export const ThemeSelector = ({ menu }: ThemeSelectorProps) => {
       </button>
       <button
         type="button"
-        className="bg-light/65 hidden rounded-full  p-2 dark:inline"
+        className="hidden rounded-full bg-light/65  p-2 dark:inline"
         onClick={() => setTheme("light")}
         aria-labelledby="theme-selector"
         aria-label="Theme Selector"
       >
         <span className="hidden dark:inline">
-          <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
+          <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 !stroke-none">
             <path
               fillRule="evenodd"
               clipRule="evenodd"

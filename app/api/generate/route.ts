@@ -1,7 +1,7 @@
-import { Configuration, OpenAIApi } from "openai-edge";
-import { OpenAIStream, StreamingTextResponse } from "ai";
-import { kv } from "@vercel/kv";
 import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { Configuration, OpenAIApi } from "openai-edge";
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -12,7 +12,7 @@ export const runtime = "edge";
 
 export async function POST(req: Request): Promise<Response> {
   if (
-    process.env.NODE_ENV != "development" &&
+    process.env.NODE_ENV !== "development" &&
     process.env.KV_REST_API_URL &&
     process.env.KV_REST_API_TOKEN
   ) {

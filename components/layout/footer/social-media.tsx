@@ -1,6 +1,7 @@
+import Image from "next/image";
+
 import { SupportedSocialMedia, socialMediaIcons } from "@/types/social-media";
 import { SocialMedia } from "@/types/storage";
-import Image from "next/image";
 //TODO: Change png icons to svg (facebook, instagram, twitter, youtube...)
 //TODO: Map social media in uiContent and display them with their icons
 //TODO: Place that type to the appropiate place in the code

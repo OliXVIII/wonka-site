@@ -6,5 +6,5 @@ export function useOutsideClick(ref: any, onClickOut: () => void, deps = []) {
       !ref?.contains(target) && onClickOut?.();
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
-  }, deps);
+  }, [ref, onClickOut, ...deps]);
 }

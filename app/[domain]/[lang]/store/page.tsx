@@ -1,6 +1,7 @@
+import { Suspense } from "react";
+
 import { Carousel } from "@/components/store/carousel";
 import { ThreeItemGrid } from "@/components/store/grid/three-items";
-import { Suspense } from "react";
 
 type Params = {
   params: { domain: string };

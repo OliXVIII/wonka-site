@@ -28,6 +28,7 @@ type FooterUiContent = {
   design: string;
   crafted: string;
   contactForm?: ContactForm;
+  
 };
 
 export type FormFields = {

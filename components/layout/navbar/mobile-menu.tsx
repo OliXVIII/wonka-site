@@ -6,13 +6,14 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import Link from "next/link";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, forwardRef, useEffect, useState } from "react";
-import { MenuContent } from "@/types/ui-content";
+
 import { createLink } from "@/lib/create-link";
 import { LocaleDetails } from "@/types/languages";
+import { MenuContent } from "@/types/ui-content";
 
 type MobileMenuProps = {
   menu: MenuContent[];
@@ -20,7 +21,7 @@ type MobileMenuProps = {
   searchbar?: boolean;
 };
 
-let MyDialogPanel = forwardRef(function (props: any, ref: any) {
+const MyDialogPanel = forwardRef(function (props: any, ref: any) {
   return (
     <DialogPanel className="max-w-xl bg-light p-12" ref={ref} {...props} />
   );

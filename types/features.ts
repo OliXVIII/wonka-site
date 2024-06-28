@@ -19,6 +19,7 @@ export type FeaturesType = {
   borderMenuNav: boolean;
   footer: FooterFeatures;
   navbar: NavbarFeatures;
+  profile: boolean;
 };
 
 export const local108Features: FeaturesType = {
@@ -36,4 +37,5 @@ export const local108Features: FeaturesType = {
   navbar: {
     fixed: false,
   },
+  profile:true,
 };

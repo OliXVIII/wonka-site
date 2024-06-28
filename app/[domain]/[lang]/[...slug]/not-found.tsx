@@ -1,11 +1,11 @@
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import Image from "next/image";
 
 export default async function NotFound() {
-  const headersList = headers();
-  const domain = headersList
-    .get("host")
-    ?.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+  // const headersList = headers();
+  // const domain = headersList
+  //   .get("host")
+  //   ?.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
 
   return (
     <div className="flex flex-col items-center justify-center">

@@ -1,5 +1,6 @@
-import { ThemeSelector } from "../theme-selector/theme-selector-server";
 import Image from "next/image";
+
+import { ThemeSelector } from "../theme-selector/theme-selector-server";
 
 const TopMenu = ({ hide = false }: { hide?: boolean }) => {
   return (

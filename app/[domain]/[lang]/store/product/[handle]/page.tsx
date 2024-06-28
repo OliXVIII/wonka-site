@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import Link from "next/link";
+import { GridTileImage } from "@/components/store/grid/tile";
+import { Gallery } from "@/components/store/product/gallery";
+import { ProductDescription } from "@/components/store/product/product-description";
 import { getProduct, getProductRecommendations } from "@/lib/shopify";
 import { HIDDEN_PRODUCT_TAG } from "@/lib/shopify/constants";
-import { Gallery } from "@/components/store/product/gallery";
 import { Image } from "@/lib/shopify/types";
-import { ProductDescription } from "@/components/store/product/product-description";
-import { GridTileImage } from "@/components/store/grid/tile";
 
 type ProductParams = {
   params: {

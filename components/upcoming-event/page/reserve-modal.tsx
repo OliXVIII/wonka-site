@@ -1,14 +1,16 @@
 "use client";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, RefObject, useState } from "react";
+
 import { priceByCountry } from "@/lib/price-by-country";
 import { taxByCountry } from "@/lib/tax";
 import { sendEmail } from "@/server/send-email";
+import { LocaleDetails } from "@/types/languages";
 import { UiContent } from "@/types/ui-content";
 import { Offer, UpcomingEvent } from "@/types/upcoming-event";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, RefObject, useState } from "react";
+
 import { ModalButton } from "./modal-button";
 import { RowImages } from "./row-images";
-import { LocaleDetails } from "@/types/languages";
 
 // TODO: Make it work for contact us
 

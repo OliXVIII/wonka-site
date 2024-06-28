@@ -1,9 +1,11 @@
-import { UpcomingEvent } from "@/types/upcoming-event";
 import Image from "next/image";
-import { ImageModale } from "./images-modal";
 import { Suspense } from "react";
-import { ImageItem } from "@/types/image";
+
 import { NextWrapper } from "@/components/next-wrapper";
+import { ImageItem } from "@/types/image";
+import { UpcomingEvent } from "@/types/upcoming-event";
+
+import { ImageModale } from "./images-modal";
 
 const RowImage = ({
   event,
@@ -66,7 +68,7 @@ export const RowImages = ({
   //remove event.main from the list
   const images = upcomingEventsLocale.images.filter((event) => !event.main);
   function chunkArrayInGroups(arr: ImageItem[], size: number) {
-    let result = [];
+    const result = [];
     for (let i = 0; i < arr.length; i += size) {
       result.push(arr.slice(i, i + size));
     }

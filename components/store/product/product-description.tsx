@@ -2,6 +2,7 @@ import { AddToCart } from "@/components/store/cart/add-to-cart";
 import Price from "@/components/store/price";
 import Prose from "@/components/store/prose";
 import { Product } from "@/lib/shopify/types";
+
 import { VariantSelector } from "./variant-selector";
 
 export function ProductDescription({ product }: { product: Product }) {

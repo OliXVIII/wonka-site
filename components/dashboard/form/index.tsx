@@ -1,15 +1,17 @@
 "use client";
 
-import LoadingDots from "@/components/icons/loading-dots";
-import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+import va from "@vercel/analytics";
 import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
-import DomainStatus from "./domain-status";
+
+import LoadingDots from "@/components/icons/loading-dots";
+import { cn } from "@/lib/utils";
+
 import DomainConfiguration from "./domain-configuration";
+import DomainStatus from "./domain-status";
 import Uploader from "./uploader";
-import va from "@vercel/analytics";
 
 export default function Form({
   title,
