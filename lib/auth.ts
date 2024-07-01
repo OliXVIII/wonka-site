@@ -61,7 +61,9 @@ export const authOptions: NextAuthOptions = {
   // },
   callbacks: {
     jwt: async ({ token, user }) => {
-      const userDb = await getUser("local-108", token.sub as string);
+      const domain = process.env.NEXTAUTH_URL ?? "local-108";
+      console.log("domain", domain);
+      const userDb = await getUser(domain, token.sub as string);
       if (userDb) {
         return {
           ...token,
