@@ -14,10 +14,10 @@ export default async function Posts({
   limit?: number;
 }) {
   const session = await getSession();
-  if (!session?.user) {
-    redirect("/login");
-  }
-  console.log(session);
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
+  // console.log(session);
   const posts = await prisma.post.findMany({
     where: {
       ...(siteId ? { siteId } : {}),

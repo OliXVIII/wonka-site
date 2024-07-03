@@ -25,11 +25,11 @@ const nanoid = customAlphabet(
 
 export const createSite = async (formData: FormData) => {
   const session = await getSession();
-  if (!session?.user.id) {
-    return {
-      error: "Not authenticated",
-    };
-  }
+  // if (!session?.user.id) {
+  //   return {
+  //     error: "Not authenticated",
+  //   };
+  // }
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const subdomain = formData.get("subdomain") as string;
@@ -227,16 +227,17 @@ export const getSiteFromPostId = async (postId: string) => {
 };
 
 export const createPost = withSiteAuth(async (_: FormData, site: Site) => {
-  const session = await getSession();
-  if (!session?.user.id) {
-    return {
-      error: "Not authenticated",
-    };
-  }
+  // const session = await getSession();
+  // if (!session?.user.id) {
+  //   return {
+  //     error: "Not authenticated",
+  //   };
+  // }
+  console.log("Creating post for site", site);
   const response = await prisma.post.create({
     data: {
       siteId: site.id,
-      userId: session.user.id,
+      // userId: session.user.id,
     },
   });
 
@@ -251,11 +252,11 @@ export const createPost = withSiteAuth(async (_: FormData, site: Site) => {
 // creating a separate function for this because we're not using FormData
 export const updatePost = async (data: Post) => {
   const session = await getSession();
-  if (!session?.user.id) {
-    return {
-      error: "Not authenticated",
-    };
-  }
+  // if (!session?.user.id) {
+  //   return {
+  //     error: "Not authenticated",
+  //   };
+  // }
   const post = await prisma.post.findUnique({
     where: {
       id: data.id,
@@ -264,7 +265,7 @@ export const updatePost = async (data: Post) => {
       site: true,
     },
   });
-  if (!post || post.userId !== session.user.id) {
+  if (!post /* || post.userId !== session.user.id */) {
     return {
       error: "Post not found",
     };
@@ -394,11 +395,11 @@ export const editUser = async (
   key: string,
 ) => {
   const session = await getSession();
-  if (!session?.user.id) {
-    return {
-      error: "Not authenticated",
-    };
-  }
+  // if (!session?.user.id) {
+  //   return {
+  //     error: "Not authenticated",
+  //   };
+  // }
   const value = formData.get(key) as string;
 
   try {

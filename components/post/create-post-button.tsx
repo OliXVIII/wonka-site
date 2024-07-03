@@ -1,23 +1,31 @@
-"use client";
-
 import va from "@vercel/analytics";
 import { useParams, useRouter } from "next/navigation";
 import { useTransition } from "react";
-
+import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import LoadingDots from "@/components/icons/loading-dots";
 import { createPost } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
-export default function CreatePostButton() {
+type CreatePostProps = {
+  domain: string;
+  admin: boolean;
+};
+
+export default function CreatePostButton({ domain, admin }: CreatePostProps) {
+  // const domain = params.domain;
+  // const locale = localesDetails[params.lang] ?? defaultLocale;
+  // const [data] = await Promise.all([fetchData(domain, locale)]);
+
+  // const uiContent = data?.uiContent;
+  // const storage = data?.storage;
   const router = useRouter();
-  const { id } = useParams() as { id: string };
   const [isPending, startTransition] = useTransition();
 
-  return (
+  return admin ? (
     <button
       onClick={() =>
         startTransition(async () => {
-          const post = await createPost(null, id, null);
+          const post = await createPost(null, domain, null);
           va.track("Created Post");
           router.refresh();
           router.push(`/post/${post.id}`);
@@ -33,5 +41,5 @@ export default function CreatePostButton() {
     >
       {isPending ? <LoadingDots color="#808080" /> : <p>Create New Post</p>}
     </button>
-  );
+  ) : null;
 }

@@ -1,4 +1,6 @@
+import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
+import { verifyUserAdmin } from "./server/admin-function/check-admin";
 
 export const config = {
   matcher: [
@@ -16,6 +18,13 @@ export const config = {
 
 export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+  const session = await getSession();
+  const domain = (
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXTAUTH_URL
+      : "local-108.com"
+  ) as string;
+  const admin = verifyUserAdmin(domain, session?.user?.id!);
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
   let hostname = req.headers
@@ -98,6 +107,9 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.rewrite(
       new URL(`/${hostname}${path.slice(0, 6)}/upcoming/le-temple`, req.url),
     );
+  }
+  if ((path.includes("/blogs") || path.includes("/post")) && !admin) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
