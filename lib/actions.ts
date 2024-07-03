@@ -17,46 +17,49 @@ import {
 } from "@/lib/domains";
 import prisma from "@/lib/prisma";
 import { getBlurDataURL } from "@/lib/utils";
+import { addPost } from "@/server/admin-function/add-post";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   7,
 ); // 7-character random string
 
-export const createSite = async (formData: FormData) => {
-  const session = await getSession();
+export const generateId = async () => {
+  // const session = await getSession();
   // if (!session?.user.id) {
   //   return {
   //     error: "Not authenticated",
   //   };
   // }
-  const name = formData.get("name") as string;
-  const description = formData.get("description") as string;
-  const subdomain = formData.get("subdomain") as string;
-
-  try {
-    const response = await prisma.site.create({
-      data: {
-        name,
-        description,
-        subdomain,
-      },
-    });
-    await revalidateTag(
-      `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
-    );
-    return response;
-  } catch (error: any) {
-    if (error.code === "P2002") {
-      return {
-        error: `This subdomain is already taken`,
-      };
-    } else {
-      return {
-        error: error.message,
-      };
-    }
-  }
+  // const name = formData.get("name") as string;
+  // const description = formData.get("description") as string;
+  // const subdomain = formData.get("subdomain") as string;
+  const now = new Date();
+  const milliseconds = now.getTime();
+  console.log(milliseconds);
+  return milliseconds;
+  //   const response = await prisma.site.create({
+  //     data: {
+  //       name,
+  //       description,
+  //       subdomain,
+  //     },
+  //   });
+  //   await revalidateTag(
+  //     `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+  //   );
+  //   return response;
+  // } catch (error: any) {
+  //   if (error.code === "P2002") {
+  //     return {
+  //       error: `This subdomain is already taken`,
+  //     };
+  //   } else {
+  //     return {
+  //       error: error.message,
+  //     };
+  //   }
+  // }
 };
 
 export const updateSite = withSiteAuth(
@@ -234,17 +237,13 @@ export const createPost = withSiteAuth(async (_: FormData, site: Site) => {
   //   };
   // }
   console.log("Creating post for site", site);
-  const response = await prisma.post.create({
-    data: {
-      siteId: site.id,
-      // userId: session.user.id,
-    },
-  });
+  // const response = await prisma.post.create({
+  const response = await addPost(site);
 
-  await revalidateTag(
-    `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
-  );
-  site.customDomain && (await revalidateTag(`${site.customDomain}-posts`));
+  // await revalidateTag(
+  //   `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+  // );
+  // site.customDomain && (await revalidateTag(`${site.customDomain}-posts`));
 
   return response;
 });

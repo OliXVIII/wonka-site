@@ -21,10 +21,10 @@ export default function FooterBottom({
     " " +
     uiContent.footer.legal;
 
-  let dimensionsClass = "max-md:mb-banner-mobile md:mb-banner-small"; //default small
+  let dimensionsClass = "max-md:pb-banner-mobile md:pb-banner-small"; //default small
 
   if (banner?.size === "medium") {
-    dimensionsClass = "max-md:mb-banner-mobile md:mb-banner-medium";
+    dimensionsClass = "max-md:pb-banner-mobile md:pb-banner-medium";
   }
 
   return (

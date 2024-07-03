@@ -2,18 +2,20 @@
 
 import { dbAdmin } from "@/lib/firebase-admin";
 
-export const verifyUserAdmin = async (domain: string, userId:string): Promise<boolean> => {
+export const verifyUserAdmin = async (
+  domain: string,
+  userId: string,
+): Promise<boolean> => {
   try {
-
     const userDocRef = dbAdmin.doc(`domain/${domain}/users/${userId}`);
     const userDocSnap = await userDocRef.get();
     const userRole = userDocSnap.data()?.role;
-    if (userRole === 'admin') {
+    if (userRole === "admin") {
       return true;
     }
     return false;
   } catch (error) {
-    console.error('check-admin.ts Error getting user document:', error);
+    console.error("check-admin.ts Error getting user document:", error);
     return false;
   }
 };

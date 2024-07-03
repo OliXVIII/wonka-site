@@ -1,17 +1,29 @@
+"use client";
+
 import va from "@vercel/analytics";
 import { useParams, useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { Locale, defaultLocale, localesDetails } from "@/types/languages";
+import {
+  Locale,
+  LocaleDetails,
+  defaultLocale,
+  localesDetails,
+} from "@/types/languages";
 import LoadingDots from "@/components/icons/loading-dots";
-import { createPost } from "@/lib/actions";
+import { createPost, createSite, generateId } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 type CreatePostProps = {
   domain: string;
   admin: boolean;
+  locale: LocaleDetails;
 };
 
-export default function CreatePostButton({ domain, admin }: CreatePostProps) {
+export default function CreatePostButton({
+  domain,
+  locale,
+  admin,
+}: CreatePostProps) {
   // const domain = params.domain;
   // const locale = localesDetails[params.lang] ?? defaultLocale;
   // const [data] = await Promise.all([fetchData(domain, locale)]);
@@ -25,17 +37,17 @@ export default function CreatePostButton({ domain, admin }: CreatePostProps) {
     <button
       onClick={() =>
         startTransition(async () => {
-          const post = await createPost(null, domain, null);
+          const id = await generateId();
           va.track("Created Post");
           router.refresh();
-          router.push(`/post/${post.id}`);
+          router.push(`/${locale.path}/post/${id}`);
         })
       }
       className={cn(
         "flex h-8 w-36 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9",
         isPending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700  dark:text-stone-300"
+          : "border border-black bg-black text-light hover:bg-light  active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200  dark:hover:text-light",
       )}
       disabled={isPending}
     >

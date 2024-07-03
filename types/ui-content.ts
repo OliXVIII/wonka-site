@@ -28,7 +28,6 @@ type FooterUiContent = {
   design: string;
   crafted: string;
   contactForm?: ContactForm;
-  
 };
 
 export type FormFields = {
@@ -104,7 +103,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       // },
       // { title: "Politique de Confidentialité", path: "/policy" },
       // { title: "Conditions Générales", path: "/terms" },
-      // { title: "Blog", path: "/blog" },
+      { title: "Blog", path: "/blogs" },
       // { title: "Contactez Nous", path: "/contact" },
     ],
     readMore: "Read More",
@@ -189,7 +188,7 @@ export const local108UIContent: Record<Language, UiContent> = {
       // { title: "À propos", path: "/about" },
       // { title: "Services", path: "/services" },
       // { title: "Le Temple", path: "/upcoming/le-temple" },
-      // // { title: "Blog", path: "/blog" },
+      { title: "Blog", path: "/blogs" },
       // {
       //   title: "Boutique",
       //   path: "https://demo.vercel.store/",
