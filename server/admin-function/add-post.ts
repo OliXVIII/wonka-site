@@ -37,6 +37,7 @@ export const addPost = async ({
     const documentRef = dbAdmin.doc(
       `domain/${domain}/lang/${locale}/post/${id}`,
     );
+    const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/table`);
 
     const postData = {
       title,
@@ -46,9 +47,16 @@ export const addPost = async ({
       createdAt,
       updatedAt,
     };
+
+    const tableData = {
+      [`${id}`]: {
+        title,
+        description,
+        imageURL,
+      },
+    };
     await documentRef.set(postData);
-    console.log("add-post.ts Successfully added post");
-    console.log("add-post.ts postData:", postData);
+    await tableRef.update(tableData);
   } catch (error) {
     console.error("add-user.ts Error adding user:", error);
   }

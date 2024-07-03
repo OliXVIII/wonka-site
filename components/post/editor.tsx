@@ -15,6 +15,8 @@ import { addPost } from "@/server/admin-function/add-post";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import dateNow from "@/lib/get-date";
 import getCurrentDateTime from "@/lib/get-date";
+import { defaultExtensions } from "@/lib/extension";
+import addPostImageStorage from "@/server/admin-function/add-post-image";
 
 type PostWithSite = Post & { site: { subdomain: string | null } | null };
 
@@ -56,33 +58,45 @@ export default function Editor({
   return (
     <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-light p-12 px-8 dark:border-stone-700 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
-        <a
+        {/* <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center space-x-1 text-sm text-stone-400 hover:text-stone-500"
         >
           <ExternalLink className="h-4 w-4" />
-        </a>
+        </a> */}
 
-        <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
+        {/* <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
           {isPendingSaving ? "Saving..." : "Saved"}
-        </div>
+        </div> */}
         <button
           onClick={() => {
             // const formData = new FormData();
+            console.log(data);
+            const imageURL = async () => {
+              await addPostImageStorage({
+                id: data.id ?? "error",
+                domain: url,
+                imageURL:
+                  "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+                image:
+                  "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+              });
+            };
+
             addPost({
               id: data.id ?? "error",
               domain: url,
               title: data.title ?? "",
               description: data.description ?? "",
               content: data.content ?? "",
-              imageURL: data.imageURL ?? "",
-              createdAt: getCurrentDateTime() ?? "",
+              imageURL: imageURL,
+              createdAt: getCurrentDateTime(),
               updatedAt: "",
               // published: data.published ?? "" || "",
               // siteId: data.siteId ?? "",
-              locale: locale ?? defaultLocale,
+              locale: locale,
             });
           }}
           // console.log(data.published, typeof data.published);
@@ -132,12 +146,14 @@ export default function Editor({
         />
       </div>
       <NovelEditor
-        className="relative block"
+        // extensions={defaultExtensions}
+        className="relative block text-dark dark:text-light"
         defaultValue={{
           type: "doc",
           content: [],
         }}
         onUpdate={(editor) => {
+          console.log(editor?.storage.markdown.getMarkdown());
           setData((prev) => ({
             ...prev,
             content: editor?.storage.markdown.getMarkdown(),
