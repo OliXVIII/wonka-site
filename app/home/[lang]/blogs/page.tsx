@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import CreatePostButton from "@/components/post/create-post-button";
-import Posts from "@/components/post/posts";
+import Posts from "@/types/posts";
 import { getSession } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 

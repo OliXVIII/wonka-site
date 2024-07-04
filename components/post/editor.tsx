@@ -7,17 +7,18 @@ import { useEffect, useState, useTransition } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 
-import { updatePost, updatePostMetadata } from "@/lib/actions";
+// import { updatePost, updatePostMetadata } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
 import LoadingDots from "../icons/loading-dots";
-import { addPost } from "@/server/admin-function/add-post";
+import { addPost } from "@/server/admin-function/blog/add-blog";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import dateNow from "@/lib/get-date";
 import getCurrentDateTime from "@/lib/get-date";
 import { defaultExtensions } from "@/lib/extension";
 import { addPostImageStorage } from "@/server/admin-function/add-post-image";
-import { deletePost } from "@/server/admin-function/delete-post";
+import { deleteBlog } from "@/server/admin-function/blog/delete-blog";
+import { updateBlog } from "@/server/admin-function/blog/update-blog";
 
 type PostWithSite = Post & { site: { subdomain: string | null } | null };
 
@@ -73,47 +74,47 @@ export default function Editor({
         </div> */}
         <button
           onClick={async () => {
-            // const formData = new FormData();
             console.log(data);
             const imageURL = "";
-            // await addPostImageStorage({
-            //   id: data.id ?? "error",
-            //   domain: url,
-            //   imageURL:
-            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-            //   image:
-            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-            // });
-
-            deletePost({
+            updateBlog({
               id: data.id ?? "error",
               domain: url,
+              title: data.title ?? "",
+              description: data.description ?? "",
+              content: data.content ?? "",
+              imageURL: imageURL,
+              updatedAt: getCurrentDateTime(),
+              // published: data.published ?? "" || "",
+              // siteId: data.siteId ?? "",
+              locale: locale,
             });
           }}
-          // console.log(data.published, typeof data.published);
-          // formData.append("published", String(!data.published));
-          // startTransitionPublishing(async () => {
-          //   await updatePostMetadata(formData, post.id, "published").then(
-          //     () => {
-          //       toast.success(
-          //         `Successfully ${
-          //           data.published ? "unpublished" : "published"
-          //         } your post.`,
-          //       );
-          //       setData((prev) => ({ ...prev, published: !prev.published }));
-          //     },
-          //   );
-          //   // });
-          // // }}
           className={cn(
             "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
             isPendingPublishing
               ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
               : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
-          // disabled={isPendingPublishing}
         >
-          {isPendingPublishing ? <LoadingDots /> : <p>Delete post</p>}
+          <p>Update post</p>
+        </button>
+        <button
+          onClick={async () => {
+            console.log(data);
+            const imageURL = "";
+            deletePost({
+              id: data.id ?? "error",
+              domain: url,
+            });
+          }}
+          className={cn(
+            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
+            isPendingPublishing
+              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
+              : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+          )}
+        >
+          <p>Delete post</p>
         </button>
         <button
           onClick={async () => {

@@ -15,10 +15,10 @@ export const deletePost = async ({
   try {
     for (const locale of locales) {
       const documentRef = dbAdmin.doc(
-        `domain/${domain}/lang/${locale}/blog/${id}`,
+        `domain/${domain}/lang/${locale}/post/${id}`,
       );
       const tableRef = dbAdmin.doc(
-        `domain/${domain}/lang/${locale}/blog/table`,
+        `domain/${domain}/lang/${locale}/post/table`,
       );
 
       await documentRef.delete();

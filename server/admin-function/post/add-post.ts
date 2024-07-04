@@ -2,10 +2,6 @@
 
 import { dbAdmin } from "@/lib/firebase-admin";
 import { Locale } from "@/types/languages";
-import { Site } from "@prisma/client";
-import { c } from "@vercel/blob/dist/put-96a1f07e";
-import { table } from "console";
-
 type addPostProps = {
   id?: string;
   title?: string;
@@ -18,7 +14,6 @@ type addPostProps = {
   published?: boolean;
   siteId?: string;
   locale?: Locale;
-  site?: Site;
 };
 
 export const addPost = async ({
@@ -36,9 +31,9 @@ export const addPost = async ({
 }: addPostProps): Promise<void> => {
   try {
     const documentRef = dbAdmin.doc(
-      `domain/${domain}/lang/${locale}/blog/${id}`,
+      `domain/${domain}/lang/${locale}/post/${id}`,
     );
-    const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/blog/table`);
+    const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/table`);
 
     const postData = {
       title,
