@@ -51,7 +51,7 @@ export default async function SitePosts({
           <CreateSiteModal />
         </CreateSiteButton> */}
         <CreatePostButton domain={domain} locale={locale} admin={admin} />
-        <Posts />
+        {/* <Posts /> */}
       </div>
       {/* <Posts siteId={decodeURIComponent(params.id)} /> */}
     </>

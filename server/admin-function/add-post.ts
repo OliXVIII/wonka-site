@@ -4,6 +4,7 @@ import { dbAdmin } from "@/lib/firebase-admin";
 import { Locale } from "@/types/languages";
 import { Site } from "@prisma/client";
 import { c } from "@vercel/blob/dist/put-96a1f07e";
+import { table } from "console";
 
 type addPostProps = {
   id?: string;
@@ -35,9 +36,9 @@ export const addPost = async ({
 }: addPostProps): Promise<void> => {
   try {
     const documentRef = dbAdmin.doc(
-      `domain/${domain}/lang/${locale}/post/${id}`,
+      `domain/${domain}/lang/${locale}/blog/${id}`,
     );
-    const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/table`);
+    const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/blog/table`);
 
     const postData = {
       title,
@@ -55,7 +56,12 @@ export const addPost = async ({
         imageURL,
       },
     };
+    console.log(postData, tableData);
     await documentRef.set(postData);
+    if (!tableRef.exists) {
+      await tableRef.set(tableData);
+      return;
+    }
     await tableRef.update(tableData);
   } catch (error) {
     console.error("add-user.ts Error adding user:", error);

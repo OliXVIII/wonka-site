@@ -16,7 +16,8 @@ import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 import dateNow from "@/lib/get-date";
 import getCurrentDateTime from "@/lib/get-date";
 import { defaultExtensions } from "@/lib/extension";
-import addPostImageStorage from "@/server/admin-function/add-post-image";
+import { addPostImageStorage } from "@/server/admin-function/add-post-image";
+import { deletePost } from "@/server/admin-function/delete-post";
 
 type PostWithSite = Post & { site: { subdomain: string | null } | null };
 
@@ -71,19 +72,62 @@ export default function Editor({
           {isPendingSaving ? "Saving..." : "Saved"}
         </div> */}
         <button
-          onClick={() => {
+          onClick={async () => {
             // const formData = new FormData();
             console.log(data);
-            const imageURL = async () => {
-              await addPostImageStorage({
-                id: data.id ?? "error",
-                domain: url,
-                imageURL:
-                  "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-                image:
-                  "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-              });
-            };
+            const imageURL = "";
+            // await addPostImageStorage({
+            //   id: data.id ?? "error",
+            //   domain: url,
+            //   imageURL:
+            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+            //   image:
+            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+            // });
+
+            deletePost({
+              id: data.id ?? "error",
+              domain: url,
+            });
+          }}
+          // console.log(data.published, typeof data.published);
+          // formData.append("published", String(!data.published));
+          // startTransitionPublishing(async () => {
+          //   await updatePostMetadata(formData, post.id, "published").then(
+          //     () => {
+          //       toast.success(
+          //         `Successfully ${
+          //           data.published ? "unpublished" : "published"
+          //         } your post.`,
+          //       );
+          //       setData((prev) => ({ ...prev, published: !prev.published }));
+          //     },
+          //   );
+          //   // });
+          // // }}
+          className={cn(
+            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
+            isPendingPublishing
+              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
+              : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+          )}
+          // disabled={isPendingPublishing}
+        >
+          {isPendingPublishing ? <LoadingDots /> : <p>Delete post</p>}
+        </button>
+        <button
+          onClick={async () => {
+            // const formData = new FormData();
+            console.log(data);
+            const imageURL = "";
+            // await addPostImageStorage({
+            //   id: data.id ?? "error",
+            //   domain: url,
+            //   imageURL:
+            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+            //   image:
+            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
+            // });
 
             addPost({
               id: data.id ?? "error",

@@ -17,6 +17,8 @@ export type LocaleDetails = {
   default?: Locale;
 };
 
+export const locales: Locale[] = ["en-CA", "fr-CA"];
+
 export const localesDetails: Record<Locale, LocaleDetails> = {
   "en-CA": {
     path: "en-CA",
