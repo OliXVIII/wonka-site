@@ -1,42 +1,51 @@
-import type { Post } from "@prisma/client";
+import { Post, Site } from "@prisma/client";
+import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-import { placeholderBlurhash, toDateString } from "@/lib/utils";
+import BlurImage from "@/components/blur-image";
+import { placeholderBlurhash, random } from "@/lib/utils";
 
-import BlurImage from "../blur-image";
+type BlogCardProps = {
+  data: Post & { site: Site | null };
+  draft: boolean;
+};
 
-interface BlogCardProps {
-  data: Pick<
-    Post,
-    "slug" | "image" | "imageBlurhash" | "title" | "description" | "createdAt"
-  >;
-}
+export default function BlogCard({ data, draft }: BlogCardProps) {
+  // const url = `${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
+  console.log("image", data.imageURL);
 
-export default function BlogCard({ data }: BlogCardProps) {
   return (
-    <Link href={`/${data.slug}`}>
-      <div className="ease overflow-hidden rounded-2xl border-2 border-stone-100 bg-light shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:border-stone-800">
-        <BlurImage
-          src={data.image!}
-          alt={data.title ?? "Blog Post"}
-          width={500}
-          height={400}
-          className="h-64 w-full object-cover"
-          placeholder="blur"
-          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-        />
-        <div className="h-36 border-t border-stone-200 px-5 py-8 dark:border-stone-700 dark:bg-black">
-          <h3 className="font-title text-xl tracking-wide dark:text-white">
+    <div className="relative rounded-lg border border-stone-200 bg-dark-light shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
+      <Link
+        href={`/post/${data.id}`}
+        className="flex flex-col overflow-hidden rounded-lg"
+      >
+        <div className="relative h-44 overflow-hidden">
+          <BlurImage
+            alt={data.title ?? "Card thumbnail"}
+            width={500}
+            height={400}
+            className="h-full object-cover"
+            src={data.imageURL ?? "/image-not-found.png"}
+            placeholder="blur"
+            blurDataURL={placeholderBlurhash}
+          />
+          {draft ? (
+            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-light px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+              Draft
+            </span>
+          ) : null}
+        </div>
+        <div className="border-t border-stone-200 p-4 dark:border-stone-700">
+          <h3 className="font-cal my-0 truncate text-xl font-bold tracking-wide text-light dark:text-dark dark:text-white">
             {data.title}
           </h3>
-          <p className="text-md my-2 truncate italic text-stone-600 dark:text-stone-400">
+          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-light dark:text-stone-400">
             {data.description}
           </p>
-          <p className="my-2 text-sm text-stone-600 dark:text-stone-400">
-            Published {toDateString(data.createdAt)}
-          </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <div className="absolute flex w-full px-4"></div>
+    </div>
   );
 }

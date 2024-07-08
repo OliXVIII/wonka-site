@@ -1,7 +1,9 @@
 "use server";
 
 import { dbAdmin } from "@/lib/firebase-admin";
+import getCurrentDateTime from "@/lib/get-date";
 import { Locale } from "@/types/languages";
+import { get } from "http";
 type addPostProps = {
   id?: string;
   title?: string;
@@ -23,10 +25,6 @@ export const addBlog = async ({
   content,
   domain,
   imageURL,
-  createdAt,
-  updatedAt,
-  published,
-  siteId,
   locale,
 }: addPostProps): Promise<void> => {
   try {
@@ -34,7 +32,8 @@ export const addBlog = async ({
       `domain/${domain}/lang/${locale}/blog/${id}`,
     );
     const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/blog/table`);
-
+    const createdAt = getCurrentDateTime();
+    const updatedAt = "";
     const postData = {
       title,
       description,
@@ -53,12 +52,12 @@ export const addBlog = async ({
     };
     console.log(postData, tableData);
     await documentRef.set(postData);
-    if (!tableRef.exists) {
+    if (!(await tableRef.get()).exists) {
       await tableRef.set(tableData);
       return;
     }
     await tableRef.update(tableData);
   } catch (error) {
-    console.error("add-user.ts Error adding user:", error);
+    console.error("add-blog.ts:", error);
   }
 };

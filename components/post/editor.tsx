@@ -1,31 +1,29 @@
 "use client";
 
 import { Post } from "@/types/post";
-import { ExternalLink } from "lucide-react";
 import { Editor as NovelEditor } from "novel";
 import { useEffect, useState, useTransition } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { toast } from "sonner";
-
-// import { updatePost, updatePostMetadata } from "@/lib/actions";
 import { cn } from "@/lib/utils";
-
 import LoadingDots from "../icons/loading-dots";
-import { addPost } from "@/server/admin-function/blog/add-blog";
+
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
-import dateNow from "@/lib/get-date";
 import getCurrentDateTime from "@/lib/get-date";
 import { defaultExtensions } from "@/lib/extension";
-import { addPostImageStorage } from "@/server/admin-function/add-post-image";
 import { deleteBlog } from "@/server/admin-function/blog/delete-blog";
-import { updateBlog } from "@/server/admin-function/blog/update-blog";
+import {
+  getAllBlog,
+  getAllPosts,
+} from "@/server/admin-function/blog/get-all-blog";
+import { publishPost } from "@/server/admin-function/post/publish-post";
+import { addPost } from "@/server/admin-function/post/add-post";
+import { updatePost } from "@/lib/actions";
 
 type PostWithSite = Post & { site: { subdomain: string | null } | null };
 
 export default function Editor({
   locale,
   post,
-  id,
 }: {
   locale: Locale;
   post: PostWithSite;
@@ -33,6 +31,7 @@ export default function Editor({
 }) {
   const [isPendingSaving, startTransitionSaving] = useTransition();
   const [isPendingPublishing, startTransitionPublishing] = useTransition();
+  const [caracCount, setCaracCount] = useState(0);
   const [data, setData] = useState<PostWithSite>(post);
   const [hydrated, setHydrated] = useState(false);
 
@@ -41,51 +40,20 @@ export default function Editor({
       ? "local-108.com"
       : process.env.NEXTAUTH_URL ?? "local-108.com";
 
-  // listen to CMD + S and override the default behavior
-  // useEffect(() => {
-  //   const onKeyDown = (e: KeyboardEvent) => {
-  //     if (e.metaKey && e.key === "s") {
-  //       e.preventDefault();
-  //       startTransitionSaving(async () => {
-  //         await updatePost(data);
-  //       });
-  //     }
-  //   };
-  //   document.addEventListener("keydown", onKeyDown);
-  //   return () => {
-  //     document.removeEventListener("keydown", onKeyDown);
-  //   };
-  // }, [data, startTransitionSaving]);
-
   return (
     <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-light p-12 px-8 dark:border-stone-700 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
-        {/* <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center space-x-1 text-sm text-stone-400 hover:text-stone-500"
-        >
-          <ExternalLink className="h-4 w-4" />
-        </a> */}
-
-        {/* <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
-          {isPendingSaving ? "Saving..." : "Saved"}
-        </div> */}
         <button
           onClick={async () => {
             console.log(data);
             const imageURL = "";
-            updateBlog({
+            addPost({
               id: data.id ?? "error",
               domain: url,
               title: data.title ?? "",
               description: data.description ?? "",
               content: data.content ?? "",
               imageURL: imageURL,
-              updatedAt: getCurrentDateTime(),
-              // published: data.published ?? "" || "",
-              // siteId: data.siteId ?? "",
               locale: locale,
             });
           }}
@@ -96,13 +64,13 @@ export default function Editor({
               : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
         >
-          <p>Update post</p>
+          <p>Save Draft</p>
         </button>
         <button
           onClick={async () => {
             console.log(data);
             const imageURL = "";
-            deletePost({
+            deleteBlog({
               id: data.id ?? "error",
               domain: url,
             });
@@ -114,11 +82,10 @@ export default function Editor({
               : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
         >
-          <p>Delete post</p>
+          <p>Delete blog</p>
         </button>
         <button
           onClick={async () => {
-            // const formData = new FormData();
             console.log(data);
             const imageURL = "";
             // await addPostImageStorage({
@@ -130,35 +97,12 @@ export default function Editor({
             //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
             // });
 
-            addPost({
+            publishPost({
               id: data.id ?? "error",
               domain: url,
-              title: data.title ?? "",
-              description: data.description ?? "",
-              content: data.content ?? "",
-              imageURL: imageURL,
-              createdAt: getCurrentDateTime(),
-              updatedAt: "",
-              // published: data.published ?? "" || "",
-              // siteId: data.siteId ?? "",
               locale: locale,
             });
           }}
-          // console.log(data.published, typeof data.published);
-          // formData.append("published", String(!data.published));
-          // startTransitionPublishing(async () => {
-          //   await updatePostMetadata(formData, post.id, "published").then(
-          //     () => {
-          //       toast.success(
-          //         `Successfully ${
-          //           data.published ? "unpublished" : "published"
-          //         } your post.`,
-          //       );
-          //       setData((prev) => ({ ...prev, published: !prev.published }));
-          //     },
-          //   );
-          //   // });
-          // // }}
           className={cn(
             "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
             isPendingPublishing
@@ -198,7 +142,19 @@ export default function Editor({
           content: [],
         }}
         onUpdate={(editor) => {
-          console.log(editor?.storage.markdown.getMarkdown());
+          setCaracCount(caracCount + 1);
+          if (caracCount % 100 === 0) {
+            console.log("updating post in DB");
+            updatePost({
+              id: post.id ?? "error",
+              title: data.title ?? "",
+              description: data.description ?? "",
+              content: editor?.storage.markdown.getMarkdown() ?? "",
+              domain: url,
+              imageURL: "",
+              locale: locale,
+            });
+          }
           setData((prev) => ({
             ...prev,
             content: editor?.storage.markdown.getMarkdown(),
@@ -212,9 +168,6 @@ export default function Editor({
           ) {
             return;
           }
-          // startTransitionSaving(async () => {
-          //   await updatePost(data);
-          // });
         }}
       />
     </div>

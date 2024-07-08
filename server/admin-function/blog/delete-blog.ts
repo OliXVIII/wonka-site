@@ -30,6 +30,6 @@ export const deleteBlog = async ({
       }
     }
   } catch (error) {
-    console.error("delete-post.ts Error deleting post:", error);
+    console.error("delete-blog.ts Error deleting post:", error);
   }
 };

@@ -1,7 +1,9 @@
 "use server";
 
 import { dbAdmin } from "@/lib/firebase-admin";
+import getCurrentDateTime from "@/lib/get-date";
 import { Locale } from "@/types/languages";
+import { get } from "http";
 
 type updatePostProps = {
   id: string;
@@ -14,14 +16,13 @@ type updatePostProps = {
   locale: Locale;
 };
 
-export const updateBlog = async ({
+export const updatePost = async ({
   id,
   title,
   description,
   content,
   domain,
   imageURL,
-  updatedAt,
   locale,
 }: updatePostProps): Promise<void> => {
   try {
@@ -29,7 +30,7 @@ export const updateBlog = async ({
       `domain/${domain}/lang/${locale}/post/${id}`,
     );
     const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/table`);
-
+    const updatedAt = getCurrentDateTime();
     const postData = {
       title,
       description,
@@ -58,6 +59,6 @@ export const updateBlog = async ({
       await tableRef.set(tableData);
     }
   } catch (error) {
-    console.error("update-post.ts Error updating post:", error);
+    console.error("update-post.ts:", error);
   }
 };
