@@ -1,5 +1,5 @@
 export type Post = {
-  id?: string;
+  id: string;
   title?: string;
   description?: string;
   content?: string;
@@ -8,7 +8,8 @@ export type Post = {
   updatedAt?: string;
   published?: boolean;
   siteId?: string;
-  locale?: string;
+  locale: string;
+  user?: string;
 };
 
 export default Post;

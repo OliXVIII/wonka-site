@@ -8,12 +8,14 @@ type publishPostProps = {
   id: string;
   domain: string;
   locale: Locale;
+  user: string;
 };
 
 export const publishPost = async ({
   id,
   domain,
   locale,
+  user,
 }: publishPostProps): Promise<void> => {
   try {
     const documentRef = dbAdmin.doc(
@@ -33,6 +35,7 @@ export const publishPost = async ({
         title: postData?.title,
         description: postData?.description,
         imageURL: postData?.imageURL,
+        user,
       },
     };
     await BlogRef.set(postData);

@@ -11,11 +11,8 @@ type addPostProps = {
   content?: string;
   domain?: string;
   imageURL?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  published?: boolean;
-  siteId?: string;
   locale?: Locale;
+  user?: string;
 };
 
 export const addBlog = async ({
@@ -26,6 +23,7 @@ export const addBlog = async ({
   domain,
   imageURL,
   locale,
+  user,
 }: addPostProps): Promise<void> => {
   try {
     const documentRef = dbAdmin.doc(
@@ -41,6 +39,7 @@ export const addBlog = async ({
       imageURL,
       createdAt,
       updatedAt,
+      user,
     };
 
     const tableData = {
@@ -48,6 +47,7 @@ export const addBlog = async ({
         title,
         description,
         imageURL,
+        user,
       },
     };
     console.log(postData, tableData);

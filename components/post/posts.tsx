@@ -28,20 +28,30 @@ export default async function Posts({
   // console.log(session);
   const blogs = await getAllBlog({ domain, locale });
   const posts = await getAllPost({ domain, locale });
-  console.log("blogs", blogs);
-  console.log("posts", posts);
 
   return blogs.length > 0 ? (
     <>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {blogs.map((blog: any) => (
-          <BlogCard key={blog.id} data={blog} draft={false} />
+          <BlogCard
+            key={blog.id}
+            data={blog}
+            draft={false}
+            locale={locale}
+            domain={domain}
+          />
         ))}
       </div>
       {posts.length > 0 && admin ? (
         <div className="mt-4 grid grid-cols-1 gap-4 border-t border-dark pt-4 sm:grid-cols-2 xl:grid-cols-4">
           {posts.map((post: any) => (
-            <BlogCard key={post.id} data={post} draft={true} />
+            <BlogCard
+              key={post.id}
+              data={post}
+              draft={true}
+              locale={locale}
+              domain={domain}
+            />
           ))}
         </div>
       ) : null}

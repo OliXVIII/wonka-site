@@ -6,6 +6,8 @@ import { Locale } from "@/types/languages";
 import { verifyUserAdmin } from "@/server/admin-function/verify-user-admin";
 import { getSession } from "next-auth/react";
 import Post from "@/types/post";
+import { get } from "http";
+import { getPost } from "@/server/admin-function/post/get-post";
 
 export default async function EditPost({
   params,
@@ -24,28 +26,14 @@ export default async function EditPost({
   if (!admin) {
     redirect(`/${params.lang}/blog/${params.id}`, RedirectType.replace);
   }
-  // const post = await prisma.post.findUnique({
-  //   where: { id: params.id },
-  //   include: {
-  //     site: {
-  //       select: {
-  //         subdomain: true,
-  //       },
-  //     },
-  //   },
-  // });
-  const post: Post = {
-    id: params.id,
-    title: "",
-    description: "",
-    content: "",
-    imageURL: "imageURL",
-    createdAt: "",
-    updatedAt: "",
-    // published: true,
-    // siteId: "siteId",
+  const domain = params.domain.replace(".wonkasite", "");
+  console.log(params);
+  const post = await getPost({
+    domain: domain,
     locale: params.lang,
-  };
+    id: params.id,
+  });
+  console.log(post);
   //   useEffect(() => {
   //     if (id) {
   //       // Function to fetch post data by id
@@ -59,7 +47,7 @@ export default async function EditPost({
   //       fetchPost(id as string);
   //     }
   //   }, [id]);
-
+  console.log(post);
   return (
     <div className="container mx-auto p-4">
       <Editor post={post} locale={params.lang} id={params.id} />

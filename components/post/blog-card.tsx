@@ -4,29 +4,39 @@ import Link from "next/link";
 
 import BlurImage from "@/components/blur-image";
 import { placeholderBlurhash, random } from "@/lib/utils";
+import { Locale } from "@/types/languages";
 
 type BlogCardProps = {
   data: Post & { site: Site | null };
   draft: boolean;
+  locale: Locale;
+  domain: string;
 };
 
-export default function BlogCard({ data, draft }: BlogCardProps) {
-  // const url = `${data.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
-  console.log("image", data.imageURL);
-
+export default function BlogCard({
+  data,
+  draft,
+  locale,
+  domain,
+}: BlogCardProps) {
+  const imageUrl =
+    data.imageURL && data.imageURL.trim() !== ""
+      ? data.imageURL
+      : "/image-not-found.png";
+  console.log(data);
+  const path = draft
+    ? `/${locale}/post/${data.id}`
+    : `/${locale}/blog/${data.id}`;
   return (
     <div className="relative rounded-lg border border-stone-200 bg-dark-light shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
-      <Link
-        href={`/post/${data.id}`}
-        className="flex flex-col overflow-hidden rounded-lg"
-      >
+      <Link href={path} className="flex flex-col overflow-hidden rounded-lg">
         <div className="relative h-44 overflow-hidden">
           <BlurImage
             alt={data.title ?? "Card thumbnail"}
             width={500}
             height={400}
-            className="h-full object-cover"
-            src={data.imageURL ?? "/image-not-found.png"}
+            className="h-full w-full object-cover"
+            src={imageUrl}
             placeholder="blur"
             blurDataURL={placeholderBlurhash}
           />

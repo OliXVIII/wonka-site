@@ -8,7 +8,7 @@ import CreateSiteButton from "@/components/sites/create-site-button";
 import CreateSiteModal from "@/components/modal/create-site";
 import { Locale, defaultLocale, localesDetails } from "@/types/languages";
 
-export default async function SitePosts({
+export default async function SiteBlogs({
   params,
 }: {
   params: { domain: string; lang: Locale; id: string };
@@ -18,8 +18,7 @@ export default async function SitePosts({
     process.env.NODE_ENV === "development"
       ? true
       : session?.user?.role === "admin";
-  const domain =
-    process.env.NODE_ENV === "development" ? "local-108.com" : params.domain;
+  const domain = params.domain.replace(".wonkasite", "");
   const locale = localesDetails[params.lang] ?? defaultLocale;
   // if (!session) {
   //   redirect("/login");
@@ -38,6 +37,7 @@ export default async function SitePosts({
   //   process.env.NODE_ENV === "development"
   //     ? "local-108.com"
   //     : process.env.NEXTAUTH_URL ?? "localhost:3000";
+  console.log(domain, locale, admin, params);
 
   return (
     <>

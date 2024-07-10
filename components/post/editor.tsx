@@ -7,54 +7,72 @@ import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import LoadingDots from "../icons/loading-dots";
 
-import { Locale, defaultLocale, localesDetails } from "@/types/languages";
-import getCurrentDateTime from "@/lib/get-date";
-import { defaultExtensions } from "@/lib/extension";
+import { Locale } from "@/types/languages";
 import { deleteBlog } from "@/server/admin-function/blog/delete-blog";
-import {
-  getAllBlog,
-  getAllPosts,
-} from "@/server/admin-function/blog/get-all-blog";
 import { publishPost } from "@/server/admin-function/post/publish-post";
 import { addPost } from "@/server/admin-function/post/add-post";
 import { updatePost } from "@/lib/actions";
 
-type PostWithSite = Post & { site: { subdomain: string | null } | null };
-
 export default function Editor({
   locale,
   post,
+  id,
 }: {
   locale: Locale;
-  post: PostWithSite;
+  post: Post;
   id: string;
 }) {
-  const [isPendingSaving, startTransitionSaving] = useTransition();
   const [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [caracCount, setCaracCount] = useState(0);
-  const [data, setData] = useState<PostWithSite>(post);
-  const [hydrated, setHydrated] = useState(false);
-
+  const [data, setData] = useState<Post>(post);
   const url =
     process.env.NODE_ENV === "development"
       ? "local-108.com"
       : process.env.NEXTAUTH_URL ?? "local-108.com";
+
+  // Effect to handle save on Cmd+S or Ctrl+S
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        console.log(id);
+        console.log("content saved", data);
+        console.log("post", post);
+        ``;
+        addPost({
+          id: id ?? "error",
+          domain: url,
+          title: data.title ?? "",
+          description: data.description ?? "",
+          content: data.content ?? "",
+          imageURL: "",
+          locale: locale,
+          user: "Nicolas Castonguay",
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [data]);
 
   return (
     <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-light p-12 px-8 dark:border-stone-700 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
         <button
           onClick={async () => {
-            console.log(data);
             const imageURL = "";
             addPost({
-              id: data.id ?? "error",
+              id: id ?? "error",
               domain: url,
               title: data.title ?? "",
               description: data.description ?? "",
               content: data.content ?? "",
               imageURL: imageURL,
               locale: locale,
+              user: "Nicolas Castonguay",
             });
           }}
           className={cn(
@@ -69,9 +87,8 @@ export default function Editor({
         <button
           onClick={async () => {
             console.log(data);
-            const imageURL = "";
             deleteBlog({
-              id: data.id ?? "error",
+              id: id ?? "error",
               domain: url,
             });
           }}
@@ -87,20 +104,11 @@ export default function Editor({
         <button
           onClick={async () => {
             console.log(data);
-            const imageURL = "";
-            // await addPostImageStorage({
-            //   id: data.id ?? "error",
-            //   domain: url,
-            //   imageURL:
-            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-            //   image:
-            //     "https://lh3.googleusercontent.com/a/ACg8ocJtsM3oGcMRaJzABCOPe_5BcbaVux4rTp2NhD4ln2XdsNxaQWyD=s96-c",
-            // });
-
             publishPost({
-              id: data.id ?? "error",
+              id: id ?? "error",
               domain: url,
               locale: locale,
+              user: "Nicolas Castonguay",
             });
           }}
           className={cn(
@@ -109,7 +117,6 @@ export default function Editor({
               ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
               : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
-          // disabled={isPendingPublishing}
         >
           {isPendingPublishing ? (
             <LoadingDots />
@@ -135,18 +142,22 @@ export default function Editor({
         />
       </div>
       <NovelEditor
-        // extensions={defaultExtensions}
         className="relative block text-dark dark:text-light"
         defaultValue={{
-          type: "doc",
-          content: [],
+          type: "string",
+          content: [{ data: data.content }],
         }}
         onUpdate={(editor) => {
           setCaracCount(caracCount + 1);
-          if (caracCount % 100 === 0) {
+          setData((prev) => ({
+            ...prev,
+            content: editor?.storage.markdown.getMarkdown(),
+          }));
+          if (caracCount >= 100) {
             console.log("updating post in DB");
+            setCaracCount(0);
             updatePost({
-              id: post.id ?? "error",
+              id: id ?? "error",
               title: data.title ?? "",
               description: data.description ?? "",
               content: editor?.storage.markdown.getMarkdown() ?? "",
@@ -155,10 +166,6 @@ export default function Editor({
               locale: locale,
             });
           }
-          setData((prev) => ({
-            ...prev,
-            content: editor?.storage.markdown.getMarkdown(),
-          }));
         }}
         onDebouncedUpdate={() => {
           if (

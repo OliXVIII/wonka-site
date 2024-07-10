@@ -3,17 +3,16 @@
 import { dbAdmin } from "@/lib/firebase-admin";
 import getCurrentDateTime from "@/lib/get-date";
 import { Locale } from "@/types/languages";
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase-admin/firestore";
 type addPostProps = {
-  id?: string;
-  title?: string;
+  id: string;
+  title: string;
   description?: string;
-  content?: string;
-  domain?: string;
-  imageURL?: string;
-  published?: boolean;
-  siteId?: string;
-  locale?: Locale;
+  content: string;
+  domain: string;
+  imageURL: string;
+  locale: Locale;
+  user: string;
 };
 
 export const addPost = async ({
@@ -24,9 +23,10 @@ export const addPost = async ({
   domain,
   imageURL,
   locale,
+  user,
 }: addPostProps): Promise<void> => {
   try {
-    const createdAt = getCurrentDateTime();
+    const createdAt = Timestamp.now();
     const updatedAt = "";
     const documentRef = dbAdmin.doc(
       `domain/${domain}/lang/${locale}/post/${id}`,
@@ -40,6 +40,7 @@ export const addPost = async ({
       imageURL,
       createdAt,
       updatedAt,
+      user,
     };
 
     const tableData = {
@@ -47,6 +48,7 @@ export const addPost = async ({
         title,
         description,
         imageURL,
+        user,
       },
     };
     console.log(postData, tableData);
@@ -56,6 +58,7 @@ export const addPost = async ({
       return;
     }
     await tableRef.update(tableData);
+    console.log("post created");
   } catch (error) {
     console.error("add-post.ts:", error);
   }
