@@ -22,7 +22,6 @@ export default function Editor({
   post: Post;
   id: string;
 }) {
-  const [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [caracCount, setCaracCount] = useState(0);
   const [data, setData] = useState<Post>(post);
   const url =
@@ -35,11 +34,7 @@ export default function Editor({
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "s") {
         e.preventDefault();
-        console.log(id);
-        console.log("content saved", data);
-        console.log("post", post);
-        ``;
-        addPost({
+        updatePost({
           id: id ?? "error",
           domain: url,
           title: data.title ?? "",
@@ -47,7 +42,7 @@ export default function Editor({
           content: data.content ?? "",
           imageURL: "",
           locale: locale,
-          user: "Nicolas Castonguay",
+          user: "",
         });
       }
     };
@@ -76,34 +71,26 @@ export default function Editor({
             });
           }}
           className={cn(
-            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
-            isPendingPublishing
-              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
-              : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg  border border-black bg-black text-sm text-light transition-all hover:bg-light hover:text-black focus:outline-none active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
         >
           <p>Save Draft</p>
         </button>
         <button
           onClick={async () => {
-            console.log(data);
             deleteBlog({
               id: id ?? "error",
               domain: url,
             });
           }}
           className={cn(
-            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
-            isPendingPublishing
-              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
-              : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border border-black bg-black text-sm text-light transition-all hover:bg-light hover:text-black focus:outline-none active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
         >
           <p>Delete blog</p>
         </button>
         <button
           onClick={async () => {
-            console.log(data);
             publishPost({
               id: id ?? "error",
               domain: url,
@@ -112,20 +99,13 @@ export default function Editor({
             });
           }}
           className={cn(
-            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
-            isPendingPublishing
-              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-300"
-              : "border border-black bg-black text-light hover:bg-light hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
+            "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border border-black bg-black text-sm text-light transition-all hover:bg-light hover:text-black focus:outline-none active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-light dark:active:bg-stone-800",
           )}
         >
-          {isPendingPublishing ? (
-            <LoadingDots />
-          ) : (
-            <p>{false ? "Unpublish" : "Publish"}</p>
-          )}
+          <p>Publish</p>
         </button>
       </div>
-      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
+      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5">
         <input
           type="text"
           placeholder="Title"
@@ -142,11 +122,8 @@ export default function Editor({
         />
       </div>
       <NovelEditor
-        className="relative block text-dark dark:text-light"
-        defaultValue={{
-          type: "string",
-          content: [{ data: data.content }],
-        }}
+        className="relative block text-dark"
+        defaultValue=<p>Hahahahahahahahahahahaha</p>
         onUpdate={(editor) => {
           setCaracCount(caracCount + 1);
           setData((prev) => ({
@@ -154,7 +131,6 @@ export default function Editor({
             content: editor?.storage.markdown.getMarkdown(),
           }));
           if (caracCount >= 100) {
-            console.log("updating post in DB");
             setCaracCount(0);
             updatePost({
               id: id ?? "error",
@@ -167,15 +143,15 @@ export default function Editor({
             });
           }
         }}
-        onDebouncedUpdate={() => {
-          if (
-            data.title === post.title &&
-            data.description === post.description &&
-            data.content === post.content
-          ) {
-            return;
-          }
-        }}
+        // onDebouncedUpdate={() => {
+        //   if (
+        //     data.title === post.title &&
+        //     data.description === post.description &&
+        //     data.content === post.content
+        //   ) {
+        //     return;
+        //   }
+        // }}
       />
     </div>
   );

@@ -3,6 +3,7 @@
 import { dbAdmin } from "@/lib/firebase-admin";
 import getCurrentDateTime from "@/lib/get-date";
 import { Locale } from "@/types/languages";
+import { Timestamp } from "firebase/firestore";
 
 type updatePostProps = {
   id: string;
@@ -29,7 +30,7 @@ export const updateBlog = async ({
       `domain/${domain}/lang/${locale}/blog/${id}`,
     );
     const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/blog/table`);
-    const updatedAt = getCurrentDateTime();
+    const updatedAt = Timestamp.now().toDate();
     const postData = {
       title,
       description,
@@ -45,8 +46,6 @@ export const updateBlog = async ({
         imageURL,
       },
     };
-
-    console.log("Updating post:", postData, "Updating table:", tableData);
 
     await documentRef.update(postData);
 

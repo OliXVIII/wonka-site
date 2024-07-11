@@ -3,6 +3,7 @@
 import { dbAdmin } from "@/lib/firebase-admin";
 import getCurrentDateTime from "@/lib/get-date";
 import { Locale } from "@/types/languages";
+import { Timestamp } from "firebase/firestore";
 import { get } from "http";
 type addPostProps = {
   id?: string;
@@ -30,7 +31,7 @@ export const addBlog = async ({
       `domain/${domain}/lang/${locale}/blog/${id}`,
     );
     const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/blog/table`);
-    const createdAt = getCurrentDateTime();
+    const createdAt = Timestamp.now().toDate();
     const updatedAt = "";
     const postData = {
       title,

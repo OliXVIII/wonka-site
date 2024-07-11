@@ -37,7 +37,6 @@ export default async function SiteBlogs({
   //   process.env.NODE_ENV === "development"
   //     ? "local-108.com"
   //     : process.env.NEXTAUTH_URL ?? "localhost:3000";
-  console.log(domain, locale, admin, params);
 
   return (
     <>

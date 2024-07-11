@@ -30,7 +30,7 @@ export const updatePost = async ({
       `domain/${domain}/lang/${locale}/post/${id}`,
     );
     const tableRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/table`);
-    const updatedAt = Timestamp.now();
+    const updatedAt = Timestamp.now().toDate();
     const postData = {
       title,
       description,

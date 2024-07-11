@@ -14,7 +14,7 @@ export const getPost = async ({
   domain,
   locale,
   id,
-}: getPostProps): Promise<Post | undefined> => {
+}: getPostProps): Promise<any | undefined> => {
   try {
     const blogRef = dbAdmin.doc(`domain/${domain}/lang/${locale}/post/${id}`);
     const blog = await blogRef.get();

@@ -23,7 +23,6 @@ export default function BlogCard({
     data.imageURL && data.imageURL.trim() !== ""
       ? data.imageURL
       : "/image-not-found.png";
-  console.log(data);
   const path = draft
     ? `/${locale}/post/${data.id}`
     : `/${locale}/blog/${data.id}`;

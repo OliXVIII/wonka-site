@@ -12,6 +12,7 @@ import {
 import LoadingDots from "@/components/icons/loading-dots";
 import { createPost, createSite, generateId } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import { addPost } from "@/server/admin-function/post/add-post";
 
 type CreatePostProps = {
   domain: string;
@@ -38,6 +39,16 @@ export default function CreatePostButton({
       onClick={() =>
         startTransition(async () => {
           const id = await generateId();
+          addPost({
+            id: id,
+            domain: domain,
+            title: "",
+            description: "",
+            content: "",
+            imageURL: "",
+            locale: locale.path,
+            user: "",
+          });
           va.track("Created Post");
           router.refresh();
           router.push(`/${locale.path}/post/${id}`);
