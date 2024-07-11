@@ -28,7 +28,7 @@ export default function Editor({
     process.env.NODE_ENV === "development"
       ? "local-108.com"
       : process.env.NEXTAUTH_URL ?? "local-108.com";
-
+  console.log("posty post", post);
   // Effect to handle save on Cmd+S or Ctrl+S
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -123,7 +123,8 @@ export default function Editor({
       </div>
       <NovelEditor
         className="relative block text-dark"
-        defaultValue=<p>Hahahahahahahahahahahaha</p>
+        disableLocalStorage={true}
+        defaultValue={post?.content ?? ""}
         onUpdate={(editor) => {
           setCaracCount(caracCount + 1);
           setData((prev) => ({

@@ -40,7 +40,7 @@ export default function CreatePostButton({
         startTransition(async () => {
           const id = await generateId();
           addPost({
-            id: id,
+            id: id.toString(),
             domain: domain,
             title: "",
             description: "",
@@ -49,6 +49,7 @@ export default function CreatePostButton({
             locale: locale.path,
             user: "",
           });
+          console.log("Created Post");
           va.track("Created Post");
           router.refresh();
           router.push(`/${locale.path}/post/${id}`);

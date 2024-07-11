@@ -31,6 +31,7 @@ export default async function EditPost({
     id: params.id,
   });
 
+  console.log("post", post);
   return (
     <div className="container mx-auto p-4">
       {post ? <Editor post={post} locale={params.lang} id={params.id} /> : null}
