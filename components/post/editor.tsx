@@ -28,7 +28,6 @@ export default function Editor({
     process.env.NODE_ENV === "development"
       ? "local-108.com"
       : process.env.NEXTAUTH_URL ?? "local-108.com";
-  console.log("posty post", post);
   // Effect to handle save on Cmd+S or Ctrl+S
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

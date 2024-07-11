@@ -39,10 +39,10 @@ export const publishPost = async ({
       },
     };
     await BlogRef.set(postData);
-    if (!(await blogTableRef.get()).exists) {
-      await blogTableRef.set(tableData);
+    if ((await blogTableRef.get()).exists) {
+      await blogTableRef.update(tableData);
     } else {
-      await tableRef.update(tableData);
+      await blogTableRef.set(tableData);
     }
     deletePost({ id, domain });
   } catch (error) {

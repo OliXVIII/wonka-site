@@ -1,16 +1,11 @@
 "use client";
 
 import va from "@vercel/analytics";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import {
-  Locale,
-  LocaleDetails,
-  defaultLocale,
-  localesDetails,
-} from "@/types/languages";
+import { LocaleDetails } from "@/types/languages";
 import LoadingDots from "@/components/icons/loading-dots";
-import { createPost, createSite, generateId } from "@/lib/actions";
+import { generateId } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { addPost } from "@/server/admin-function/post/add-post";
 
@@ -39,6 +34,7 @@ export default function CreatePostButton({
       onClick={() =>
         startTransition(async () => {
           const id = await generateId();
+          console.log("post that will be added", id, domain, locale.path);
           addPost({
             id: id.toString(),
             domain: domain,
@@ -49,7 +45,6 @@ export default function CreatePostButton({
             locale: locale.path,
             user: "",
           });
-          console.log("Created Post");
           va.track("Created Post");
           router.refresh();
           router.push(`/${locale.path}/post/${id}`);
