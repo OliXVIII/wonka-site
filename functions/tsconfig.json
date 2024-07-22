@@ -6,7 +6,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "dist",
-    "rootDirs": ["src", "../shared"],
+    "rootDir": "src",
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
@@ -14,11 +14,8 @@
     "checkJs": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@/shared/*": ["../shared/*"]
-    }
+    "skipLibCheck": true
   },
   "compileOnSave": true,
-  "exclude": ["node_modules", "../legacy"]
+  "exclude": ["node_modules", "../legacy", "dist"]
 }
