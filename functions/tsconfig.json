@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "module": "commonjs",
     "target": "ESNext",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "dist",
-    "rootDir": "src",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
