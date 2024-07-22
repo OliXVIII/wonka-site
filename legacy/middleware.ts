@@ -43,35 +43,35 @@ export default async function middleware(req: NextRequest) {
     hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
     hostname == `www.app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`
   ) {
-    const cookiesList = req.cookies.getAll();
-    const sessionCookie = process.env.NEXTAUTH_URL?.startsWith("https://")
-      ? "__Secure-next-auth.session-token"
-      : "next-auth.session-token";
-    // no session token present, remove all next-auth cookies and redirect to sign-in
-    if (path == "/logout") {
-      console.log("Logging out...");
-      return NextResponse.rewrite(new URL(`/app${path}`, req.url));
-    }
-    if (
-      !cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
-      path !== "/login"
-    ) {
-      console.log("No session token found, redirecting to /login");
-      // remove all next-auth cookies
-      for (const cookie of cookiesList) {
-        if (cookie.name.startsWith("next-auth.")) {
-          req.cookies.delete(cookie.name);
-        }
-      }
-      return NextResponse.redirect(new URL("/login", req.url));
-    } else if (
-      cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
-      path == "/login"
-    ) {
-      console.log("Session token found, redirecting to /");
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    console.log("Session token found, continuing to requested page");
+    // const cookiesList = req.cookies.getAll();
+    // const sessionCookie = process.env.NEXTAUTH_URL?.startsWith("https://")
+    //   ? "__Secure-next-auth.session-token"
+    //   : "next-auth.session-token";
+    // // no session token present, remove all next-auth cookies and redirect to sign-in
+    // if (path == "/logout") {
+    //   console.log("Logging out...");
+    //   return NextResponse.rewrite(new URL(`/app${path}`, req.url));
+    // }
+    // if (
+    //   !cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
+    //   path !== "/login"
+    // ) {
+    //   console.log("No session token found, redirecting to /login");
+    //   // remove all next-auth cookies
+    //   for (const cookie of cookiesList) {
+    //     if (cookie.name.startsWith("next-auth.")) {
+    //       req.cookies.delete(cookie.name);
+    //     }
+    //   }
+    //   return NextResponse.redirect(new URL("/login", req.url));
+    // } else if (
+    //   cookiesList.some((cookie) => cookie.name.includes(sessionCookie)) &&
+    //   path == "/login"
+    // ) {
+    //   console.log("Session token found, redirecting to /");
+    //   return NextResponse.redirect(new URL("/", req.url));
+    // }
+    // console.log("Session token found, continuing to requested page");
 
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),

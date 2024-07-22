@@ -1,0 +1,30 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# production
+/build
+
+# keys
+.env
+
+
+/src/config
+
+/src/shared
+/src/shared/*
+
+/src/lib/prompt
+
+/dist
+/lib
+lib/**/*.js
+lib/**/*.js.map
+.turbo
+.vercel
+.env*.local
+/src/shared
+
+firebase-debug.log
+ui-debug.log

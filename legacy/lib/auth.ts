@@ -9,24 +9,24 @@ const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    // GitHubProvider({
-    //   clientId: process.env.AUTH_GITHUB_ID as string,
-    //   clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-    //   profile(profile) {
-    //     return {
-    //       id: profile.id.toString(),
-    //       name: profile.name || profile.login,
-    //       gh_username: profile.login,
-    //       email: profile.email,
-    //       image: profile.avatar_url,
-    //       role: "user",
-    //     };
-    //   },
-    // }),
+    GitHubProvider({
+      clientId: process.env.AUTH_GITHUB_ID as string,
+      clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          gh_username: profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          role: "user",
+        };
+      },
+    }),
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
-      profile(profile, tokens) {
+      profile(profile) {
         return {
           id: profile.sub,
           name: profile.name,
@@ -60,9 +60,14 @@ export const authOptions: NextAuthOptions = {
   //   },
   // },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, account }) => {
+      if (account && account.provider === "github") {
+        if (user) {
+          token.user = user;
+        }
+        return token;
+      }
       const domain = process.env.NEXTAUTH_URL ?? "local-108";
-      console.log("domain", domain);
       const userDb = await getUser(domain, token.sub as string);
       if (userDb) {
         return {
@@ -78,7 +83,18 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    session: async ({ session, token }) => {
+    session: async ({ session, token, user }) => {
+      // Assuming gh_username is only set for GitHub users
+      if (user?.gh_username) {
+        session.user = {
+          ...session.user,
+          // @ts-expect-error This is necessary because the 'username' property is not defined in the 'token' object.
+          id: token.sub,
+          // @ts-expect-error This is necessary because the 'username' property is not defined in the 'token' object.
+          username: token?.user?.username || token?.user?.gh_username,
+        };
+        return session;
+      }
       console.log("session", session, "token", token);
       session.user = {
         ...session.user,
