@@ -12,11 +12,54 @@ export const getListOfSubjectSecretPrompt = async (subject: string): Promise<{ s
   };
 };
 
-export const getContentForSubtitlePrompt = async (subtitle: string): Promise<{ system: string; user: string }> => {
+export const getContentForSubtitlePrompt = async (
+  subtitle: string,
+  mission: string,
+): Promise<{ system: string; user: string }> => {
   return {
-    system: `Create content for the subtitle "${subtitle}", the requirement are:
-    - Keep it short and easy to process for a human reader
-    -make it concise and informative`,
+    system: `Create content for the subtitle: "${subtitle}" and the mission: "${mission}", the requirement are:
+    -use html tags to format the text
+    - write a professional and engaging content
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand`,
     user: `Create content for the subtitle ${subtitle}`,
+  };
+};
+
+export const getContentForIntroPrompt = async (intro: string, mission: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `Create introduction for the intro: "${intro}" and the mission: "${mission}", the requirement are:
+    -use html tags to format the text
+    - write a professional and engaging content
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand`,
+    user: `Create content for the subtitle ${intro}`,
+  };
+};
+export const getContentForClosurePrompt = async (closure: string, mission: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `Create content for the subtitle: "${closure}" and the mission: "${mission}",, the requirement are:
+    -use html tags to make the content looks like a closure
+    - write a professional and engaging content
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand`,
+    user: `Create content for the subtitle ${closure}`,
+  };
+};
+
+export const improveDraftPrompt = async (draft: string, mission: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a draft of an article, you will improve it, better it, make it coherent betweens parts. Here is the draft: "${draft}" and the mission: "${mission}",, the requirement are:
+    - write a professional and engaging content
+    -use no special caracters like "#" or "*" or any other markdown
+    -delete all special caracters like "#" or "*" or any other markdown
+    -write the article a way a user would expect it to looks like on a website
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand`,
+    user: `Improve this draft: ${draft}`,
   };
 };

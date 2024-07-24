@@ -1,5 +1,6 @@
 import { openai } from '../lib/open-ai';
 import { getListOfSubjectSecretPrompt } from '../private/prompt';
+import { preprocessJSON } from './preprocessJSON';
 
 export const getListSubtitle = async (subject: string): Promise<string[]> => {
   const prompt = await getListOfSubjectSecretPrompt(subject);
@@ -18,11 +19,7 @@ export const getListSubtitle = async (subject: string): Promise<string[]> => {
     ],
   });
 
-  const result = completion.choices[0].message?.content
-    ?.replaceAll('\n', '')
-    .replaceAll('json', '')
-    .replaceAll('```', '')
-    .replaceAll('javascript', '');
+  const result = preprocessJSON(completion.choices[0].message?.content ?? '');
 
   if (!result) {
     return [];
