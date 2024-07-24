@@ -18,7 +18,11 @@ export const getListSubtitle = async (subject: string): Promise<string[]> => {
     ],
   });
 
-  const result = completion.choices[0].message?.content?.replaceAll('\n', '');
+  const result = completion.choices[0].message?.content
+    ?.replaceAll('\n', '')
+    .replaceAll('json', '')
+    .replaceAll('```', '')
+    .replaceAll('javascript', '');
 
   if (!result) {
     return [];

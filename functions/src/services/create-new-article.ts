@@ -1,3 +1,4 @@
+import { createContentForSubtitle } from './create-content-subtitle';
 import { getListSubtitle } from './get-list-subtitle';
 
 export const createNewArticle = async ({ mission, subject }: { mission: string; subject: string }) => {
@@ -12,14 +13,17 @@ export const createNewArticle = async ({ mission, subject }: { mission: string; 
   const content = await Promise.all(
     listSubtitle.map(async (subtitle) => {
       //Créer le contenu pour chaque sous-titre
-      return {
-        content: 'example',
-        imageTitle: 'White poney', //optional et plus tard
-      };
-      //return createContentForSubtitle(subtitle, mission);
+      // return {
+      //   content: 'example',
+      //   //imageTitle: 'White poney', //optional et plus tard
+      // };
+      const content = await createContentForSubtitle(subtitle, mission);
+      console.log('content: ', content);
+      return content;
     }),
   );
-  console.log('content: ', content);
+  return content;
+  //console.log('content: ', content);
 
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
 

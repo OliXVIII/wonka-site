@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/createNewArticle', (req: express.Request, res: express.Response) => {
+app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
   const { mission, subject } = req.body;
 
   if (!mission || !subject) {
@@ -14,9 +14,9 @@ app.get('/createNewArticle', (req: express.Request, res: express.Response) => {
     return;
   }
 
-  createNewArticle({ mission, subject });
+  const article = await createNewArticle({ mission, subject });
 
-  res.status(200).send(`Creating new article for ${mission} on ${subject}`);
+  res.status(200).send(`Creating new article: ${article}`);
 });
 
 //http://127.0.0.1:5001/wonkasite-d43b5/us-central1/app/ping
