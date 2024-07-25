@@ -17,7 +17,7 @@ export const getContentForSubtitlePrompt = async (
   mission: string,
 ): Promise<{ system: string; user: string }> => {
   return {
-    system: `Create content for the subtitle: "${subtitle}" and the mission: "${mission}", the requirement are:
+    system: `Create few paragraph WITHOUT introduction OR conclusion for the subtitle: "${subtitle}" and the mission: "${mission}", the requirement are:
     -use html tags to format the text
     - write a professional and engaging content
     - make it concise and informative,
@@ -40,7 +40,7 @@ export const getContentForIntroPrompt = async (intro: string, mission: string): 
 };
 export const getContentForClosurePrompt = async (closure: string, mission: string): Promise<{ system: string; user: string }> => {
   return {
-    system: `Create content for the subtitle: "${closure}" and the mission: "${mission}",, the requirement are:
+    system: `Create conclusion for the subtitle: "${closure}" and the mission: "${mission}",, the requirement are:
     -use html tags to make the content looks like a closure
     - write a professional and engaging content
     - make it concise and informative,

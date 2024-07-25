@@ -34,7 +34,6 @@ export const createNewArticle = async ({ mission, subject }: { mission: string; 
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
   const draft = listDraft.join('\n');
   const content = await improveDraft(draft, mission);
-  console.log('content: ', content);
   return content;
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
   // console.log('finalContent: ', finalContent);
