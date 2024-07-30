@@ -4,7 +4,7 @@ import { createContentForIntro } from './create-introduction';
 import { createContentForClosure } from './create-closure';
 import { improveDraft } from './improve-draft';
 import { preprocessJSON } from '../preprocessJSON';
-import { addSources } from './add-souces';
+import { addSources } from './add-sources/add-souces';
 
 export const createNewArticle = async ({ mission, subject }: { mission: string; subject: string }) => {
   //fetch chat gpt api with gpt-4o-mini

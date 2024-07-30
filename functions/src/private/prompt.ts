@@ -165,12 +165,19 @@ export const findSourcesItemPrompt = async (
 export const addSourcesToItemPrompt = async (keyElement: string, subject: string): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an array of key element.
-    You must find teh 3 most important element of the article for this subject: "${subject}"
+    You must find the 3 most important element of the article for this subject: "${subject}"
+    Scrape the web to find 3 relevant sources for each of these elements.
+    YOU WILL ONLY RETURN THE URL OF THE SOURCES.
+    URL should be in the format: "www.example.com"
+    Sources must be relevant to the content.
+    Sources must be from reputable sources.
+    Sources must be up-to-date.
+
 
     You will find a relevant sources to EACH of the elements.
     You will return the sources in APA format.
     You must validate the sources before adding them to the article.
-    You must verifie if the link is still up-to-date.
+    You must verify if the link is still up-to-date.
     You must verify if the link redirect to the right page.
     The sources added should be relevant and add value to the article.
 
@@ -191,9 +198,33 @@ export const addSourcesToItemPrompt = async (keyElement: string, subject: string
   };
 };
 
-export const addSourcesPrompt = async (article: string, sources: string): Promise<{ system: string; user: string }> => {
+export const parseUrlPrompt = async (sources: string): Promise<{ system: string; user: string }> => {
   return {
-    system: `You will receive an article and a list of key elements of the article.
+    system: `You will receive a list of sources.
+    You will parse the sources to extract the domain name of the source.
+    You will return the domain name of the source in a JSON format.
+
+    Exemple: {
+      "source1": "domain1",
+      "source2": "domain2",
+      "source3": "domain3",
+    }
+
+    `,
+    user: `Parse the sources to extract the domain name of the source: "${sources}"`,
+  };
+};
+
+export const addSourcesPrompt = async (
+  article: string,
+  sources: string[],
+  listKeyElement: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive an article, sources for the article and the key element associate to these sources.
+    You must link the sources to the key element in the article.
+    You must put the sources at the right place, associate to the right key element. 
+    You must add the sources to the article using APA format.
     IMPORTANT: YOU NEED TO RETURN ALL THE CONTENT OF THE ARTICLE GIVEN TO YOU.
     You will delete all link html tag already present in the article.
     Return all the article with the sources added in APA format and via html link tag.
@@ -208,7 +239,8 @@ export const addSourcesPrompt = async (article: string, sources: string): Promis
     You will remove all other html link that was there before this prompt.
 
     `,
-    user: `Add sources to this article: "${article}, here's the list of sources to add to this article: ${sources}".
+    user: `Add sources to this article: "${article}.
+    Here's the list of sources to add to this article: ${sources}" Here's the list of key element: ${listKeyElement}.
     You will return all the article with the sources added to it.`,
   };
 };
