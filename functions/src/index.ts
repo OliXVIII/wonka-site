@@ -1,14 +1,12 @@
-import moduleAlias from 'module-alias';
-moduleAlias.addAliases({
-  '@': `${__dirname}`,
-});
+export * from "./http/http";
+export * from "./auth/auth";
+export * from "./models/all";
+export { createConfiguration } from "./configuration"
+export { Configuration } from "./configuration"
+export * from "./apis/exception";
+export * from "./servers";
+export { RequiredError } from "./apis/baseapi";
 
-import * as functions from 'firebase-functions';
-import app from './app';
+export { PromiseMiddleware as Middleware } from './middleware';
+export { PromiseJournalApi as JournalApi,  PromiseMiscellaneousApi as MiscellaneousApi,  PromisePapersApi as PapersApi,  PromisePubMedSourceTalliesApi as PubMedSourceTalliesApi,  PromiseReferenceCheckApi as ReferenceCheckApi,  PromiseReferencesApi as ReferencesApi,  PromiseSearchApi as SearchApi,  PromiseSmartCitationGraphApi as SmartCitationGraphApi,  PromiseTalliesApi as TalliesApi } from './types/PromiseAPI';
 
-const runtimeOpts = {
-  timeoutSeconds: 540,
-  memory: '1GB' as const,
-};
-
-exports.app = functions.runWith(runtimeOpts).https.onRequest(app);

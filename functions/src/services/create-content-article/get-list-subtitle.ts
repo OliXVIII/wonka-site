@@ -1,12 +1,13 @@
-import { openai } from '../lib/open-ai';
-import { getListOfSubjectSecretPrompt } from '../private/prompt';
-import { preprocessJSON } from './preprocessJSON';
+import { openai } from '../../lib/open-ai';
+import { getListOfSubjectSecretPrompt } from '../../private/prompt';
+import { preprocessJSON } from '../preprocessJSON';
 
 export const getListSubtitle = async (subject: string): Promise<string[]> => {
   const prompt = await getListOfSubjectSecretPrompt(subject);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini', //TODO: Tester différente version de gpt
+    // response_format: { type: 'json_object' },
     messages: [
       {
         role: 'system',

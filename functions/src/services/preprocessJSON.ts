@@ -9,5 +9,7 @@ export const preprocessJSON = (jsonString: string) => {
     .replace(/,\s*}/g, '}')
     .replace(/,\s*]/g, ']')
     .replace(/,\s*([\]}])/g, '$1')
-    .replace(regex, '}, {');
+    .replace(regex, '}, {')
+    .replace('```html', '')
+    .replace('```', '');
 };
