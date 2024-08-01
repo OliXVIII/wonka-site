@@ -1,16 +1,22 @@
-import { createContentForSubtitle } from './create-subtitle';
-import { getListSubtitle } from './get-list-subtitle';
-import { createContentForIntro } from './create-introduction';
-import { createContentForClosure } from './create-closure';
+import { createContentForSubtitle } from './create-section/create-subtitle';
+import { getListSubtitle } from './create-section/get-list-subtitle';
+import { createContentForIntro } from './create-section/create-introduction';
+import { createContentForClosure } from './create-section/create-closure';
 import { improveDraft } from './improve-draft';
 import { preprocessJSON } from '../preprocessJSON';
 import { addSources } from './add-sources/add-souces';
 
-export const createNewArticle = async ({ mission, subject }: { mission: string; subject: string }) => {
+export const createNewArticle = async (
+  mission: string,
+  subject: string,
+  target_audiance: string,
+  source: boolean,
+  section: string,
+) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
-  const listSubtitle = await getListSubtitle(subject);
+  const listSubtitle = await getListSubtitle(subject, target_audiance, section);
   console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
@@ -23,11 +29,11 @@ export const createNewArticle = async ({ mission, subject }: { mission: string; 
       //   //imageTitle: 'White poney', //optional et plus tard
       // };
       if (subtitle.toLowerCase().includes('introduction')) {
-        return createContentForIntro(subtitle, mission, subject);
+        return createContentForIntro(subtitle, mission, subject, target_audiance, listSubtitle);
       } else if (subtitle.toLowerCase().includes('conclusion' || 'closure')) {
-        return createContentForClosure(subtitle, mission, subject);
+        return createContentForClosure(subtitle, mission, subject, target_audiance, listSubtitle);
       }
-      const content = await createContentForSubtitle(subtitle, mission, subject);
+      const content = await createContentForSubtitle(subtitle, mission, subject, target_audiance);
       return content;
     }),
   );
@@ -37,8 +43,11 @@ export const createNewArticle = async ({ mission, subject }: { mission: string; 
   const draft = listDraft.join('\n');
   console.log('draft finished');
 
-  const content = await improveDraft(draft, mission, subject);
-  const contentWithSource = await addSources(content, mission, subject);
+  let content = await improveDraft(draft, mission, subject, target_audiance);
+  if (source) {
+    content = await addSources(content, mission, subject, target_audiance);
+  }
+
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
   // console.log('finalContent: ', finalContent);
 
@@ -47,6 +56,6 @@ export const createNewArticle = async ({ mission, subject }: { mission: string; 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
 
-  return preprocessJSON(contentWithSource).replace('html', '');
+  return preprocessJSON(content).replace('html', '');
   //Étape 5: Publier le contenu sur dans la base de donnée
 };

@@ -8,27 +8,27 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  const { mission, subject } = req.body;
+  const { mission, subject, target_audiance, source, section } = req.body;
 
   if (!mission || !subject) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const article = await createNewArticle({ mission, subject });
+  const article = await createNewArticle(mission, subject, target_audiance ?? 'general', source, section);
 
   res.status(200).send(`${article}`);
 });
 
 app.get('/createNewImage', async (req: express.Request, res: express.Response) => {
-  const { mission, subject, image } = req.body;
+  let { mission, subject, image, target_audiance } = req.body;
 
   if (!mission || !subject || !image) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const { picture, url } = await createNewImage({ mission, subject, image });
+  const { picture, url } = await createNewImage(mission, subject, image, target_audiance ?? 'general');
 
   res.status(200).send(`Creating new image at url ${url}: ${picture}`);
 });
