@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { createNewArticle } from './services/create-content-article/create-new-article';
+import { createNewArticle } from './create-new-article';
 import { createNewImage } from './services/create-image/create-new-image';
 
 const app = express();

@@ -1,24 +1,25 @@
-// //NEVER IMPORT IN A CLIENT SIDE FILE
-// const isServer = typeof window === 'undefined';
+//NEVER IMPORT IN A CLIENT SIDE FILE
 
-// if (!isServer) {
-//   throw new Error('Firebase Admin must not be initialized on the client-side.');
-// }
+const isServer = typeof window === 'undefined';
 
-// import { initializeApp, App, cert, getApps } from 'firebase-admin/app';
-// import { getFirestore, Firestore } from 'firebase-admin/firestore';
-// const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIALS as string);
+if (!isServer) {
+  throw new Error('Firebase Admin must not be initialized on the client-side.');
+}
 
-// serviceAccount.private_key = (process.env.FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
+import { initializeApp, App, cert, getApps } from 'firebase-admin/app';
+import { getFirestore, Firestore } from 'firebase-admin/firestore';
+const serviceAccount = JSON.parse(process.env.DB_FIREBASE_ADMIN_CREDENTIALS as string);
 
-// // Import only what you need from the Firebase SDK for Firebase
+serviceAccount.private_key = (process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
 
-// //If App doesn't exist, initialize one
-// const app: App = getApps().length
-//   ? getApps()[0]
-//   : initializeApp({
-//       credential: cert(serviceAccount),
-//       databaseURL: 'https://wonkasite-d43b5.firebaseio.com',
-//     });
+// Import only what you need from the Firebase SDK for Firebase
 
-// export const dbAdmin: Firestore = getFirestore(app);
+//If App doesn't exist, initialize one
+const app: App = getApps().length
+  ? getApps()[0]
+  : initializeApp({
+      credential: cert(serviceAccount),
+      databaseURL: 'https://wonkasite-d43b5.firebaseio.com',
+    });
+
+export const dbAdmin: Firestore = getFirestore(app);

@@ -1,10 +1,11 @@
-import { createContentForSubtitle } from './create-section/create-subtitle';
-import { getListSubtitle } from './create-section/get-list-subtitle';
-import { createContentForIntro } from './create-section/create-introduction';
-import { createContentForClosure } from './create-section/create-closure';
-import { improveDraft } from './improve-draft';
-import { preprocessJSON } from '../preprocessJSON';
-import { addSources } from './add-sources/add-souces';
+import { createContentForSubtitle } from './services/create-content-article/create-section/create-subtitle';
+import { getListSubtitle } from './services/create-content-article/create-section/get-list-subtitle';
+import { createContentForIntro } from './services/create-content-article/create-section/create-introduction';
+import { createContentForClosure } from './services/create-content-article/create-section/create-closure';
+import { improveDraft } from './services/create-content-article/improve-draft';
+import { preprocessJSON } from './services/preprocessJSON';
+import { addSources } from './services/create-content-article/add-sources/add-souces';
+import { addArticle } from './services/database-firebase/add-article';
 
 export const createNewArticle = async (
   mission: string,
@@ -55,7 +56,8 @@ export const createNewArticle = async (
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
-
-  return preprocessJSON(content).replace('html', '');
+  content = preprocessJSON(content).replace('html', '');
+  addArticle(content);
+  return content;
   //Étape 5: Publier le contenu sur dans la base de donnée
 };

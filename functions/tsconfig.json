@@ -13,7 +13,8 @@
     "checkJs": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]
   },
   "compileOnSave": true,
   "exclude": ["node_modules", "../legacy", "dist"]
