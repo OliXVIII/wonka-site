@@ -10,7 +10,7 @@ import { initializeApp, App, cert, getApps } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
 const serviceAccount = JSON.parse(process.env.DB_FIREBASE_ADMIN_CREDENTIALS as string);
 
-serviceAccount.private_key = (process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
+serviceAccount.private_key = process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY; //(process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
 
 // Import only what you need from the Firebase SDK for Firebase
 

@@ -13,6 +13,7 @@ export const createNewArticle = async (
   target_audiance: string,
   source: boolean,
   section: string,
+  clientId: string,
 ) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
@@ -57,7 +58,8 @@ export const createNewArticle = async (
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
   content = preprocessJSON(content).replace('html', '');
-  addArticle(content);
+  const title = subject.replace(' ', '-');
+  addArticle(content, clientId, title);
   return content;
   //Étape 5: Publier le contenu sur dans la base de donnée
 };
