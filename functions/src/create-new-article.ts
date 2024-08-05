@@ -6,6 +6,7 @@ import { improveDraft } from './services/create-content-article/improve-draft';
 import { preprocessJSON } from './services/preprocessJSON';
 import { addSources } from './services/create-content-article/add-sources/add-souces';
 import { addArticle } from './services/database-firebase/add-article';
+import { seoTitle } from './services/create-content-article/seo-title';
 
 export const createNewArticle = async (
   mission: string,
@@ -14,6 +15,7 @@ export const createNewArticle = async (
   source: boolean,
   section: string,
   clientId: string,
+  lang: string,
 ) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
@@ -45,7 +47,7 @@ export const createNewArticle = async (
   const draft = listDraft.join('\n');
   console.log('draft finished');
 
-  let content = await improveDraft(draft, mission, subject, target_audiance);
+  let content = await improveDraft(draft, mission, subject, target_audiance, lang);
   if (source) {
     content = await addSources(content, mission, subject, target_audiance);
   }
@@ -58,7 +60,7 @@ export const createNewArticle = async (
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
   content = preprocessJSON(content).replace('html', '');
-  const title = subject.replace(' ', '-');
+  const title = (await seoTitle(subject)).toLowerCase();
   addArticle(content, clientId, title);
   return content;
   //Étape 5: Publier le contenu sur dans la base de donnée

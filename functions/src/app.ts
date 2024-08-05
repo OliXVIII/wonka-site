@@ -8,14 +8,14 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  const { mission, subject, target_audiance, source, section, clientId } = req.body;
+  const { mission, subject, target_audiance, source, section, clientId, lang } = req.body;
 
   if (!mission || !subject) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const article = await createNewArticle(mission, subject, target_audiance ?? 'general', source, section, clientId);
+  const article = await createNewArticle(mission, subject, target_audiance ?? 'general', source, section, clientId, lang);
 
   res.status(200).send(`${article}`);
 });

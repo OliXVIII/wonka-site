@@ -1,6 +1,6 @@
 export const getListOfSubjectSecretPrompt = async (
   subject: string,
-  target_audiance: string,
+  target_audience: string,
   section: string,
 ): Promise<{ system: string; user: string }> => {
   return {
@@ -16,7 +16,7 @@ export const getListOfSubjectSecretPrompt = async (
 -only return a list of content, nothing else
 - Simply output a JavaScript-like list of subtitle"`,
     user: `Accomplish the task by providing a list of subtitle for an article "${subject},
-    your target audiance for this is: "${target_audiance}, IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION"
+    your target audience for this is: "${target_audience}, DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."
     IMPORTANT: NUMBER OF BODY SUBTITLE (EXCLUDING INTRO, BONUS AND CONCLUSION) MUST BE A TOTAL OF ${section}.`,
   };
 };
@@ -25,7 +25,7 @@ export const getContentForSubtitlePrompt = async (
   subtitle: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Create few paragraph WITHOUT (introduction OR conclusion) for the subtitle: "${subtitle}" and the mission: "${mission}",
@@ -43,12 +43,12 @@ export const getContentForSubtitlePrompt = async (
     - if you have to make a list, make it clear and easy to read
     - if you have to explain a concept, make it clear and easy to understand
 
-    The target audience is busy people with short attention span and "${target_audiance}" looking to learn about "${subject}" and "${subtitle}, IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION".
+    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}" and "${subtitle}, DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
 
     
     `,
-    user: `Create content for the subtitle "${subtitle}, your target audiance for this is: "${target_audiance}, IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION"`,
+    user: `Create content for the subtitle "${subtitle}, your target audience for this is: "${target_audience}, DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."`,
   };
 };
 
@@ -56,7 +56,7 @@ export const getContentForIntroPrompt = async (
   intro: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
   subtitle: string[],
 ): Promise<{ system: string; user: string }> => {
   return {
@@ -77,18 +77,18 @@ export const getContentForIntroPrompt = async (
     - if you have to make a list, make it clear and easy to read
     - if you have to explain a concept, make it clear and easy to understand
     
-    The target audience is busy people with short attention span and "${target_audiance}" looking to learn about "${subject}".
+    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
     `,
-    user: `Create an introduction respecting the requirements for the introduction: "${intro}, your target audiance for this is: "${target_audiance}, 
-    IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION"`,
+    user: `Create an introduction respecting the requirements for the introduction: "${intro}, your target audience for this is: "${target_audience}, 
+    DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."`,
   };
 };
 export const getContentForClosurePrompt = async (
   closure: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
   subtitle: string[],
 ): Promise<{ system: string; user: string }> => {
   return {
@@ -106,11 +106,11 @@ export const getContentForClosurePrompt = async (
     - if you have to explain a concept, make it clear and easy to understand
     
     
-    The target audience is busy people with short attention span and "${target_audiance}" looking to learn about "${subject}" and "${closure}".
+    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}" and "${closure}".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
     `,
-    user: `Create a conclusion respecting the requirements for the conclusion: "${closure}, your target audiance for this is: "${target_audiance}, 
-    IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION"`,
+    user: `Create a conclusion respecting the requirements for the conclusion: "${closure}, your target audience for this is: "${target_audience}, 
+    DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."`,
   };
 };
 
@@ -118,7 +118,8 @@ export const improveDraftPrompt = async (
   draft: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
+  lang: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a draft of an article, you will improve it, better it, make it coherent betweens parts.
@@ -126,6 +127,10 @@ export const improveDraftPrompt = async (
 
     Here is the draft: "${draft}" and the mission: "${mission}", on the subject: "${subject}", the requirement are:
 
+    - make sure to format it in html format
+    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords; followed by a p with id="intro"
+    - make sure the subtitle of the article is in h2 tag
+    
     - write a professional and engaging content
     - use no special caracters like "#" or "*" or any other markdown
     - delete all special caracters like "#" or "*" or any other markdown
@@ -135,8 +140,8 @@ export const improveDraftPrompt = async (
     - if you have to explain a concept, make it clear and easy to understand
     
     Your task is to generate engaging and informative content for this draft.
-    The target audience is busy people with short attention span and "${target_audiance}" looking to learn about "${subject}".
-    Your target audiance only have limited time to give you.
+    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}".
+    Your target audience only have limited time to give you.
     You should grab their attention fast, because otherwise they would go elsewhere and go-on about their day..
     The content should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
     The text output is destined to bring organic traffic to a website.
@@ -148,9 +153,17 @@ export const improveDraftPrompt = async (
     The persons that read your article come from organic traffic, they are looking for information, make a purchase, or are interested about "${subject}". 
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
     `,
-    user: `Improve this draft: "${draft}, your target audiance for this is: "${target_audiance}, 
-    IMPORTANT, NE MENTIONNE PAS CETTE AUDIANCE CIBLE DANS LE TEXTE, CECI EST UNIQUEMENT POUR GUIDER LA NARRATION"
-    DONT PUT "INTRODUCTION" OR "CLOSURE" IN THE TEXT, ONLY THE CONTENT OF THE ARTICLE NOR IN THE TITLE.
+    user: `Improve this draft: "${draft}, your target audience for this is: "${target_audience}, 
+    IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
+
+    ${
+      lang == 'francais' || lang == 'french'
+        ? `The title must be in french format (no uppercase at the start of each word, just the first word)`
+        : ''
+    }
+
+    IMPORTANT, DON'T MENTION THE TARGET audience IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION,
+    DON'T PUT "INTRODUCTION" OR "CLOSURE" IN THE TEXT, ONLY THE CONTENT OF THE ARTICLE NOR IN THE TITLE.
     THE FINAL RESULT MUST BE IN HTML TAGS.
     IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
 
@@ -166,7 +179,7 @@ export const createImagePrompt = async (
   mission: string,
   subject: string,
   image: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<string> => {
   return `Create an image of: "image", related to the subject: "${subject}" and keep in mind the mission: "${mission}",
   you're a professional on this subject. 
@@ -177,7 +190,7 @@ export const createImagePrompt = async (
     It should have a lot of different keywords related to the subject.
 
     The target audience is busy individuals looking to learn about "${subject}".
-    Your target audiance for this is: "${target_audiance} looking to learn about "${subject}".
+    Your target audience for this is: "${target_audience} looking to learn about "${subject}".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
     `;
 };
@@ -186,7 +199,7 @@ export const findSourcesItemPrompt = async (
   article: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an article, you find 3 key element of the article.
@@ -200,21 +213,21 @@ export const findSourcesItemPrompt = async (
     `,
     user: `You must return an array of string containing the key element. Here's the article: "${article}", the mission: "${mission}", the subject of the article: "${subject}".
     Find 3 key element of the article that a source could be added and ALSO be relevant. 
-    Your target audiance for this is: "${target_audiance}`,
+    Your target audience for this is: "${target_audience}`,
   };
 };
 
 export const addSourcesToItemPrompt = async (
   keyElement: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an array of key element.
     You must find the 3 most important element of the article for this subject: "${subject}"
     Scrape the web to find 3 relevant sources for each of these elements.
     YOU WILL ONLY RETURN THE URL OF THE SOURCES.
-    URL should be in the format: "www.example.com"
+    URL should be in the format: "www.example.com".
     Sources must be relevant to the content.
     Sources must be from reputable sources.
     Sources must be up-to-date.
@@ -231,20 +244,20 @@ export const addSourcesToItemPrompt = async (
     The sources added should be relevant and add value to the article.
 
     The requirement are:
+    -Add a maximum of 3 useful sources to the article.
+    -The sources must be from academic sources.
+    -The sources must be in APA format.
+    -The sources must be relevant to the content.
+    -The sources must be from reputable sources.
+    -The sources must be up-to-date.
+    -The sources must be cited correctly.
+    -The sources must be added in the right place in the article.
 
-    -Add a maximum of 3 useful sources to the article
-    -The sources must be from academic sources
-    -The sources must be in APA format
-    -The sources must be relevant to the content
-    -The sources must be from reputable sources
-    -The sources must be up-to-date
-    -The sources must be cited correctly
-    -The sources must be added in the right place in the article
     Keep in mind that these element must be relevant to the content.
 
     `,
     user: `Here's the array of key element: "${keyElement}". Find a relevant sources to each of these elements. 
-    Your target audiance for this is: "${target_audiance}"`,
+    ${target_audience ? `Your target audience for this is: "${target_audience}"` : ''}`,
   };
 };
 
@@ -269,7 +282,7 @@ export const addSourcesPrompt = async (
   article: string,
   sources: string[],
   listKeyElement: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an article, sources for the article and the key element associate to these sources.
@@ -294,7 +307,19 @@ export const addSourcesPrompt = async (
     user: `Add sources to this article: "${article}.
     Here's the list of sources to add to this article: ${sources}" Here's the list of key element: ${listKeyElement}.
     You will return all the article with the sources added to it.
-    Your target audiance for this is: "${target_audiance}
+    Your target audience for this is: "${target_audience}
     IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS. ADD THE SOURCE SHOULD BE IN APA FORMAT. `,
+  };
+};
+
+export const seoTitlePrompt = async (title: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a title.
+    You will optimize the title for SEO. (without the quotes, and any special caracters)
+    The return value must be exempt of any adverbs, adjectives, or any other words that are not necessary. (like "of", "for", "the", etc.)
+    You will return the optimized title.
+
+    `,
+    user: `Optimize the title for SEO: "${title}"`,
   };
 };

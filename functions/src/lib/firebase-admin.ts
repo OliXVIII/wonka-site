@@ -6,9 +6,16 @@ if (!isServer) {
   throw new Error('Firebase Admin must not be initialized on the client-side.');
 }
 
+const admin = require('firebase-admin');
+
+const serviceAccount = require('../../inceptionai-61b20-firebase-adminsdk-walwf-0253a7603b');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 import { initializeApp, App, cert, getApps } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
-const serviceAccount = JSON.parse(process.env.DB_FIREBASE_ADMIN_CREDENTIALS as string);
 
 serviceAccount.private_key = process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY; //(process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
 
