@@ -6,10 +6,10 @@ export const improveDraft = async (
   draft: string,
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
   lang: string,
 ): Promise<string> => {
-  const prompt = await improveDraftPrompt(draft, mission, subject, target_audiance, lang);
+  const prompt = await improveDraftPrompt(draft, mission, subject, target_audience, lang);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

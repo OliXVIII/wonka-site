@@ -6,9 +6,9 @@ export const createImageForContent = async (
   mission: string,
   subject: string,
   image: string,
-  target_audiance: string,
+  target_audience: string,
 ): Promise<string> => {
-  const prompt = await createImagePrompt(mission, subject, image, target_audiance);
+  const prompt = await createImagePrompt(mission, subject, image, target_audience);
 
   const picture = await openai.images.generate({
     model: 'dall-e-3',

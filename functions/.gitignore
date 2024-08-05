@@ -29,4 +29,5 @@ lib/**/*.js.map
 firebase-debug.log
 ui-debug.log
 
-/src/private/inceptionai-61b20-firebase-adminsdk-walwf-0253a7603b.json
+
+inceptionai-61b20-firebase-adminsdk-walwf-0253a7603b.json

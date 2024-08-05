@@ -7,7 +7,7 @@ if (!isServer) {
 }
 
 const admin = require('firebase-admin');
-const serviceAccount = require('../private/inceptionai-61b20-firebase-adminsdk-walwf-0253a7603b.json');
+const serviceAccount = require('../../inceptionai-61b20-firebase-adminsdk-walwf-0253a7603b.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

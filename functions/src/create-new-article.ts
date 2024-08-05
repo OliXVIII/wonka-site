@@ -6,12 +6,11 @@ import { improveDraft } from './services/create-content-article/improve-draft';
 import { preprocessJSON } from './services/preprocessJSON';
 import { addSources } from './services/create-content-article/add-sources/add-souces';
 import { addArticle } from './services/database-firebase/add-article';
-import { seoTitle } from './services/create-content-article/seo-title';
 
 export const createNewArticle = async (
   mission: string,
   subject: string,
-  target_audiance: string,
+  target_audience: string,
   source: boolean,
   section: string,
   clientId: string,
@@ -20,7 +19,7 @@ export const createNewArticle = async (
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
-  const listSubtitle = await getListSubtitle(subject, target_audiance, section);
+  const listSubtitle = await getListSubtitle(subject, target_audience, section);
   console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
@@ -33,11 +32,11 @@ export const createNewArticle = async (
       //   //imageTitle: 'White poney', //optional et plus tard
       // };
       if (subtitle.toLowerCase().includes('introduction')) {
-        return createContentForIntro(subtitle, mission, subject, target_audiance, listSubtitle);
+        return createContentForIntro(subtitle, mission, subject, target_audience, listSubtitle);
       } else if (subtitle.toLowerCase().includes('conclusion' || 'closure')) {
-        return createContentForClosure(subtitle, mission, subject, target_audiance, listSubtitle);
+        return createContentForClosure(subtitle, mission, subject, target_audience, listSubtitle);
       }
-      const content = await createContentForSubtitle(subtitle, mission, subject, target_audiance);
+      const content = await createContentForSubtitle(subtitle, mission, subject, target_audience);
       return content;
     }),
   );
@@ -47,9 +46,9 @@ export const createNewArticle = async (
   const draft = listDraft.join('\n');
   console.log('draft finished');
 
-  let content = await improveDraft(draft, mission, subject, target_audiance, lang);
+  let content = await improveDraft(draft, mission, subject, target_audience, lang);
   if (source) {
-    content = await addSources(content, mission, subject, target_audiance);
+    content = await addSources(content, mission, subject, target_audience);
   }
 
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
@@ -62,7 +61,7 @@ export const createNewArticle = async (
   content = preprocessJSON(content).replace('html', '');
   const idMatch = content.match(/<h1 id="([^"]+)">/);
   const id = idMatch?.[1] ?? '';
-  addArticle(content, clientId, id);
+  addArticle(content, clientId, id, lang);
   return content;
   //Étape 5: Publier le contenu sur dans la base de donnée
 };

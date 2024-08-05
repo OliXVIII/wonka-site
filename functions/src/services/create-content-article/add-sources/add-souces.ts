@@ -4,8 +4,8 @@ import { preprocessJSON } from '../../preprocessJSON';
 import { checkUrl } from './check-url';
 
 // Function to add sources to a text
-export const addSources = async (source: string, mission: string, subject: string, target_audiance: string): Promise<string> => {
-  let prompt = await findSourcesItemPrompt(source, mission, subject, target_audiance);
+export const addSources = async (source: string, mission: string, subject: string, target_audience: string): Promise<string> => {
+  let prompt = await findSourcesItemPrompt(source, mission, subject, target_audience);
 
   const listKeyElementPrompt = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -22,7 +22,7 @@ export const addSources = async (source: string, mission: string, subject: strin
   });
 
   const listKeyElement = listKeyElementPrompt.choices[0].message?.content;
-  prompt = await addSourcesToItemPrompt(listKeyElement ?? 'error in listKeyElement', subject, target_audiance);
+  prompt = await addSourcesToItemPrompt(listKeyElement ?? 'error in listKeyElement', subject, target_audience);
 
   const listOfSourcesPrompt = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -64,7 +64,7 @@ export const addSources = async (source: string, mission: string, subject: strin
     console.log(validDomains); // Output: List of valid domains
   });
   console.log('urlList: ', urlList);
-  prompt = await addSourcesPrompt(source, urlList, listKeyElement ?? '', target_audiance);
+  prompt = await addSourcesPrompt(source, urlList, listKeyElement ?? '', target_audience);
 
   const articleWithSourcesPrompt = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
