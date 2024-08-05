@@ -311,15 +311,3 @@ export const addSourcesPrompt = async (
     IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS. ADD THE SOURCE SHOULD BE IN APA FORMAT. `,
   };
 };
-
-export const seoTitlePrompt = async (title: string): Promise<{ system: string; user: string }> => {
-  return {
-    system: `You will receive a title.
-    You will optimize the title for SEO. (without the quotes, and any special caracters)
-    The return value must be exempt of any adverbs, adjectives, or any other words that are not necessary. (like "of", "for", "the", etc.)
-    You will return the optimized title.
-
-    `,
-    user: `Optimize the title for SEO: "${title}"`,
-  };
-};

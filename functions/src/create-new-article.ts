@@ -60,8 +60,9 @@ export const createNewArticle = async (
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
   content = preprocessJSON(content).replace('html', '');
-  const title = (await seoTitle(subject)).toLowerCase();
-  addArticle(content, clientId, title);
+  const idMatch = content.match(/<h1 id="([^"]+)">/);
+  const id = idMatch?.[1] ?? '';
+  addArticle(content, clientId, id);
   return content;
   //Étape 5: Publier le contenu sur dans la base de donnée
 };
