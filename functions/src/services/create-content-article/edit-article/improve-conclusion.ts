@@ -1,15 +1,15 @@
-import { openai } from '../../lib/open-ai';
-import { improveDraftPrompt } from '../../private/prompt';
+import { openai } from '../../../lib/open-ai';
+import { improveConclusionPrompt } from '../../../private/prompt';
 
-// Function to generate content for a subtitle
-export const improveDraft = async (
+// Function to improve the conclusion of an article
+export const improveConclusion = async (
   draft: string,
   mission: string,
   subject: string,
   target_audience: string,
   lang: string,
 ): Promise<string> => {
-  const prompt = await improveDraftPrompt(draft, mission, subject, target_audience, lang);
+  const prompt = await improveConclusionPrompt(draft, mission, subject, target_audience, lang);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

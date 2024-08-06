@@ -9,19 +9,19 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  const { mission, subject, target_audience, source, section, clientId, lang } = req.body;
+  const { mission, subject, target_audience = 'general', source, clientId, lang, author } = req.body;
 
-  if (!mission || !subject || !section || !clientId || !lang) {
+  if (!mission || !subject || !clientId || !lang) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
   if (!isValidLanguage(lang)) {
-    res.status(400).send('Invalid language, must be one of "en" or "fr"');
+    res.status(400).send('Invalid language');
     return;
   }
 
-  const article = await createNewArticle(mission, subject, target_audience ?? 'general', source, section, clientId, lang);
+  const article = await createNewArticle(mission, subject, target_audience, source, clientId, lang, author);
 
   res.status(200).send(`${article}`);
 });

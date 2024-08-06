@@ -1,23 +1,24 @@
 export const getListOfSubjectSecretPrompt = async (
   subject: string,
   target_audience: string,
-  section: string,
 ): Promise<{ system: string; user: string }> => {
   return {
-    system: `Split this subject: "${subject}" into subtitle for an article, you're a professional on this subject. 
-    IMPORTANT: NUMBER OF BODY SUBTITLE (EXCLUDING INTRO AND OUTRO) MUST BE A TOTAL OF ${section}.
+    system: `Split this subject: "${subject}" into subtitle for an article, you're a professional on this subject.
     The requirement for your task are the following:
-    -Result must be in JSON format
-- Keep it short and easy to process
-- if the title include a number of points to develop, explore them and and always add a bonus +1 item marked as "(bonus)"
 
-- Always add an adapted introduction and closure but you could present it as fitted for the subject
--introduction and closure must be in the list of subtitles
--only return a list of content, nothing else
-- Simply output a JavaScript-like list of subtitle"`,
+    - You can choose the number of subtitle you want, but keep the number of subtitle under 7 maximum 
+    - Each subtitle must have a distinct and clear meaning
+    - Result must be in JSON format
+    - Keep it short and easy to process
+    - if the title include a number of points to develop, explore them and and always add a bonus item"
+
+    - Always add an adapted introduction and closure but you could present it as fitted for the subject
+    -introduction and closure must be in the list of subtitles
+    -only return a list of content, nothing else
+    - Simply output a JavaScript-like list of subtitle"`,
     user: `Accomplish the task by providing a list of subtitle for an article "${subject},
     your target audience for this is: "${target_audience}, DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."
-    IMPORTANT: NUMBER OF BODY SUBTITLE (EXCLUDING INTRO, BONUS AND CONCLUSION) MUST BE A TOTAL OF ${section}.`,
+    `,
   };
 };
 
@@ -35,6 +36,9 @@ export const getContentForSubtitlePrompt = async (
     The content should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
     The text output is destined to bring organic traffic to a website.
     It should have a lot of different keywords related to the subject.
+
+    Develop the content in a way that it is easy to read and understand.
+    You should have a minimum of 4 paragraphs for each subtitle.
 
     The requirements are:
     - use html tags to format the text
@@ -108,70 +112,11 @@ export const getContentForClosurePrompt = async (
     
     The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}" and "${closure}".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
+    MAKE SURE TO CREATE A CALL TO ACTION.
+    THE CONCLUSION MUST BE AROUND THE MISSION AND THE SUBJECT, WITHOUT MENTIONING THEM DIRECTLY.
     `,
     user: `Create a conclusion respecting the requirements for the conclusion: "${closure}, your target audience for this is: "${target_audience}, 
     DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION."`,
-  };
-};
-
-export const improveDraftPrompt = async (
-  draft: string,
-  mission: string,
-  subject: string,
-  target_audience: string,
-  lang: string,
-): Promise<{ system: string; user: string }> => {
-  return {
-    system: `You will receive a draft of an article, you will improve it, better it, make it coherent betweens parts.
-    IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS. ADD THE SOURCE SHOULD BE IN APA FORMAT.
-
-    Here is the draft: "${draft}" and the mission: "${mission}", on the subject: "${subject}", the requirement are:
-
-    - make sure to format it in html format
-    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords; followed by a p with id="intro"
-    - make sure the subtitle of the article is in h2 tag
-    
-    - write a professional and engaging content
-    - use no special caracters like "#" or "*" or any other markdown
-    - delete all special caracters like "#" or "*" or any other markdown
-    - write the article a way a user would expect it to looks like on a website
-    - make it concise and informative,
-    - if you have to make a list, make it clear and easy to read
-    - if you have to explain a concept, make it clear and easy to understand
-    
-    Your task is to generate engaging and informative content for this draft.
-    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}".
-    Your target audience only have limited time to give you.
-    You should grab their attention fast, because otherwise they would go elsewhere and go-on about their day..
-    The content should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
-    The text output is destined to bring organic traffic to a website.
-    It should have a lot of different keywords related to the subject.
-
-    
-
-    The target audience is busy individuals looking to learn about "${subject}", or they are interested about "${subject}".
-    The persons that read your article come from organic traffic, they are looking for information, make a purchase, or are interested about "${subject}". 
-    They value time efficiency, convenience. You should grab their attention as they have short attention spans.
-    `,
-    user: `Improve this draft: "${draft}, your target audience for this is: "${target_audience}, 
-    IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
-
-    ${
-      lang == 'francais' || lang == 'french'
-        ? `The title must be in french format (no uppercase at the start of each word, just the first word)`
-        : ''
-    }
-
-    IMPORTANT, DON'T MENTION THE TARGET audience IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION,
-    DON'T PUT "INTRODUCTION" OR "CLOSURE" IN THE TEXT, ONLY THE CONTENT OF THE ARTICLE NOR IN THE TITLE.
-    THE FINAL RESULT MUST BE IN HTML TAGS.
-    IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
-
-    YOU STILL HAVE HTML LINK TAG, REMOVE THEM ALL.
-    YOU STILL HAVE HTML LINK TAG, REMOVE THEM ALL.
-
-    ALL LINK TAG LIKE <A></A> MUST BE REMOVED.
-    `,
   };
 };
 
@@ -309,5 +254,143 @@ export const addSourcesPrompt = async (
     You will return all the article with the sources added to it.
     Your target audience for this is: "${target_audience}
     IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS. ADD THE SOURCE SHOULD BE IN APA FORMAT. `,
+  };
+};
+
+export const improveIntroPrompt = async (
+  intro: string,
+  mission: string,
+  subject: string,
+  target_audience: string,
+  lang: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive an introduction, you will improve it, better it, make it coherent betweens parts.
+    Keep in mind that the introduction is the first thing the reader will see, it should be engaging and informative.
+    The introduction should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
+    The text output is destined to bring organic traffic to a website.
+    It should have a lot of different keywords related to the subject.
+    
+    - the first paragraph should be a short introduction of the article
+    - write a professional and engaging content
+    - use no special characters like "#" or "*" or any other markdown
+    - delete all special characters like "#" or "*" or any other markdown
+    - write the article a way a user would expect it to looks like on a website
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand
+    - make sure the text is in language: ${lang}
+    - Each paragraph must be a maximum of 3 sentences.
+
+    
+    Keep in mind that the mission is "${mission}" and the subject is "${subject}".
+    The target audience is busy people with short attention span and "${target_audience}".`,
+    user: `Improve this introduction: "${intro}", your target audience for this is: "${target_audience}.
+    DON'T DIRECTLY MENTION THE MISSION OR THE SUBJECT IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.
+    `,
+  };
+};
+
+export const improveConclusionPrompt = async (
+  conclusion: string,
+  mission: string,
+  subject: string,
+  target_audience: string,
+  lang: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a conclusion, you will improve it, better it, make it coherent betweens parts.
+    Keep in mind that the conclusion is the last thing the reader will see, it should conclude the article in a professional and engaging way.
+    The conclusion must also be design in a way to create a Call to Action related to the mission: "${mission}".
+    The text output is destined to bring organic traffic to a website.
+    It should have a lot of different keywords related to the subject.
+    The title of the conclusion should begin with "Conclusion: "
+    
+    - write a professional and engaging content
+    - use no special characters like "#" or "*" or any other markdown
+    - delete all special characters like "#" or "*" or any other markdown
+    - write the article a way a user would expect it to looks like on a website
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand
+    - make sure the text is in language: ${lang}
+    - Each paragraph must be a maximum of 3 sentences.
+
+    
+    Keep in mind that the mission is "${mission}" and the subject is "${subject}".
+    The target audience is busy people with short attention span and "${target_audience}".`,
+    user: `Improve this conclusion: "${conclusion}", your target audience for this is: "${target_audience}.
+    DON'T DIRECTLY MENTION THE MISSION OR THE SUBJECT IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.
+    `,
+  };
+};
+
+export const improveBodyPrompt = async (
+  body: string,
+  mission: string,
+  subject: string,
+  target_audience: string,
+  lang: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a part of an article, you will improve it, better it, make it coherent betweens parts.
+    Keep in mind that the introduction is the first thing the reader will see, it should be engaging and informative.
+    The body should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
+    Each paragraph must be a maximum of 3 sentences.
+
+    number of paragraph is up to you, choose wisely the number of paragraph you will use.
+    The text output is destined to bring organic traffic to a website.
+    It should have a lot of different keywords related to the subject.
+    
+    - the first paragraph should be a short introduction of the article
+    - write a professional and engaging content
+    - use no special characters like "#" or "*" or any other markdown
+    - delete all special characters like "#" or "*" or any other markdown
+    - write the article a way a user would expect it to looks like on a website
+    - make it concise and informative,
+    - if you have to make a list, make it clear and easy to read
+    - if you have to explain a concept, make it clear and easy to understand
+    - make sure the text is in language: ${lang}
+
+    
+    Keep in mind that the mission is "${mission}" and the subject is "${subject}".
+    The target audience is busy people with short attention span and "${target_audience}".`,
+    user: `Improve this body: "${body}", your target audience for this is: "${target_audience}.
+    DON'T DIRECTLY MENTION THE MISSION OR THE SUBJECT IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.
+    `,
+  };
+};
+
+export const editContentPrompt = async (article: string, lang: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive an article, you will edit it with the requirements that follow.
+    IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
+
+    - the conclusion subtitle should begin with "Conclusion: "
+    - make sure to format it in html format
+    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords; followed by a p with id="intro", the seo title should be in ${lang}, 
+    - make sure that the title is formatted for the language: ${lang}, per example, if the language is french, 
+    - the title should be in the language: ${lang}, without uppercase except for the first world, and with the right accent.
+    - translate the seo title you previously made in the right language
+
+    IMPORTANT: YOU NEED TO MAKE SURE THAT ALL THE TITLE AND SUBTITLE RESPECT THE REQUIREMENT PREVIOUSLY MENTIONED.
+    IF (${lang} == "french") {
+      MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES.
+    }
+    `,
+    user: `Improve this article: "${article}
+    Keep in ind that the first letter of each subtitle or title must always be in uppercase.
+    IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
+
+    EACH PARAGRAPH MUST ONLY BE A MAXIMUM OF 3 SENTENCES.
+    THE FIRST <P></P> MUST BE A SHORT INTRODUCTION OF THE ARTICLE. THIS SHOULD BE A MAXIMUM OF 2 SENTENCES.
+    The first <p></p> should not have any <strong></strong>, <em></em>, <a></a> or any other html tags.
+    THIS SHOULD BE AN OVERVIEW OF THE ARTICLE, NOT A SUMMARY. IT SHOULD MAKE THE READER WANT TO CLICK ON THE ARTICLE AND READ IT.
+
+    DON'T PUT "INTRODUCTION" OR "CLOSURE" IN THE TEXT, ONLY THE CONTENT OF THE ARTICLE NOR IN THE TITLE.
+    THE FINAL RESULT MUST BE IN HTML TAGS.
+    IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
+
+    `,
   };
 };
