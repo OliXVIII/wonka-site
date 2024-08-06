@@ -338,18 +338,12 @@ export const improveBodyPrompt = async (
     The body should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
     Each paragraph must be a maximum of 3 sentences.
 
+    You should have between 3 and 8 paragraphs for each subtitle.
+
     number of paragraph is up to you, choose wisely the number of paragraph you will use.
     The text output is destined to bring organic traffic to a website.
     It should have a lot of different keywords related to the subject.
     
-    - the first paragraph should be a short introduction of the article
-    - write a professional and engaging content
-    - use no special characters like "#" or "*" or any other markdown
-    - delete all special characters like "#" or "*" or any other markdown
-    - write the article a way a user would expect it to looks like on a website
-    - make it concise and informative,
-    - if you have to make a list, make it clear and easy to read
-    - if you have to explain a concept, make it clear and easy to understand
     - make sure the text is in language: ${lang}
 
     
@@ -364,14 +358,13 @@ export const improveBodyPrompt = async (
 export const editContentPrompt = async (article: string, lang: string): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an article, you will edit it with the requirements that follow.
-    IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
 
     - the conclusion subtitle should begin with "Conclusion: "
-    - you should have a minimum of 3 paragraphs for each subtitle
+    - you should have between 3 and 8 paragraphs for each subtitle
     - make sure to format it in html format.
     
     - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords;
-    - MAKE SURE THAT THE H1 TITLE IS GREAT FOR SEO.
+    - MODIFY THE TITLE TO BE SURE THAT THE H1 TITLE IS GREAT FOR SEO.
     followed by a p with id="intro", the seo title should be in ${lang}, 
     - remove any adverbs or adjectives that are not necessary for the seo title, only keyword for the SEO title,
     - the seo title should also be the title of the article, but formated to be the seo title.
@@ -384,8 +377,14 @@ export const editContentPrompt = async (article: string, lang: string): Promise<
       MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES.
     }
     `,
-    user: `Improve this article: "${article}
+    user: `Edit this article: "${article}
     Keep in ind that the first letter of each subtitle or title must always be in uppercase.
+    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords;
+    - MODIFY THE TITLE TO BE SURE THAT THE H1 TITLE IS GREAT FOR SEO.
+    followed by a p with id="intro", the seo title should be in ${lang}, 
+    - remove any adverbs or adjectives that are not necessary for the seo title, only keyword for the SEO title,
+    - the seo title should also be the title of the article, but formated to be the seo title.
+
     IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
 
     EACH PARAGRAPH MUST ONLY BE A MAXIMUM OF 3 SENTENCES.
