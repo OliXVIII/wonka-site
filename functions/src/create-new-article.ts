@@ -62,6 +62,13 @@ export const createNewArticle = async (
     content = await addSources(content, mission, subject, target_audience);
   }
 
+  content = preprocessJSON(content).replace('html', '');
+
+  const idMatch = content.match(/<h1 id="([^"]+)">/);
+  const title = content.match(/<h1 id="[^"]+">(.+?)<\/h1>/)?.[1] ?? '';
+
+  const id = idMatch?.[1] ?? '';
+
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
   // console.log('finalContent: ', finalContent);
 
@@ -70,17 +77,11 @@ export const createNewArticle = async (
     //generateMetadata(finalContent),
     //generateThumbnail(finalContent),
     Promise.resolve(undefined),
-    createNewImage(subject),
+    createNewImage(subject, clientId, id),
   ]);
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
-  content = preprocessJSON(content).replace('html', '');
-
-  const idMatch = content.match(/<h1 id="([^"]+)">/);
-  const title = content.match(/<h1 id="[^"]+">(.+?)<\/h1>/)?.[1] ?? '';
-
-  const id = idMatch?.[1] ?? '';
 
   const article: Article = {
     id,

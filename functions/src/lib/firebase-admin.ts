@@ -15,6 +15,7 @@ admin.initializeApp({
 
 import { initializeApp, App, cert, getApps } from 'firebase-admin/app';
 import { getFirestore, Firestore } from 'firebase-admin/firestore';
+import { getStorage } from 'firebase-admin/storage';
 
 serviceAccount.private_key = process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY; //(process.env.DB_FIREBASE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n');
 
@@ -29,3 +30,5 @@ const app: App = getApps().length
     });
 
 export const dbAdmin: Firestore = getFirestore(app);
+
+export const bucket = getStorage(app).bucket('gs://inceptionai-61b20.appspot.com');
