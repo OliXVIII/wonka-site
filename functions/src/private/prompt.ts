@@ -367,8 +367,14 @@ export const editContentPrompt = async (article: string, lang: string): Promise<
     IMPORTANT: YOU NEED TO DELETE ALL HTML TAGS OF <A></A> OR ANY OTHER LINK TAGS.
 
     - the conclusion subtitle should begin with "Conclusion: "
-    - make sure to format it in html format
-    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords; followed by a p with id="intro", the seo title should be in ${lang}, 
+    - you should have a minimum of 3 paragraphs for each subtitle
+    - make sure to format it in html format.
+    
+    - make sure the title of the article is in h1 tag with a seo-friendly id with human-readable keywords;
+    - MAKE SURE THAT THE H1 TITLE IS GREAT FOR SEO.
+    followed by a p with id="intro", the seo title should be in ${lang}, 
+    - remove any adverbs or adjectives that are not necessary for the seo title, only keyword for the SEO title,
+    - the seo title should also be the title of the article, but formated to be the seo title.
     - make sure that the title is formatted for the language: ${lang}, per example, if the language is french, 
     - the title should be in the language: ${lang}, without uppercase except for the first world, and with the right accent.
     - translate the seo title you previously made in the right language

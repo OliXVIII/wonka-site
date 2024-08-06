@@ -10,7 +10,6 @@ import { improveIntro } from './services/create-content-article/edit-article/imp
 import { improveConclusion } from './services/create-content-article/edit-article/improve-conclusion';
 import { improveBody } from './services/create-content-article/edit-article/improve-body';
 import { editContent } from './services/create-content-article/edit-article/edit-content';
-import { auth } from 'firebase-admin';
 
 export const createNewArticle = async (
   mission: string,
