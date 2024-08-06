@@ -10,6 +10,9 @@ import { improveIntro } from './services/create-content-article/edit-article/imp
 import { improveConclusion } from './services/create-content-article/edit-article/improve-conclusion';
 import { improveBody } from './services/create-content-article/edit-article/improve-body';
 import { editContent } from './services/create-content-article/edit-article/edit-content';
+import { createNewImage } from './services/create-image/create-new-image';
+import { Timestamp } from 'firebase-admin/firestore';
+import { Article } from './types/article';
 
 export const createNewArticle = async (
   mission: string,
@@ -49,10 +52,10 @@ export const createNewArticle = async (
   //console.log('content: ', content);
 
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
-  const article = listDraft.join('\n');
+  const draft = listDraft.join('\n');
   console.log('draft finished');
 
-  let content = await editContent(article, language);
+  let content = await editContent(draft, language);
 
   //Add sources if needed
   if (source) {
@@ -62,14 +65,33 @@ export const createNewArticle = async (
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
   // console.log('finalContent: ', finalContent);
 
-  //Étape 4: Générer meta tags pour le contenu final
+  //Étape 4: Générer metadata tags (title, description, keywords, ++) et thumbnail pour le contenu final
+  const [metadata, thumbnail] = await Promise.all([
+    //generateMetadata(finalContent),
+    //generateThumbnail(finalContent),
+    Promise.resolve(undefined),
+    createNewImage(subject),
+  ]);
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
   content = preprocessJSON(content).replace('html', '');
+
   const idMatch = content.match(/<h1 id="([^"]+)">/);
+  const title = content.match(/<h1 id="[^"]+">(.+?)<\/h1>/)?.[1] ?? '';
+
   const id = idMatch?.[1] ?? '';
-  addArticle(content, clientId, id, lang, author);
+
+  const article: Article = {
+    id,
+    title,
+    content,
+    thumbnail: thumbnail.url,
+    author,
+    metadata,
+    created: Timestamp.now(),
+  };
+  addArticle(article, clientId, lang);
+
   return content;
-  //Étape 5: Publier le contenu sur dans la base de donnée
 };

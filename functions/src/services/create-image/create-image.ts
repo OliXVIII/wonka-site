@@ -1,14 +1,8 @@
 import { openai } from '../../lib/open-ai';
-import { createImagePrompt } from '../../private/prompt';
+import { createImagePrompt } from '../../private/image-prompt';
 
-// Function to generate content for a subtitle
-export const createImageForContent = async (
-  mission: string,
-  subject: string,
-  image: string,
-  target_audience: string,
-): Promise<string> => {
-  const prompt = await createImagePrompt(mission, subject, image, target_audience);
+export const createImage = async (subject: string): Promise<string> => {
+  const prompt = await createImagePrompt(subject);
 
   const picture = await openai.images.generate({
     model: 'dall-e-3',

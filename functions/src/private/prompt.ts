@@ -120,26 +120,6 @@ export const getContentForClosurePrompt = async (
   };
 };
 
-export const createImagePrompt = async (
-  mission: string,
-  subject: string,
-  image: string,
-  target_audience: string,
-): Promise<string> => {
-  return `Create an image of: "image", related to the subject: "${subject}" and keep in mind the mission: "${mission}",
-  you're a professional on this subject. 
-
-    Your task is to generate an image that is engaging and informative for the reader.
-    The image should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
-    The image output is destined to bring organic traffic to a website.
-    It should have a lot of different keywords related to the subject.
-
-    The target audience is busy individuals looking to learn about "${subject}".
-    Your target audience for this is: "${target_audience} looking to learn about "${subject}".
-    They value time efficiency, convenience. You should grab their attention as they have short attention spans.
-    `;
-};
-
 export const findSourcesItemPrompt = async (
   article: string,
   mission: string,

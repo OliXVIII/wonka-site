@@ -27,14 +27,15 @@ app.get('/createNewArticle', async (req: express.Request, res: express.Response)
 });
 
 app.get('/createNewImage', async (req: express.Request, res: express.Response) => {
-  let { mission, subject, image, target_audience } = req.body;
+  let { subject } = req.body;
+  console.log('subject', subject);
 
-  if (!mission || !subject || !image) {
+  if (!subject) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const { picture, url } = await createNewImage(mission, subject, image, target_audience ?? 'general');
+  const { picture, url } = await createNewImage(subject);
 
   res.status(200).send(`Creating new image at url ${url}: ${picture}`);
 });
