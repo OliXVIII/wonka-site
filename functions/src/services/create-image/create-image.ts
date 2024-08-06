@@ -3,14 +3,14 @@ import { openai } from '../../lib/open-ai';
 import { createImagePrompt } from '../../private/image-prompt';
 
 export const createImage = async (subject: string, clientId: string, id?: string): Promise<string | undefined> => {
-  const prompt = await createImagePrompt(subject);
+  const prompt = createImagePrompt(subject);
   console.log('prompt: ', prompt);
 
   const picture = await openai.images.generate({
     model: 'dall-e-3',
     prompt: prompt,
     size: '1792x1024',
-    quality: 'standard',
+    quality: 'hd',
     n: 1,
   });
 
@@ -38,8 +38,6 @@ const saveImageStorage = async (url: string, clientId: string, id?: string): Pro
   });
 
   await file.makePublic();
-
-  console.log(file.publicUrl());
 
   return file.publicUrl();
 };
