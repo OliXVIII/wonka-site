@@ -1,8 +1,12 @@
 export const createImagePrompt = (subject: string): string => {
-  return `Generate a perfect thumbnail image with these requirements:
-- A modern and simple thumbnail image depicting the subject “${subject}”. 
-- Simplified, cartoon-like depiction of the subject adds a sense of accessibility, making the concept feel more approachable.
-- The background is clean with inviting, fresh and modern colors.
-- The composition is neat and organized, with a focus on accessibility and clarity.
-- No text and no writing is present.`;
+  return `Create a sleek, modern thumbnail image representing "${subject}" with the following features:
+
+Include only a two core elements most relevant to "${subject}".
+Use gradients, fresh and soft colors, predominantly in cool tones.
+Background with a very simple, clean pattern suggesting organization and structure, with almost no details.
+Only a couple of small geometric shapes to add a hint of dynamism.
+Minimal subtle lines and waves within the design to imply movement and flow, ensuring the design remains clean and uncluttered.
+Overall vibe should be futuristic, eco-friendly, approachable, and visually engaging, with an emphasis on simplicity.
+No text.
+16/9 ratio.`;
 };

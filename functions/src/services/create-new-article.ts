@@ -79,7 +79,10 @@ export const createNewArticle = async (
   //   createNewImage(subject),
   // ]);
 
-  const thumbnail = await createNewImage(subject, clientId, id);
+  //const thumbnail = await createNewImage(subject, clientId, id);
+  const thumbnail = {
+    url: '',
+  };
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
