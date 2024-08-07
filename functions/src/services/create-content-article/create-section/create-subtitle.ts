@@ -7,8 +7,9 @@ export const createContentForSubtitle = async (
   mission: string,
   subject: string,
   target_audience: string,
+  listOfSubtitles: string[],
 ): Promise<string> => {
-  const prompt = await getContentForSubtitlePrompt(subtitle, mission, subject, target_audience);
+  const prompt = await getContentForSubtitlePrompt(subtitle, mission, subject, target_audience, listOfSubtitles);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

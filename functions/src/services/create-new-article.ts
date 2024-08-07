@@ -3,7 +3,6 @@ import { getListSubtitle } from './create-content-article/create-section/get-lis
 import { createContentForIntro } from './create-content-article/create-section/create-introduction';
 import { createContentForClosure } from './create-content-article/create-section/create-closure';
 import { preprocessJSON } from './preprocessJSON';
-import { addSources } from './create-content-article/add-sources/add-souces';
 import { addArticle } from './firebase/add-article';
 import { Locale, localesDetails } from '../types/languages';
 import { improveIntro } from './create-content-article/edit-article/improve-intro';
@@ -13,6 +12,7 @@ import { editContent } from './create-content-article/edit-article/edit-content'
 import { createNewImage } from './create-image/create-new-image';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Article } from '../types/article';
+import { addSources } from './create-content-article/add-sources/add-souces';
 
 export const createNewArticle = async (
   mission: string,
@@ -26,7 +26,7 @@ export const createNewArticle = async (
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
-  const listSubtitle = await getListSubtitle(subject, target_audience);
+  const listSubtitle = await getListSubtitle(subject, target_audience, mission);
   console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
@@ -44,7 +44,7 @@ export const createNewArticle = async (
         const conclusion = await createContentForClosure(subtitle, mission, subject, target_audience, listSubtitle);
         return await improveConclusion(conclusion, mission, subject, target_audience, language);
       } else {
-        const content = await createContentForSubtitle(subtitle, mission, subject, target_audience);
+        const content = await createContentForSubtitle(subtitle, mission, subject, target_audience, listSubtitle);
         return await improveBody(content, mission, subject, target_audience, language);
       }
     }),
@@ -55,7 +55,7 @@ export const createNewArticle = async (
   const draft = listDraft.join('\n');
   console.log('draft finished');
 
-  let content = await editContent(draft, language);
+  let content = await editContent(draft, language, target_audience);
 
   //Add sources if needed
   if (source) {
@@ -73,12 +73,13 @@ export const createNewArticle = async (
   // console.log('finalContent: ', finalContent);
 
   //Étape 4: Générer metadata tags (title, description, keywords, ++) et thumbnail pour le contenu final
-  const [metadata, thumbnail] = await Promise.all([
-    //generateMetadata(finalContent),
-    //generateThumbnail(finalContent),
-    Promise.resolve(undefined),
-    createNewImage(subject, clientId, id),
-  ]);
+  // const [metadata, thumbnail] = await Promise.all([
+  //   //generateMetadata(finalContent),
+  //   //generateThumbnail(finalContent),
+  //   createNewImage(subject),
+  // ]);
+
+  const thumbnail = await createNewImage(subject, clientId, id);
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
@@ -89,7 +90,7 @@ export const createNewArticle = async (
     content,
     thumbnail: thumbnail.url,
     author,
-    metadata,
+    // metadata,
     created: Timestamp.now(),
   };
   addArticle(article, clientId, lang);

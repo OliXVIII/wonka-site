@@ -41,9 +41,11 @@ app.get('/createNewImage', async (req: express.Request, res: express.Response) =
 });
 
 app.get('/createLinkinPost', async (req: express.Request, res: express.Response) => {
-  let { content } = req.body;
+  let { content, image } = req.body;
 
-  const linkedinPost = createContentForClosure(content);
+  const linkedinPost = createContentForClosure(content, image);
+
+  console.log('linkedinPost: ', linkedinPost);
 
   res.status(200).send('Creating new linkedin post');
 });
