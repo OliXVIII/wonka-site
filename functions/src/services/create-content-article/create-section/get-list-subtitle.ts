@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { getListOfSubjectSecretPrompt } from '../../../private/prompt';
+import { getListOfSubjectSecretPrompt } from '../../../private/content';
 import { preprocessJSON } from '../../preprocessJSON';
 
 export const getListSubtitle = async (subject: string, target_audience: string): Promise<string[]> => {

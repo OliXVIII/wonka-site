@@ -1,8 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { createNewArticle } from './create-new-article';
+import { createNewArticle } from './services/create-new-article';
 import { createNewImage } from './services/create-image/create-new-image';
 import { isValidLanguage } from './types/languages';
+import { createContentForClosure } from './services/create-linkedin-post/create-linkedin-post';
 
 const app = express();
 
@@ -34,9 +35,17 @@ app.get('/createNewImage', async (req: express.Request, res: express.Response) =
     return;
   }
 
-  const { picture, url } = await createNewImage(subject, 'testId', subject.replace(/ /g, '').toLowerCase());
+  const { picture, url } = await createNewImage(subject, 'testId', subject.replace(/ /g, '-').toLowerCase());
 
   res.status(200).send(`Creating new image at url ${url}: ${picture}`);
+});
+
+app.get('/createLinkinPost', async (req: express.Request, res: express.Response) => {
+  let { content } = req.body;
+
+  const linkedinPost = createContentForClosure(content);
+
+  res.status(200).send('Creating new linkedin post');
 });
 
 //http://127.0.0.1:5001/wonkasite-d43b5/us-central1/app/ping

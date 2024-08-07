@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { addSourcesPrompt, addSourcesToItemPrompt, findSourcesItemPrompt, parseUrlPrompt } from '../../../private/prompt';
+import { addSourcesPrompt, addSourcesToItemPrompt, findSourcesItemPrompt, parseUrlPrompt } from '../../../private/content';
 import { preprocessJSON } from '../../preprocessJSON';
 import { checkUrl } from './check-url';
 

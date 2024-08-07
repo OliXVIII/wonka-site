@@ -1,18 +1,18 @@
-import { createContentForSubtitle } from './services/create-content-article/create-section/create-subtitle';
-import { getListSubtitle } from './services/create-content-article/create-section/get-list-subtitle';
-import { createContentForIntro } from './services/create-content-article/create-section/create-introduction';
-import { createContentForClosure } from './services/create-content-article/create-section/create-closure';
-import { preprocessJSON } from './services/preprocessJSON';
-import { addSources } from './services/create-content-article/add-sources/add-souces';
-import { addArticle } from './services/database-firebase/add-article';
-import { Locale, localesDetails } from './types/languages';
-import { improveIntro } from './services/create-content-article/edit-article/improve-intro';
-import { improveConclusion } from './services/create-content-article/edit-article/improve-conclusion';
-import { improveBody } from './services/create-content-article/edit-article/improve-body';
-import { editContent } from './services/create-content-article/edit-article/edit-content';
-import { createNewImage } from './services/create-image/create-new-image';
+import { createContentForSubtitle } from './create-content-article/create-section/create-subtitle';
+import { getListSubtitle } from './create-content-article/create-section/get-list-subtitle';
+import { createContentForIntro } from './create-content-article/create-section/create-introduction';
+import { createContentForClosure } from './create-content-article/create-section/create-closure';
+import { preprocessJSON } from './preprocessJSON';
+import { addSources } from './create-content-article/add-sources/add-souces';
+import { addArticle } from './firebase/add-article';
+import { Locale, localesDetails } from '../types/languages';
+import { improveIntro } from './create-content-article/edit-article/improve-intro';
+import { improveConclusion } from './create-content-article/edit-article/improve-conclusion';
+import { improveBody } from './create-content-article/edit-article/improve-body';
+import { editContent } from './create-content-article/edit-article/edit-content';
+import { createNewImage } from './create-image/create-new-image';
 import { Timestamp } from 'firebase-admin/firestore';
-import { Article } from './types/article';
+import { Article } from '../types/article';
 
 export const createNewArticle = async (
   mission: string,

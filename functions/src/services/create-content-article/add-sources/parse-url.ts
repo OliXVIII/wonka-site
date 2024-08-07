@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { parseUrlPrompt } from '../../../private/prompt';
+import { parseUrlPrompt } from '../../../private/content';
 
 // Function to parse content to json format
 export const createContentForClosure = async (sources: string): Promise<string> => {

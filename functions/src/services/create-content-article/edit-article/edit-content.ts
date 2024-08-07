@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { editContentPrompt } from '../../../private/prompt';
+import { editContentPrompt } from '../../../private/content';
 
 // Function to edit the content of an article and format it
 export const editContent = async (article: string, lang: string): Promise<string> => {

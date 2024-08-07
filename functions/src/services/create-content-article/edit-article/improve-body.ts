@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { improveBodyPrompt } from '../../../private/prompt';
+import { improveBodyPrompt } from '../../../private/content';
 
 // Function to improve the body of an article
 export const improveBody = async (

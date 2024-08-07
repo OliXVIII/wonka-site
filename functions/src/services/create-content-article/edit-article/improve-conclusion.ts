@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { improveConclusionPrompt } from '../../../private/prompt';
+import { improveConclusionPrompt } from '../../../private/content';
 
 // Function to improve the conclusion of an article
 export const improveConclusion = async (
