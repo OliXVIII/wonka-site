@@ -9,7 +9,6 @@ import { improveIntro } from './create-content-article/edit-article/improve-intr
 import { improveConclusion } from './create-content-article/edit-article/improve-conclusion';
 import { improveBody } from './create-content-article/edit-article/improve-body';
 import { editContent } from './create-content-article/edit-article/edit-content';
-import { createNewImage } from './create-image/create-new-image';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Article } from '../types/article';
 import { addSources } from './create-content-article/add-sources/add-souces';
