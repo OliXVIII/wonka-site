@@ -4,6 +4,7 @@ import { createNewArticle } from './services/create-new-article';
 import { createNewImage } from './services/create-image/create-new-image';
 import { isValidLanguage } from './types/languages';
 import { createContentForClosure } from './services/create-linkedin-post/create-linkedin-post';
+import { dbAdmin } from './lib/firebase-admin';
 
 const app = express();
 
@@ -41,18 +42,36 @@ app.get('/createNewImage', async (req: express.Request, res: express.Response) =
 });
 
 app.get('/createLinkinPost', async (req: express.Request, res: express.Response) => {
-  let { content, image } = req.body;
+  let { href, clientId, lang } = req.body;
+
+  if (!href || !clientId) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
+
+  const id = href.split('/').pop();
+
+  const snapshot = await dbAdmin.doc(`${clientId}/${lang}/articles/${id}`).get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const data = snapshot.data();
+  const content = data?.content as string;
+  const image = data?.thumbnail as string;
+
+  if (!content || !image) {
+    res.status(400).send('Article not found');
+    return;
+  }
 
   const linkedinPost = createContentForClosure(content, image);
 
   console.log('linkedinPost: ', linkedinPost);
 
   res.status(200).send('Creating new linkedin post');
-});
-
-//http://127.0.0.1:5001/wonkasite-d43b5/us-central1/app/ping
-app.get('/ping', (req: express.Request, res: express.Response) => {
-  res.status(200).send('Pong');
 });
 
 //export app for firebase functions
