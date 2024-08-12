@@ -1,17 +1,17 @@
-import { createContentForSubtitle } from './create-content-article/create-section/create-subtitle';
+import { createBody } from './create-content-article/create-section/create-subtitle';
 import { getListSubtitle } from './create-content-article/create-section/get-list-subtitle';
 import { createContentForIntro } from './create-content-article/create-section/create-introduction';
 import { createContentForClosure } from './create-content-article/create-section/create-closure';
 import { preprocessJSON } from './preprocessJSON';
 import { addArticle } from './firebase/add-article';
 import { Locale, localesDetails } from '../types/languages';
-import { improveIntro } from './create-content-article/edit-article/improve-intro';
-import { improveConclusion } from './create-content-article/edit-article/improve-conclusion';
 import { improveBody } from './create-content-article/edit-article/improve-body';
 import { editContent } from './create-content-article/edit-article/edit-content';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Article } from '../types/article';
 import { addSources } from './create-content-article/add-sources/add-souces';
+import { createSEOTitle } from './create-content-article/create-title/create-seo-title';
+import { createGreatestTitleEverMade } from './create-content-article/create-title/create-greatest-title';
 
 export const createNewArticle = async (
   mission: string,
@@ -24,37 +24,35 @@ export const createNewArticle = async (
 ) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
-
-  const listSubtitle = await getListSubtitle(subject, target_audience, mission);
+  const language = localesDetails[lang].language;
+  const seoTitle = (await createSEOTitle(subject, target_audience, mission, lang)).replaceAll('"', '');
+  const listSubtitle = await getListSubtitle(subject, target_audience, mission, seoTitle, language);
   console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
-
-  let language = localesDetails[lang].language;
 
   const listDraft = await Promise.all(
     listSubtitle.map(async (subtitle) => {
       const index = listSubtitle.indexOf(subtitle);
 
       if (index === 0) {
-        const intro = await createContentForIntro(subtitle, mission, subject, target_audience, listSubtitle);
-        return await improveIntro(intro, mission, subject, target_audience, language);
+        return await createContentForIntro(subtitle, mission, subject, target_audience, listSubtitle);
       } else if (index === listSubtitle.length - 1) {
-        const conclusion = await createContentForClosure(subtitle, mission, subject, target_audience, listSubtitle);
-        return await improveConclusion(conclusion, mission, subject, target_audience, language);
+        return await createContentForClosure(subtitle, mission, subject, target_audience, listSubtitle);
       } else {
-        const content = await createContentForSubtitle(subtitle, mission, subject, target_audience, listSubtitle);
-        return await improveBody(content, mission, subject, target_audience, language);
+        return await createBody(subtitle, mission, subject, target_audience, listSubtitle);
       }
     }),
   );
   //console.log('content: ', content);
 
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
-  const draft = listDraft.join('\n');
+  let body = listDraft.slice(1, -1).join('\n');
   console.log('draft finished');
-
-  let content = await editContent(draft, language, target_audience);
+  body = await improveBody(body, language, listSubtitle);
+  let content = `${listDraft[0]}\n${body}\n${listDraft[listDraft.length - 1]}`;
+  const greatestTitle = await createGreatestTitleEverMade(subject, target_audience, mission, lang);
+  content = await editContent(content, language, target_audience, listSubtitle, subject, greatestTitle);
 
   //Add sources if needed
   if (source) {
@@ -63,10 +61,10 @@ export const createNewArticle = async (
 
   content = preprocessJSON(content).replace('html', '');
 
-  const idMatch = content.match(/<h1 id="([^"]+)">/);
+  // const idMatch = content.match(/<h1 id="([^"]+)">/);
   const title = content.match(/<h1 id="[^"]+">(.+?)<\/h1>/)?.[1] ?? '';
 
-  const id = idMatch?.[1] ?? '';
+  // const id = idMatch?.[1] ?? '';
 
   //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
   // console.log('finalContent: ', finalContent);
@@ -87,7 +85,7 @@ export const createNewArticle = async (
   console.log('draft improved');
 
   const article: Article = {
-    id,
+    id: seoTitle,
     title,
     content,
     thumbnail: thumbnail.url,

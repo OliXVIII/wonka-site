@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { getContentForIntroPrompt } from '../../../private/content';
+import { getIntroPrompt } from '../../../private/content';
 
 // Function to generate content for a subtitle
 export const createContentForIntro = async (
@@ -9,7 +9,7 @@ export const createContentForIntro = async (
   target_audience: string,
   listSubtitle: string[],
 ): Promise<string> => {
-  const prompt = await getContentForIntroPrompt(subtitle, mission, subject, target_audience, listSubtitle);
+  const prompt = await getIntroPrompt(subtitle, mission, subject, target_audience, listSubtitle);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

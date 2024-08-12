@@ -1,15 +1,14 @@
 import { openai } from '../../../lib/open-ai';
-import { improveConclusionPrompt } from '../../../private/content';
+import { createSEOTitlePrompt } from '../../../private/content';
 
-// Function to improve the conclusion of an article
-export const improveConclusion = async (
-  draft: string,
-  mission: string,
+// Function to generate a great SEO title
+export const createSEOTitle = async (
   subject: string,
   target_audience: string,
+  mission: string,
   lang: string,
 ): Promise<string> => {
-  const prompt = await improveConclusionPrompt(draft, mission, subject, target_audience, lang);
+  const prompt = await createSEOTitlePrompt(subject, target_audience, mission, lang);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

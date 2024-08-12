@@ -2,8 +2,15 @@ import { openai } from '../../../lib/open-ai';
 import { editContentPrompt } from '../../../private/content';
 
 // Function to edit the content of an article and format it
-export const editContent = async (article: string, lang: string, target_audience: string): Promise<string> => {
-  const prompt = await editContentPrompt(article, lang, target_audience);
+export const editContent = async (
+  article: string,
+  lang: string,
+  target_audience: string,
+  subtitleList: string[],
+  subject: string,
+  greatestTitle: string,
+): Promise<string> => {
+  const prompt = await editContentPrompt(article, lang, target_audience, subtitleList, subject, greatestTitle);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

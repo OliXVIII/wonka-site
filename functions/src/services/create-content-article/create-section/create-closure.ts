@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { getContentForClosurePrompt } from '../../../private/content';
+import { getConclusionPrompt } from '../../../private/content';
 
 // Function to generate content for a subtitle
 export const createContentForClosure = async (
@@ -9,7 +9,7 @@ export const createContentForClosure = async (
   target_audience: string,
   listSubtitle: string[],
 ): Promise<string> => {
-  const prompt = await getContentForClosurePrompt(subtitle, mission, subject, target_audience, listSubtitle);
+  const prompt = await getConclusionPrompt(subtitle, mission, subject, target_audience, listSubtitle);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

@@ -1,15 +1,9 @@
 import { openai } from '../../../lib/open-ai';
 import { improveBodyPrompt } from '../../../private/content';
 
-// Function to improve the body of an article
-export const improveBody = async (
-  draft: string,
-  mission: string,
-  subject: string,
-  target_audience: string,
-  lang: string,
-): Promise<string> => {
-  const prompt = await improveBodyPrompt(draft, mission, subject, target_audience, lang);
+// Function to generate content for a subtitle
+export const improveBody = async (body: string, lang: string, listSubtitle: string[]): Promise<string> => {
+  const prompt = await improveBodyPrompt(body, lang, listSubtitle);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
