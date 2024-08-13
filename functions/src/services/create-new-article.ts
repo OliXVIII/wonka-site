@@ -14,16 +14,25 @@ import { createSEOTitle } from './create-content-article/create-title/create-seo
 import { createGreatestTitleEverMade } from './create-content-article/create-title/create-greatest-title';
 import { getContext } from './create-content-article/get-context';
 
-export const createNewArticle = async (
-  mission: string,
-  subject: string,
-  target_audience: string,
-  source: boolean,
-  clientId: string,
-  lang: Locale,
-  author: string,
-  context: string,
-) => {
+export const createNewArticle = async ({
+  mission,
+  subject,
+  target_audience,
+  source,
+  clientId,
+  lang,
+  author,
+  context,
+}: {
+  mission: string;
+  subject: string;
+  target_audience: string;
+  source: boolean;
+  clientId: string;
+  lang: Locale;
+  author: string;
+  context: string;
+}) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
@@ -101,6 +110,7 @@ export const createNewArticle = async (
     // metadata,
     created: Timestamp.now(),
   };
+
   addArticle(article, clientId, lang);
 
   return content;

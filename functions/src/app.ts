@@ -13,11 +13,25 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  const { subject, source, clientId, lang, author = '', context = '' } = req.body;
+  let { prompt, source, clientId, lang, author } = req.body as {
+    prompt: string;
+    source: boolean;
+    clientId: string;
+    lang: 'en' | 'fr';
+    author?: string;
+  };
 
   const info = await dbAdmin.doc(`${clientId}/info`).get();
 
-  const { mission, target_audience = 'general' } = info.data() as { mission: string; target_audience: string };
+  const {
+    mission,
+    target_audience = 'general',
+    default_author,
+  } = info.data() as { mission: string; target_audience: string; default_author: string };
+
+  if (!author) {
+    author = default_author;
+  }
 
   // if (!mission || !subject || !clientId || !lang) {
   //   res.status(400).send('Missing required parameters');
@@ -29,7 +43,16 @@ app.get('/createNewArticle', async (req: express.Request, res: express.Response)
     return;
   }
 
-  const article = await createNewArticle(mission, subject, target_audience, source, clientId, lang, author, context);
+  const article = await createNewArticle({
+    mission,
+    target_audience,
+    source,
+    clientId,
+    lang,
+    author,
+    context: prompt,
+    subject: '',
+  });
 
   res.status(200).send(`${article}`);
 });
