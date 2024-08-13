@@ -1,4 +1,4 @@
-export const linkedinSecretPrompt = (content: string, image: string): { system: string; user: string } => {
+export const linkedinSecretPrompt = (content: string, image: string, href: string): { system: string; user: string } => {
   //TODO - Provide a link to the content
 
   return {
@@ -11,10 +11,9 @@ Requirements:
 - The post should be tailored to a professional audience.
 - The post should be concise and to the point to capture the reader's attention and encourage engagement.
 - The post should include relevant hashtags and mentions to increase visibility.
-- The post should be formatted correctly for LinkedIn, with proper spacing and formatting.
-- Include a call to action to encourage to follow the link to the content.
-- The post should include the thumbnail image "${image}" to attract the reader's attention in a image tag.
-`,
+- The post should use plain text, emojis, and line breaks to format your post effectively
+- Include a call to action to encourage to follow the link ${href} to read the full content.
+- The post will be sent by email, it should be copy-paste ready for linkedin, with no need for further editing.`,
     user: `Generate a LinkedIn post`,
   };
 };

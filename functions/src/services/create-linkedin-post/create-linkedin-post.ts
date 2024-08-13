@@ -1,10 +1,9 @@
 import { openai } from '../../lib/open-ai';
 import { linkedinSecretPrompt } from '../../private/linkedin';
 
-// Function to generate content for a subtitle
-export const createContentForClosure = async (content: string, image: string): Promise<string | null> => {
+export const generateLinkedinPost = async (content: string, image: string, href: string): Promise<string | null> => {
   try {
-    const prompt = linkedinSecretPrompt(content, image);
+    const prompt = linkedinSecretPrompt(content, image, href);
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -21,10 +20,15 @@ export const createContentForClosure = async (content: string, image: string): P
     });
 
     const response = completion.choices[0].message?.content;
+    console.log('Response from generateLinkedinPost', response);
+
+    if (!response) {
+      return null;
+    }
 
     return response;
   } catch (error) {
-    console.error('Error in createContentForClosure', error);
+    console.error('Error in generateLinkedinPost', error);
     return null;
   }
 };
