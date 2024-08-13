@@ -11,19 +11,18 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  const { mission, subject, target_audience = 'general', source, clientId, lang, author } = req.body;
+  const { mission, subject, target_audience = 'general', source, clientId, lang, author = '', context = '' } = req.body;
 
-  if (!mission || !subject || !clientId || !lang) {
-    res.status(400).send('Missing required parameters');
-    return;
-  }
-
+  // if (!mission || !subject || !clientId || !lang) {
+  //   res.status(400).send('Missing required parameters');
+  //   return;
+  // }
   if (!isValidLanguage(lang)) {
     res.status(400).send('Invalid language');
     return;
   }
 
-  const article = await createNewArticle(mission, subject, target_audience, source, clientId, lang, author);
+  const article = await createNewArticle(mission, subject, target_audience, source, clientId, lang, author, context);
 
   res.status(200).send(`${article}`);
 });

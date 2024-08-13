@@ -12,6 +12,7 @@ import { Article } from '../types/article';
 import { addSources } from './create-content-article/add-sources/add-souces';
 import { createSEOTitle } from './create-content-article/create-title/create-seo-title';
 import { createGreatestTitleEverMade } from './create-content-article/create-title/create-greatest-title';
+import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async (
   mission: string,
@@ -20,14 +21,21 @@ export const createNewArticle = async (
   source: boolean,
   clientId: string,
   lang: Locale,
-  author?: string,
+  author: string,
+  context: string,
 ) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
+
+  if (context && context?.length > 0) {
+    const raw = preprocessJSON(await getContext(context));
+    console.log('raw: ', raw);
+    ({ subject, mission } = JSON.parse(raw));
+  }
   const language = localesDetails[lang].language;
   const seoTitle = (await createSEOTitle(subject, target_audience, mission, lang)).replaceAll('"', '');
-  const listSubtitle = await getListSubtitle(subject, target_audience, mission, seoTitle, language);
-  console.log('listSubtitle: ', listSubtitle);
+  const listSubtitle = await getListSubtitle(subject, target_audience, mission, seoTitle, language, context);
+  // console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
 

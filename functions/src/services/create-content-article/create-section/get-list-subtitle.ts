@@ -8,8 +8,9 @@ export const getListSubtitle = async (
   mission: string,
   seoTitle: string,
   language: string,
+  context: string,
 ): Promise<string[]> => {
-  const prompt = await getListOfSubjectSecretPrompt(subject, target_audience, mission, seoTitle, language);
+  const prompt = await getListOfSubjectSecretPrompt(subject, target_audience, mission, seoTitle, language, context);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini', //TODO: Tester différente version de gpt

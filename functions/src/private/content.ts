@@ -1,3 +1,23 @@
+export const getContextPrompt = async (context: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a context, your job is to create a mission and subject for an article based on this context.
+    The mission is the goal of the article, it's what the article is trying to achieve.
+    The subject is the main topic of the article, it's what the article is about.
+
+    IF THERE IS A IMPORTANT POINT TO MENTION, MAKE SURE TO INCLUDE IT IN THE MISSION OR THE SUBJECT.
+    IF THERE ARE IMPORTANT POINTS TO ENUMERATE, MAKE SURE TO INCLUDE THEM IN THE MISSION OR THE SUBJECT.
+
+    Your output MUST be in the following JSON format:
+    {
+      "mission": "Your mission here",
+      "subject": "Your subject here"
+    }
+    `,
+    user: `Here is the context you will use to create the mission and subject for the article: ${context}
+    `,
+  };
+};
+
 export const createSEOTitlePrompt = async (
   subject: string,
   target_audience: string,
@@ -30,6 +50,7 @@ export const getListOfSubjectSecretPrompt = async (
   mission: string,
   seoTitle: string,
   language: string,
+  context: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Split this subject: "${subject}" into subtitle for an article, you're a professional on this subject.
@@ -62,6 +83,7 @@ export const getListOfSubjectSecretPrompt = async (
     - Simply output a JavaScript-like list of subtitle.
     DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.`,
     user: `ONLY RETURN AN ARRAY OF SUBTITLE, NOTHING ELSE.
+    HERE IS THE CONTEXT, VERY IMPORTANT TO FOLLOW IT: "${context}"
     Accomplish the task by providing a list of subtitle for an article on the subject: "${subject}", 
     your target audience for this is: "${target_audience}", and the mission is: "${mission}".
     You have a SEO title you can use to create the title of the article: "${seoTitle}".
@@ -146,6 +168,8 @@ export const getIntroPrompt = async (
     HERE'S A LIST OF THE SUBTITLE OF THIS ARTICLE TO HELP YOU DO LOGICAL TRANSITION BETWEEN THE INTRO
     AND THE REST OF THE ARTICLE AND FOR THE BULLET POINTS: ${subtitle}.
 
+    You need to introduce all the rest of the article (the different bullet point)
+
     DON'T LIST EVERY SUBTITLE IN BULLET POINTS.
     
     The introduction is the first thing the reader will see, it should be engaging and informative.
@@ -162,7 +186,6 @@ export const getIntroPrompt = async (
     - if you have to make a list, make it clear and easy to read
     - if you have to explain a concept, make it clear and easy to understand
     
-    The target audience is busy people with short attention span and "${target_audience}" looking to learn about "${subject}".
     They value time efficiency, convenience. You should grab their attention as they have short attention spans.
     DON'T MENTION THE TARGET AUDIENCE IN THE TEXT, THIS IS ONLY TO GUIDE THE NARRATION.
     `,
@@ -232,7 +255,7 @@ export const improveBodyPrompt = async (
     You need to modify a few sentences in a way to make it moreSEO friendly.
     
     You will make sure the language of the text is in ${lang}, even the subtitle.
-    Deploys the information in a way that is easy to read and understand. 
+    Deploys the information in a way that is easy to read and understand.
     Develop and explain each ideas.
 
     You will make sure that the information of the text is display is various way.
@@ -315,6 +338,8 @@ export const createGreatestTitleEverMadePrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive an article, the target audience, and the subject of the article.
+    - The title MUST be written in ${lang}.
+
       Your task is to create the best possible title for this article.
       What makes a great title?
       The title should:
