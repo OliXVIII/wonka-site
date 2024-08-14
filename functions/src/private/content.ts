@@ -316,6 +316,8 @@ export const editContentPrompt = async (
     IF (${lang} == "french" || ${lang} == "francais") {
       MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES. (Even the one in the h1 tag)
     }
+
+    EACH SUBTITLE MUST BE IN A <H2> TAG.
     Edit this article: "${article} (Make sure all title begin by an uppercase letter).
     IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
     make sure the mission is not mentioned literally in the test, it should be implicit, only to guide the narration.
