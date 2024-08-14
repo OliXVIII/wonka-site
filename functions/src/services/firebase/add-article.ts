@@ -16,6 +16,6 @@ export const addArticle = async (article: Article, clientId: string, lang: strin
       'ms',
     );
   } catch (error) {
-    console.error('add-user.ts Error adding user:', error);
+    console.error('add-user.ts Error adding article:', error);
   }
 };

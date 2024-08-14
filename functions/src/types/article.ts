@@ -6,6 +6,7 @@ export type Article = {
   id: string;
   thumbnail: string;
   title: string;
+  published: boolean; // Default value is false
   author?: string;
   metadata?: {
     title: string;

@@ -5,12 +5,11 @@ import { editContentPrompt } from '../../../private/content';
 export const editContent = async (
   article: string,
   lang: string,
-  target_audience: string,
   subtitleList: string[],
-  subject: string,
   greatestTitle: string,
+  context: string,
 ): Promise<string> => {
-  const prompt = await editContentPrompt(article, lang, target_audience, subtitleList, subject, greatestTitle);
+  const prompt = await editContentPrompt(article, lang, subtitleList, greatestTitle, context);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

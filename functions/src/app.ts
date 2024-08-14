@@ -2,11 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-new-article';
 import { createNewImage } from './services/create-image/create-new-image';
-import { isValidLanguage } from './types/languages';
+import { Locale, isValidLanguage } from './types/languages';
 import { generateLinkedinPost } from './services/create-linkedin-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
+import { deleteArticleNotPublished } from './services/firebase/delete-article-not-published';
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.get('/createNewArticle', async (req: express.Request, res: express.Response)
     prompt: string;
     source: boolean;
     clientId: string;
-    lang: 'en' | 'fr';
+    lang: Locale;
     author?: string;
   };
 
@@ -51,7 +52,6 @@ app.get('/createNewArticle', async (req: express.Request, res: express.Response)
     lang,
     author,
     context: prompt,
-    subject: '',
   });
 
   res.status(200).send(`${article}`);
@@ -165,6 +165,21 @@ app.post('/unpublish', async (req: express.Request, res: express.Response) => {
   snapshot.ref.update({ production: false });
 
   res.status(200).send('Article unpublished');
+});
+
+app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, id } = req.body as {
+    clientId: string;
+    lang: Locale;
+    id?: string;
+  };
+  try {
+    await deleteArticleNotPublished(clientId, lang, id);
+    res.status(200).send('Unpublished articles deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting article:', error);
+    res.status(500).send('Error deleting article');
+  }
 });
 
 //export app for firebase functions

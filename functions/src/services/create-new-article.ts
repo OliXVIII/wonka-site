@@ -12,11 +12,10 @@ import { Article } from '../types/article';
 import { addSources } from './create-content-article/add-sources/add-souces';
 import { createSEOTitle } from './create-content-article/create-title/create-seo-title';
 import { createGreatestTitleEverMade } from './create-content-article/create-title/create-greatest-title';
-import { getContext } from './create-content-article/get-context';
+// import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async ({
   mission,
-  subject,
   target_audience,
   source,
   clientId,
@@ -25,7 +24,6 @@ export const createNewArticle = async ({
   context,
 }: {
   mission: string;
-  subject: string;
   target_audience: string;
   source: boolean;
   clientId: string;
@@ -36,14 +34,9 @@ export const createNewArticle = async ({
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
-  if (context && context?.length > 0) {
-    const raw = preprocessJSON(await getContext(context));
-    console.log('raw: ', raw);
-    ({ subject, mission } = JSON.parse(raw));
-  }
   const language = localesDetails[lang].language;
-  const seoTitle = (await createSEOTitle(subject, target_audience, mission, lang)).replaceAll('"', '');
-  const listSubtitle = await getListSubtitle(subject, target_audience, mission, seoTitle, language, context);
+  const seoTitle = (await createSEOTitle(context, target_audience, mission, lang)).replaceAll('"', '');
+  const listSubtitle = await getListSubtitle(context, target_audience, mission, seoTitle, language);
   // console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
@@ -53,11 +46,11 @@ export const createNewArticle = async ({
       const index = listSubtitle.indexOf(subtitle);
 
       if (index === 0) {
-        return await createContentForIntro(subtitle, mission, subject, target_audience, listSubtitle);
+        return await createContentForIntro(subtitle, mission, context, target_audience, listSubtitle);
       } else if (index === listSubtitle.length - 1) {
-        return await createContentForClosure(subtitle, mission, subject, target_audience, listSubtitle);
+        return await createContentForClosure(subtitle, mission, context, target_audience, listSubtitle);
       } else {
-        return await createBody(subtitle, mission, subject, target_audience, listSubtitle);
+        return await createBody(subtitle, mission, context, target_audience, listSubtitle);
       }
     }),
   );
@@ -66,14 +59,14 @@ export const createNewArticle = async ({
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
   let body = listDraft.slice(1, -1).join('\n');
   console.log('draft finished');
-  body = await improveBody(body, language, listSubtitle);
+  body = await improveBody(body, language, listSubtitle, context);
   let content = `${listDraft[0]}\n${body}\n${listDraft[listDraft.length - 1]}`;
-  const greatestTitle = await createGreatestTitleEverMade(subject, target_audience, mission, lang);
-  content = await editContent(content, language, target_audience, listSubtitle, subject, greatestTitle);
+  const greatestTitle = await createGreatestTitleEverMade(context, target_audience, mission, lang);
+  content = await editContent(content, language, listSubtitle, greatestTitle, context);
 
   //Add sources if needed
   if (source) {
-    content = await addSources(content, mission, subject, target_audience);
+    content = await addSources(content, mission, context, target_audience);
   }
 
   content = preprocessJSON(content).replace('html', '');
@@ -109,6 +102,7 @@ export const createNewArticle = async ({
     author,
     // metadata,
     created: Timestamp.now(),
+    published: false,
   };
 
   addArticle(article, clientId, lang);
