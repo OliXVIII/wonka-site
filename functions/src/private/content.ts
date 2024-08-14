@@ -104,6 +104,7 @@ export const getBodyPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Create a text, this text is a section of an article.
+    This section should have a minimum of 4 paragraphs.
     You will be given a subtitle of the article and the mission of the article.
     You will also be given a context, this context will act as a set of instructions for the text you will create.
     Develop on the context of this section, don't be afraid to make a long section if needed.
