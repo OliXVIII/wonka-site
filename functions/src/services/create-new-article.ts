@@ -37,7 +37,7 @@ export const createNewArticle = async ({
   const language = localesDetails[lang].language;
   const seoTitle = (await createSEOTitle(context, target_audience, mission, lang)).replaceAll('"', '');
   const listSubtitle = await getListSubtitle(context, target_audience, mission, seoTitle, language);
-  // console.log('listSubtitle: ', listSubtitle);
+  console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
 

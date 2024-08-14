@@ -1,6 +1,7 @@
 export enum Language {
   English = 'en',
   French = 'fr',
+  Mandarin = 'zh',
 }
 
 export type Locale = `${Language}`;
@@ -23,6 +24,11 @@ export const localesDetails: Record<Locale, LocaleDetails> = {
     path: 'fr',
     language: 'French',
     languageCode: Language.French,
+  },
+  zh: {
+    path: 'zh',
+    language: 'Mandarin',
+    languageCode: Language.Mandarin,
   },
 };
 

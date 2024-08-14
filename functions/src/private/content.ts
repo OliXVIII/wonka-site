@@ -143,8 +143,6 @@ export const getBodyPrompt = async (
 
     IMPORTANT: "For SEO purpose, make sure to use keyword related to the context in the text. 
     You also need to use keyword that the target audience would use to search for the article."
-
-    Make sure there's not too much bullet point in the different part of the text. There should be a maximum of 2 bullet point in the whole text.
     Here's the list of subtitle of all the section of the article to help you do logical transition between the content: ${listSubtitle}.
     `,
   };
@@ -163,6 +161,7 @@ export const getIntroPrompt = async (
     USE BULLET POINT TO PRESENT THE REST OF THE ARTICLE.
     HERE'S A LIST OF THE SUBTITLE OF THIS ARTICLE TO HELP YOU DO LOGICAL TRANSITION BETWEEN THE INTRO
     AND THE REST OF THE ARTICLE AND FOR THE BULLET POINTS: ${subtitle}.
+    DON'T MENTION THE FIRST AND LAST ELEMENT OF THE LIST OF SUBTITLE IN THE TEXT.
 
     USE THE CONTEXT AS INSTRUCTION FOR THE INTRODUCTION.
 
@@ -253,7 +252,8 @@ export const improveBodyPrompt = async (
 
     You will make sure that the information of the text is display is various way.
     You will make sure that not all the information is display in the same way.
-    Make sure bullet points are used in the text, if not, add some using the information in the text.
+    Make sure bullet points are used in the text. Add them in a MAXIMUM of 2 or 3 SECTIONS.
+    DON'T PUT TOO MUCH BULLET POINTS IN THE TEXT.
     Make sure that the text looks like a professional article made by a human.
 
     Make sure that the different section doesn't have the same structure, make sure that the different section don't look alike.
@@ -262,15 +262,18 @@ export const improveBodyPrompt = async (
     `,
     user: `Here's the content of the body of the article: "${content}" and the multiple subtitles of the article: ${listOfSubtitles}.
     Your main job is to make sure the text is not redundant.
+    MAKE SURE THERE IS NOT BULLET POINT IN EACH SECTION, IF THERE IS, REMOVE SOME.
     Develop the ideas, explain them, create a small introduction and conclusion for each paragraph if not already done.
     Use various way to display the information.
     Check the length of each paragraph, if one one is too long, split it.
     Separate the text in small paragraphs and make sure that the text is in ${lang}.
     You job is to find a way to make the text non redundant. 
 
+    Include some bullet points in the text, but not at every paragraph.
+    Each paragraph must have a different structure.
+
     YOUR MAIN OBJECTIVE IS TO CREATE QUALITY CONTENT THAT WILL ENGAGE THE READER.
 
-    A maximum of 2 bullet points section must be in the whole text.
     IMPORTANT MAKE SURE TO FOLLOW THE INSTRUCTION OF THE CONTEXT: "${context}"
     `,
   };
@@ -357,6 +360,10 @@ export const createGreatestTitleEverMadePrompt = async (
     }
     - The title MUST be written in ${lang}.
     YOU MUST USE CHOICE OF WORD THAT ARE NOT ALREADY IN THE ARTICLE AS SUBTITLE OR TITLE.
+
+    THE TITLE MUST BE IN ${lang} AND SEO FRIENDLY.
+
+    MAKE SURE THAT, IF THE TITLE IS IN ENGLISH, EVERY FIRST LETTER OF THE MAJOR ORD IS UPPERCASE.
 
     HERE'S THE CONTEXT OF THE ARTICLE, MAKE SURE TO FOLLOW THE INSTRUCTIONS: "${context}".
     
