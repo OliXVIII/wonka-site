@@ -168,11 +168,17 @@ app.post('/unpublish', async (req: express.Request, res: express.Response) => {
 });
 
 app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: express.Response) => {
-  const { clientId, lang, id } = req.body as {
+  const { clientId, lang, secret, id } = req.body as {
     clientId: string;
     lang: Locale;
+    secret: string;
     id?: string;
   };
+  if (secret !== 'secret') {
+    console.log('Invalid secret');
+    res.status(400).send("Invalid secret, stop trying to hack me. Please don't do that.");
+    return;
+  }
   try {
     await deleteArticleNotPublished(clientId, lang, id);
     res.status(200).send('Unpublished articles deleted successfully.');
