@@ -15,7 +15,7 @@ export const PublishArticle = async ({
 }: {
   lang: Locale;
   clientId: string;
-  source: string;
+  source: boolean;
   prompt: string;
 }): Promise<any> => {
   await fetch(`${url}/createNewArticle`, {
