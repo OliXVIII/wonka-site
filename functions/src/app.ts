@@ -50,7 +50,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const { id } = await createNewArticle({
+  const id = await createNewArticle({
     mission,
     target_audience,
     source,
