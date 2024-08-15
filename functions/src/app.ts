@@ -14,7 +14,13 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/createNewArticle', async (req: express.Request, res: express.Response) => {
-  let { prompt, source, clientId, lang, author } = req.body as {
+  let {
+    prompt,
+    source = false,
+    clientId,
+    lang,
+    author,
+  } = req.body as {
     prompt: string;
     source: boolean;
     clientId: string;
@@ -186,6 +192,10 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
     console.error('Error deleting article:', error);
     res.status(500).send('Error deleting article');
   }
+});
+
+app.get('/ping', async (req: express.Request, res: express.Response) => {
+  res.status(200).send('Pong');
 });
 
 //export app for firebase functions

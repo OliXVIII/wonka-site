@@ -1,8 +1,5 @@
 {
   "projects": {
-    "wonkanews": "wonkasite-d43b5"
-  },
-  "targets": {},
-  "etags": {},
-  "dataconnectEmulatorConfig": {}
+    "default": "inceptionai-61b20"
+  }
 }

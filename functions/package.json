@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "version": "2.21.0",
-  "description": "Wonka News Firebase Cloud Functions",
+  "description": "InceptionAI News Firebase Cloud Functions",
   "author": "Olivier Leclerc",
   "license": "MIT",
   "type": "commonjs",
