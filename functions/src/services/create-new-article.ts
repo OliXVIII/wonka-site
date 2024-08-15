@@ -105,7 +105,7 @@ export const createNewArticle = async ({
     published: false,
   };
 
-  addArticle(article, clientId, lang);
+  await addArticle(article, clientId, lang);
 
   return seoTitle;
 };
