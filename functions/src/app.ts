@@ -50,7 +50,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const article = await createNewArticle({
+  const { id } = await createNewArticle({
     mission,
     target_audience,
     source,
@@ -60,7 +60,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     context: prompt,
   });
 
-  res.status(200).send(`${article}`);
+  res.status(200).send({ id, lang });
 });
 
 app.get('/createNewImage', async (req: express.Request, res: express.Response) => {
@@ -71,9 +71,9 @@ app.get('/createNewImage', async (req: express.Request, res: express.Response) =
     return;
   }
 
-  const { picture, url } = await createNewImage(subject, 'testId', subject.replace(/ /g, '-').toLowerCase());
+  const { picture } = await createNewImage(subject, 'testId', subject.replace(/ /g, '-').toLowerCase());
 
-  res.status(200).send(`Creating new image at url ${url}: ${picture}`);
+  res.status(200).send(`${picture}`);
 });
 
 app.post('/publish', async (req: express.Request, res: express.Response) => {
