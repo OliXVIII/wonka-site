@@ -13,7 +13,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/createNewArticle', async (req: express.Request, res: express.Response) => {
+app.post('/createNewArticle', async (req: express.Request, res: express.Response) => {
   let { prompt, source, clientId, lang, author } = req.body as {
     prompt: string;
     source: boolean;
@@ -113,11 +113,11 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   const linkedinPost = await generateLinkedinPost(html, image, href);
 
-  if (!data?.thumbnail) {
-    const { url } = await createNewImage(title, clientId, id);
+  // if (!data?.thumbnail) {
+  //   const { url } = await createNewImage(title, clientId, id);
 
-    data.thumbnail = url;
-  }
+  //   data.thumbnail = url;
+  // }
 
   const email = emailContent({ lang, subject: title, linkedinPost, href });
 
@@ -128,7 +128,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   await sendEmail(email);
 
-  snapshot.ref.update({ production: true, thumbnail: data.thumbnail });
+  snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
 
   res.status(200).send('New article published');
 });
@@ -162,7 +162,7 @@ app.post('/unpublish', async (req: express.Request, res: express.Response) => {
     return;
   }
 
-  snapshot.ref.update({ production: false });
+  snapshot.ref.update({ published: false });
 
   res.status(200).send('Article unpublished');
 });
