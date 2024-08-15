@@ -5,17 +5,15 @@ import { Article } from '../../types/article';
 
 export const addArticle = async (article: Article, clientId: string, lang: string): Promise<void> => {
   try {
-    const date = new Date();
-    const collectionRef = dbAdmin.collection(`${clientId}/${lang}/articles`);
-    await collectionRef.doc(article.id).set(article);
-    console.log(
-      'content added at path:',
-      `${clientId}/${lang}/articles/${article.id}`,
-      'in',
-      new Date().getTime() - date.getTime(),
-      'ms',
-    );
+    const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${article.id}`);
+
+    if ((await docRef.get()).exists) {
+      console.log('Document already exists');
+      return;
+    }
+
+    await docRef.set(article);
   } catch (error) {
-    console.error('add-user.ts Error adding article:', error);
+    console.error('add-article.ts: Error adding article:', error);
   }
 };

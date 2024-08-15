@@ -7,7 +7,7 @@ import { generateLinkedinPost } from './services/create-linkedin-post/create-lin
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
-import { deleteArticleNotPublished } from './services/firebase/delete-article-not-published';
+import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 
 const app = express();
 
@@ -178,7 +178,33 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
     clientId: string;
     lang: Locale;
     secret: string;
-    id?: string;
+    id: string;
+  };
+
+  if (!clientId || !lang || !id) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
+
+  if (secret !== 'secret') {
+    console.log('Invalid secret');
+    res.status(400).send("Invalid secret, stop trying to hack me. Please don't do that.");
+    return;
+  }
+  try {
+    await deleteUnpublishedArticle(clientId, lang, id);
+    res.status(200).send('Unpublished articles deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting article:', error);
+    res.status(500).send('Error deleting article');
+  }
+});
+
+app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, secret } = req.body as {
+    clientId: string;
+    lang: Locale;
+    secret: string;
   };
   if (secret !== 'secret') {
     console.log('Invalid secret');
@@ -186,7 +212,7 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
     return;
   }
   try {
-    await deleteArticleNotPublished(clientId, lang, id);
+    await deleteAllUnpublishedArticles(clientId, lang);
     res.status(200).send('Unpublished articles deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
