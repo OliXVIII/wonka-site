@@ -236,18 +236,27 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
 });
 
 app.get('/create-chart-dataset', async (req: express.Request, res: express.Response) => {
-  const { context, clientId, lang, id } = req.body as { context: string; clientId: string; lang: Locale; id: string };
+  const { clientId, lang, id } = req.body as { context: string; clientId: string; lang: Locale; id: string };
 
-  if (!context || !clientId) {
+  if (!clientId || !lang || !id) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
+  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
+
+  const snapshot = await docRef.get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const context = snapshot.data()?.content as string;
+
   const locale = localesDetails[lang];
 
   const data = await createChartDataset(context, locale);
-
-  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
 
   await docRef.update({ dataset: data });
 
