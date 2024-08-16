@@ -2,13 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-new-article';
 import { createNewImage } from './services/create-image/create-new-image';
-import { Locale, isValidLanguage } from './types/languages';
+import { Locale, isValidLanguage, localesDetails } from './types/languages';
 import { generateLinkedinPost } from './services/create-linkedin-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
 import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
-import { getDataset } from './services/create-dataset.ts/get-dataset';
+import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 
 const app = express();
 
@@ -235,29 +235,27 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
   }
 });
 
-app.get('/ping', async (req: express.Request, res: express.Response) => {
-  res.status(200).send('Pong');
-});
-
-app.get('/dataset', async (req: express.Request, res: express.Response) => {
-  const { context, clientId, lang } = req.body as { context: string; clientId: string; lang: Locale };
+app.get('/create-chart-dataset', async (req: express.Request, res: express.Response) => {
+  const { context, clientId, lang, id } = req.body as { context: string; clientId: string; lang: Locale; id: string };
 
   if (!context || !clientId) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const info = await dbAdmin.doc(`${clientId}/info`).get();
+  const locale = localesDetails[lang];
 
-  if (!info.exists) {
-    res.status(400).send('Client not found');
-    return;
-  }
+  const data = await createChartDataset(context, locale);
 
-  const { mission, target_audience = 'general' } = info.data() as { mission: string; target_audience: string };
+  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
 
-  const data = await getDataset({ context, mission, target_audience, lang });
+  await docRef.update({ dataset: data });
+
   res.status(200).send(data);
+});
+
+app.get('/ping', async (req: express.Request, res: express.Response) => {
+  res.status(200).send('Pong');
 });
 
 //export app for firebase functions

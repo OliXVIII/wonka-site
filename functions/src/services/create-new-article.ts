@@ -80,10 +80,11 @@ export const createNewArticle = async ({
   // console.log('finalContent: ', finalContent);
 
   //Étape 4: Générer metadata tags (title, description, keywords, ++) et thumbnail pour le contenu final
-  // const [metadata, thumbnail] = await Promise.all([
+  // const [metadata, thumbnail, chartDataset] = await Promise.all([
   //   //generateMetadata(finalContent),
   //   //generateThumbnail(finalContent),
   //   createNewImage(subject),
+  //   hasChartDataset ? await createChartDataset({ context, lang }) : null,
   // ]);
 
   //const thumbnail = await createNewImage(subject, clientId, id);
