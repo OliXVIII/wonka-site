@@ -26,15 +26,19 @@ export const createSEOTitlePrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a context, a mission and a target audience you will create a seo-friendly title for an article.
+    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 3 KEYWORDS.
+    ONLY USE THE MOST IMPORTANT KEYWORDS.
       SEO title must not have any adverb
       or any useless word that are not necessary for the seo title, only use keyword for the SEO title, 
       also make sure that the seo title is in "${lang}"
       - the seo title should use words that a "${target_audience}" would use to search for the article.
       - a great seo title have key word that a user would use to search for the article.
       - the seo title will not have any whitespace or special character.
-      EXAMPLE: "The best way to learn how to code" => "best-way-learn-how-code"
       `,
     user: `Create a great seo title for the article.
+    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 3 KEYWORDS.
+    ONLY USE THE MOST IMPORTANT KEYWORDS.
+    EVERY KEYWORDS MUST BY SEPARATED BY A "-" (DASH).
     Here is the context you will use to create the seo title: "${context}", 
     your target audience for this is: "${target_audience}", 
     and the mission is: "${mission}".
@@ -112,6 +116,7 @@ export const getBodyPrompt = async (
     IMPORTANT: The text output should have a MINIMUM of 4 paragraphs, feel free to add more if you think it's necessary.
 
     Your job is to write the section of the subtitle given to you.
+    Make sure the content is related to the mission of the article: "${mission}".
 
     Your task is to generate engaging and informative content for the subtitle.
     The content should be designed to hold the reader’s attention and provide valuable information without overwhelming them.
@@ -207,11 +212,15 @@ export const getConclusionPrompt = async (
     You will receive the subtitle of the conclusion, the mission, the context and the target audience.
 
     You will use the context as instruction for the conclusion.
+    Make sure the conclusion is related to the mission.
+
 
     You will also receive a list of subtitles of this article to help you create a logical conclusion with the rest of the article.
     The text output is destined to bring organic traffic to a website.
     Summarize the key points and encourage the reader to take action. 
     
+    Make sure the conclusion is related to the mission of the article: "${mission}".
+
     The requirement are:
     - write a professional and engaging content
     - make it concise and informative,
@@ -229,6 +238,8 @@ export const getConclusionPrompt = async (
     your target audience for this is: "${target_audience},
     the mission is ${mission} and the context is ${context}.
     YOUR MAIN OBJECTIVE IS TO CREATE QUALITY CONTENT THAT WILL ENGAGE THE READER.
+
+    PUT THE SUBTITLE OF THE CONCLUSION AS A TITLE.
 
     Make sure the conclusion is concise and short.
     Here's a list of the subtitle of this article to help you do logical transition between the content: ${subtitle}.
@@ -317,7 +328,9 @@ export const editContentPrompt = async (
       MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES. (Even the one in the h1 tag)
     }
 
-    EACH SUBTITLE MUST BE IN A <H2> TAG.
+    KEEP THE SAME CONCLUSION TITLLE.
+    MAKE SURE THE CONCLUSION TITLE IS DIFFERENT OF "Conclusion: ".
+        EACH SUBTITLE MUST BE IN A <H2> TAG.
     Edit this article: "${article} (Make sure all title begin by an uppercase letter).
     IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
     make sure the mission is not mentioned literally in the test, it should be implicit, only to guide the narration.

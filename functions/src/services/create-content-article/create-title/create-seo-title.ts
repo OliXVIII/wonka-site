@@ -22,6 +22,8 @@ export const createSEOTitle = async (
         content: prompt.user,
       },
     ],
+    temperature: 0.000001,
+    top_p: 0.000001,
   });
 
   const content = completion.choices[0].message?.content;
