@@ -24,8 +24,8 @@ export const getListSubtitle = async (
         content: prompt.user,
       },
     ],
-    temperature: 0.01,
-    top_p: 0.01,
+    temperature: 0.1,
+    top_p: 0.1,
   });
 
   const result = preprocessJSON(completion.choices[0].message?.content ?? '');
