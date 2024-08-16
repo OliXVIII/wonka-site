@@ -30,20 +30,30 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
 
   const info = await dbAdmin.doc(`${clientId}/info`).get();
 
+  if (!info.exists) {
+    res.status(400).send('Client not found');
+    return;
+  }
+
   const {
     mission,
     target_audience = 'general',
     default_author,
   } = info.data() as { mission: string; target_audience: string; default_author: string };
 
+  if (!mission || !target_audience || !default_author) {
+    res.status(400).send('Client incomplete');
+    return;
+  }
+
   if (!author) {
     author = default_author;
   }
 
-  // if (!mission || !subject || !clientId || !lang) {
-  //   res.status(400).send('Missing required parameters');
-  //   return;
-  // }
+  if (!mission || !prompt || !clientId || !lang) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
 
   if (!isValidLanguage(lang)) {
     res.status(400).send('Invalid language');
@@ -193,7 +203,7 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
   }
   try {
     await deleteUnpublishedArticle(clientId, lang, id);
-    res.status(200).send('Unpublished articles deleted successfully.');
+    res.status(200).send('Unpublished article deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
     res.status(500).send('Error deleting article');
@@ -206,6 +216,10 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
     lang: Locale;
     secret: string;
   };
+  if (!clientId || !lang) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
   if (secret !== 'secret') {
     console.log('Invalid secret');
     res.status(400).send("Invalid secret, stop trying to hack me. Please don't do that.");
@@ -213,10 +227,10 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
   }
   try {
     await deleteAllUnpublishedArticles(clientId, lang);
-    res.status(200).send('Unpublished articles deleted successfully.');
+    res.status(200).send('All unpublished articles deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
-    res.status(500).send('Error deleting article');
+    res.status(500).send('Error deleting all articles');
   }
 });
 
