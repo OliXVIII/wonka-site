@@ -11,5 +11,6 @@ export const preprocessJSON = (jsonString: string) => {
     .replace(/,\s*([\]}])/g, '$1')
     .replace(regex, '}, {')
     .replace('```html', '')
-    .replace('```', '');
+    .replace('```', '')
+    .replace('typescript', '');
 };

@@ -8,6 +8,7 @@ import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
 import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
+import { getDataset } from './services/create-dataset.ts/get-dataset';
 
 const app = express();
 
@@ -236,6 +237,27 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
 
 app.get('/ping', async (req: express.Request, res: express.Response) => {
   res.status(200).send('Pong');
+});
+
+app.get('/dataset', async (req: express.Request, res: express.Response) => {
+  const { context, clientId, lang } = req.body as { context: string; clientId: string; lang: Locale };
+
+  if (!context || !clientId) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
+
+  const info = await dbAdmin.doc(`${clientId}/info`).get();
+
+  if (!info.exists) {
+    res.status(400).send('Client not found');
+    return;
+  }
+
+  const { mission, target_audience = 'general' } = info.data() as { mission: string; target_audience: string };
+
+  const data = await getDataset({ context, mission, target_audience, lang });
+  res.status(200).send(data);
 });
 
 //export app for firebase functions

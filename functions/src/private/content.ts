@@ -386,3 +386,92 @@ export const createGreatestTitleEverMadePrompt = async (
     Article: "${article}", target audience: "${target_audience}", and language: "${lang}".`,
   };
 };
+
+export const createDatasetContextPrompt = async (
+  context: string,
+  target_audience: string,
+  mission: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a context from which an article was created.
+    You will return a prompt that will be used to create a dataset.
+    You will return a PROMPT ith all the information needed to create a dataset.
+    You will will determine what the dataset will be about given the context. 
+    You will determine the information that will be in the dataset.
+    You will also receive the target audience and the mission of the article.
+    `,
+    user: `Create a dataset asking prompt with the information you will be given.
+    mission: "${mission}",
+    target audience: "${target_audience}",
+    context: "${context}".
+    `,
+  };
+};
+
+export const createDatasetPrompt = async (
+  prompt: string,
+  target_audience: string,
+  mission: string,
+  lang: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a prompt, mission and target_audience.
+    You will make sure the language of the dataset is in ${lang}.
+    You will return a dataset for Chart.js.
+    Remove all // comments from the dataset.
+
+    give me a maximum of 5 fields for the dataset.
+
+    donne moi un jeu de donnée pour faire une représentation graphique intéressante,
+    donc je veux un object JSON avec 2 fields, 'data' et labels',
+    ce jeu de donnée devrait être assez grand pour être pertinent et avoir un attrait intéressant pour le sujet donnée 
+
+    this is an exemple of dataset you must return: {
+      type: 'pie',
+      data: {
+        labels: ['Blog Posts', 'Ebooks', 'Webinars', 'Infographics', 'Whitepapers'],
+        datasets: [
+          {
+            label: 'Usage (%)',
+            data: [85, 65, 55, 50, 40],
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              'rgba(255, 205, 86, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(255, 205, 86, 1)',
+              'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Usage of Content Types',
+          },
+        },
+      },
+    };
+    
+    `,
+    user: `Create a dataset with the following information:
+
+    mission: "${mission}",
+    target audience: "${target_audience}",
+    prompt: "${prompt}".
+    `,
+  };
+};
