@@ -236,7 +236,7 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
 });
 
 app.get('/create-chart-dataset', async (req: express.Request, res: express.Response) => {
-  const { clientId, lang, id } = req.body as { context: string; clientId: string; lang: Locale; id: string };
+  const { clientId, lang, id } = req.body as { clientId: string; lang: Locale; id: string };
 
   if (!clientId || !lang || !id) {
     res.status(400).send('Missing required parameters');
