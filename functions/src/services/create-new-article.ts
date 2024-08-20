@@ -12,6 +12,9 @@ import { Article } from '../types/article';
 import { addSources } from './create-content-article/add-sources/add-souces';
 import { createSEOTitle } from './create-content-article/create-title/create-seo-title';
 import { createGreatestTitleEverMade } from './create-content-article/create-title/create-greatest-title';
+import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
+import { addChartToArticle } from './create-content-article/edit-article/add-chart-to-article';
+import { editChartDataset } from './create-chart-dataset.ts/edit-dataset';
 // import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async ({
@@ -22,6 +25,7 @@ export const createNewArticle = async ({
   lang,
   author,
   context,
+  chart,
 }: {
   mission: string;
   target_audience: string;
@@ -30,6 +34,7 @@ export const createNewArticle = async ({
   lang: Locale;
   author: string;
   context: string;
+  chart: boolean;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
@@ -94,7 +99,15 @@ export const createNewArticle = async ({
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
-
+  let dataset = '';
+  if (chart) {
+    //Add chart if needed
+    //content = await addChart(content, mission, context, target_audience);
+    dataset = await createChartDataset(context, localesDetails[lang]);
+    dataset = await editChartDataset(dataset, content, localesDetails[lang]);
+    content = preprocessJSON(await addChartToArticle(content, dataset)).replaceAll('html', '');
+    console.log('chart added');
+  }
   const article: Article = {
     id: seoTitle,
     title,
@@ -104,9 +117,9 @@ export const createNewArticle = async ({
     // metadata,
     created: Timestamp.now(),
     published: false,
+    dataset: dataset,
   };
 
   await addArticle(article, clientId, lang);
-
   return seoTitle;
 };

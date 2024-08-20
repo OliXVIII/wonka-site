@@ -9,6 +9,7 @@ import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
 import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
+import { get100Ideas } from './services/get-100-ideas/get-100-ideas';
 
 const app = express();
 
@@ -21,12 +22,14 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     clientId,
     lang,
     author,
+    chart = true,
   } = req.body as {
     prompt: string;
     source: boolean;
     clientId: string;
     lang: Locale;
     author?: string;
+    chart: boolean;
   };
 
   const info = await dbAdmin.doc(`${clientId}/info`).get();
@@ -69,6 +72,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     lang,
     author,
     context: prompt,
+    chart,
   });
 
   res.status(200).send({ id, lang });
@@ -259,6 +263,32 @@ app.get('/create-chart-dataset', async (req: express.Request, res: express.Respo
   const data = await createChartDataset(context, locale);
 
   await docRef.update({ dataset: data });
+
+  res.status(200).send(data);
+});
+
+app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, subject } = req.body as { clientId: string; lang: Locale; subject: string };
+
+  if (!clientId || !lang || !subject) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
+
+  const docRef = dbAdmin.doc(`${clientId}/${lang}`);
+
+  const snapshot = await docRef.get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Language or clientId not found');
+    return;
+  }
+  const { mission, target_audience } = snapshot.data() as { mission: string; target_audience: string };
+  const locale = localesDetails[lang];
+
+  const data = await get100Ideas(subject, locale, mission, target_audience);
+
+  await docRef.update({ ideas: data });
 
   res.status(200).send(data);
 });

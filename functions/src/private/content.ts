@@ -328,7 +328,7 @@ export const editContentPrompt = async (
       MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES. (Even the one in the h1 tag)
     }
 
-    KEEP THE SAME CONCLUSION TITLLE.
+    KEEP THE SAME CONCLUSION TITLE.
     MAKE SURE THE CONCLUSION TITLE IS DIFFERENT OF "Conclusion: ".
         EACH SUBTITLE MUST BE IN A <H2> TAG.
     Edit this article: "${article} (Make sure all title begin by an uppercase letter).
