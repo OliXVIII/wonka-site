@@ -10,6 +10,7 @@ import { emailContent } from './lib/email';
 import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 import { get100Ideas } from './services/get-100-ideas/get-100-ideas';
+import { ClientInfo } from './types/client-info';
 
 const app = express();
 
@@ -41,12 +42,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const {
-    mission,
-    ideas,
-    target_audience = 'general',
-    default_author,
-  } = info.data() as { mission: string; ideas: string[]; target_audience: string; default_author: string };
+  const { mission, ideas, target_audience = 'general', default_author } = info.data() as ClientInfo;
 
   if (!mission || !target_audience || !default_author) {
     res.status(400).send('Client incomplete');
@@ -93,14 +89,19 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
 });
 
 app.get('/createNewImage', async (req: express.Request, res: express.Response) => {
-  let { subject } = req.body;
+  let { subject, clientInfo } = req.body;
 
   if (!subject) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const { picture } = await createNewImage(subject, 'testId', subject.replace(/ /g, '-').toLowerCase());
+  const { picture } = await createNewImage({
+    subject,
+    clientInfo,
+    clientId: 'testId',
+    id: subject.replace(/ /g, '-').toLowerCase(),
+  });
 
   res.status(200).send(`${picture}`);
 });
@@ -148,11 +149,20 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   const linkedinPost = await generateLinkedinPost(html, image, href);
 
-  // if (!data?.thumbnail) {
-  //   const { url } = await createNewImage(title, clientId, id);
+  if (!data?.thumbnail) {
+    const path_info = `${clientId}/info`;
+    const info = await dbAdmin.doc(path_info).get();
 
-  //   data.thumbnail = url;
-  // }
+    try {
+      const clientInfo = info.data() as ClientInfo | undefined;
+
+      const { url } = await createNewImage({ subject: title, clientInfo, clientId, id });
+
+      data.thumbnail = url;
+    } catch (error: any) {
+      console.error('/publish: Error creating image:', error.message);
+    }
+  }
 
   const email = emailContent({ lang, subject: title, linkedinPost, href });
 

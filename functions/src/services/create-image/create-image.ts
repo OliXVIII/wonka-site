@@ -1,13 +1,21 @@
 import { bucket } from '../../lib/firebase-admin';
 import { openai } from '../../lib/open-ai';
 import { createImagePrompt } from '../../private/image-prompt';
+import { ClientInfo } from '../../types/client-info';
 
-export const createImage = async (
-  subject: string,
-  clientId: string,
-  id?: string,
-  square?: boolean,
-): Promise<string | undefined> => {
+export const createImage = async ({
+  subject,
+  clientId,
+  clientInfo,
+  id,
+  square,
+}: {
+  subject: string;
+  clientId: string;
+  clientInfo?: ClientInfo;
+  id?: string;
+  square?: boolean;
+}): Promise<string | undefined> => {
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o',
     messages: [
@@ -20,7 +28,7 @@ export const createImage = async (
 
   const coreElements = completion.choices[0].message?.content;
 
-  const prompt = createImagePrompt(subject, 'cartoonish', coreElements);
+  const prompt = createImagePrompt(subject, clientInfo?.image_style, coreElements);
   console.log('prompt: ', prompt);
 
   const picture = await openai.images.generate({

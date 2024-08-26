@@ -1,13 +1,20 @@
+import { ClientInfo } from '../../types/client-info';
 import { createImage } from './create-image';
 
-export const createNewImage = async (
-  subject: string,
-  clientId: string,
-  id?: string,
-): Promise<{ picture: string; url: string }> => {
+export const createNewImage = async ({
+  clientId,
+  clientInfo,
+  subject,
+  id,
+}: {
+  clientId: string;
+  clientInfo?: ClientInfo;
+  subject: string;
+  id?: string;
+}): Promise<{ picture: string; url: string }> => {
   const date = new Date();
   console.log(`Started creating image for "${subject}"`);
-  const url = await createImage(subject, clientId, id);
+  const url = await createImage({ subject, clientInfo, clientId, id });
 
   if (!url) {
     console.error('Failed to create image');
