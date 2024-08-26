@@ -23,6 +23,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     lang,
     author,
     chart = true,
+    addInstructions = false,
   } = req.body as {
     prompt: string;
     source: boolean;
@@ -30,9 +31,10 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     lang: Locale;
     author?: string;
     chart: boolean;
+    addInstructions: boolean;
   };
-
-  const info = await dbAdmin.doc(`${clientId}/info`).get();
+  const path_info = `${clientId}/info`;
+  const info = await dbAdmin.doc(path_info).get();
 
   if (!info.exists) {
     res.status(400).send('Client not found');
@@ -41,9 +43,10 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
 
   const {
     mission,
+    ideas,
     target_audience = 'general',
     default_author,
-  } = info.data() as { mission: string; target_audience: string; default_author: string };
+  } = info.data() as { mission: string; ideas: string[]; target_audience: string; default_author: string };
 
   if (!mission || !target_audience || !default_author) {
     res.status(400).send('Client incomplete');
@@ -54,11 +57,21 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     author = default_author;
   }
 
-  if (!mission || !prompt || !clientId || !lang) {
+  if (!mission || (!prompt && !ideas) || !clientId || !lang) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
+  if (!prompt && ideas.length > 0) {
+    const randomIndex = Math.floor(Math.random() * ideas.length);
+    prompt = ideas[randomIndex];
+    console.log('No prompt, idea picked: ', prompt);
+    ideas.splice(randomIndex, 1);
+    await dbAdmin.doc(path_info).update({
+      ideas: ideas,
+    });
+    // addInstructions = true;
+  }
   if (!isValidLanguage(lang)) {
     res.status(400).send('Invalid language');
     return;
@@ -73,6 +86,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     author,
     context: prompt,
     chart,
+    addInstructions,
   });
 
   res.status(200).send({ id, lang });
@@ -268,14 +282,14 @@ app.get('/create-chart-dataset', async (req: express.Request, res: express.Respo
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {
-  const { clientId, lang, subject } = req.body as { clientId: string; lang: Locale; subject: string };
+  const { clientId, subject } = req.body as { clientId: string; subject: string };
 
-  if (!clientId || !lang || !subject) {
+  if (!clientId || !subject) {
     res.status(400).send('Missing required parameters');
     return;
   }
 
-  const docRef = dbAdmin.doc(`${clientId}/${lang}`);
+  const docRef = dbAdmin.doc(`${clientId}/info`);
 
   const snapshot = await docRef.get();
 
@@ -284,9 +298,8 @@ app.get('/get-100-ideas', async (req: express.Request, res: express.Response) =>
     return;
   }
   const { mission, target_audience } = snapshot.data() as { mission: string; target_audience: string };
-  const locale = localesDetails[lang];
 
-  const data = await get100Ideas(subject, locale, mission, target_audience);
+  const data = await get100Ideas(subject, mission, target_audience);
 
   await docRef.update({ ideas: data });
 

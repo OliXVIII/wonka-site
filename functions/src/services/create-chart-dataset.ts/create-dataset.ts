@@ -18,6 +18,7 @@ export const createChartDataset = async (context: string, locale: LocaleDetails,
         content: prompt.user,
       },
     ],
+    response_format: { type: 'json_object' },
   });
 
   const content = completion.choices[0].message?.content;

@@ -1,16 +1,10 @@
 import { openai } from '../../lib/open-ai';
 import { get10RootIdeasPrompt } from '../../private/ideas';
-import { LocaleDetails } from '../../types/languages';
 import { preprocessJSON } from '../preprocessJSON';
 
 // Function to generate a list of 10 ideas to a given context
-export const get10RootIdeas = async (
-  subject: string,
-  locale: LocaleDetails,
-  mission: string,
-  target_audience: string,
-): Promise<string[]> => {
-  const prompt = await get10RootIdeasPrompt(subject, locale, mission, target_audience);
+export const get10RootIdeas = async (subject: string, mission: string, target_audience: string): Promise<string[]> => {
+  const prompt = await get10RootIdeasPrompt(subject, mission, target_audience);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

@@ -18,6 +18,7 @@ export const editChartDataset = async (dataset: string, article: string, lang: L
         content: prompt.user,
       },
     ],
+    response_format: { type: 'json_object' },
   });
 
   const content = completion.choices[0].message?.content;

@@ -15,6 +15,8 @@ import { createGreatestTitleEverMade } from './create-content-article/create-tit
 import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
 import { addChartToArticle } from './create-content-article/edit-article/add-chart-to-article';
 import { editChartDataset } from './create-chart-dataset.ts/edit-dataset';
+import { extractLabelAndTitleFromString } from './util/get-chart-info';
+import { addInstructionToPrompt } from './add-instruction-to-prompt';
 // import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async ({
@@ -26,6 +28,7 @@ export const createNewArticle = async ({
   author,
   context,
   chart,
+  addInstructions,
 }: {
   mission: string;
   target_audience: string;
@@ -35,11 +38,15 @@ export const createNewArticle = async ({
   author: string;
   context: string;
   chart: boolean;
+  addInstructions: boolean;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
   const language = localesDetails[lang].language;
+  if (addInstructions) {
+    context = await addInstructionToPrompt(context);
+  }
   const seoTitle = (await createSEOTitle(context, target_audience, mission, lang)).replaceAll('"', '');
   const listSubtitle = await getListSubtitle(context, target_audience, mission, seoTitle, language);
   console.log('listSubtitle: ', listSubtitle);
@@ -105,7 +112,8 @@ export const createNewArticle = async ({
     //content = await addChart(content, mission, context, target_audience);
     dataset = await createChartDataset(context, localesDetails[lang]);
     dataset = await editChartDataset(dataset, content, localesDetails[lang]);
-    content = preprocessJSON(await addChartToArticle(content, dataset)).replaceAll('html', '');
+    const chart_info = extractLabelAndTitleFromString(dataset);
+    content = preprocessJSON(await addChartToArticle(content, chart_info)).replaceAll('html', '');
     console.log('chart added');
   }
   const article: Article = {

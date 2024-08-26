@@ -26,7 +26,12 @@ export const createSEOTitlePrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a context, a mission and a target audience you will create a seo-friendly title for an article.
-    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 3 KEYWORDS.
+    Take the subject as a whole to create the title, don't be specific to the article.
+    DON'T PUT ANY ACCENT IN THE TITLE. EX: "é" should be "e".
+    - there will be no whitespace.
+    - there should only be one word per section of the title : "word1-word2-word3".
+    - the 3 keywords must be the most important keywords of the article.
+    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
     ONLY USE THE MOST IMPORTANT KEYWORDS.
       SEO title must not have any adverb
       or any useless word that are not necessary for the seo title, only use keyword for the SEO title, 
@@ -36,7 +41,7 @@ export const createSEOTitlePrompt = async (
       - the seo title will not have any whitespace or special character.
       `,
     user: `Create a great seo title for the article.
-    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 3 KEYWORDS.
+    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
     ONLY USE THE MOST IMPORTANT KEYWORDS.
     EVERY KEYWORDS MUST BY SEPARATED BY A "-" (DASH).
     Here is the context you will use to create the seo title: "${context}", 
@@ -163,7 +168,8 @@ export const getIntroPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Write introduction for the intro: "${intro}" and the mission",
-    you're a professional on this context. 
+    you're a professional on this context.
+    Make sure the structure of each paragraph is different, diverse.
     USE BULLET POINT TO PRESENT THE REST OF THE ARTICLE.
     HERE'S A LIST OF THE SUBTITLE OF THIS ARTICLE TO HELP YOU DO LOGICAL TRANSITION BETWEEN THE INTRO
     AND THE REST OF THE ARTICLE AND FOR THE BULLET POINTS: ${subtitle}.
@@ -323,11 +329,12 @@ export const editContentPrompt = async (
 
     `,
     user: `You will add the greatest title and add it in a h1 tag at the beginning of the article: "${greatestTitle}".
+    -You will make all the text in the article in ${lang}, even the subtitle.
     IMPORTANT: YOU NEED TO MAKE SURE THAT ALL THE TITLE AND SUBTITLE RESPECT THE REQUIREMENT PREVIOUSLY MENTIONED.
     IF (${lang} == "french" || ${lang} == "francais") {
       MAKE SURE THAT THE ONLY UPPERCASE LETTER IS THE FIRST LETTER OF THE SUBTITLE, FOR EACH ONES. (Even the one in the h1 tag)
     }
-
+    YOU WILL MAKE SURE THE TITLE OF THE ARTICLE IS IN LANGUAGE: ${lang}.
     KEEP THE SAME CONCLUSION TITLE.
     MAKE SURE THE CONCLUSION TITLE IS DIFFERENT OF "Conclusion: ".
         EACH SUBTITLE MUST BE IN A <H2> TAG.
@@ -384,5 +391,17 @@ export const createGreatestTitleEverMadePrompt = async (
     HERE'S THE CONTEXT OF THE ARTICLE, MAKE SURE TO FOLLOW THE INSTRUCTIONS: "${context}".
     
     Article: "${article}", target audience: "${target_audience}", and language: "${lang}".`,
+  };
+};
+
+export const addInstructionToPromptPrompt = async (context: string): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a small context, the context is too short to be used as a prompt.
+    Your job will be to develop this context into a list of instruction to create an article from it.
+
+    You will only guide the writing of the text, never suggest to add something to it.
+    `,
+    user: `Here is the context you will use to create the instruction for the creation of the article: ${context}
+    `,
   };
 };
