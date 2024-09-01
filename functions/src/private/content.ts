@@ -18,38 +18,57 @@
 //   };
 // };
 
+// export const createSEOTitlePrompt = async (
+//   context: string,
+//   target_audience: string,
+//   mission: string,
+//   lang: string,
+// ): Promise<{ system: string; user: string }> => {
+//   return {
+//     system: `You will receive a context, a mission and a target audience you will create a seo-friendly title for an article.
+//     Take the subject as a whole to create the title, don't be specific to the article.
+//     DON'T PUT ANY ACCENT IN THE TITLE. EX: "é" should be "e".
+//     - there will be no whitespace.
+//     - there should only be one word per section of the title : "word1-word2-word3".
+//     - the 3 keywords must be the most important keywords of the article.
+//     VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
+//     ONLY USE THE MOST IMPORTANT KEYWORDS.
+//       SEO title must not have any adverb
+//       or any useless word that are not necessary for the seo title, only use keyword for the SEO title,
+//       also make sure that the seo title is in "${lang}"
+//       - the seo title should use words that a "${target_audience}" would use to search for the article.
+//       - a great seo title have key word that a user would use to search for the article.
+//       - the seo title will not have any whitespace or special character.
+//       `,
+//     user: `Create a great seo title in ${lang} for an article.
+//     VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
+//     ONLY USE THE MOST IMPORTANT KEYWORDS.
+//     EVERY KEYWORDS MUST BY SEPARATED BY A "-" (DASH).
+//     Here is the context you will use to create the seo title: "${context}",
+//     your target audience for this is: "${target_audience}",
+//     and the mission is: "${mission}".
+
+//     Make sure the title is not exactly the same as the context. (should use different word)
+//     The word of the seo title mush be composed of keyword that a user (target audience) would use to search for the article.`,
+//   };
+// };
 export const createSEOTitlePrompt = async (
-  context: string,
+  prompt: string,
   target_audience: string,
   mission: string,
   lang: string,
 ): Promise<{ system: string; user: string }> => {
   return {
-    system: `You will receive a context, a mission and a target audience you will create a seo-friendly title for an article.
-    Take the subject as a whole to create the title, don't be specific to the article.
-    DON'T PUT ANY ACCENT IN THE TITLE. EX: "é" should be "e".
-    - there will be no whitespace.
-    - there should only be one word per section of the title : "word1-word2-word3".
-    - the 3 keywords must be the most important keywords of the article.
-    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
-    ONLY USE THE MOST IMPORTANT KEYWORDS.
-      SEO title must not have any adverb
-      or any useless word that are not necessary for the seo title, only use keyword for the SEO title, 
-      also make sure that the seo title is in "${lang}"
-      - the seo title should use words that a "${target_audience}" would use to search for the article.
-      - a great seo title have key word that a user would use to search for the article.
-      - the seo title will not have any whitespace or special character.
-      `,
-    user: `Create a great seo title for the article.
-    VERY IMPORTANT: IT SHOULD HAVE A MAXIMUM OF 4 KEYWORDS.
-    ONLY USE THE MOST IMPORTANT KEYWORDS.
-    EVERY KEYWORDS MUST BY SEPARATED BY A "-" (DASH).
-    Here is the context you will use to create the seo title: "${context}", 
-    your target audience for this is: "${target_audience}", 
-    and the mission is: "${mission}".
-    
-    Make sure the title is not exactly the same as the context. (should use different word)
-    The word of the seo title mush be composed of keyword that a user (target audience) would use to search for the article.`,
+    system: `Generate an SEO-friendly title for an article based on the provided context, mission, and target audience.
+    - Use the most relevant keywords that the target audience would likely search for.
+    - Ensure the title is in "${lang}" and uses different words from the provided context.
+    - Avoid accents, adverbs, and unnecessary words.
+    ${lang === 'french' ? '- Only use uppercase for the first letter of the title.' : ''}
+    `,
+
+    user: `Create a concise SEO title in ${lang} for an article about "${prompt}".
+    - Use the target audience: "${target_audience}", and mission: "${mission}".
+    - Ensure the title aligns with common search behavior and is not identical to the context.`,
   };
 };
 

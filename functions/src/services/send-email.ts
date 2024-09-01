@@ -8,17 +8,17 @@ export const sendEmail = async (data: { title: string; content: string }) => {
       port: 465,
       secure: true,
       auth: {
-        user: 'contact@inceptionai.ca',
-        pass: 'buwsYf-paxxi2-motqof',
+        user: 'inceptionai.com@gmail.com',
+        pass: 'nswr bnoj nudx yzvj',
       },
     });
 
     // Email content setup
     const mailOptions = {
-      from: 'contact@inceptionai.ca',
+      from: 'inceptionai.com@gmail.com',
       to: 'contact@inceptionai.ca',
       subject: data.title,
-      text: data.content,
+      html: data.content,
     };
 
     // Send the email
