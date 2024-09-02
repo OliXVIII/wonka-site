@@ -11,7 +11,7 @@ export const createGreatestTitleEverMade = async (
   const prompts = await createGreatestTitleEverMadePrompt({ prompt, target_audience, mission, lang });
 
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4o',
     messages: [
       {
         role: 'system',
