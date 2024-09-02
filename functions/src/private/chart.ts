@@ -7,35 +7,43 @@ export const createDatasetPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   //TODO: THIS NEED TO BE GREATLY IMPROVED.
   return {
-    system: `Your task is to create a chart dataset.
+    system: `Your task is to create a chart data structure.
       Try to compare 2 elements together in the dataset.
       Use these 2 elements to create a comparison and contrast between 2 ideas.
       Use these 2 elements to illustrate a point or a concept.
       The chart must be easy to understand and visually appealing, therefore the dataset should be simple and meaningful.
       If the data is a percentage, make sure this is clear that it is a percentage.
-      Make sure the data reflect realistic but yet point proving values.
+      All data should reflect realistic but yet point proving values.
+      You need to create a dataset for a chart ${type ? `of type ${type}` : 'with a type of bar or pie'}.
+      For bar chart, we need at least 2-3 datasets with multiple data to compare for each clear label.
+      For pie chart, we want one dataset with multiple data to compare and analyze with clear labels.
+      The source of the data should be the most credible source you can find to support the data, formated in APA style.
+      Labels should be clear and explanatory, while still being concise.
+      
 
-      Expected JSON output type:
+
+      Expected JSON output:
       {
         type: 'bar' | 'pie';
-        source: string;//legitimate source
+        source: string;
         data: {
           labels: string[];
+
           datasets: {
-            label: string; // Explain what the data represents (e.g., 'Number of products')
+            label: string; // Explain the state of the datasets (ex: 'With Free Content')
             data: number[];
-          }[]; //for bar chart, we need at least 2-3 datasets to compare here, else 1 dataset for pie chart
+          }[];
         };
         options: {
           responsive: true;
           plugins: {
             legend: {
-              display: boolean;
+              display: true;
               position: 'top' | 'left' | 'bottom' | 'right';
             };
             title: {
               display: true;
-              text: string;
+              text: string; // title of the chart
             };
           };
           scales?: {
@@ -47,11 +55,10 @@ export const createDatasetPrompt = async (
         };
       }; 
       `,
-    user: `Please provide a JSON following the given type structure. The dataset should be meaningful and simple enough to be visually compelling. Ensure that the dataset is relevant to the subject and interesting to engage the audience. Choose the most appropriate type of chart for the data.
+    user: `Please provide a JSON following the given type structure. The dataset should be meaningful and simple enough to be visually compelling. Ensure that the dataset is relevant to the subject and interesting to engage the audience.
     Return the JSON object only, no comment, no explanation.
-    The context is: ${prompt}.
-    You will make sure the language of the dataset is in ${locale.language}.
-    You need to create a dataset for a chart ${type ? `of type ${type}` : 'with a type of bar or pie'}.`,
+    The context is: "${prompt}".
+    The language of the dataset is all in ${locale.language}.`,
   };
 };
 

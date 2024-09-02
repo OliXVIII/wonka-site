@@ -7,11 +7,15 @@ export type Article = {
   thumbnail: string;
   title: string;
   published: boolean; // Default value is false
-  dataset: string;
+  dataset?: string;
   author?: string;
   metadata?: {
     title: string;
     description: string;
     keywords: string;
+  };
+  prompt: {
+    content: string;
+    thumbnail?: string;
   };
 };

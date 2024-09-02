@@ -14,7 +14,7 @@ export const createImage = async ({
   clientId: string;
   clientInfo?: ClientInfo;
   id?: string;
-}): Promise<string | undefined> => {
+}): Promise<{ url: string; prompt: string }> => {
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o',
     messages: [
@@ -41,12 +41,16 @@ export const createImage = async ({
   const url = picture.data[0].url;
 
   if (!url) {
-    return;
+    return { url: '', prompt };
   }
 
-  const publicUrl = saveImageStorage(url, clientId, subject);
+  const publicUrl = await saveImageStorage(url, clientId, subject);
 
-  return publicUrl ?? url;
+  if (publicUrl) {
+    return { url: publicUrl, prompt };
+  } else {
+    return { url, prompt };
+  }
 };
 
 const saveImageStorage = async (url: string, clientId: string, subject: string): Promise<string> => {

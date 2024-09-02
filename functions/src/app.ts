@@ -107,9 +107,9 @@ app.post('/updateImage', async (req: express.Request, res: express.Response) => 
     return;
   }
 
-  const url = await createImage({ subject: title, clientInfo, clientId });
+  const { url, prompt } = await createImage({ subject: title, clientInfo, clientId });
 
-  snapshot.ref.update({ thumbnail: url });
+  snapshot.ref.update({ thumbnail: url, prompt: { thumbnail: prompt } });
 
   res.status(200).send(`Successfully updated image for article ${id}`);
 });
@@ -143,7 +143,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   }
 
   const html = data?.content as string;
-  const image = data?.thumbnail
+  let image = data?.thumbnail
     ? data.thumbnail
     : 'https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2FtestId%2Fstate-of-seo-in-2024%3A-trends-and-predictions.png?alt=media&token=aab4aafc-3543-42bc-aab5-055fa7f10e41';
   const title = data?.content.match(/<h1(?: id="[^"]+")?>(.+?)<\/h1>/)?.[1] ?? '';
@@ -155,8 +155,6 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     return;
   }
 
-  const linkedinPost = await generateLinkedinPost(html, image, href);
-
   if (!data?.thumbnail) {
     const path_info = `${clientId}/info`;
     const info = await dbAdmin.doc(path_info).get();
@@ -164,13 +162,17 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     try {
       const clientInfo = info.data() as ClientInfo | undefined;
 
-      const url = await createImage({ subject: title, clientInfo, clientId });
+      const { url, prompt } = await createImage({ subject: title, clientInfo, clientId });
 
       data.thumbnail = url;
+      data.prompt.thumbnail = prompt;
+      image = url;
     } catch (error: any) {
       console.error('/publish: Error creating image:', error.message);
     }
   }
+
+  const linkedinPost = await generateLinkedinPost(html, image, href);
 
   const email = emailContent({ lang, subject: title, linkedinPost, href });
 
@@ -181,7 +183,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   await sendEmail(email);
 
-  snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
+  snapshot.ref.update({ published: true, thumbnail: data.thumbnail, prompt: { thumbnail: data.prompt.thumbnail } });
 
   res.status(200).send('New article published');
 });
@@ -271,7 +273,7 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
   }
 });
 
-app.get('/create-chart-dataset', async (req: express.Request, res: express.Response) => {
+app.get('/update-chart-dataset', async (req: express.Request, res: express.Response) => {
   const { clientId, lang, id } = req.body as { clientId: string; lang: Locale; id: string };
 
   if (!clientId || !lang || !id) {
@@ -292,11 +294,11 @@ app.get('/create-chart-dataset', async (req: express.Request, res: express.Respo
 
   const locale = localesDetails[lang];
 
-  const data = await createChartDataset(context, locale);
+  const dataset = await createChartDataset(context, locale);
 
-  await docRef.update({ dataset: data });
+  await docRef.update({ dataset });
 
-  res.status(200).send(data);
+  res.status(200).send(dataset);
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {

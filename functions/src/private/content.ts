@@ -155,7 +155,7 @@ export const getBodyPrompt = async (
 
     The people that will read the text value time efficiency and convenience.
     The people that will read the text don't necessarily have a lot of knowledge on the subject.
-    You should grab their attention as they have short attention spans.
+    You should grab the readers attention as they have short attention spans, with geniuine interest in helping them.
 
     Make a one liner closing sentence to transition to the next subtitle.
     Here's a list of the subtitle of this article to help you do logical transition between the content, 
@@ -166,7 +166,7 @@ export const getBodyPrompt = async (
     user: `
     Create content for the subtitle "${subtitle}, your target audience for this is: "${target_audience}, the mission is: "${mission}".
     The context of the article is, use the context as instructions: "${context}".
-    Develop your ideas and make everything is well explained.
+    Develop your ideas and make everything is well explained with geniuine interest to help the readers.
     The text output should have a MINIMUM of 4 paragraphs.
     Explain the concept well and make sure that the text is engaging.
     Make the format of the text adequate for the context and the target audience.
@@ -416,9 +416,10 @@ export const createGreatestTitleEverMadePrompt = async (
 export const addInstructionToPromptPrompt = async (context: string): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a small context, the context is too short to be used as a prompt.
-    Your job will be to develop this context into a list of instruction to create an article from it.
+    Your job will be to develop this context into a list of instruction to create an article from it, with a genuin interest in helping the readers.
 
-    You will only guide the writing of the text, never suggest to add something to it.`,
+    You will only guide the writing of the text, never suggest to add something to it.
+    Output only the revised context, nothing else.`,
     user: `Here is the context you will use to create the instruction for the creation of the article: ${context}
     `,
   };

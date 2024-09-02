@@ -14,7 +14,6 @@ import { createSEOTitle } from './create-article/create-title/create-seo-title';
 import { createGreatestTitleEverMade } from './create-article/create-title/create-greatest-title';
 import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
 import { addChartToArticle } from './create-article/edit-article/add-chart-to-article';
-import { editChartDataset } from './create-chart-dataset.ts/edit-dataset';
 import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
 import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
@@ -48,7 +47,9 @@ export const createNewArticle = async ({
     prompt = await addInstructionToPrompt(prompt);
   }
 
-  prompt = await translatePrompt(prompt);
+  if (language === 'en') {
+    prompt = await translatePrompt(prompt);
+  }
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
@@ -109,15 +110,17 @@ export const createNewArticle = async ({
 
   //Étape x: Améliorer le contenu final de x façons différentes (ex: ajouter des images avec Stock Free Images or AI generated images)
   console.log('draft improved');
-  let dataset = '';
+  let dataset;
 
   //TODO: This should be done in parallel
   if (chart) {
     //Add chart if needed
-    //content = await addChart(content, mission, prompt, target_audience);
-    dataset = await createChartDataset(prompt, localesDetails[lang]);
-    dataset = await editChartDataset(dataset, content, localesDetails[lang]);
+    const description = content.match(/<p(?: id="intro")?>(.+?)<\/p>/)?.[1] ?? '';
+    dataset = await createChartDataset(prompt + ' ' + description, localesDetails[lang]);
     const chart_info = extractLabelAndTitleFromString(dataset);
+
+    //TODO: This is very very slow and costly for no reason, maybe use the title and prompt to generate the chart or generate the chart in the same step as the content?
+    //I don't have a good solution for this yet, but it's a problem
     content = preprocessJSON(await addChartToArticle(content, chart_info)).replaceAll('html', '');
     console.log('chart added');
   }
@@ -131,6 +134,9 @@ export const createNewArticle = async ({
     created: Timestamp.now(),
     published: false,
     dataset: dataset,
+    prompt: {
+      content: prompt,
+    },
   };
 
   await addArticle(article, clientId, lang);
