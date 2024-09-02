@@ -10,14 +10,13 @@ import { editContent } from './create-article/edit-article/edit-content';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Article } from '../types/article';
 import { addSources } from './create-article/add-sources/add-souces';
-import { createSEOTitle } from './create-article/create-title/create-seo-title';
 import { createGreatestTitleEverMade } from './create-article/create-title/create-greatest-title';
 import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
 import { addChartToArticle } from './create-article/edit-article/add-chart-to-article';
 import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
 import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
-import { translatePrompt } from './translate-prompt';
+import { translate } from './translate-prompt';
 // import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async ({
@@ -48,7 +47,7 @@ export const createNewArticle = async ({
   }
 
   if (language === 'en') {
-    prompt = await translatePrompt(prompt);
+    prompt = await translate(prompt, language);
   }
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
