@@ -5,16 +5,14 @@ export const createNewImage = async ({
   clientId,
   clientInfo,
   subject,
-  id,
 }: {
   clientId: string;
   clientInfo?: ClientInfo;
   subject: string;
-  id?: string;
 }): Promise<{ picture: string; url: string }> => {
   const date = new Date();
   console.log(`Started creating image for "${subject}"`);
-  const url = await createImage({ subject, clientInfo, clientId, id });
+  const url = await createImage({ subject, clientInfo, clientId });
 
   if (!url) {
     console.error('Failed to create image');

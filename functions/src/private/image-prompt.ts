@@ -1,12 +1,28 @@
 export type ImageStyle = 'retro-style cartoonish' | 'cinematic' | 'cartoonish' | 'minimalistic';
 
-export const createImagePrompt = (subject: string, style?: ImageStyle, coreElements?: string | null): string => {
-  return `Create a clean and uncluttered ${style ?? 'retro-style cartoonish'} image representing the core subject of ${subject}.\
- ${coreElements ?? 'The image features 2-3 core elements to picturize the subject.'}\
+export const createImagePrompt = ({
+  subject,
+  style,
+  coreElements,
+  region = 'Canada',
+}: {
+  subject: string;
+  style?: ImageStyle;
+  coreElements?: string | null;
+  region?: string;
+}): string => {
+  if (
+    !style ||
+    (style !== 'retro-style cartoonish' && style !== 'cinematic' && style !== 'cartoonish' && style !== 'minimalistic')
+  ) {
+    style = 'retro-style cartoonish';
+  }
+  return `Create a clean , simple and uncluttered ${style} image representing the core subject of ${subject}, requirements:\
+ ${coreElements ?? 'The image features 3 main elements to picturize the subject'}.\
  The color palette is fresh and natural, using soft colors.\
  Minimal design ensuring the image remains clean and uncluttered.\
- Overall vibe is neat, approachable, and visually engaging, with an emphasis on simplicity and clarity.\
- Focus on specific, visually representable elements.\
- Describe actions and scenarios rather than abstract concepts.\
- Avoid ambiguous language that could be interpreted as including text.`;
+ Minimal and visually engaging design, with an emphasis on simplicity and clarity.\
+ No text, or any ambiguous language that could be interpreted as including text.\
+ Describe actions and scenarios rather than abstract concepts.
+ In the socio-cultural context of ${region} to make it relatable, skin tones and cultural references should be appropriate.`;
 };

@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-new-article';
-import { createNewImage } from './services/create-image/create-new-image';
 import { Locale, isValidLanguage, localesDetails } from './types/languages';
 import { generateLinkedinPost } from './services/create-linkedin-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
@@ -11,6 +10,7 @@ import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './servic
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 import { get100Ideas } from './services/get-100-ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
+import { createImage } from './services/create-image/create-image';
 
 const app = express();
 
@@ -24,7 +24,6 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     lang,
     author,
     chart = true,
-    addInstructions = false,
   } = req.body as {
     prompt: string;
     source: boolean;
@@ -32,7 +31,6 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     lang: Locale;
     author?: string;
     chart: boolean;
-    addInstructions: boolean;
   };
   const path_info = `${clientId}/info`;
   const info = await dbAdmin.doc(path_info).get();
@@ -80,30 +78,40 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     clientId,
     lang,
     author,
-    context: prompt,
+    prompt,
     chart,
-    addInstructions,
   });
 
   res.status(200).send({ id, lang });
 });
 
-app.get('/createNewImage', async (req: express.Request, res: express.Response) => {
-  let { subject, clientInfo } = req.body;
+app.post('/updateImage', async (req: express.Request, res: express.Response) => {
+  let { title, clientId, id, lang } = req.body as {
+    title: string;
+    clientId: string;
+    lang: string;
+    id: string;
+  };
+  const path_info = `${clientId}/info`;
+  const info = await dbAdmin.doc(path_info).get();
+  const clientInfo = info.data() as ClientInfo | undefined;
 
-  if (!subject) {
-    res.status(400).send('Missing required parameters');
+  if (!title || !clientId || !id || !lang) {
+    res.status(401).send('Article not found');
+    return;
+  }
+  const snapshot = await dbAdmin.doc(`${clientId}/${lang}/articles/${id}`).get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
     return;
   }
 
-  const { picture } = await createNewImage({
-    subject,
-    clientInfo,
-    clientId: 'testId',
-    id: subject.replace(/ /g, '-').toLowerCase(),
-  });
+  const url = await createImage({ subject: title, clientInfo, clientId });
 
-  res.status(200).send(`${picture}`);
+  snapshot.ref.update({ thumbnail: url });
+
+  res.status(200).send(`Successfully updated image for article ${id}`);
 });
 
 app.post('/publish', async (req: express.Request, res: express.Response) => {
@@ -156,7 +164,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     try {
       const clientInfo = info.data() as ClientInfo | undefined;
 
-      const { url } = await createNewImage({ subject: title, clientInfo, clientId, id });
+      const url = await createImage({ subject: title, clientInfo, clientId });
 
       data.thumbnail = url;
     } catch (error: any) {

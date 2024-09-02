@@ -18,6 +18,7 @@ import { editChartDataset } from './create-chart-dataset.ts/edit-dataset';
 import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
 import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
+import { translatePrompt } from './translate-prompt';
 // import { getContext } from './create-content-article/get-context';
 
 export const createNewArticle = async ({
@@ -29,7 +30,6 @@ export const createNewArticle = async ({
   author,
   prompt,
   chart,
-  addInstructions,
 }: {
   mission: string;
   target_audience: string;
@@ -39,23 +39,25 @@ export const createNewArticle = async ({
   author: string;
   prompt: string;
   chart: boolean;
-  addInstructions: boolean;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
   const language = localesDetails[lang].language;
-  if (addInstructions) {
+  if (prompt.length < 70) {
     prompt = await addInstructionToPrompt(prompt);
   }
-  const title = (await createSEOTitle(prompt, target_audience, mission, lang)).replaceAll('"', '');
+
+  prompt = await translatePrompt(prompt);
+
+  //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
+  // Also, we should use this title for the h1 tag in the article
+  const title = await createSEOTitle(prompt, target_audience, mission, lang);
   const id = convertTitleToID(title);
 
   const listSubtitle = await getListSubtitle(prompt, target_audience, mission, title, language);
-  console.log('listSubtitle: ', listSubtitle);
 
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
-
   const listDraft = await Promise.all(
     listSubtitle.map(async (subtitle) => {
       const index = listSubtitle.indexOf(subtitle);

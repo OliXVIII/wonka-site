@@ -23,8 +23,6 @@ export const createContentForClosure = async (
         content: prompt.user,
       },
     ],
-    temperature: 0.01,
-    top_p: 0.01,
   });
 
   const content = completion.choices[0].message?.content;

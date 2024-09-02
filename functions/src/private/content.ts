@@ -418,8 +418,7 @@ export const addInstructionToPromptPrompt = async (context: string): Promise<{ s
     system: `You will receive a small context, the context is too short to be used as a prompt.
     Your job will be to develop this context into a list of instruction to create an article from it.
 
-    You will only guide the writing of the text, never suggest to add something to it.
-    `,
+    You will only guide the writing of the text, never suggest to add something to it.`,
     user: `Here is the context you will use to create the instruction for the creation of the article: ${context}
     `,
   };

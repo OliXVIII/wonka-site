@@ -23,8 +23,6 @@ export const editContent = async (
         content: prompt.user,
       },
     ],
-    temperature: 0.1,
-    top_p: 0.1,
   });
 
   const content = completion.choices[0].message?.content;

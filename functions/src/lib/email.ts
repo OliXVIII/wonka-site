@@ -12,22 +12,26 @@ export const emailContent = ({
   subject: string;
 }) => {
   const emailTemplates = {
-    en: `Your article "${subject}" has just been published.
+    en: `<div style="font-family: Arial, sans-serif; color: #333;">
+  <h1 style="font-size: 18px;">Your article "<strong>${subject}</strong>" has just been published.</h1>
 
-You can view it on our website at the following address: ${href}
+  <p style="font-size: 16px;">You can view it on our website at the following address: <a href="${href}" style="color: #1a73e8;">${href}</a></p>
 
-To introduce it on your social networks, here are some post suggestions:
-${linkedinPost ? `LinkedIn post 📫:\n${linkedinPost}` : ''}
-${facebookPost && linkedinPost ? '\n-----------------\n' : ''}
-${facebookPost ? `Facebook post 📩:\n${facebookPost}` : ''}`,
-    fr: `Votre article "${subject}" vient d'être publié.
+  <p style="font-size: 16px;">To introduce it on your social networks, here are some post suggestions:</p>
+  ${linkedinPost ? `<p style="font-size: 16px;">LinkedIn post 📫:<br>${linkedinPost}</p>` : ''}
+  ${facebookPost && linkedinPost ? '<hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">' : ''}
+  ${facebookPost ? `<p style="font-size: 16px;">Facebook post 📩:<br>${facebookPost}</p>` : ''}
+</div>`,
+    fr: `<div style="font-family: Arial, sans-serif; color: #333;">
+  <p style="font-size: 16px;">Votre article "<strong>${subject}</strong>" vient d'être publié.</p>
 
-Vous pouvez le consulter sur notre site web à l'adresse suivante : ${href}
+  <p style="font-size: 16px;">Vous pouvez le consulter sur notre site web à l'adresse suivante : <a href="${href}" style="color: #1a73e8;">${href}</a></p>
 
-Pour l'introduire sur vos réseaux sociaux, voici des suggestions de posts :
-${linkedinPost ? `Post LinkedIn :\n${linkedinPost}` : ''}
-${facebookPost && linkedinPost ? '\n-----------------\n' : ''}
-${facebookPost ? `Post Facebook :\n${facebookPost}` : ''}`,
+  <p style="font-size: 16px;">Pour l'introduire sur vos réseaux sociaux, voici des suggestions de posts :</p>
+  ${linkedinPost ? `<p style="font-size: 16px;">Post LinkedIn :<br>${linkedinPost}</p>` : ''}
+  ${facebookPost && linkedinPost ? '<hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">' : ''}
+  ${facebookPost ? `<p style="font-size: 16px;">Post Facebook :<br>${facebookPost}</p>` : ''}
+</div>`,
   };
 
   const title = {

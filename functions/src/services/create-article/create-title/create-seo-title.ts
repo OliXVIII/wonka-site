@@ -17,11 +17,9 @@ export const createSEOTitle = async (prompt: string, target_audience: string, mi
         content: prompts.user,
       },
     ],
-    temperature: 0.1,
-    top_p: 0.1,
   });
 
   const content = completion.choices[0].message?.content;
 
-  return content ?? 'No content generated';
+  return content ? content.replaceAll('"', '') : 'No content generated';
 };

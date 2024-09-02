@@ -1,19 +1,19 @@
 import { LocaleDetails } from '../types/languages';
 
 export const createDatasetPrompt = async (
-  context: string,
+  prompt: string,
   locale: LocaleDetails,
   type?: 'bar' | 'pie',
 ): Promise<{ system: string; user: string }> => {
+  //TODO: THIS NEED TO BE GREATLY IMPROVED.
   return {
-    system: `For an article for the context.
-      You will follow the specific instruction given by the user.
-
+    system: `Your task is to create a chart dataset.
       Try to compare 2 elements together in the dataset.
       Use these 2 elements to create a comparison and contrast between 2 ideas.
       Use these 2 elements to illustrate a point or a concept.
       The chart must be easy to understand and visually appealing, therefore the dataset should be simple and meaningful.
       If the data is a percentage, make sure this is clear that it is a percentage.
+      Make sure the data reflect realistic but yet point proving values.
 
       Expected JSON output type:
       {
@@ -24,7 +24,7 @@ export const createDatasetPrompt = async (
           datasets: {
             label: string; // Explain what the data represents (e.g., 'Number of products')
             data: number[];
-          }[];
+          }[]; //for bar chart, we need at least 2-3 datasets to compare here, else 1 dataset for pie chart
         };
         options: {
           responsive: true;
@@ -49,7 +49,7 @@ export const createDatasetPrompt = async (
       `,
     user: `Please provide a JSON following the given type structure. The dataset should be meaningful and simple enough to be visually compelling. Ensure that the dataset is relevant to the subject and interesting to engage the audience. Choose the most appropriate type of chart for the data.
     Return the JSON object only, no comment, no explanation.
-    The context is: ${context}.
+    The context is: ${prompt}.
     You will make sure the language of the dataset is in ${locale.language}.
     You need to create a dataset for a chart ${type ? `of type ${type}` : 'with a type of bar or pie'}.`,
   };

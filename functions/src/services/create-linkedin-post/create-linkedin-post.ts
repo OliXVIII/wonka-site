@@ -3,7 +3,7 @@ import { linkedinSecretPrompt } from '../../private/linkedin';
 
 export const generateLinkedinPost = async (content: string, image: string, href: string): Promise<string | null> => {
   try {
-    const prompt = linkedinSecretPrompt(content, image, href);
+    const prompt = linkedinSecretPrompt(content, href, image);
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
@@ -19,7 +19,7 @@ export const generateLinkedinPost = async (content: string, image: string, href:
       ],
     });
 
-    const response = completion.choices[0].message?.content;
+    const response = completion.choices[0].message?.content?.replaceAll('```html', '').replaceAll('```', '');
     console.log('Response from generateLinkedinPost', response);
 
     if (!response) {

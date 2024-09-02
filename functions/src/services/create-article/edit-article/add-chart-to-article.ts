@@ -17,8 +17,6 @@ export const addChartToArticle = async (content: string, dataset: string): Promi
         content: prompt.user,
       },
     ],
-    temperature: 0.1,
-    top_p: 0.1,
   });
 
   const data = completion.choices[0].message?.content;
