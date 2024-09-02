@@ -46,9 +46,7 @@ export const createNewArticle = async ({
     prompt = await addInstructionToPrompt(prompt);
   }
 
-  if (language === 'en') {
-    prompt = await translate(prompt, language);
-  }
+  prompt = await translate(prompt, language);
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
