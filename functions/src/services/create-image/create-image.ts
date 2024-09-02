@@ -20,9 +20,7 @@ export const createImage = async ({
     messages: [
       {
         role: 'user',
-        content: `Ìdentify 3 main vizuale elements to vizualize "${subject}" in a simple thumbnail, output them in a singleshort phrase like "The image features 3 core elements: element_1, element_2 and element_3".${
-          clientInfo?.image_style ? ` These element should be perfect to represent in a ${clientInfo?.image_style} style.}` : ''
-        } with no textual elements.`,
+        content: `Ìdentify 3 main objects as vizuale elements to vizualize "${subject}", output them in a singleshort phrase like:  "The image features 3 core elements: element_1, element_2 and element_3".`,
       },
     ],
   });
@@ -30,6 +28,7 @@ export const createImage = async ({
   const coreElements = completion.choices[0].message?.content;
 
   const prompt = createImagePrompt({ subject, style: clientInfo?.image_style, coreElements });
+  console.log('Prompt:', prompt);
 
   const picture = await openai.images.generate({
     model: 'dall-e-3',
