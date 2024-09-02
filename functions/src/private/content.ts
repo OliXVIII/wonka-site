@@ -357,7 +357,8 @@ export const editContentPrompt = async (
     KEEP THE SAME CONCLUSION TITLE.
     MAKE SURE THE CONCLUSION TITLE IS DIFFERENT OF "Conclusion: ".
         EACH SUBTITLE MUST BE IN A <H2> TAG.
-    Edit this article: "${article} (Make sure all title begin by an uppercase letter).
+    Edit this article: "${article}".
+
     IMPORTANT: the text must be in ${lang}, if the text is not in ${lang}, you must translate it in ${lang} before improving it.
     make sure the mission is not mentioned literally in the test, it should be implicit, only to guide the narration.
     Make sure that each paragraph is separated by a <p></p> tag.
@@ -371,45 +372,33 @@ export const editContentPrompt = async (
   };
 };
 
-export const createGreatestTitleEverMadePrompt = async (
-  article: string,
-  lang: string,
-  target_audience: string,
-  context: string,
-): Promise<{ system: string; user: string }> => {
+export const createGreatestTitleEverMadePrompt = async ({
+  prompt,
+  target_audience,
+  mission,
+  lang,
+}: {
+  prompt: string;
+  target_audience: string;
+  mission: string;
+  lang: string;
+}): Promise<{ system: string; user: string }> => {
+  //TODO: Use mission simply here
   return {
-    system: `You will receive an article, the target audience, and the context of the article.
-    - The title MUST be written in ${lang}.
-
-      Your task is to create the best possible title for this article.
-      What makes a great title?
-      The title should:
-      - Be short and concise (no more than 8 words).
+    system: `Your task is to create an article title with these requirements:
+      - Be short, concise and engaging (no more than 8 words).
       - Clearly convey what the article is about without giving away too much.
       - Be highly engaging and draw the reader's attention.
-      - MOST IMPORTANTLY, the title should contain keywords that the target audience would use to search for the article. It MUST BE SEO FRIENDLY.
-    
-      THE TITLE MUST BE SEO FRIENDLY AND INCLUDE KEYWORDS THAT THE TARGET AUDIENCE WOULD USE TO SEARCH FOR THE context.`,
+      - Contain keywords that the target audience would use to search for the article.
+      - Do NOT mention the target audience directly in the title.
+      - Be SEO FRIENDLY.
+      - Avoid using colons (:) or any special characters.
+      ${lang === 'french' ? '- Only use uppercase for the first letter of the title.' : ''}
 
-    user: `CREATE THE BEST POSSIBLE TITLE:
-    - The title should be no more than 8 words.
-    - It must relate directly to the content of the article.
-    - The title should be short, concise, and engaging.
-    - Avoid using colons (:) or any special characters.
-    - Do NOT mention the target audience directly in the title.
-    - IF (${lang} == "french" || ${lang} == "francais") {
-      ENSURE that only the first letter of the title is capitalized.
-    }
-    - The title MUST be written in ${lang}.
-    YOU MUST USE CHOICE OF WORD THAT ARE NOT ALREADY IN THE ARTICLE AS SUBTITLE OR TITLE.
 
-    THE TITLE MUST BE IN ${lang} AND SEO FRIENDLY.
+    Here's our context: target audience: "${target_audience}", mission: "${mission}".`,
 
-    MAKE SURE THAT, IF THE TITLE IS IN ENGLISH, EVERY FIRST LETTER OF THE MAJOR ORD IS UPPERCASE.
-
-    HERE'S THE CONTEXT OF THE ARTICLE, MAKE SURE TO FOLLOW THE INSTRUCTIONS: "${context}".
-    
-    Article: "${article}", target audience: "${target_audience}", and language: "${lang}".`,
+    user: `Create the best possible title for this article "${prompt}" in ${lang}.`,
   };
 };
 

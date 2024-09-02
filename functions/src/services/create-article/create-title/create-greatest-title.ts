@@ -3,23 +3,23 @@ import { createGreatestTitleEverMadePrompt } from '../../../private/content';
 
 // Function to generate a great SEO title
 export const createGreatestTitleEverMade = async (
-  subject: string,
+  prompt: string,
   target_audience: string,
   mission: string,
   lang: string,
 ): Promise<string> => {
-  const prompt = await createGreatestTitleEverMadePrompt(subject, target_audience, mission, lang);
+  const prompts = await createGreatestTitleEverMadePrompt({ prompt, target_audience, mission, lang });
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',
-        content: prompt.system,
+        content: prompts.system,
       },
       {
         role: 'user',
-        content: prompt.user,
+        content: prompts.user,
       },
     ],
   });

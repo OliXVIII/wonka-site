@@ -53,7 +53,9 @@ export const createNewArticle = async ({
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const title = await createSEOTitle(prompt, target_audience, mission, lang);
+  const title = await createGreatestTitleEverMade(prompt, target_audience, mission, lang);
+
+  //TODO: Later, no added value, shorten id
   const id = convertTitleToID(title);
 
   const listSubtitle = await getListSubtitle(prompt, target_audience, mission, title, language);
@@ -66,6 +68,7 @@ export const createNewArticle = async ({
       if (index === 0) {
         return await createContentForIntro(subtitle, mission, prompt, target_audience, listSubtitle);
       } else if (index === listSubtitle.length - 1) {
+        //TODO: Offer availability in closure for the user to add a call to action (MAYBE)
         return await createContentForClosure(subtitle, mission, prompt, target_audience, listSubtitle);
       } else {
         return await createBody(subtitle, mission, prompt, target_audience, listSubtitle);
@@ -79,8 +82,7 @@ export const createNewArticle = async ({
   console.log('draft finished');
   body = await improveBody(body, language, listSubtitle, prompt);
   let content = `${listDraft[0]}\n${body}\n${listDraft[listDraft.length - 1]}`;
-  const greatestTitle = await createGreatestTitleEverMade(prompt, target_audience, mission, lang);
-  content = await editContent(content, language, listSubtitle, greatestTitle, prompt);
+  content = await editContent(content, language, listSubtitle, title, prompt);
 
   //Add sources if needed
   if (source) {
