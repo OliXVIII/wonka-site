@@ -88,15 +88,8 @@ export const createNewArticle = async ({
 
   content = preprocessJSON(content).replace('html', '');
 
-  // const idMatch = content.match(/<h1 id="([^"]+)">/);
-  // const title = content.match(/<h1 id="[^"]+">(.+?)<\/h1>/)?.[1] ?? '';
-
-  // const id = idMatch?.[1] ?? '';
-
-  //const finalContent = createFinalContent(content); //TODO: Implementer cette fonction, retourne un article JSON, HTML ou plain text à voir
-
   //Étape 4: Générer metadata tags (title, description, keywords, ++) et thumbnail pour le contenu final
-  // TODO: Do this in parallel
+  // TODO: Do this in parallel, generate metadata
   // const [metadata, chartDataset] = await Promise.all([
   //   generateMetadata(finalContent),
   //   hasChartDataset ? await createChartDataset({ prompt, lang }) : null,
@@ -118,7 +111,7 @@ export const createNewArticle = async ({
     dataset = await createChartDataset(prompt + ' ' + description, localesDetails[lang]);
     const chart_info = extractLabelAndTitleFromString(dataset);
 
-    //TODO: This is very very slow and costly for no reason, maybe use the title and prompt to generate the chart or generate the chart in the same step as the content?
+    //TODO: Not a priority as of Sep. 02 2024, but this is very very slow and costly for no reason, maybe use the title and prompt to generate the chart or generate the chart in the same step as the content?
     //I don't have a good solution for this yet, but it's a problem
     content = preprocessJSON(await addChartToArticle(content, chart_info)).replaceAll('html', '');
     console.log('chart added');
