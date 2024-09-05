@@ -8,8 +8,8 @@ export const get10RootIdeasPrompt = async (
 
     -You will generate 10 ideas related to the subject, mission, and target audience.
     -This should be a list of subjects that can be further developed into articles.
-    -The ideas should be unique and interesting.
-    -The ideas should be in the language provided in the subject.
+    - Each ideas should be unique and interesting.
+    - Each ideas should bring value to our target audience quickly.
     -You will return an array of 10 ideas.
     `,
     user: `Here's the subject: "${subject}", the mission: "${mission}", the target audience: "${target_audience}".`,
@@ -28,8 +28,8 @@ export const get10IdeasFromIdeaPrompt = async (
   
       -You will generate 10 new ideas related to the specific idea while taking into account the mission and target audience.
       -This should be a list of subjects that can be further developed into articles for online referencing.
-      -The ideas should be unique and interesting.
-      -The ideas should be in the language provided.
+      - Each ideas should be unique and interesting.
+      - Each ideas should bring value to our target audience quickly.
       -You will return an array of 10 ideas.
 
       Each idea should only be a few words long.
