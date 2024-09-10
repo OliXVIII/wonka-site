@@ -11,6 +11,8 @@ import { createChartDataset } from './services/create-chart-dataset.ts/create-da
 import { get100Ideas } from './services/get-100-ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
 import { createImage } from './services/create-image/create-image';
+import { getTranslation } from './services/firebase/add-article';
+import { Article } from './types/article';
 
 const app = express();
 
@@ -118,7 +120,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   let { href, clientId, lang, id } = req.body as {
     href: string;
     clientId: string;
-    lang: 'en' | 'fr';
+    lang: Locale;
     id: string;
     thumbnail?: string;
   };
@@ -172,7 +174,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     }
   }
 
-  const linkedinPost = await generateLinkedinPost(html, image, href);
+  const linkedinPost = await generateLinkedinPost(html, image, href, localesDetails[lang]);
 
   const email = emailContent({ lang, subject: title, linkedinPost, href });
 
@@ -185,6 +187,19 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   await snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
   await snapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
+
+  for (const translateLang of ['en', 'fr'] as Locale[]) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      const translateSnapshot = await dbAdmin.doc(`${clientId}/${translateLang}/articles/${id}`).get();
+
+      if (translateSnapshot.exists) {
+        await translateSnapshot.ref.update({ published: true, thumbnail: data.thumbnail });
+        await translateSnapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
+      }
+    }
+  }
 
   res.status(200).send('New article published');
 });
@@ -300,6 +315,33 @@ app.get('/update-chart-dataset', async (req: express.Request, res: express.Respo
   await docRef.update({ dataset });
 
   res.status(200).send(dataset);
+});
+
+app.post('/get-translations', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, id } = req.body as { clientId: string; lang: Locale; id: string };
+  const snapshot = await dbAdmin.doc(`${clientId}/${lang}/articles/${id}`).get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
+    return;
+  }
+  const article = snapshot.data() as Article | undefined;
+
+  if (!article) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const hardcodedClientLang = ['en', 'fr'] as Locale[];
+
+  for (const translateLang of hardcodedClientLang) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      await getTranslation(article, clientId, translateLang);
+    }
+  }
+  res.status(200).send('Translations generated');
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {

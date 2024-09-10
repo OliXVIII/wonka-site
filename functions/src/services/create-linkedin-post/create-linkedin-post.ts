@@ -1,9 +1,15 @@
 import { openai } from '../../lib/open-ai';
 import { linkedinSecretPrompt } from '../../private/linkedin';
+import { LocaleDetails } from '../../types/languages';
 
-export const generateLinkedinPost = async (content: string, image: string, href: string): Promise<string | null> => {
+export const generateLinkedinPost = async (
+  content: string,
+  image: string,
+  href: string,
+  locale: LocaleDetails,
+): Promise<string | null> => {
   try {
-    const prompt = linkedinSecretPrompt(content, href, image);
+    const prompt = linkedinSecretPrompt(content, href, image, locale.language);
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',

@@ -1,3 +1,5 @@
+import { Locale } from '../types/languages';
+
 export const emailContent = ({
   href,
   lang,
@@ -7,7 +9,7 @@ export const emailContent = ({
   subject,
 }: {
   href: string;
-  lang: 'en' | 'fr';
+  lang: Locale;
   linkedinPost?: string | null;
   facebookPost?: string | null;
   twitterPost?: string | null; // Define the type for twitterPost
@@ -46,5 +48,5 @@ export const emailContent = ({
     fr: `Nouvel article publié: "${subject}"`,
   };
 
-  return { content: emailTemplates[lang], title: title[lang] };
+  return { content: emailTemplates[lang as 'en' | 'fr'], title: title[lang as 'en' | 'fr'] };
 };

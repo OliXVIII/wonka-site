@@ -1,5 +1,6 @@
 'use server';
 
+import { Timestamp } from 'firebase-admin/firestore';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { openai } from '../../lib/open-ai';
 import { Article } from '../../types/article';
@@ -21,9 +22,9 @@ export const addArticle = async (article: Article, clientId: string, lang: Local
     for (const translateLang of hardcodedClientLang) {
       if (translateLang === lang) {
         continue;
+      } else {
+        await getTranslation(article, clientId, translateLang);
       }
-
-      await getTranslation(article, clientId, translateLang);
     }
   } catch (error) {
     console.error('add-article.ts: Error adding article:', error);
@@ -34,12 +35,13 @@ export const addArticle = async (article: Article, clientId: string, lang: Local
 export const getTranslation = async (article: Article, clientId: string, lang: Locale): Promise<void> => {
   const locale = localesDetails[lang];
   const prompts = {
-    system: `You are TranslateAI. Your task is to rewrite it in ${locale.language}.
+    system: `You are TranslateAI. Your task is to rewrite this JSON obejct in ${locale.language} and return a translated JSON object.
     The purpose here is to outline the same information in a different language while adapting to the language's specificities.
     Dont be too literal, make it sound natural.
-    Make sure the headline is catchy.`,
+    Make sure the headline is catchy.
+    ${lang === 'fr' ? '- Only use uppercase for the first letter of the title.' : ''}`,
     user: `Translate this article into ${locale.language}:
-    ${JSON.stringify({ ...article, id: undefined, author: undefined, published: undefined })}`,
+    ${JSON.stringify({ ...article, id: undefined, author: undefined, published: undefined, created: undefined })}`,
   };
 
   const completion = await openai.chat.completions.create({
@@ -67,6 +69,7 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
   data.id = article.id;
   data.author = article.author;
   data.published = false;
+  data.created = Timestamp.now();
 
   const docRefTranslate = dbAdmin.doc(`${clientId}/${lang}/articles/${data.id}`);
 
