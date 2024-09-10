@@ -385,7 +385,9 @@ export const createGreatestTitleEverMadePrompt = async ({
 }): Promise<{ system: string; user: string }> => {
   //TODO: Use mission simply here
   return {
-    system: `Your task is to create an article title with these requirements:
+    system: `Your task is to return a JSON object with 2 field 'id' and 'title'
+    Id must a valid, long enough to be unique but still short, SEO id representing the title.
+    Title must:
       - Be short, concise and engaging (no more than 8 words).
       - Clearly convey what the article is about without giving away too much.
       - Be highly engaging and draw the reader's attention.
@@ -396,9 +398,11 @@ export const createGreatestTitleEverMadePrompt = async ({
       ${lang === 'french' ? '- Only use uppercase for the first letter of the title.' : ''}
 
 
-    Here's our context: target audience: "${target_audience}", mission: "${mission}".`,
+    Here's our context:
+    target audience: "${target_audience}".
+    mission: "${mission}".`,
 
-    user: `Create the best possible title for this article "${prompt}" in ${lang}.`,
+    user: `Create the best possible 'id' and 'title' for this article "${prompt}" in ${lang}.`,
   };
 };
 

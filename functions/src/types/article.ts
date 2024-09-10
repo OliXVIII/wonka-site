@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
+import { Locale } from './languages';
 
 export type Article = {
   content: string;
@@ -18,4 +19,5 @@ export type Article = {
     content: string;
     thumbnail?: string;
   };
+  translation?: Partial<Record<Locale, string>>;
 };

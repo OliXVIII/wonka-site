@@ -15,9 +15,8 @@ import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
 import { addChartToArticle } from './create-article/edit-article/add-chart-to-article';
 import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
-import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
 import { translate } from './translate-prompt';
-// import { getContext } from './create-content-article/get-context';
+import { dbAdmin } from '../lib/firebase-admin';
 
 export const createNewArticle = async ({
   mission,
@@ -42,18 +41,25 @@ export const createNewArticle = async ({
   //Étape 1: getListSubtitle, créer une liste de sous-titres
 
   const language = localesDetails[lang].language;
-  if (prompt.length < 70) {
+  if (prompt.length < 50) {
     prompt = await addInstructionToPrompt(prompt);
   }
-
-  prompt = await translate(prompt, language);
+  if (lang !== 'en') {
+    prompt = await translate(prompt, language);
+  }
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const title = await createGreatestTitleEverMade(prompt, target_audience, mission, lang);
+  const { title, id } = await createGreatestTitleEverMade(prompt, target_audience, mission, lang);
+
+  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
+
+  if ((await docRef.get()).exists) {
+    console.log('Document already exists');
+    return;
+  }
 
   //TODO: Later, no added value, shorten id
-  const id = convertTitleToID(title);
 
   const listSubtitle = await getListSubtitle(prompt, target_audience, mission, title, language);
 

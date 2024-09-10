@@ -183,7 +183,8 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   await sendEmail(email);
 
-  snapshot.ref.update({ published: true, thumbnail: data.thumbnail, prompt: { thumbnail: data.prompt.thumbnail } });
+  await snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
+  await snapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
 
   res.status(200).send('New article published');
 });
