@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-new-article';
 import { Locale, isValidLanguage, localesDetails } from './types/languages';
-import { generateLinkedinPost } from './services/create-linkedin-post/create-linkedin-post';
+import { generateLinkedinPost } from './services/create-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
@@ -13,6 +13,7 @@ import { ClientInfo } from './types/client-info';
 import { createImage } from './services/create-image/create-image';
 import { getTranslation } from './services/firebase/add-article';
 import { Article } from './types/article';
+import { generateTwitterPost } from './services/create-post/create-twitter-post';
 
 const app = express();
 
@@ -176,7 +177,9 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   const linkedinPost = await generateLinkedinPost(html, image, href, localesDetails[lang]);
 
-  const email = emailContent({ lang, subject: title, linkedinPost, href });
+  const twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
+
+  const email = emailContent({ lang, subject: title, linkedinPost, twitterPost, href });
 
   if (!email) {
     res.status(400).send('Failed to generate email content');
@@ -282,6 +285,8 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
   }
   try {
     await deleteAllUnpublishedArticles(clientId, lang);
+
+    //TODO: delete all translations ?
     res.status(200).send('All unpublished articles deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
