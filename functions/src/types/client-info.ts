@@ -8,4 +8,5 @@ export type ClientInfo = {
   image_style: ImageStyle;
   mission: string;
   target_audience?: string;
+  CTA: string;
 };

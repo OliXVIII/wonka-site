@@ -17,8 +17,9 @@ import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
 import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
 import { translate } from './translate-prompt';
+import { improveConclusion } from './create-article/edit-article/improve-closure';
 // import { getContext } from './create-content-article/get-context';
-
+//TODO add CTA attribute in the database
 export const createNewArticle = async ({
   mission,
   target_audience,
@@ -28,6 +29,8 @@ export const createNewArticle = async ({
   author,
   prompt,
   chart,
+  CTA,
+  domain,
 }: {
   mission: string;
   target_audience: string;
@@ -37,10 +40,11 @@ export const createNewArticle = async ({
   author: string;
   prompt: string;
   chart: boolean;
+  CTA: string;
+  domain: string;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
-
   const language = localesDetails[lang].language;
   if (prompt.length < 70) {
     prompt = await addInstructionToPrompt(prompt);
@@ -50,23 +54,46 @@ export const createNewArticle = async ({
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const title = await createGreatestTitleEverMade(prompt, target_audience, mission, lang);
+  const title = await createGreatestTitleEverMade(prompt, target_audience, mission, language);
+  console.log('lang', lang);
+  console.log('language', language);
+  console.log('title: ', title);
 
   //TODO: Later, no added value, shorten id
   const id = convertTitleToID(title);
 
   const listSubtitle = await getListSubtitle(prompt, target_audience, mission, title, language);
-
+  console.log('listSubtitle: ', listSubtitle);
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
   const listDraft = await Promise.all(
     listSubtitle.map(async (subtitle) => {
       const index = listSubtitle.indexOf(subtitle);
 
       if (index === 0) {
-        return await createContentForIntro(subtitle, mission, prompt, target_audience, listSubtitle);
+        return await createContentForIntro(subtitle, mission, prompt, target_audience, listSubtitle, lang);
       } else if (index === listSubtitle.length - 1) {
         //TODO: Offer availability in closure for the user to add a call to action (MAYBE)
-        return await createContentForClosure(subtitle, mission, prompt, target_audience, listSubtitle);
+        let conclusion = await createContentForClosure(
+          subtitle,
+          mission,
+          prompt,
+          target_audience,
+          listSubtitle,
+          language,
+          CTA,
+          domain,
+        );
+        return await improveConclusion(
+          subtitle,
+          mission,
+          prompt,
+          target_audience,
+          listSubtitle,
+          language,
+          CTA,
+          domain,
+          conclusion,
+        );
       } else {
         return await createBody(subtitle, mission, prompt, target_audience, listSubtitle);
       }

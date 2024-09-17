@@ -1,18 +1,18 @@
 export const get10RootIdeasPrompt = async (
-  subject: string,
   mission: string,
   target_audience: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a context consisting of a subject, a mission, and a target audience.
 
+    Important: the result should be display in a way that can be used in a JSON.parse() function.
     -You will generate 10 ideas related to the subject, mission, and target audience.
     -This should be a list of subjects that can be further developed into articles.
     -The ideas should be unique and interesting.
     -The ideas should be in the language provided in the subject.
     -You will return an array of 10 ideas.
     `,
-    user: `Here's the subject: "${subject}", the mission: "${mission}", the target audience: "${target_audience}".`,
+    user: `Here's the mission: "${mission}", the target audience: "${target_audience}".`,
   };
 };
 
@@ -35,5 +35,26 @@ export const get10IdeasFromIdeaPrompt = async (
       Each idea should only be a few words long.
         `,
     user: `Here's the idea: ${idea}, the mission: ${mission}, the target audience: ${target_audience}.`,
+  };
+};
+
+export const getNextArticleIdeasPrompt = async (
+  ideas: string[],
+  mission: string,
+  target_audience: string,
+): Promise<{ system: string; user: string }> => {
+  return {
+    system: `You will receive a list of ideas, a mission, and a target audience.
+      You will receive a list of 100 ideas, you will pick the 7 best ideas for the user to pick from.
+
+      The first idea should be the best one, the second idea should be the second best one, and so on.
+      Result should only be a list[] of 7 ideas.
+      Result must be type string[].
+      
+      Here's what's make a good idea:
+      - The idea should be interesting enough to create content around it.
+      - The idea should reflect the mission and target audience.
+    `,
+    user: `Here's the mission: ${mission}, the target audience: ${target_audience} and the list of 100 ideas: ${ideas}.`,
   };
 };

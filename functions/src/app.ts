@@ -8,14 +8,17 @@ import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
 import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
-import { get100Ideas } from './services/get-100-ideas/get-100-ideas';
+import { get100Ideas } from './services/ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
 import { createImage } from './services/create-image/create-image';
+import { v4 as uuidv4 } from 'uuid';
+import { getNextArticleIdeas } from './services/ideas/get-next-article-idea';
 
 const app = express();
 
 app.use(bodyParser.json());
 
+//TODO: recall get100ideas if ideas is empty
 app.post('/createNewArticle', async (req: express.Request, res: express.Response) => {
   let {
     prompt,
@@ -40,7 +43,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const { mission, ideas, target_audience = 'general', default_author } = info.data() as ClientInfo;
+  const { mission, ideas, target_audience = 'general', default_author, CTA, domain } = info.data() as ClientInfo;
 
   if (!mission || !target_audience || !default_author) {
     res.status(400).send('Client incomplete');
@@ -80,6 +83,8 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     author,
     prompt,
     chart,
+    CTA,
+    domain,
   });
 
   res.status(200).send({ id, lang });
@@ -302,10 +307,10 @@ app.get('/update-chart-dataset', async (req: express.Request, res: express.Respo
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {
-  const { clientId, subject } = req.body as { clientId: string; subject: string };
+  const { clientId } = req.body as { clientId: string; subject: string };
 
-  if (!clientId || !subject) {
-    res.status(400).send('Missing required parameters');
+  if (!clientId) {
+    res.status(400).send('Missing clientId');
     return;
   }
 
@@ -319,7 +324,7 @@ app.get('/get-100-ideas', async (req: express.Request, res: express.Response) =>
   }
   const { mission, target_audience } = snapshot.data() as { mission: string; target_audience: string };
 
-  const data = await get100Ideas(subject, mission, target_audience);
+  const data = await get100Ideas(mission, target_audience);
 
   await docRef.update({ ideas: data });
 
@@ -332,3 +337,28 @@ app.get('/ping', async (req: express.Request, res: express.Response) => {
 
 //export app for firebase functions
 export default app;
+
+//TODO number left
+app.post('/setupClient', async (req: express.Request, res: express.Response) => {
+  console.log('req.body', req.body);
+  const { mission, company_name, target_audience, image_style, CTA = '', domain = '' } = req.body;
+  const clientId = uuidv4();
+
+  let ideas100 = await get100Ideas(mission, target_audience);
+  const nextIdeas = await getNextArticleIdeas(ideas100, mission, target_audience);
+  ideas100 = ideas100.filter((idea) => !nextIdeas.includes(idea));
+
+  const docRef = dbAdmin.doc(`${clientId}/info`);
+  const info = {
+    mission,
+    company_name,
+    target_audience,
+    image_style,
+    ideas: ideas100,
+    domain,
+    CTA,
+    nextIdeas,
+  };
+  docRef.set(info);
+  res.status(200).send({ ...info, clientId });
+});
