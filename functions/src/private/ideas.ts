@@ -11,8 +11,12 @@ export const get10RootIdeasPrompt = async (
     - The ideas should be unique and interesting.
     - The ideas should be in the language provided in the subject.
     - You will return an array of 10 ideas.
+    - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
+    - The idea should have a wider scope than the subject.
+    - Use different theme for each idea.
     `,
-    user: `Here's the mission: "${mission}", the target audience: "${targetAudience}".`,
+    user: `Here's the mission: "${mission}", the target audience: "${targetAudience}".
+    Important: the result should be display in a way that can be used in a JSON.parse() function.`,
   };
 };
 
@@ -32,6 +36,10 @@ export const get10IdeasFromIdeaPrompt = async (
       - The ideas should be in the language provided.
       - You will return an array of 10 ideas.
       - Each idea should engage the target audience.
+      - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
+      - The idea should have a wider scope than the idea.
+
+
 
       Each idea should only be a few words long.
         `,
@@ -53,9 +61,12 @@ export const getNextArticleIdeasPrompt = async (
       Result must be type string[].
       
       Here's what's make a good idea:
+      - Pick ideas the company would be advantageous to create content around.
       - The idea should be interesting enough to create content around it.
       - The idea should reflect the mission and target audience.
       - The idea should engage the target audience.
+      - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
+
     `,
     user: `Here's the mission: ${mission}, the target audience: ${targetAudience} and the list of 100 ideas: ${ideas}.`,
   };
