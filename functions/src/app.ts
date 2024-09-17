@@ -16,6 +16,7 @@ import { getNextArticleIdeas } from './services/ideas/get-next-article-idea';
 import { getTranslation } from './services/firebase/add-article';
 import { Article } from './types/article';
 import { generateTwitterPost } from './services/create-post/create-twitter-post';
+import { Timestamp } from 'firebase-admin/firestore';
 
 const app = express();
 
@@ -422,7 +423,7 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
     CTA,
     nextIdeas,
   };
-  await docRef.set(info);
+  await docRef.set({ ...info, creationDate: Timestamp.now() });
   res.status(200).json({ ...info, clientId });
 });
 
