@@ -15,9 +15,9 @@ import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
 import { addChartToArticle } from './create-article/edit-article/add-chart-to-article';
 import { extractLabelAndTitleFromString } from './util/get-chart-info';
 import { addInstructionToPrompt } from './add-instruction-to-prompt';
-import { convertTitleToID } from './create-article/create-title/convert-title-to-id';
 import { translate } from './translate-prompt';
 import { improveConclusion } from './create-article/edit-article/improve-closure';
+import { dbAdmin } from '../lib/firebase-admin';
 // import { getContext } from './create-content-article/get-context';
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({
@@ -46,21 +46,25 @@ export const createNewArticle = async ({
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
   const language = localesDetails[lang].language;
-  if (prompt.length < 70) {
+  if (prompt.length < 50) {
     prompt = await addInstructionToPrompt(prompt);
   }
-
-  prompt = await translate(prompt, language);
+  if (lang !== 'en') {
+    prompt = await translate(prompt, language);
+  }
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const title = await createGreatestTitleEverMade(prompt, targetAudience, mission, language);
-  console.log('lang', lang);
-  console.log('language', language);
-  console.log('title: ', title);
+  const { title, id } = await createGreatestTitleEverMade(prompt, targetAudience, mission, lang);
+
+  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
+
+  if ((await docRef.get()).exists) {
+    console.log('Document already exists');
+    return;
+  }
 
   //TODO: Later, no added value, shorten id
-  const id = convertTitleToID(title);
 
   const listSubtitle = await getListSubtitle(prompt, targetAudience, mission, title, language);
   console.log('listSubtitle: ', listSubtitle);

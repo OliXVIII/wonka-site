@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-new-article';
 import { Locale, isValidLanguage, localesDetails } from './types/languages';
-import { generateLinkedinPost } from './services/create-linkedin-post/create-linkedin-post';
+import { generateLinkedinPost } from './services/create-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
@@ -13,6 +13,9 @@ import { ClientInfo } from './types/client-info';
 import { createImage } from './services/create-image/create-image';
 import { v4 as uuidv4 } from 'uuid';
 import { getNextArticleIdeas } from './services/ideas/get-next-article-idea';
+import { getTranslation } from './services/firebase/add-article';
+import { Article } from './types/article';
+import { generateTwitterPost } from './services/create-post/create-twitter-post';
 
 const app = express();
 
@@ -123,7 +126,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   let { href, clientId, lang, id } = req.body as {
     href: string;
     clientId: string;
-    lang: 'en' | 'fr';
+    lang: Locale;
     id: string;
     thumbnail?: string;
   };
@@ -177,9 +180,11 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     }
   }
 
-  const linkedinPost = await generateLinkedinPost(html, image, href);
+  const linkedinPost = await generateLinkedinPost(html, image, href, localesDetails[lang]);
 
-  const email = emailContent({ lang, subject: title, linkedinPost, href });
+  const twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
+
+  const email = emailContent({ lang, subject: title, linkedinPost, twitterPost, href });
 
   if (!email) {
     res.status(400).send('Failed to generate email content');
@@ -188,7 +193,21 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   await sendEmail(email);
 
-  snapshot.ref.update({ published: true, thumbnail: data.thumbnail, prompt: { thumbnail: data.prompt.thumbnail } });
+  await snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
+  await snapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
+
+  for (const translateLang of ['en', 'fr'] as Locale[]) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      const translateSnapshot = await dbAdmin.doc(`${clientId}/${translateLang}/articles/${id}`).get();
+
+      if (translateSnapshot.exists) {
+        await translateSnapshot.ref.update({ published: true, thumbnail: data.thumbnail });
+        await translateSnapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
+      }
+    }
+  }
 
   res.status(200).send('New article published');
 });
@@ -271,6 +290,8 @@ app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: exp
   }
   try {
     await deleteAllUnpublishedArticles(clientId, lang);
+
+    //TODO: delete all translations ?
     res.status(200).send('All unpublished articles deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
@@ -304,6 +325,33 @@ app.get('/update-chart-dataset', async (req: express.Request, res: express.Respo
   await docRef.update({ dataset });
 
   res.status(200).send(dataset);
+});
+
+app.post('/get-translations', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, id } = req.body as { clientId: string; lang: Locale; id: string };
+  const snapshot = await dbAdmin.doc(`${clientId}/${lang}/articles/${id}`).get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
+    return;
+  }
+  const article = snapshot.data() as Article | undefined;
+
+  if (!article) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const hardcodedClientLang = ['en', 'fr'] as Locale[];
+
+  for (const translateLang of hardcodedClientLang) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      await getTranslation(article, clientId, translateLang);
+    }
+  }
+  res.status(200).send('Translations generated');
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {

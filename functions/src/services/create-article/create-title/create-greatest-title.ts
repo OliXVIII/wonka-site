@@ -7,11 +7,15 @@ export const createGreatestTitleEverMade = async (
   targetAudience: string,
   mission: string,
   lang: string,
-): Promise<string> => {
+  retry: boolean = false,
+): Promise<{
+  title: string;
+  id: string;
+}> => {
   const prompts = await createGreatestTitleEverMadePrompt({ prompt, targetAudience, mission, lang });
 
   const completion = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',
@@ -22,9 +26,19 @@ export const createGreatestTitleEverMade = async (
         content: prompts.user,
       },
     ],
+    response_format: { type: 'json_object' },
   });
 
   const content = completion.choices[0].message?.content;
 
-  return content ?? 'No content generated';
+  if (!content) {
+    if (retry) {
+      throw new Error('Failed to generate a title and id');
+    }
+    return createGreatestTitleEverMade(prompt, targetAudience, mission, lang, true);
+  }
+
+  const data = JSON.parse(content) as { title: string; id: string };
+
+  return data;
 };
