@@ -3,7 +3,7 @@ import { stylePreferences } from '../private/image-prompt';
 export type ClientInfo = {
   clientId?: string;
   companyName: string;
-  default_author: string;
+  defaultAuthor?: string;
   domain: string;
   ideas: string[];
   stylePreferences: stylePreferences;

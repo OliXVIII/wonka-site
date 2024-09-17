@@ -47,15 +47,15 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const { mission, ideas, targetAudience = 'general', default_author, CTA, domain } = info.data() as ClientInfo;
+  const { mission, ideas, targetAudience = 'general', defaultAuthor, CTA, domain, companyName } = info.data() as ClientInfo;
 
-  if (!mission || !targetAudience || !default_author) {
+  if (!mission || !targetAudience) {
     res.status(400).send('Client incomplete');
     return;
   }
 
   if (!author) {
-    author = default_author;
+    author = defaultAuthor ? defaultAuthor : companyName;
   }
 
   if (!mission || (!prompt && !ideas) || !clientId || !lang) {
@@ -267,6 +267,15 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
   }
   try {
     await deleteUnpublishedArticle(clientId, lang, id);
+
+    // Delete all translations
+    for (const translateLang of ['en', 'fr'] as Locale[]) {
+      if (translateLang === lang) {
+        continue;
+      } else {
+        await deleteUnpublishedArticle(clientId, translateLang, id);
+      }
+    }
     res.status(200).send('Unpublished article deleted successfully.');
   } catch (error) {
     console.error('Error deleting article:', error);
