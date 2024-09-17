@@ -389,14 +389,19 @@ export default app;
 //TODO number left
 app.post('/setupClient', async (req: express.Request, res: express.Response) => {
   console.log('req.body', req.body);
-  let { mission, companyName, targetAudience, imageStyle, CTA = '', domain = '', clientId } = req.body as ClientInfo;
+  let { mission, companyName, targetAudience, stylePreferences, CTA = '', domain = '', clientId } = req.body as ClientInfo;
+
+  if (!mission || !companyName || !targetAudience || !stylePreferences) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
 
   if (clientId) {
     const docRef = dbAdmin.doc(`${clientId}/info`);
     const snapshot = await docRef.get();
     if (snapshot.exists) {
       const data = snapshot.data() as ClientInfo;
-      res.status(200).send(data);
+      res.status(201).json({ ...data, clientId });
       return;
     }
   }
@@ -411,12 +416,12 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
     mission,
     companyName,
     targetAudience,
-    imageStyle,
+    stylePreferences,
     ideas: ideas100,
     domain,
     CTA,
     nextIdeas,
   };
-  docRef.set(info);
-  res.status(200).send({ ...info, clientId });
+  await docRef.set(info);
+  res.status(200).json({ ...info, clientId });
 });

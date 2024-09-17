@@ -1,4 +1,4 @@
-import { ImageStyle } from '../private/image-prompt';
+import { stylePreferences } from '../private/image-prompt';
 
 export type ClientInfo = {
   clientId?: string;
@@ -6,7 +6,7 @@ export type ClientInfo = {
   default_author: string;
   domain: string;
   ideas: string[];
-  imageStyle: ImageStyle;
+  stylePreferences: stylePreferences;
   mission: string;
   targetAudience: string;
   CTA: string;
