@@ -425,3 +425,30 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
   await docRef.set(info);
   res.status(200).json({ ...info, clientId });
 });
+
+// Add this code after your existing endpoints
+
+app.post('/finishSetup', async (req, res) => {
+  console.log('req.body', req.body);
+  const { clientId, info } = req.body;
+
+  // Check if clientId is provided
+  if (!clientId) {
+    res.status(400).send('Missing clientId');
+    return;
+  }
+
+  const docRef = dbAdmin.doc(`${clientId}/info`);
+  const snapshot = await docRef.get();
+
+  // Check if the client exists
+  if (!snapshot.exists) {
+    res.status(404).send('Client not found');
+    return;
+  }
+
+  // Update the client's info with the new data
+  await docRef.update(info);
+
+  res.status(200).json({ message: 'Setup finished successfully', clientId });
+});
