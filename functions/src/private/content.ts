@@ -20,7 +20,7 @@
 
 // export const createSEOTitlePrompt = async (
 //   context: string,
-//   target_audience: string,
+//   targetAudience: string,
 //   mission: string,
 //   lang: string,
 // ): Promise<{ system: string; user: string }> => {
@@ -36,7 +36,7 @@
 //       SEO title must not have any adverb
 //       or any useless word that are not necessary for the seo title, only use keyword for the SEO title,
 //       also make sure that the seo title is in "${lang}"
-//       - the seo title should use words that a "${target_audience}" would use to search for the article.
+//       - the seo title should use words that a "${targetAudience}" would use to search for the article.
 //       - a great seo title have key word that a user would use to search for the article.
 //       - the seo title will not have any whitespace or special character.
 //       `,
@@ -45,7 +45,7 @@
 //     ONLY USE THE MOST IMPORTANT KEYWORDS.
 //     EVERY KEYWORDS MUST BY SEPARATED BY A "-" (DASH).
 //     Here is the context you will use to create the seo title: "${context}",
-//     your target audience for this is: "${target_audience}",
+//     your target audience for this is: "${targetAudience}",
 //     and the mission is: "${mission}".
 
 //     Make sure the title is not exactly the same as the context. (should use different word)
@@ -54,7 +54,7 @@
 // };
 export const createSEOTitlePrompt = async (
   prompt: string,
-  target_audience: string,
+  targetAudience: string,
   mission: string,
   lang: string,
 ): Promise<{ system: string; user: string }> => {
@@ -69,7 +69,7 @@ export const createSEOTitlePrompt = async (
     `,
 
     user: `Create a concise SEO title in ${lang} for an article about "${prompt}".
-    - Use the target audience: "${target_audience}", and mission: "${mission}".
+    - Use the target audience: "${targetAudience}", and mission: "${mission}".
     - Ensure the title aligns with common search behavior and is not identical to the context.
     ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
     `,
@@ -78,7 +78,7 @@ export const createSEOTitlePrompt = async (
 
 export const getListOfSubjectSecretPrompt = async (
   context: string,
-  target_audience: string,
+  targetAudience: string,
   mission: string,
   seoTitle: string,
   lang: string,
@@ -102,7 +102,7 @@ export const getListOfSubjectSecretPrompt = async (
     - Only return an array of subtitle, nothing else.
     `,
     user: `Write an array of subtitle for the following context: "${context}".
-    Your target audience is"${target_audience}", and the mission is: "${mission}".
+    Your target audience is"${targetAudience}", and the mission is: "${mission}".
     You have a SEO title you can use for addition information: "${seoTitle}".
     SEO TITLE MUST NOT BE IN THE LIST OF SUBTITLE.
     `,
@@ -113,7 +113,7 @@ export const getBodyPrompt = async (
   subtitle: string,
   mission: string,
   context: string,
-  target_audience: string,
+  targetAudience: string,
   listSubtitle: string[],
 ): Promise<{ system: string; user: string }> => {
   return {
@@ -136,7 +136,7 @@ export const getBodyPrompt = async (
     - Don't mention the target audience in the text, this is only to guide the narration.
     `,
     user: `
-    Create content for the subtitle "${subtitle}, your target audience for this is: "${target_audience}, the mission is: "${mission}".
+    Create content for the subtitle "${subtitle}, your target audience for this is: "${targetAudience}, the mission is: "${mission}".
     The context of the article is, use the context as instructions: "${context}".
     `,
   };
@@ -146,7 +146,7 @@ export const getIntroPrompt = async (
   intro: string,
   mission: string,
   context: string,
-  target_audience: string,
+  targetAudience: string,
   subtitle: string[],
   lang: string,
 ): Promise<{ system: string; user: string }> => {
@@ -168,7 +168,7 @@ export const getIntroPrompt = async (
     "
     `,
     user: `Create an introduction respecting the requirements for the introduction: "${intro},
-    your target audience for this is: "${target_audience}, 
+    your target audience for this is: "${targetAudience}, 
     Keep in mind that the mission is ${mission} and the context is "${context}".
     `,
   };
@@ -177,7 +177,7 @@ export const getConclusionPrompt = async (
   closure: string,
   mission: string,
   context: string,
-  target_audience: string,
+  targetAudience: string,
   subtitle: string[],
   lang: string,
   CTA: string,
@@ -211,7 +211,7 @@ export const getConclusionPrompt = async (
     "
     `,
     user: `Create a conclusion respecting the requirements for the conclusion: "${closure},
-    your target audience is: "${target_audience}:,
+    your target audience is: "${targetAudience}:,
     the mission is: "${mission}" and the context is "${context}".
     Here's a list of the subtitle of this article to help you do logical transition between the content: ${subtitle}.
     `,
@@ -222,7 +222,7 @@ export const improveConclusionPrompt = async (
   closure: string,
   mission: string,
   prompt: string,
-  target_audience: string,
+  targetAudience: string,
   subtitle: string[],
   lang: string,
   CTA: string,
@@ -245,7 +245,7 @@ export const improveConclusionPrompt = async (
     "
     `,
     user: `Create a conclusion respecting the requirements for the conclusion: "${closure},
-    your target audience is: "${target_audience}:,
+    your target audience is: "${targetAudience}:,
     the mission is: "${mission}" and the context is "${prompt}".
     Here's the conclusion you will improve: "${conclusion}".
     `,
@@ -316,12 +316,12 @@ export const editContentPrompt = async (
 
 export const createGreatestTitleEverMadePrompt = async ({
   prompt,
-  target_audience,
+  targetAudience,
   mission,
   lang,
 }: {
   prompt: string;
-  target_audience: string;
+  targetAudience: string;
   mission: string;
   lang: string;
 }): Promise<{ system: string; user: string }> => {
@@ -339,7 +339,7 @@ export const createGreatestTitleEverMadePrompt = async ({
       ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
 
 
-    Here's our context: target audience: "${target_audience}", mission: "${mission}".`,
+    Here's our context: target audience: "${targetAudience}", mission: "${mission}".`,
 
     user: `Create the best possible title for this article "${prompt}" in ${lang}.`,
   };

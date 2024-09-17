@@ -22,7 +22,7 @@ import { improveConclusion } from './create-article/edit-article/improve-closure
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({
   mission,
-  target_audience,
+  targetAudience,
   source,
   clientId,
   lang,
@@ -33,7 +33,7 @@ export const createNewArticle = async ({
   domain,
 }: {
   mission: string;
-  target_audience: string;
+  targetAudience: string;
   source: boolean;
   clientId: string;
   lang: Locale;
@@ -54,7 +54,7 @@ export const createNewArticle = async ({
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const title = await createGreatestTitleEverMade(prompt, target_audience, mission, language);
+  const title = await createGreatestTitleEverMade(prompt, targetAudience, mission, language);
   console.log('lang', lang);
   console.log('language', language);
   console.log('title: ', title);
@@ -62,7 +62,7 @@ export const createNewArticle = async ({
   //TODO: Later, no added value, shorten id
   const id = convertTitleToID(title);
 
-  const listSubtitle = await getListSubtitle(prompt, target_audience, mission, title, language);
+  const listSubtitle = await getListSubtitle(prompt, targetAudience, mission, title, language);
   console.log('listSubtitle: ', listSubtitle);
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
   const listDraft = await Promise.all(
@@ -70,14 +70,14 @@ export const createNewArticle = async ({
       const index = listSubtitle.indexOf(subtitle);
 
       if (index === 0) {
-        return await createContentForIntro(subtitle, mission, prompt, target_audience, listSubtitle, lang);
+        return await createContentForIntro(subtitle, mission, prompt, targetAudience, listSubtitle, lang);
       } else if (index === listSubtitle.length - 1) {
         //TODO: Offer availability in closure for the user to add a call to action (MAYBE)
         let conclusion = await createContentForClosure(
           subtitle,
           mission,
           prompt,
-          target_audience,
+          targetAudience,
           listSubtitle,
           language,
           CTA,
@@ -87,7 +87,7 @@ export const createNewArticle = async ({
           subtitle,
           mission,
           prompt,
-          target_audience,
+          targetAudience,
           listSubtitle,
           language,
           CTA,
@@ -95,7 +95,7 @@ export const createNewArticle = async ({
           conclusion,
         );
       } else {
-        return await createBody(subtitle, mission, prompt, target_audience, listSubtitle);
+        return await createBody(subtitle, mission, prompt, targetAudience, listSubtitle);
       }
     }),
   );
@@ -110,7 +110,7 @@ export const createNewArticle = async ({
 
   //Add sources if needed
   if (source) {
-    content = await addSources(content, mission, prompt, target_audience);
+    content = await addSources(content, mission, prompt, targetAudience);
   }
 
   content = preprocessJSON(content).replace('html', '');

@@ -3,8 +3,8 @@ import { getNextArticleIdeasPrompt } from '../../private/ideas';
 import { preprocessJSON } from '../preprocessJSON';
 
 // Function to improve the body of the article
-export const getNextArticleIdeas = async (ideas: string[], mission: string, target_audience: string): Promise<string[]> => {
-  const prompt = await getNextArticleIdeasPrompt(ideas, mission, target_audience);
+export const getNextArticleIdeas = async (ideas: string[], mission: string, targetAudience: string): Promise<string[]> => {
+  const prompt = await getNextArticleIdeasPrompt(ideas, mission, targetAudience);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

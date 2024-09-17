@@ -43,9 +43,9 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const { mission, ideas, target_audience = 'general', default_author, CTA, domain } = info.data() as ClientInfo;
+  const { mission, ideas, targetAudience = 'general', default_author, CTA, domain } = info.data() as ClientInfo;
 
-  if (!mission || !target_audience || !default_author) {
+  if (!mission || !targetAudience || !default_author) {
     res.status(400).send('Client incomplete');
     return;
   }
@@ -76,7 +76,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
 
   const id = await createNewArticle({
     mission,
-    target_audience,
+    targetAudience,
     source,
     clientId,
     lang,
@@ -322,9 +322,9 @@ app.get('/get-100-ideas', async (req: express.Request, res: express.Response) =>
     res.status(400).send('Language or clientId not found');
     return;
   }
-  const { mission, target_audience } = snapshot.data() as { mission: string; target_audience: string };
+  const { mission, targetAudience } = snapshot.data() as { mission: string; targetAudience: string };
 
-  const data = await get100Ideas(mission, target_audience);
+  const data = await get100Ideas(mission, targetAudience);
 
   await docRef.update({ ideas: data });
 
@@ -341,19 +341,29 @@ export default app;
 //TODO number left
 app.post('/setupClient', async (req: express.Request, res: express.Response) => {
   console.log('req.body', req.body);
-  const { mission, company_name, target_audience, image_style, CTA = '', domain = '' } = req.body;
-  const clientId = uuidv4();
+  let { mission, companyName, targetAudience, imageStyle, CTA = '', domain = '', clientId } = req.body as ClientInfo;
 
-  let ideas100 = await get100Ideas(mission, target_audience);
-  const nextIdeas = await getNextArticleIdeas(ideas100, mission, target_audience);
+  if (clientId) {
+    const docRef = dbAdmin.doc(`${clientId}/info`);
+    const snapshot = await docRef.get();
+    if (snapshot.exists) {
+      const data = snapshot.data() as ClientInfo;
+      res.status(200).send(data);
+      return;
+    }
+  }
+  clientId = uuidv4();
+  const docRef = dbAdmin.doc(`${clientId}/info`);
+
+  let ideas100 = await get100Ideas(mission, targetAudience);
+  const nextIdeas = await getNextArticleIdeas(ideas100, mission, targetAudience);
   ideas100 = ideas100.filter((idea) => !nextIdeas.includes(idea));
 
-  const docRef = dbAdmin.doc(`${clientId}/info`);
   const info = {
     mission,
-    company_name,
-    target_audience,
-    image_style,
+    companyName,
+    targetAudience,
+    imageStyle,
     ideas: ideas100,
     domain,
     CTA,

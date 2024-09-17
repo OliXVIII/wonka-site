@@ -1,12 +1,13 @@
 import { ImageStyle } from '../private/image-prompt';
 
 export type ClientInfo = {
-  company_name: string;
+  clientId?: string;
+  companyName: string;
   default_author: string;
   domain: string;
   ideas: string[];
-  image_style: ImageStyle;
+  imageStyle: ImageStyle;
   mission: string;
-  target_audience?: string;
+  targetAudience: string;
   CTA: string;
 };

@@ -6,13 +6,13 @@ export const createContentForClosure = async (
   subtitle: string,
   mission: string,
   subject: string,
-  target_audience: string,
+  targetAudience: string,
   listSubtitle: string[],
   lang: string,
   CTA: string,
   domain: string,
 ): Promise<string> => {
-  const prompt = await getConclusionPrompt(subtitle, mission, subject, target_audience, listSubtitle, lang, CTA, domain);
+  const prompt = await getConclusionPrompt(subtitle, mission, subject, targetAudience, listSubtitle, lang, CTA, domain);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',

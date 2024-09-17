@@ -6,11 +6,11 @@ export const createContentForIntro = async (
   subtitle: string,
   mission: string,
   subject: string,
-  target_audience: string,
+  targetAudience: string,
   listSubtitle: string[],
   lang: string,
 ): Promise<string> => {
-  const prompt = await getIntroPrompt(subtitle, mission, subject, target_audience, listSubtitle, lang);
+  const prompt = await getIntroPrompt(subtitle, mission, subject, targetAudience, listSubtitle, lang);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
