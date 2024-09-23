@@ -4,19 +4,18 @@ export const get10RootIdeasPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a context consisting of a subject, a mission, and a target audience.
+    result should be in JSON format
 
-    Important: the result should be display in a way that can be used in a JSON.parse() function.
+    - Each idea should only be a few words long.
+    - Each idea should be unique, non-repetitive AND HAVE A DIFFERENT THEME.
     - You will generate 10 ideas related to the subject, mission, and target audience.
     - This should be a list of subjects that can be further developed into articles.
-    - The ideas should be unique and interesting.
     - The ideas should be in the language provided in the subject.
     - You will return an array of 10 ideas.
     - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
-    - The idea should have a wider scope than the subject.
-    - Use different theme for each idea.
     `,
     user: `Here's the mission: "${mission}", the target audience: "${targetAudience}".
-    Important: the result should be display in a way that can be used in a JSON.parse() function.`,
+    Make sure the ideas are unique, non-repetitive, and have a different theme.`,
   };
 };
 
@@ -27,10 +26,14 @@ export const get10IdeasFromIdeaPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a context consisting of a idea, a mission, and a target audience.
-      The idea you receive comes from the context of the mission and target audience.
-      All the ideas must be in the language of the ideas input.
-  
-      - You will generate 10 new ideas related to the specific idea while taking into account the mission and target audience.
+      The idea you receive will be the core of the 10 shorts ideas you will generate.
+      result should be in json format
+
+      - Ideas must Not be generic, they must be interesting and engaging.
+      - Each idea should be a few words long, not more then 5 words.
+      - You will generate 10 new ideas related to the core subject.
+      - Each idea should be unique, non-repetitive AND HAVE A DIFFERENT THEME.
+      - Ideas should be short and concise.
       - This should be a list of subjects that can be further developed into articles for online referencing.
       - The ideas should be unique and interesting.
       - The ideas should be in the language provided.

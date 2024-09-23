@@ -3,11 +3,12 @@ import { get10IdeasFromIdeaPrompt } from '../../private/ideas';
 import { preprocessJSON } from '../preprocessJSON';
 
 // Function to generate a list of 10 ideas to a given context
-export const get10IdeasFromIdea = async (idea: string, mission: string, targetAudience: string): Promise<string[]> => {
+export const get10IdeasFromIdea = async (idea: string, mission: string, targetAudience: string): Promise<any> => {
   const prompt = await get10IdeasFromIdeaPrompt(idea, mission, targetAudience);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
+    response_format: { type: 'json_object' },
     messages: [
       {
         role: 'system',

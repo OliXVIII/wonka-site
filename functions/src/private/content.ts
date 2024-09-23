@@ -92,7 +92,7 @@ export const getListOfSubjectSecretPrompt = async (
     - Make sure the subtitles don't repeat the same information.
     - Each subtitle must be seo-friendly and contain keywords related to the context.
     - You can choose the number of subtitle you think you be best (using the given information (target audience, mission, context)),
-    but keep the number of subtitle under 6 maximum.
+    but keep the number of subtitle under 6 subtitles maximum.
     - Each subtitle must have a distinct and clear meaning.
     - Result must be in JSON format.
     - Always add an adapted introduction and conclusion to the list of subtitles.
@@ -105,6 +105,7 @@ export const getListOfSubjectSecretPrompt = async (
     Your target audience is"${targetAudience}", and the mission is: "${mission}".
     You have a SEO title you can use for addition information: "${seoTitle}".
     SEO TITLE MUST NOT BE IN THE LIST OF SUBTITLE.
+    The last subtitle should be the subtitle for the conclusion of the article.
     `,
   };
 };
@@ -121,6 +122,7 @@ export const getBodyPrompt = async (
     It should respect the requirement that follow:
     "
     - This section should have a minimum of 4 paragraphs.
+    - Each paragraph will be short and concise, to be easy to read.
     - You will be given a subtitle of the article and the mission of the article, the text must reflect of those.
     - You will also be given a context, this context will act as a set of instructions for the text you will create.
     - Make sure the content is related to the mission of the article: "${mission}".
@@ -153,7 +155,9 @@ export const getIntroPrompt = async (
   return {
     system: `Write introduction for the title: "${intro}" and the mission ${mission}", you're a professional on the subject.
     Respect the requirement that follow: "
+
     - Use bullet point to present de rest of the article.
+    - Use less then 5 bullet point.
     - Use the list of subtitle to create logical transition in the intro and the rest of the article: ${subtitle}
     - The introduction should be engaging and informative.
     - The introduction must be designed in a way to keep the reader on the site.
@@ -170,6 +174,7 @@ export const getIntroPrompt = async (
     user: `Create an introduction respecting the requirements for the introduction: "${intro},
     your target audience for this is: "${targetAudience}, 
     Keep in mind that the mission is ${mission} and the context is "${context}".
+    Introduction should be short and concise, it should introduce the reader to the article.
     `,
   };
 };
@@ -188,6 +193,9 @@ export const getConclusionPrompt = async (
     You will receive the subtitle of the conclusion, the mission, the context and the target audience.
     You will respect the requirement that follow:
     "
+
+    - Don't mention the call to action in the title.
+    - It should have an interesting and engaging title.
     - Make sure the conclusion is related to the mission.
     - The conclusion title should be pertinent to the article.
     - Make sure the conclusion title is interesting and engaging.
@@ -260,6 +268,7 @@ export const improveBodyPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive the body of an article, you will improve it with the requirements that follow:
+    - Make sure the text is not redundant, easy to read, without big paragraph.
     - Each part of the body must have at least 4 paragraphs.
     - Make logic transition each part of the body.
     - Make sure the language of the text is in ${lang}, even the subtitle.
@@ -275,7 +284,7 @@ export const improveBodyPrompt = async (
     `,
     user: `Here's the content of the body of the article: "${content}" and the multiple subtitles of the article: ${listOfSubtitles}.
     Your main job is to make sure the text is not redundant.
-    Make sure the body respect the instruction of the context: "${context}"
+    Make sure the body respect the instruction of the context: "${context}".
     `,
   };
 };
@@ -292,11 +301,12 @@ export const editContentPrompt = async (
 
     ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
     - Remove the "Introduction: " from the introduction title.
+    - Edit the content of the article to make it easy to read and non-redundant.
     - If acronyms are used, make sure the acronym is written in full the first time it is used, followed by the acronym in parenthesis.
     - If acronyms are used make sure the acronyms is written in capital letters.
     - Make sure to format it in html format.    
     - Here's a list of the subtitle of this article to help you do logical transition between the content: "${subtitleList}" and to help you format the text in html format.
-    - You will add the title  in a h1 tag at the beginning of the article: "${greatestTitle}".
+    - You will add the title in a h1 tag at the beginning of the article: "${greatestTitle}".
     - Make sure that all the text is in language: "${lang}", even the subtitle.
     - If the article use abbreviations, make sure to write the full word and the abbreviation in parenthesis.
     - THE FIRST <P></P> MUST BE A SHORT INTRODUCTION OF THE ARTICLE. THIS SHOULD BE A MAXIMUM OF 2 SENTENCES.
@@ -308,9 +318,16 @@ export const editContentPrompt = async (
     - Make sure the article follow the instructions of the context: "${context}".
     - If bullet point are used in the text, make sure the first word of each bullet point, only the ones before an ":" is in bold.
     - The text output is destined to bring organic traffic to a website.
+    - DO NOT MENTION THE WORDS "CALL TO ACTIONS" IN THE TEXT.
     `,
     user: `Edit this article: "${article}".
-    Don't forget the call to action at the end of the article.`,
+    Don't forget the call to action at the end of the article.
+    Follow all requirements.
+    
+    - Make sure to format it in html format.
+    Highlight the important words in bold.
+    Make sure the article is easy to read and non-redundant.
+    Make sure there is not bullet point in each section, if there is, reformulate the bullet to change the way it's displayed.`,
   };
 };
 

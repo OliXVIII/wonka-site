@@ -12,7 +12,6 @@ import { get100Ideas } from './services/ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
 import { createImage } from './services/create-image/create-image';
 import { v4 as uuidv4 } from 'uuid';
-import { getNextArticleIdeas } from './services/ideas/get-next-article-idea';
 import { getTranslation } from './services/firebase/add-article';
 import { Article } from './types/article';
 import { generateTwitterPost } from './services/create-post/create-twitter-post';
@@ -47,7 +46,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  const { mission, ideas, targetAudience = 'general', defaultAuthor, CTA, domain, companyName } = info.data() as ClientInfo;
+  let { mission, ideas, targetAudience = 'general', defaultAuthor, CTA, domain, companyName } = info.data() as ClientInfo;
 
   if (!mission || !targetAudience) {
     res.status(400).send('Client incomplete');
@@ -63,8 +62,13 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  if (!prompt && ideas.length > 0) {
+  if (!prompt) {
     const randomIndex = Math.floor(Math.random() * ideas.length);
+    if (ideas.length === 0) {
+      console.log('No ideas left, getting 100 new ideas');
+      ideas = await get100Ideas(mission, targetAudience);
+      await dbAdmin.doc(path_info).update({ ideas: ideas });
+    }
     prompt = ideas[randomIndex];
     console.log('No prompt, idea picked: ', prompt);
     ideas.splice(randomIndex, 1);
@@ -77,7 +81,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     res.status(400).send('Invalid language');
     return;
   }
-
+  console.log('prompt', prompt);
   const id = await createNewArticle({
     mission,
     targetAudience,
@@ -365,7 +369,7 @@ app.post('/get-translations', async (req: express.Request, res: express.Response
 });
 
 app.get('/get-100-ideas', async (req: express.Request, res: express.Response) => {
-  const { clientId } = req.body as { clientId: string; subject: string };
+  const { clientId } = req.body as { clientId: string };
 
   if (!clientId) {
     res.status(400).send('Missing clientId');
@@ -419,7 +423,7 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
   let ideas100 = await get100Ideas(mission, targetAudience);
-  const nextIdeas = await getNextArticleIdeas(ideas100, mission, targetAudience);
+  const nextIdeas = ideas100.slice(0, 7);
   ideas100 = ideas100.filter((idea) => !nextIdeas.includes(idea));
 
   const info = {
@@ -439,7 +443,6 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
 // Add this code after your existing endpoints
 
 app.post('/finishSetup', async (req, res) => {
-  console.log('req.body', req.body);
   const { clientId, info } = req.body;
 
   // Check if clientId is provided
@@ -461,4 +464,25 @@ app.post('/finishSetup', async (req, res) => {
   await docRef.update(info);
 
   res.status(200).json({ message: 'Setup finished successfully', clientId });
+});
+
+app.post('/updateNextIdeas', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, newNextIdeas } = req.body as { clientId: string; lang: Locale; newNextIdeas: string[] };
+
+  if (!clientId || !lang || !newNextIdeas) {
+    return res.status(400).send({ error: 'Invalid or missing input data' });
+  }
+
+  try {
+    const docRef = dbAdmin.doc(`${clientId}/info`);
+
+    await docRef.update({
+      nextIdeas: newNextIdeas,
+    });
+
+    return res.status(200).send({ message: 'nextIdeas successfully updated' });
+  } catch (error) {
+    console.error('Error updating nextIdeas:', error);
+    return res.status(500).send({ error: 'Failed to update nextIdeas' });
+  }
 });
