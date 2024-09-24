@@ -9,5 +9,5 @@ export type ClientInfo = {
   stylePreferences: stylePreferences;
   mission: string;
   targetAudience: string;
-  CTA: string;
+  CTA?: string;
 };

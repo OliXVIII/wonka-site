@@ -6,7 +6,7 @@ import { generateLinkedinPost } from './services/create-post/create-linkedin-pos
 import { dbAdmin } from './lib/firebase-admin';
 import { sendEmail } from './services/send-email';
 import { emailContent } from './lib/email';
-import { deleteAllUnpublishedArticles, deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
+import { deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 import { get100Ideas } from './services/ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
@@ -167,15 +167,19 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     res.status(400).send('Article not found or missing content');
     return;
   }
+  const refInfo = `${clientId}/info`;
+  const snapshotInfo = await dbAdmin.doc(refInfo).get();
+  const info = snapshotInfo.data() as ClientInfo | undefined;
+
+  if (!info) {
+    console.log('No cliendId');
+    res.status(400).send('Article not found or missing content');
+    return;
+  }
 
   if (!data?.thumbnail) {
-    const path_info = `${clientId}/info`;
-    const info = await dbAdmin.doc(path_info).get();
-
     try {
-      const clientInfo = info.data() as ClientInfo | undefined;
-
-      const { url, prompt } = await createImage({ subject: title, clientInfo, clientId });
+      const { url, prompt } = await createImage({ subject: title, info, clientId });
 
       data.thumbnail = url;
       data.prompt.thumbnail = prompt;
@@ -185,10 +189,23 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     }
   }
 
-  const linkedinPost = await generateLinkedinPost(html, image, href, localesDetails[lang]);
+  const linkedinPost = await generateLinkedinPost({ content: html, image, href, locale: localesDetails[lang], info });
+
+  const linkedinPost_v2 = await generateLinkedinPost({
+    content: `Context:
+    "${data.prompt.content}"
+    Article subtitles list:
+    [${html.match(/<h2(?: id="[^"]+")?>(.+?)<\/h2>/g)?.map((subtitle) => subtitle.replace(/<[^>]*>?/gm, ''))}]
+    `,
+    image,
+    href,
+    locale: localesDetails[lang],
+    info,
+  });
 
   const twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
 
+  //TODO: add a email wrapper
   const email = emailContent({ lang, subject: title, linkedinPost, twitterPost, href });
 
   if (!email) {
@@ -284,32 +301,6 @@ app.delete('/deleteUnpublishedArticle', async (req: express.Request, res: expres
   } catch (error) {
     console.error('Error deleting article:', error);
     res.status(500).send('Error deleting article');
-  }
-});
-
-app.delete('/deleteAllUnpublishedArticle', async (req: express.Request, res: express.Response) => {
-  const { clientId, lang, secret } = req.body as {
-    clientId: string;
-    lang: Locale;
-    secret: string;
-  };
-  if (!clientId || !lang) {
-    res.status(400).send('Missing required parameters');
-    return;
-  }
-  if (secret !== 'secret') {
-    console.log('Invalid secret');
-    res.status(400).send("Invalid secret, stop trying to hack me. Please don't do that.");
-    return;
-  }
-  try {
-    await deleteAllUnpublishedArticles(clientId, lang);
-
-    //TODO: delete all translations ?
-    res.status(200).send('All unpublished articles deleted successfully.');
-  } catch (error) {
-    console.error('Error deleting article:', error);
-    res.status(500).send('Error deleting all articles');
   }
 });
 
