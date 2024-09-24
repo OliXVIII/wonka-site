@@ -179,7 +179,7 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
   if (!data?.thumbnail) {
     try {
-      const { url, prompt } = await createImage({ subject: title, info, clientId });
+      const { url, prompt } = await createImage({ subject: title, clientInfo: info, clientId });
 
       data.thumbnail = url;
       data.prompt.thumbnail = prompt;
@@ -202,6 +202,9 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     locale: localesDetails[lang],
     info,
   });
+
+  console.log('linkedinPost', linkedinPost);
+  console.log('linkedinPost_v2', linkedinPost_v2);
 
   const twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
 

@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 export const createImage = async ({
   subject,
   clientId,
-  info,
+  clientInfo,
   id,
 }: {
   subject: string;
   clientId: string;
-  info?: ClientInfo;
+  clientInfo?: ClientInfo;
   id?: string;
 }): Promise<{ url: string; prompt: string }> => {
   const completion = await openai.chat.completions.create({
@@ -27,7 +27,7 @@ export const createImage = async ({
 
   const coreElements = completion.choices[0].message?.content;
 
-  const prompt = createImagePrompt({ subject, style: info?.stylePreferences, coreElements });
+  const prompt = createImagePrompt({ subject, style: clientInfo?.stylePreferences, coreElements });
   console.log('Prompt:', prompt);
 
   const picture = await openai.images.generate({

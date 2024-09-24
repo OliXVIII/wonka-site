@@ -21,27 +21,27 @@ import { dbAdmin } from '../lib/firebase-admin';
 // import { getContext } from './create-content-article/get-context';
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({
-  mission,
-  targetAudience,
-  source,
-  clientId,
-  lang,
   author,
-  prompt,
   chart,
-  CTA,
+  clientId,
   domain,
+  lang,
+  mission,
+  prompt,
+  source,
+  targetAudience,
+  CTA = "Let's get started",
 }: {
-  mission: string;
-  targetAudience: string;
-  source: boolean;
-  clientId: string;
-  lang: Locale;
   author: string;
-  prompt: string;
   chart: boolean;
-  CTA: string;
+  clientId: string;
   domain: string;
+  lang: Locale;
+  mission: string;
+  prompt: string;
+  source: boolean;
+  targetAudience: string;
+  CTA?: string;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres

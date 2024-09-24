@@ -7,7 +7,7 @@ export const linkedinSecretPrompt_v1 = (
   language: string,
   info: ClientInfo,
 ): { system: string; user: string } => {
-  const { mission, CTA } = info;
+  const { mission } = info;
   return {
     system: `Your task is to generate a great LinkedIn post in ${language} for the following content:
   "
