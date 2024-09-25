@@ -18,7 +18,7 @@ import { addInstructionToPrompt } from './add-instruction-to-prompt';
 import { translate } from './translate-prompt';
 import { improveConclusion } from './create-article/edit-article/improve-closure';
 import { dbAdmin } from '../lib/firebase-admin';
-// import { getContext } from './create-content-article/get-context';
+
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({
   author,

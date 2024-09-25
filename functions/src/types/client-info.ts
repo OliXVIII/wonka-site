@@ -1,13 +1,18 @@
-import { stylePreferences } from '../private/image-prompt';
+import { Timestamp } from 'firebase-admin/firestore';
+import { StylePreferences } from '../private/image-prompt';
 
 export type ClientInfo = {
   clientId?: string;
   companyName: string;
+  CTA?: string;
   defaultAuthor?: string;
   domain: string;
+  frequency?: string;
   ideas: string[];
-  stylePreferences: stylePreferences;
   mission: string;
+  nextIdeas?: string[];
+  startDate: Timestamp;
+  stylePreferences: StylePreferences;
   targetAudience: string;
-  CTA?: string;
+  UID?: string[];
 };

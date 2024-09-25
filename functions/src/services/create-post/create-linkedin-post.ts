@@ -19,6 +19,8 @@ export const generateLinkedinPost = async ({
   try {
     const prompt = linkedinSecretPrompt_v1(content, href, image, locale.language, info);
 
+    console.log('Prompt:', JSON.stringify(prompt));
+
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
@@ -34,7 +36,6 @@ export const generateLinkedinPost = async ({
     });
 
     const response = completion.choices[0].message?.content?.replaceAll('```html', '').replaceAll('```', '');
-    console.log('Response from generateLinkedinPost', response);
 
     if (!response) {
       return null;

@@ -24,7 +24,7 @@ Requirements for a great LinkedIn post:
 - Should use plain text, no emojis, and line breaks to format your post effectively
 ${href ? `- Include a CTA to encourage to follow the unchanged link "${href}" to read the full content.` : ''}
 ${!href && image ? `- Include a img tag with the src attribute set to ${image} and a custom alt.` : ''}
-- Use HTML tag and inline CSS styling that is compatible with the mailOptions usage for sending HTML emails via Node.js, use <br> between lines appropriately.
+- Use HTML tag and without CSS styling that is compatible with the mailOptions usage for sending HTML emails via Node.js, use <br> between lines appropriately.
 - Output the completed HTML content only, no further explanation.`,
     //, with a call to action to follow the link ${href} to read the full content
     user: `Generate a great LinkedIn post in ${language} in html with geniuine interest in helping the reader, while being concise and to the point.

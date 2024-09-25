@@ -177,21 +177,29 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     return;
   }
 
-  if (!data?.thumbnail) {
-    try {
-      const { url, prompt } = await createImage({ subject: title, clientInfo: info, clientId });
+  // if (!data?.thumbnail) {
+  //   try {
+  //     const { url, prompt } = await createImage({ subject: title, clientInfo: info, clientId });
 
-      data.thumbnail = url;
-      data.prompt.thumbnail = prompt;
-      image = url;
-    } catch (error: any) {
-      console.error('/publish: Error creating image:', error.message);
-    }
-  }
+  //     data.thumbnail = url;
+  //     data.prompt.thumbnail = prompt;
+  //     image = url;
+  //   } catch (error: any) {
+  //     console.error('/publish: Error creating image:', error.message);
+  //   }
+  // }
 
-  const linkedinPost = await generateLinkedinPost({ content: html, image, href, locale: localesDetails[lang], info });
+  // REMOVE
+  data.thumbnail =
+    'https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2FtestId%2Fstate-of-seo-in-2024%3A-trends-and-predictions.png?alt=media&token=aab4aafc-3543-42bc-aab5-055fa7f10e41';
 
-  const linkedinPost_v2 = await generateLinkedinPost({
+  let linkedinPost: string | null = null;
+  let linkedinPost_v2: string | null = null;
+  let twitterPost: string | null = null;
+
+  linkedinPost = await generateLinkedinPost({ content: html, image, href, locale: localesDetails[lang], info });
+
+  linkedinPost_v2 = await generateLinkedinPost({
     content: `Context:
     "${data.prompt.content}"
     Article subtitles list:
@@ -203,13 +211,35 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     info,
   });
 
-  console.log('linkedinPost', linkedinPost);
-  console.log('linkedinPost_v2', linkedinPost_v2);
+  if (linkedinPost || linkedinPost_v2) {
+    const email = emailContent({
+      lang,
+      subject: title,
+      linkedinPosts:
+        linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null,
+      twitterPosts: twitterPost ? [twitterPost] : null,
+      href,
+      thumbnail: data.thumbnail,
+    });
 
-  const twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
+    await sendEmail(email);
+
+    res.status(200).send('New article published');
+    return;
+  }
+
+  twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
 
   //TODO: add a email wrapper
-  const email = emailContent({ lang, subject: title, linkedinPost, twitterPost, href });
+  const email = emailContent({
+    lang,
+    subject: title,
+    linkedinPosts:
+      linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null,
+    twitterPosts: twitterPost ? [twitterPost] : null,
+    href,
+    thumbnail: data.thumbnail,
+  });
 
   if (!email) {
     res.status(400).send('Failed to generate email content');

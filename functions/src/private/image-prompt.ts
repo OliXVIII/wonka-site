@@ -1,4 +1,4 @@
-export type stylePreferences = 'retro-style cartoonish' | 'cinematic' | 'cartoonish' | 'minimalistic';
+export type StylePreferences = 'retro-style cartoonish' | 'cinematic' | 'cartoonish' | 'minimalistic';
 
 export const createImagePrompt = ({
   subject,
@@ -7,7 +7,7 @@ export const createImagePrompt = ({
   region = 'Canada',
 }: {
   subject: string;
-  style?: stylePreferences;
+  style?: StylePreferences;
   coreElements?: string | null;
   region?: string;
 }): string => {
