@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export const sendEmail = async (data: { title: string; content: string }) => {
+export const sendEmail = async (data: { title: string; content: string }, receiver?: string) => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -16,7 +16,7 @@ export const sendEmail = async (data: { title: string; content: string }) => {
     // Email content setup
     const mailOptions = {
       from: 'inceptionai.com@gmail.com',
-      to: 'contact@inceptionai.ca',
+      to: receiver ?? 'contact@inceptionai.ca',
       subject: data.title,
       html: data.content,
     };

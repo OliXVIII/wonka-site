@@ -124,6 +124,19 @@ app.post('/updateImage', async (req: express.Request, res: express.Response) => 
 
   snapshot.ref.update({ thumbnail: url, prompt: { thumbnail: prompt } });
 
+  // Update all translations
+  for (const translateLang of ['en', 'fr'] as Locale[]) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      const translateSnapshot = await dbAdmin.doc(`${clientId}/${translateLang}/articles/${id}`).get();
+
+      if (translateSnapshot.exists) {
+        translateSnapshot.ref.update({ thumbnail: url, prompt: { thumbnail: prompt } });
+      }
+    }
+  }
+
   res.status(200).send(`Successfully updated image for article ${id}`);
 });
 
@@ -155,18 +168,17 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     return;
   }
 
-  const html = data?.content as string;
+  const html = data?.content.replace(/<[^>]*>/g, '') as string;
   let image = data?.thumbnail
     ? data.thumbnail
     : 'https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2FtestId%2Fstate-of-seo-in-2024%3A-trends-and-predictions.png?alt=media&token=aab4aafc-3543-42bc-aab5-055fa7f10e41';
   const title = data?.content.match(/<h1(?: id="[^"]+")?>(.+?)<\/h1>/)?.[1] ?? '';
 
-  console.log('title', title);
-
   if (!html) {
     res.status(400).send('Article not found or missing content');
     return;
   }
+
   const refInfo = `${clientId}/info`;
   const snapshotInfo = await dbAdmin.doc(refInfo).get();
   const info = snapshotInfo.data() as ClientInfo | undefined;
@@ -177,67 +189,55 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
     return;
   }
 
-  // if (!data?.thumbnail) {
-  //   try {
-  //     const { url, prompt } = await createImage({ subject: title, clientInfo: info, clientId });
+  if (!data?.thumbnail) {
+    try {
+      const { url, prompt } = await createImage({ subject: title, clientInfo: info, clientId });
 
-  //     data.thumbnail = url;
-  //     data.prompt.thumbnail = prompt;
-  //     image = url;
-  //   } catch (error: any) {
-  //     console.error('/publish: Error creating image:', error.message);
-  //   }
-  // }
-
-  // REMOVE
-  data.thumbnail =
-    'https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2FtestId%2Fstate-of-seo-in-2024%3A-trends-and-predictions.png?alt=media&token=aab4aafc-3543-42bc-aab5-055fa7f10e41';
+      data.thumbnail = url;
+      data.prompt.thumbnail = prompt;
+      image = url;
+    } catch (error: any) {
+      console.error('/publish: Error creating image:', error.message);
+    }
+  }
 
   let linkedinPost: string | null = null;
   let linkedinPost_v2: string | null = null;
   let twitterPost: string | null = null;
 
-  linkedinPost = await generateLinkedinPost({ content: html, image, href, locale: localesDetails[lang], info });
-
-  linkedinPost_v2 = await generateLinkedinPost({
-    content: `Context:
-    "${data.prompt.content}"
-    Article subtitles list:
-    [${html.match(/<h2(?: id="[^"]+")?>(.+?)<\/h2>/g)?.map((subtitle) => subtitle.replace(/<[^>]*>?/gm, ''))}]
-    `,
+  linkedinPost = await generateLinkedinPost({
+    content: html.replace(/<[^>]*>/g, ''),
     image,
     href,
     locale: localesDetails[lang],
     info,
   });
 
-  if (linkedinPost || linkedinPost_v2) {
-    const email = emailContent({
-      lang,
-      subject: title,
-      linkedinPosts:
-        linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null,
-      twitterPosts: twitterPost ? [twitterPost] : null,
-      href,
-      thumbnail: data.thumbnail,
-    });
+  linkedinPost_v2 = await generateLinkedinPost({
+    content: `Context:
+    "${data.prompt.content}"
+    Here's a structure of subjects we're able to cover in that post:
+    [${html.match(/<h2(?: id="[^"]+")?>(.+?)<\/h2>/g)?.map((subtitle) => subtitle.replace(/<[^>]*>?/gm, ''))}]
+    `,
+    image,
+    href: href.includes('clientId') ? href : `${href}?clientId=${clientId}`,
+    locale: localesDetails[lang],
+    info,
+  });
 
-    await sendEmail(email);
-
-    res.status(200).send('New article published');
-    return;
+  if (info.allowed?.twitter) {
+    twitterPost = await generateTwitterPost(html.replace(/<[^>]*>/g, ''), href, localesDetails[lang]);
   }
-
-  twitterPost = await generateTwitterPost(html, href, localesDetails[lang]);
+  const linkedinPosts =
+    linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null;
 
   //TODO: add a email wrapper
   const email = emailContent({
     lang,
     subject: title,
-    linkedinPosts:
-      linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null,
+    linkedinPosts,
     twitterPosts: twitterPost ? [twitterPost] : null,
-    href,
+    href: href.includes('clientId') ? href : `${href}?clientId=${clientId}`,
     thumbnail: data.thumbnail,
   });
 
@@ -247,9 +247,17 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   }
 
   await sendEmail(email);
-
   await snapshot.ref.update({ published: true, thumbnail: data.thumbnail });
-  await snapshot.ref.set({ prompt: { thumbnail: data.prompt.thumbnail } }, { merge: true });
+  await snapshot.ref.set(
+    {
+      prompt: { thumbnail: data.prompt.thumbnail },
+      posts: {
+        linkedin: linkedinPosts,
+        twitter: twitterPost,
+      },
+    },
+    { merge: true },
+  );
 
   for (const translateLang of ['en', 'fr'] as Locale[]) {
     if (translateLang === lang) {
@@ -265,6 +273,70 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   }
 
   res.status(200).send('New article published');
+});
+
+app.post('/send-post-to-email', async (req: express.Request, res: express.Response) => {
+  const { clientId, lang, id, href, receiver } = req.body as {
+    clientId: string;
+    lang: Locale;
+    id: string;
+    href: string;
+    receiver: string;
+  };
+
+  if (!clientId || !lang || !id) {
+    res.status(400).send('Missing required parameters');
+    return;
+  }
+
+  const snapshot = await dbAdmin.doc(`${clientId}/${lang}/articles/${id}`).get();
+
+  if (!snapshot.exists) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const data = snapshot.data();
+
+  if (!data || !data.published) {
+    res.status(400).send('Article not found');
+    return;
+  }
+
+  const title = data?.content.match(/<h1(?: id="[^"]+")?>(.+?)<\/h1>/)?.[1] ?? '';
+
+  if (!title) {
+    res.status(400).send('Article not found or missing content');
+    return;
+  }
+
+  const refInfo = `${clientId}/info`;
+  const snapshotInfo = await dbAdmin.doc(refInfo).get();
+  const info = snapshotInfo.data() as ClientInfo | undefined;
+
+  if (!info) {
+    console.log('No cliendId');
+    res.status(400).send('Article not found or missing content');
+    return;
+  }
+
+  const email = emailContent({
+    lang,
+    subject: title,
+    linkedinPosts: data.posts?.linkedin,
+    twitterPosts: data.posts?.twitter ? [data.posts.twitter] : null,
+    href: href.includes('clientId') || clientId === process.env.CLIENT_ID ? href : `${href}?clientId=${clientId}`,
+    thumbnail: data.thumbnail,
+  });
+
+  if (!email) {
+    res.status(400).send('Failed to generate email content');
+    return;
+  }
+
+  await sendEmail(email, receiver);
+
+  res.status(200).send('Email sent');
 });
 
 app.post('/unpublish', async (req: express.Request, res: express.Response) => {
@@ -297,6 +369,18 @@ app.post('/unpublish', async (req: express.Request, res: express.Response) => {
   }
 
   snapshot.ref.update({ published: false });
+
+  for (const translateLang of ['en', 'fr'] as Locale[]) {
+    if (translateLang === lang) {
+      continue;
+    } else {
+      const translateSnapshot = await dbAdmin.doc(`${clientId}/${translateLang}/articles/${id}`).get();
+
+      if (translateSnapshot.exists) {
+        translateSnapshot.ref.update({ published: false });
+      }
+    }
+  }
 
   res.status(200).send('Article unpublished');
 });
@@ -425,7 +509,7 @@ app.get('/ping', async (req: express.Request, res: express.Response) => {
 export default app;
 
 //TODO number left
-app.post('/setupClient', async (req: express.Request, res: express.Response) => {
+app.post('/setup-client', async (req: express.Request, res: express.Response) => {
   console.log('req.body', req.body);
   let { mission, companyName, targetAudience, stylePreferences, CTA = '', domain = '', clientId } = req.body as ClientInfo;
 
@@ -466,7 +550,7 @@ app.post('/setupClient', async (req: express.Request, res: express.Response) => 
 
 // Add this code after your existing endpoints
 
-app.post('/finishSetup', async (req, res) => {
+app.post('/finish-setup', async (req, res) => {
   const { clientId, info } = req.body;
 
   // Check if clientId is provided

@@ -24,9 +24,8 @@ export const emailContent = ({
       linkedin: 'LinkedIn posts 📫',
       facebook: 'Facebook posts 📩',
       twitter: 'Twitter posts 🐦',
-      viewOnWebsite: 'You can view it on our website at the following address:',
+      viewOnWebsite: 'You can view your new article on our website at the following link:',
       newArticle: `New article just published: "${subject}"`,
-      headerLinkText: 'I N C E P T I O N A I',
       mainTitle: subject,
     },
     fr: {
@@ -34,9 +33,8 @@ export const emailContent = ({
       linkedin: 'Publications LinkedIn 📫',
       facebook: 'Publications Facebook 📩',
       twitter: 'Publications Twitter 🐦',
-      viewOnWebsite: "Vous pouvez le consulter sur notre site Web à l'adresse suivante :",
+      viewOnWebsite: "Vous pouvez consulter votre nouvel article sur notre site Web à l'adresse suivante :",
       newArticle: `Nouvel article publié : "${subject}"`,
-      headerLinkText: 'I N C E P T I O N A I',
       mainTitle: subject,
     },
   };
@@ -53,7 +51,7 @@ export const emailContent = ({
   ) {
     socialMediaPostsHtml += `
       <tr style="margin: 20px 0;">
-        <td align="left">
+        <td align="left" style="padding: 0 10px;">
           <p style="padding-bottom: 20px;">${content.shareIntro}</p>
     `;
 
@@ -237,8 +235,8 @@ export const emailContent = ({
             h1, h2, h3, h4, h5, h6 {
                 line-height: 120% !important;
             }
-            h1 { font-size: 26px !important; }
-            h2 { font-size: 24px !important; }
+            h1 { font-size: 24px !important; }
+            h2 { font-size: 22px !important; }
             h3 { font-size: 20px !important; }
             .inception-wrapper table {
                 width: 100% !important;
@@ -253,6 +251,11 @@ export const emailContent = ({
                 height: auto !important;
             }
             .inception-hidden { display: none !important; }
+        }
+        @media only screen and (max-width: 480px) {
+            .inception-logo {
+                font-size: 22px !important;
+            } 
         }
     </style>
 </head>
@@ -279,8 +282,8 @@ export const emailContent = ({
                                             <a href="${href}" style="display: inline-block;">
                                                 <img src="https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2Flogo-no-background.png?alt=media&token=31899a4f-bc2c-4fdf-b55b-8a0b259e11b1" alt="logo" width="100" style="display: block; padding: 10px;"> <!-- Added padding to image -->
                                             </a>
-                                            <a href="${href}" style="display: inline-block; font-family: monospace; letter-spacing: 0.1em; font-size: 24px; text-align: end; text-decoration: none;">
-                                                ${content.headerLinkText}
+                                            <a href="${href}" class="inception-logo" style="display: inline-block; font-family: monospace; letter-spacing: 0.1em; font-size: 22px; text-align: end; text-decoration: none;">
+                                                I N C E P T I O N <span style="white-space: nowrap;">A I</span>
                                             </a>
                                         </div>
                                     </td>
@@ -299,11 +302,18 @@ export const emailContent = ({
                     <td align="center">
                         <table class="inception-content-body" align="center" cellpadding="0" cellspacing="0" width="600" style="border-radius: 6px;">
                             <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <div class="overlay"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
                                 <!-- Thumbnail Image -->
                                 ${
                                   thumbnail
                                     ? `<tr>
-                                        <td align="center" style="padding: 10px;">
+                                        <td align="center" style="padding: 10px 10px 0px 10px;">
                                             <img src="${thumbnail}" alt="${subject}" width="600" style="display: block; aspect-ratio: 16 / 9; width: 100%; object-fit: cover; opacity: 0.9; filter: brightness(0.9); border-radius: 6px;">
                                         </td>
                                     </tr>`
@@ -311,20 +321,20 @@ export const emailContent = ({
                                 }
                                 <!-- Main Title -->
                                 <tr>
-                                    <td align="left">
-                                        <h1 style="text-align: center; padding-top: 20px; line-height: 2.5rem;">${content.mainTitle}</h1>
+                                    <td align="left" style="padding: 0 10px;">
+                                        <h1 style="text-align: center; padding-top: 20px; line-height: 2.5rem; font-weight: 500;">${content.mainTitle}</h1>
                                     </td>
                                 </tr>
                                 <!-- Main Content -->
                                 <tr>
-                                    <td align="left">
+                                    <td align="left" style="padding: 0 10px;">
                                         <p style="padding-top: 10px;">${content.viewOnWebsite}</p>
                                         <p style="padding-top: 10px; padding-bottom: 30px;"><a href="${href}" style="color: #1a73e8;">${href}</a></p>
                                     </td>
                                 </tr>
-
+                            </tbody>
+                            <tbody>
                                 ${socialMediaPostsHtml}
-        
                             </tbody>
                         </table>
                     </td>

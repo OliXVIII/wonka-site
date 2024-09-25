@@ -7,7 +7,7 @@ export const linkedinSecretPrompt_v1 = (
   language: string,
   info: ClientInfo,
 ): { system: string; user: string } => {
-  const { mission } = info;
+  const { mission, CTA } = info;
   return {
     system: `Your task is to generate a great LinkedIn post in ${language} for the following content:
   "
@@ -20,15 +20,14 @@ Requirements for a great LinkedIn post:
 - Should be engaging, professional and informative, while being concise enough and introducing the reader to the content.
 - Should be professional and well-written and show a genuine interest in helping the reader.
 - Should be concise and to the point to capture the reader's attention and encourage engagement.
+${mission ? `- Make sure it aligns with our mission: "${mission}" without mentioning it directly.` : ''}
 - No hashtags.
-- Should use plain text, no emojis, and line breaks to format your post effectively
-${href ? `- Include a CTA to encourage to follow the unchanged link "${href}" to read the full content.` : ''}
-${!href && image ? `- Include a img tag with the src attribute set to ${image} and a custom alt.` : ''}
+- Should use plain text, no emojis, and line breaks to space out your post effectively.
+${href && CTA ? `- Include a CTA to encourage to "${CTA}".` : "- JUST try to provide value and engaging content to the user from the context, don't ask for anything and don't include a CTA."}
 - Use HTML tag and without CSS styling that is compatible with the mailOptions usage for sending HTML emails via Node.js, use <br> between lines appropriately.
 - Output the completed HTML content only, no further explanation.`,
     //, with a call to action to follow the link ${href} to read the full content
-    user: `Generate a great LinkedIn post in ${language} in html with geniuine interest in helping the reader, while being concise and to the point.
-    ${mission ? `And make sure it aligns with our company's mission: "${mission}"` : ''}`,
+    user: `Generate a great LinkedIn post in ${language} in html with geniuine interest in helping the reader learn more, while being concise and to the point.`,
   };
 };
 
