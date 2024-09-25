@@ -48,7 +48,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
 
   let { mission, ideas, targetAudience = 'general', defaultAuthor, CTA, domain, companyName } = info.data() as ClientInfo;
 
-  if (!mission || !targetAudience) {
+  if (!mission) {
     res.status(400).send('Client incomplete');
     return;
   }
@@ -495,8 +495,11 @@ app.get('/get-100-ideas', async (req: express.Request, res: express.Response) =>
   const { mission, targetAudience } = snapshot.data() as { mission: string; targetAudience: string };
 
   const data = await get100Ideas(mission, targetAudience);
+  const shuffleArray = (data: string[]): string[] => {
+    return data.sort(() => Math.random() - 0.5);
+  };
 
-  await docRef.update({ ideas: data });
+  await docRef.update({ ideas: shuffleArray(data) });
 
   res.status(200).send(data);
 });

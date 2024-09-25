@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { improveConclusionPrompt } from '../../../private/content';
+import { improveConclusionPrompt } from '../../../private/conclusion';
 
 // Function to generate content for a subtitle
 export const improveConclusion = async (

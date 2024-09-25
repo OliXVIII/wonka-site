@@ -50,27 +50,27 @@ export const get10IdeasFromIdeaPrompt = async (
   };
 };
 
-export const getNextArticleIdeasPrompt = async (
-  ideas: string[],
-  mission: string,
-  targetAudience: string,
-): Promise<{ system: string; user: string }> => {
-  return {
-    system: `You will receive a list of ideas, a mission, and a target audience.
-      You will receive a list of 100 ideas, you will pick the 7 best ideas for the user to pick from.
+// export const getNextArticleIdeasPrompt = async (
+//   ideas: string[],
+//   mission: string,
+//   targetAudience: string,
+// ): Promise<{ system: string; user: string }> => {
+//   return {
+//     system: `You will receive a list of ideas, a mission, and a target audience.
+//       You will receive a list of 100 ideas, you will pick the 7 best ideas for the user to pick from.
 
-      The first idea should be the best one, the second idea should be the second best one, and so on.
-      Result should only be a list[] of 7 ideas.
-      Result must be type string[].
-      
-      Here's what's make a good idea:
-      - Pick ideas the company would be advantageous to create content around.
-      - The idea should be interesting enough to create content around it.
-      - The idea should reflect the mission and target audience.
-      - The idea should engage the target audience.
-      - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
+//       The first idea should be the best one, the second idea should be the second best one, and so on.
+//       Result should only be a list[] of 7 ideas.
+//       Result must be type string[].
 
-    `,
-    user: `Here's the mission: ${mission}, the target audience: ${targetAudience} and the list of 100 ideas: ${ideas}.`,
-  };
-};
+//       Here's what's make a good idea:
+//       - Pick ideas the company would be advantageous to create content around.
+//       - The idea should be interesting enough to create content around it.
+//       - The idea should reflect the mission and target audience.
+//       - The idea should engage the target audience.
+//       - The mission should no be mentioned, it should only be used to guide the nature of the ideas.
+
+//     `,
+//     user: `Here's the mission: ${mission}, the target audience: ${targetAudience} and the list of 100 ideas: ${ideas}.`,
+//   };
+// };

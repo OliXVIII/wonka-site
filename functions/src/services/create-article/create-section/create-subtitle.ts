@@ -1,5 +1,5 @@
 import { openai } from '../../../lib/open-ai';
-import { getBodyPrompt } from '../../../private/content';
+import { getBodyPrompt } from '../../../private/body';
 
 // Function to generate content for a subtitle
 export const createBody = async (
