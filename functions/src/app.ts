@@ -10,12 +10,14 @@ import { deleteUnpublishedArticle } from './services/firebase/delete-article-not
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 import { get100Ideas } from './services/ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
-import { createImage } from './services/create-image/create-image';
+import { createImage } from './services/image/create-image';
 import { v4 as uuidv4 } from 'uuid';
 import { getTranslation } from './services/firebase/add-article';
 import { Article } from './types/article';
 import { generateTwitterPost } from './services/create-post/create-twitter-post';
 import { Timestamp } from 'firebase-admin/firestore';
+import { deleteImage } from './services/image/delete-image';
+import { updateNextIdeas } from './services/ideas/update-next-ideas';
 
 const app = express();
 
@@ -118,6 +120,17 @@ app.post('/updateImage', async (req: express.Request, res: express.Response) => 
   if (!snapshot.exists) {
     res.status(400).send('Article not found');
     return;
+  }
+
+  const data = snapshot.data();
+
+  if (data?.thumbnail) {
+    //delete this current image in firebase storage
+    const data = snapshot.data();
+
+    if (data?.thumbnail) {
+      deleteImage(data.thumbnail);
+    }
   }
 
   const { url, prompt } = await createImage({ subject: title, clientInfo, clientId });
@@ -447,6 +460,31 @@ app.get('/update-chart-dataset', async (req: express.Request, res: express.Respo
   await docRef.update({ dataset });
 
   res.status(200).send(dataset);
+});
+
+app.post('/update-next-ideas', async (req: express.Request, res: express.Response) => {
+  const { clientId, nextIdeas } = req.body as { clientId: string; nextIdeas: any[] };
+
+  if (!clientId || !nextIdeas) {
+    res.status(400).send({ error: 'Invalid or missing input data' });
+    return;
+  }
+
+  // Validate nextIdeas array
+  if (!Array.isArray(nextIdeas)) {
+    res.status(400).send({ error: 'nextIdeas must be an array' });
+    return;
+  }
+
+  try {
+    // Call the `updateNextIdeas` function to handle the logic and update Firestore
+    await updateNextIdeas(clientId, nextIdeas);
+
+    res.status(200).send({ message: 'nextIdeas successfully updated' });
+  } catch (error: any) {
+    console.error('Error updating nextIdeas:', error);
+    res.status(400).send({ error: error.message });
+  }
 });
 
 app.post('/get-translations', async (req: express.Request, res: express.Response) => {

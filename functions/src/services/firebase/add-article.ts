@@ -41,7 +41,7 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
     Make sure the headline is catchy.
     ${lang === 'fr' ? '- Only use uppercase for the first letter of the title.' : ''}`,
     user: `Translate this article into ${locale.language}:
-    ${JSON.stringify({ ...article, id: undefined, author: undefined, published: undefined, created: undefined })}`,
+    ${JSON.stringify({ ...article, id: undefined, author: undefined, published: undefined, created: undefined, thumbnail: undefined })}`,
   };
 
   const completion = await openai.chat.completions.create({
@@ -70,6 +70,7 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
   data.author = article.author;
   data.published = false;
   data.created = Timestamp.now();
+  data.thumbnail = article.thumbnail;
 
   const docRefTranslate = dbAdmin.doc(`${clientId}/${lang}/articles/${data.id}`);
 
