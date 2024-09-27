@@ -1,5 +1,5 @@
-import { dbAdmin } from '../lib/firebase-admin';
-import { get100Ideas } from './ideas/get-100-ideas';
+import { dbAdmin } from '../../lib/firebase-admin';
+import { get100Ideas } from './get-100-ideas';
 
 // This function is called by the cronjob to remove first element of nextIdeas and add a new one
 export const handleNewNextIdeas = async (clientId: string, mission: string, targetAudience: string) => {

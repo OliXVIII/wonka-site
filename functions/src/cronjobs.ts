@@ -3,7 +3,7 @@
 const { onSchedule } = require('firebase-functions/v2/scheduler');
 
 import { dbAdmin } from './lib/firebase-admin';
-import { handleNewPost } from './services/handleNewPost';
+import { handleNewArticle } from './services/create-article/cronjob-new-article';
 
 exports.dailyCronjobs = onSchedule('every day 11:00', async () => {
   const today = new Date();
@@ -21,7 +21,7 @@ exports.dailyCronjobs = onSchedule('every day 11:00', async () => {
           const date = clientData.date;
           date.setHours(0, 0, 0, 0);
           if (date === today) {
-            await handleNewPost(clientId);
+            await handleNewArticle(clientId);
           } else {
             console.log(`Client ${clientId} does not have today's date.`);
           }

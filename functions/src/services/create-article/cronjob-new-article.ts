@@ -1,10 +1,17 @@
+<<<<<<< Updated upstream:functions/src/services/handleNewPost.ts
 import { dbAdmin } from '../lib/firebase-admin';
 import { ClientInfo } from '../types/client-info';
 import { createNewArticle } from './create-new-article';
 import { createdArticleEmail } from './email/cronjob-email';
 // import { handleNewNextIdeas } from './handleNewNextIdeas';
+=======
+import { dbAdmin } from '../../lib/firebase-admin';
+import { ClientInfo } from '../../types/client-info';
+import { createNewArticle } from '../create-new-article';
+import { createdArticleEmail } from '../email/cronjob-email';
+>>>>>>> Stashed changes:functions/src/services/create-article/cronjob-new-article.ts
 
-export const handleNewPost = async (clientId: string) => {
+export const handleNewArticle = async (clientId: string) => {
   const path_info = `${clientId}/info`;
   const clientInfoRef = dbAdmin.doc(path_info);
   const ClientInfo = await clientInfoRef.get();

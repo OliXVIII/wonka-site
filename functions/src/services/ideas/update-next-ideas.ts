@@ -2,6 +2,14 @@ import { dbAdmin } from '../../lib/firebase-admin';
 import { FrequencyArticle, NextIdeas } from '../../types/client-info';
 import { Timestamp } from 'firebase-admin/firestore';
 
+/**
+ *
+ * Here's 3 way to use this function:
+ * 1. Set title to an empty string to delete it from nextIdeas.
+ * 2. Set a new object with title = string to add a new idea.
+ * 3. Modify an existing idea by setting title = string to an other value.
+ */
+
 const updateNextIdeas = async (clientId: string, nextIdeasInput: NextIdeas[]) => {
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
