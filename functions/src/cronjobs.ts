@@ -4,7 +4,7 @@ import { dbAdmin } from './lib/firebase-admin';
 import { handleNewArticle } from './services/create-article/cronjob-new-article';
 import { NextIdeas } from './types/client-info';
 
-exports.dailyCronjobs = onSchedule('every day 11:00', async () => {
+exports.dailyCronjobs = onSchedule('every day 8:00', async () => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayTimestamp = today.getTime();
