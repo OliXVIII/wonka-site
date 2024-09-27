@@ -18,6 +18,7 @@ import { generateTwitterPost } from './services/create-post/create-twitter-post'
 import { Timestamp } from 'firebase-admin/firestore';
 import { deleteImage } from './services/image/delete-image';
 import { updateNextIdeas } from './services/ideas/update-next-ideas';
+import { handleNewArticle } from './services/create-article/cronjob-new-article';
 
 const app = express();
 
@@ -644,4 +645,10 @@ app.post('/updateNextIdeas', async (req: express.Request, res: express.Response)
     console.error('Error updating nextIdeas:', error);
     return res.status(500).send({ error: 'Failed to update nextIdeas' });
   }
+});
+
+app.post('/test', async (req: express.Request, res: express.Response) => {
+  const { clientId } = req.body;
+  await handleNewArticle(clientId);
+  res.status(200).send('Test');
 });

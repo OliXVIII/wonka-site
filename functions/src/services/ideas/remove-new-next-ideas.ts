@@ -1,4 +1,6 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { dbAdmin } from '../../lib/firebase-admin';
+import { NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
 
 // This function is called by the cronjob to remove first element of nextIdeas and add a new one
@@ -10,7 +12,7 @@ export const handleNewNextIdeas = async (clientId: string, mission: string, targ
     console.log('Client info does not exist');
     return;
   }
-  let nextIdeas = data.nextIdeas;
+  let nextIdeas = data.nextIdeas as NextIdeas[];
   let ideas = data.ideas;
 
   if (!nextIdeas || !ideas) {
@@ -32,13 +34,12 @@ export const handleNewNextIdeas = async (clientId: string, mission: string, targ
     const newIdeas = await get100Ideas(mission, targetAudience);
     await dbAdmin.doc(`${clientId}/info`).update({ ideas: newIdeas });
   }
-
-  nextIdeas = nextIdeas.shift(); // Remove the first element (the one that was just used)
-  nextIdeas = nextIdeas.push({ title: newNextIdea, date: new Date(), new: true }); //TODO: check with Oli for Date attribute
+  nextIdeas.shift(); // Remove the first element (the one that was just used)
+  nextIdeas.push({ title: newNextIdea, date: Timestamp.fromDate(new Date()), new: true }); //TODO: check with Oli for Date attribute
   await dbAdmin.doc(`${clientId}/info`).update({ nextIdeas });
 
   const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
-  const cronjobs = await cronjobsRef.get();
+  // const cronjobs = await cronjobsRef.get();
 
   await cronjobsRef.update({ [clientId]: { date: new Date() } });
 };

@@ -147,7 +147,9 @@ export const createNewArticle = async ({
     content = preprocessJSON(await addChartToArticle(content, chart_info)).replaceAll('html', '');
     console.log('chart added');
   }
+  const langue = 'en'; //TODO: This is a temporary fix, we should implement the lang tin the database
   const article: Article = {
+    href: `https://inceptionai.ca/${langue}-CA/articles/${id}`,
     id,
     title,
     content,
