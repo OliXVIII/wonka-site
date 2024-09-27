@@ -8,6 +8,7 @@ export const emailContent = ({
   twitterPosts,
   subject,
   thumbnail,
+  isNewArticleCreated,
 }: {
   href: string;
   lang: Locale;
@@ -16,6 +17,7 @@ export const emailContent = ({
   twitterPosts?: string[] | null;
   subject: string;
   thumbnail?: string;
+  isNewArticleCreated?: boolean;
 }) => {
   // Define the content for each supported language
   const localizedContent = {
@@ -24,21 +26,26 @@ export const emailContent = ({
       linkedin: 'LinkedIn posts 📫',
       facebook: 'Facebook posts 📩',
       twitter: 'Twitter posts 🐦',
-      viewOnWebsite: 'You can view your new article on our website at the following link:',
-      newArticle: `New article just published: "${subject}"`,
-      mainTitle: subject,
+      viewOnWebsite: isNewArticleCreated
+        ? 'Please review the new article created at the following link:'
+        : 'You can view your new article on our website at the following link:',
+      newArticle: isNewArticleCreated ? `New article ready for review: "${subject}"` : `New article just published: "${subject}"`,
+      mainTitle: isNewArticleCreated ? `Article ready for review: "${subject}"` : subject,
     },
     fr: {
       shareIntro: 'Pour le partager sur vos réseaux sociaux, voici quelques suggestions de publications :',
       linkedin: 'Publications LinkedIn 📫',
       facebook: 'Publications Facebook 📩',
       twitter: 'Publications Twitter 🐦',
-      viewOnWebsite: "Vous pouvez consulter votre nouvel article sur notre site Web à l'adresse suivante :",
-      newArticle: `Nouvel article publié : "${subject}"`,
-      mainTitle: subject,
+      viewOnWebsite: isNewArticleCreated
+        ? "Veuillez examiner l'article au lien suivant :"
+        : "Vous pouvez consulter votre nouvel article sur notre site Web à l'adresse suivante :",
+      newArticle: isNewArticleCreated
+        ? `Nouvel article prêt à être examiné : "${subject}"`
+        : `Nouvel article publié : "${subject}"`,
+      mainTitle: isNewArticleCreated ? `Article prêt à être examiné : "${subject}"` : subject,
     },
   };
-
   // Extract the content based on the selected language
   const content = localizedContent[lang as 'en' | 'fr'] ?? localizedContent.en;
 
@@ -333,9 +340,13 @@ export const emailContent = ({
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody>
+                            ${
+                              !isNewArticleCreated
+                                ? `<tbody>
                                 ${socialMediaPostsHtml}
-                            </tbody>
+                            </tbody>`
+                                : ''
+                            }
                         </table>
                     </td>
                 </tr>

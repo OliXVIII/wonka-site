@@ -4,7 +4,7 @@ import { createNewArticle } from './services/create-new-article';
 import { Locale, isValidLanguage, localesDetails } from './types/languages';
 import { generateLinkedinPost } from './services/create-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
-import { sendEmail } from './services/send-email';
+import { sendEmail } from './services/email/send-email';
 import { emailContent } from './lib/email';
 import { deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
@@ -83,7 +83,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     res.status(400).send('Invalid language');
     return;
   }
-  console.log('prompt', prompt);
+
   const id = await createNewArticle({
     mission,
     targetAudience,
