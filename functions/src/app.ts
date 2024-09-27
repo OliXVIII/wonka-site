@@ -612,6 +612,16 @@ app.post('/finish-setup', async (req, res) => {
   // Update the client's info with the new data
   await docRef.update(info);
 
+  //TODO: Append first next ideas to cronjobs/nextIdeas
+  const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
+  const cronjobs = await cronjobsRef.get();
+
+  if (!cronjobs.exists) {
+    await cronjobsRef.set({ [clientId]: info.nextIdeas });
+  } else {
+    await cronjobsRef.update({ [clientId]: info.nextIdeas });
+  }
+
   res.status(200).json({ message: 'Setup finished successfully', clientId });
 });
 

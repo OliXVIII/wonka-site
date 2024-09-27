@@ -1,15 +1,8 @@
-<<<<<<< Updated upstream:functions/src/services/handleNewPost.ts
-import { dbAdmin } from '../lib/firebase-admin';
-import { ClientInfo } from '../types/client-info';
-import { createNewArticle } from './create-new-article';
-import { createdArticleEmail } from './email/cronjob-email';
-// import { handleNewNextIdeas } from './handleNewNextIdeas';
-=======
 import { dbAdmin } from '../../lib/firebase-admin';
 import { ClientInfo } from '../../types/client-info';
 import { createNewArticle } from '../create-new-article';
 import { createdArticleEmail } from '../email/cronjob-email';
->>>>>>> Stashed changes:functions/src/services/create-article/cronjob-new-article.ts
+import { handleNewNextIdeas } from '../ideas/remove-new-next-ideas';
 
 export const handleNewArticle = async (clientId: string) => {
   const path_info = `${clientId}/info`;
@@ -48,6 +41,6 @@ export const handleNewArticle = async (clientId: string) => {
     console.log('Error creating article');
     return;
   }
-  // await handleNewNextIdeas(clientId, mission, targetAudience);
+  await handleNewNextIdeas(clientId, mission, targetAudience);
   await createdArticleEmail(clientId, 'en', articleId);
 };

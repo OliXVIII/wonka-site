@@ -36,4 +36,9 @@ export const handleNewNextIdeas = async (clientId: string, mission: string, targ
   nextIdeas = nextIdeas.shift(); // Remove the first element (the one that was just used)
   nextIdeas = nextIdeas.push({ title: newNextIdea, date: new Date(), new: true }); //TODO: check with Oli for Date attribute
   await dbAdmin.doc(`${clientId}/info`).update({ nextIdeas });
+
+  const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
+  const cronjobs = await cronjobsRef.get();
+
+  await cronjobsRef.update({ [clientId]: { date: new Date() } });
 };
