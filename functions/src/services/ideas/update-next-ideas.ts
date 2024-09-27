@@ -54,7 +54,8 @@ const updateNextIdeas = async (clientId: string, nextIdeasInput: NextIdeas[]) =>
 
     // Validate title
     if (typeof idea.title !== 'string' || !idea.title.trim()) {
-      throw new Error(`Invalid title for idea at position ${i + 1}`);
+      console.warn(`Skipping idea at position ${i + 1} due to invalid or empty title.`);
+      continue; // Skip adding this idea to updatedNextIdeas
     }
     updatedIdea.title = idea.title.trim();
 
