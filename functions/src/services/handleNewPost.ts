@@ -2,7 +2,7 @@ import { dbAdmin } from '../lib/firebase-admin';
 import { ClientInfo } from '../types/client-info';
 import { createNewArticle } from './create-new-article';
 import { createdArticleEmail } from './email/cronjob-email';
-import { handleNewNextIdeas } from './handleNewNextIdeas';
+// import { handleNewNextIdeas } from './handleNewNextIdeas';
 
 export const handleNewPost = async (clientId: string) => {
   const path_info = `${clientId}/info`;
