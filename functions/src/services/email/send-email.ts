@@ -2,24 +2,24 @@ import nodemailer from 'nodemailer';
 
 export const sendEmail = async (data: { title: string; content: string }, receiver?: string) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: 'inceptionai.com@gmail.com',
-        pass: 'nswr bnoj nudx yzvj',
-      },
-    });
-
     // Email content setup
     const mailOptions = {
-      from: 'inceptionai.com@gmail.com',
+      from: 'contact@inceptionai.ca',
       to: receiver ?? 'contact@inceptionai.ca',
       subject: data.title,
       html: data.content,
     };
+
+    let mailerConfig = {
+      host: 'smtp.office365.com',
+      secureConnection: true,
+      port: 587,
+      auth: {
+        user: 'contact@inceptionai.ca',
+        pass: 'buwsYf-paxxi2-motqof',
+      },
+    };
+    let transporter = nodemailer.createTransport(mailerConfig);
 
     // Send the email
     await transporter.sendMail(mailOptions);

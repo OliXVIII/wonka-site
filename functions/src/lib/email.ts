@@ -31,6 +31,7 @@ export const emailContent = ({
         : 'You can view your new article on our website at the following link:',
       newArticle: isNewArticleCreated ? `New article ready for review: "${subject}"` : `New article just published: "${subject}"`,
       mainTitle: isNewArticleCreated ? `Article ready for review: "${subject}"` : subject,
+      link: 'Link to the article',
     },
     fr: {
       shareIntro: 'Pour le partager sur vos réseaux sociaux, voici quelques suggestions de publications :',
@@ -44,6 +45,7 @@ export const emailContent = ({
         ? `Nouvel article prêt à être examiné : "${subject}"`
         : `Nouvel article publié : "${subject}"`,
       mainTitle: isNewArticleCreated ? `Article prêt à être examiné : "${subject}"` : subject,
+      link: "Lien vers l'article",
     },
   };
   // Extract the content based on the selected language
@@ -186,6 +188,10 @@ export const emailContent = ({
             font-family: 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             mso-line-height-rule: exactly;
             color: #FFFFFF;
+        }
+        a {
+            text-decoration: none;
+            color: #5093eb;
         }
         .overlay {
             position: absolute;
@@ -336,7 +342,7 @@ export const emailContent = ({
                                 <tr>
                                     <td align="left" style="padding: 0 10px;">
                                         <p style="padding-top: 10px;">${content.viewOnWebsite}</p>
-                                        <p style="padding-top: 10px; padding-bottom: 30px;"><a href="${href}" style="color: #1a73e8;">${href}</a></p>
+                                        <p style="padding-top: 10px; padding-bottom: 30px; justify-content: center; text-align: center;"><a href="${href}" style="color: #1a73e8;">${content.link}</a></p>
                                     </td>
                                 </tr>
                             </tbody>
