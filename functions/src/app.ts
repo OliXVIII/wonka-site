@@ -48,7 +48,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     return;
   }
 
-  let { mission, ideas, targetAudience = 'general', defaultAuthor, CTA, domain, companyName } = info.data() as ClientInfo;
+  let { mission, ideas, targetAudience = 'general', defaultAuthor, CTA = '', domain, companyName } = info.data() as ClientInfo;
 
   if (!mission) {
     res.status(400).send('Client incomplete');

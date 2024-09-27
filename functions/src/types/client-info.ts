@@ -17,7 +17,7 @@ export type ClientInfo = {
   allowed?: Allowed;
   clientId?: string;
   companyName: string;
-  CTA?: string;
+  CTA: string;
   defaultAuthor?: string;
   domain: string;
   frequency?: FrequencyArticle;

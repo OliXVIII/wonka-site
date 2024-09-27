@@ -5,10 +5,10 @@ import { sendEmail } from './send-email'; // Adjust the path as necessary
 import { dbAdmin } from '../../lib/firebase-admin';
 
 // Define the function
-export const createdArticleEmail = async (clientId: string, lang: string, title: string, id: string) => {
+export const createdArticleEmail = async (clientId: string, lang: string, id: string) => {
   try {
     // Validate required fields
-    if (!clientId || !lang || !title) {
+    if (!clientId || !lang) {
       throw new Error('Missing required fields');
     }
 

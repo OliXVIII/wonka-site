@@ -22,26 +22,26 @@ import { dbAdmin } from '../lib/firebase-admin';
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({
   author,
-  chart,
   clientId,
   domain,
-  lang,
   mission,
   prompt,
-  source,
   targetAudience,
   CTA = "Let's get started",
+  chart = true,
+  lang = 'en',
+  source = false,
 }: {
   author: string;
-  chart: boolean;
   clientId: string;
   domain: string;
-  lang: Locale;
   mission: string;
   prompt: string;
-  source: boolean;
   targetAudience: string;
-  CTA?: string;
+  CTA: string;
+  chart?: boolean;
+  lang?: Locale;
+  source?: boolean;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
