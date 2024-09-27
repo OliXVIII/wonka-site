@@ -617,9 +617,9 @@ app.post('/finish-setup', async (req, res) => {
   const cronjobs = await cronjobsRef.get();
 
   if (!cronjobs.exists) {
-    await cronjobsRef.set({ [clientId]: info.nextIdeas });
+    await cronjobsRef.set({ [clientId]: info.nextIdeas[0] });
   } else {
-    await cronjobsRef.update({ [clientId]: info.nextIdeas });
+    await cronjobsRef.update({ [clientId]: info.nextIdeas[0] });
   }
 
   res.status(200).json({ message: 'Setup finished successfully', clientId });
