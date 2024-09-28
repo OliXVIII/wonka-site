@@ -647,8 +647,9 @@ app.post('/updateNextIdeas', async (req: express.Request, res: express.Response)
   }
 });
 
+// TODO: Test incomplet, à revoir, url à changer, etc.
 app.post('/test', async (req: express.Request, res: express.Response) => {
   const { clientId } = req.body;
-  await handleNewArticle(clientId);
+  await handleNewArticle(clientId, Timestamp.now());
   res.status(200).send('Test');
 });
