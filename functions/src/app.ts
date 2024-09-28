@@ -19,6 +19,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { deleteImage } from './services/image/delete-image';
 import { updateNextIdeas } from './services/ideas/update-next-ideas';
 import { handleNewArticle } from './services/create-article/cronjob-new-article';
+import { processDailyCronJob } from './cronjobs';
 
 const app = express();
 
@@ -648,8 +649,12 @@ app.post('/updateNextIdeas', async (req: express.Request, res: express.Response)
 });
 
 // TODO: Test incomplet, à revoir, url à changer, etc.
-app.post('/test', async (req: express.Request, res: express.Response) => {
-  const { clientId } = req.body;
-  await handleNewArticle(clientId, Timestamp.now());
-  res.status(200).send('Test');
+app.post('/trigger-daily-cronjob', async (req, res) => {
+  try {
+    await processDailyCronJob();
+    res.status(200).send('Cron job triggered successfully');
+  } catch (error) {
+    console.error('Error triggering cron job:', error);
+    res.status(500).send('Error triggering cron job');
+  }
 });

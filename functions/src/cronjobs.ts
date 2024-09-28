@@ -1,16 +1,22 @@
-const { onSchedule } = require('firebase-functions/v2/scheduler');
-
+// cronjob.ts
+import { onSchedule } from 'firebase-functions/v2/scheduler';
+// cronjob.ts
 import { dbAdmin } from './lib/firebase-admin';
 import { handleNewArticle } from './services/create-article/cronjob-new-article';
 import { NextIdeas } from './types/client-info';
 
-exports.dailyCronjobs = onSchedule('every day 8:00', async () => {
+/**
+ * This function contains the main logic for processing the cron job.
+ * It can be called both by a cron job and via an HTTP request.
+ */
+export const processDailyCronJob = async () => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayTimestamp = today.getTime();
 
   const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
   const cronjobsDoc = await cronjobsRef.get();
+
   if (!cronjobsDoc.exists) {
     console.log('No cronjobs found.');
     return;
@@ -35,5 +41,16 @@ exports.dailyCronjobs = onSchedule('every day 8:00', async () => {
         console.log(`Client ${clientId} does not have a date field.`);
       }
     }
+  }
+};
+
+/**
+ * Firebase scheduled cron job that runs every day at 8:00 AM.
+ */
+exports.dailyCronjobs = onSchedule('0 10 * * *', async () => {
+  try {
+    await processDailyCronJob();
+  } catch (error) {
+    console.error('Error running daily cron job:', error);
   }
 });
