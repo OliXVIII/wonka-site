@@ -27,7 +27,7 @@ exports.dailyCronjobs = onSchedule('every day 8:00', async () => {
         const dateTimestamp = date.getTime();
 
         if (dateTimestamp === todayTimestamp) {
-          await handleNewArticle(clientId);
+          await handleNewArticle(clientId, clientData.date);
         } else {
           console.log(`Client ${clientId} does not have today's date.`);
         }

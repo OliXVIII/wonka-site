@@ -1,10 +1,11 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { ClientInfo } from '../../types/client-info';
 import { createNewArticle } from '../create-new-article';
 import { createdArticleEmail } from '../email/cronjob-email';
 // import { handleNewNextIdeas } from '../ideas/remove-new-next-ideas';
 
-export const handleNewArticle = async (clientId: string) => {
+export const handleNewArticle = async (clientId: string, date: Timestamp) => {
   const path_info = `${clientId}/info`;
   const clientInfoRef = dbAdmin.doc(path_info);
   const ClientInfo = await clientInfoRef.get();
@@ -21,12 +22,14 @@ export const handleNewArticle = async (clientId: string) => {
 
   let { mission, nextIdeas, targetAudience = 'general', defaultAuthor, CTA = '', domain } = clientData as ClientInfo;
 
-  const prompt = nextIdeas?.[0].title;
+  // find the right date as idea.date is a timestamp
+  const prompt = nextIdeas?.find((idea) => idea.date.toMillis() === date.toMillis())?.title;
 
   if (!prompt) {
     console.log('No prompt found');
     return;
   }
+
   console.log('creating article');
   const articleId = await createNewArticle({
     author: defaultAuthor ?? 'InceptionAI',
