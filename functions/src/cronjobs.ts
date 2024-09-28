@@ -3,7 +3,6 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 // cronjob.ts
 import { dbAdmin } from './lib/firebase-admin';
 import { handleNewArticle } from './services/create-article/cronjob-new-article';
-import { NextIdeas } from './types/client-info';
 
 /**
  * This function contains the main logic for processing the cron job.
@@ -22,7 +21,12 @@ export const processDailyCronJob = async () => {
     return;
   }
 
-  const data = cronjobsDoc.data() as Record<string, NextIdeas>;
+  const data = cronjobsDoc.data() as Record<
+    string,
+    {
+      date: FirebaseFirestore.Timestamp;
+    }
+  >;
 
   if (data) {
     for (const clientId in data) {

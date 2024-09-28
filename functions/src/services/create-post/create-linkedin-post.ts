@@ -4,20 +4,18 @@ import { ClientInfo } from '../../types/client-info';
 import { LocaleDetails } from '../../types/languages';
 
 export const generateLinkedinPost = async ({
-  content,
-  image,
+  context,
   href,
   locale,
   info,
 }: {
-  content: string;
-  image: string;
+  context: string;
   href: string;
   locale: LocaleDetails;
   info: ClientInfo;
-}): Promise<string | null> => {
+}): Promise<string[] | null> => {
   try {
-    const prompt = linkedinSecretPrompt_v1(content, href, image, locale.language, info);
+    const prompt = linkedinSecretPrompt_v1(context, href, locale.language, info);
 
     console.log('Prompt:', JSON.stringify(prompt));
 
@@ -41,7 +39,9 @@ export const generateLinkedinPost = async ({
       return null;
     }
 
-    return response;
+    const list = JSON.parse(response) as string[];
+
+    return list;
   } catch (error) {
     console.error('Error in generateLinkedinPost', error);
     return null;

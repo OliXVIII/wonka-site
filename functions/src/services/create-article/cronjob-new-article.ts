@@ -14,7 +14,7 @@ export const handleNewArticle = async (clientId: string, date: Timestamp) => {
     return;
   }
   const clientData = ClientInfo.data();
-  console.log('clientData: ', clientData);
+
   if (!clientData) {
     console.log('Client data does not exist');
     return;
@@ -22,16 +22,25 @@ export const handleNewArticle = async (clientId: string, date: Timestamp) => {
 
   let { mission, nextIdeas, targetAudience = 'general', defaultAuthor, CTA = '', domain } = clientData as ClientInfo;
 
-  // find the right date as idea.date is a timestamp
-  const prompt = nextIdeas?.find((idea) => idea.date.toMillis() === date.toMillis())?.title;
+  // Find the prompt where idea.date is the same day as date
+  const prompt = nextIdeas?.find((idea) => {
+    const ideaDate = new Date(idea.date.toMillis());
+    const targetDate = new Date(date.toMillis());
+
+    const isSameDay =
+      ideaDate.getFullYear() === targetDate.getFullYear() &&
+      ideaDate.getMonth() === targetDate.getMonth() &&
+      ideaDate.getDate() === targetDate.getDate();
+
+    return isSameDay;
+  })?.title;
 
   if (!prompt) {
-    console.log('No prompt found');
     return;
   }
 
   console.log('creating article');
-  const articleId = await createNewArticle({
+  const id = await createNewArticle({
     author: defaultAuthor ?? 'InceptionAI',
     clientId,
     domain,
@@ -41,13 +50,12 @@ export const handleNewArticle = async (clientId: string, date: Timestamp) => {
     CTA,
     lang: 'en',
   });
-  console.log('articleId: ', articleId);
-  if (!articleId) {
+  if (!id) {
     console.log('Error creating article');
     return;
   }
   // await handleNewNextIdeas(clientId, mission, targetAudience);
-  await createdArticleEmail(clientId, 'en', articleId);
+  await createdArticleEmail(clientId, 'en', id);
   console.log('Article created and email sent, congrats!');
   return;
 };

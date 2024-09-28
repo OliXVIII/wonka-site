@@ -18,7 +18,7 @@ import { generateTwitterPost } from './services/create-post/create-twitter-post'
 import { Timestamp } from 'firebase-admin/firestore';
 import { deleteImage } from './services/image/delete-image';
 import { updateNextIdeas } from './services/ideas/update-next-ideas';
-import { handleNewArticle } from './services/create-article/cronjob-new-article';
+
 import { processDailyCronJob } from './cronjobs';
 
 const app = express();
@@ -184,9 +184,6 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
   }
 
   const html = data?.content.replace(/<[^>]*>/g, '') as string;
-  let image = data?.thumbnail
-    ? data.thumbnail
-    : 'https://firebasestorage.googleapis.com/v0/b/inceptionai-61b20.appspot.com/o/images%2FtestId%2Fstate-of-seo-in-2024%3A-trends-and-predictions.png?alt=media&token=aab4aafc-3543-42bc-aab5-055fa7f10e41';
   const title = data?.content.match(/<h1(?: id="[^"]+")?>(.+?)<\/h1>/)?.[1] ?? '';
 
   if (!html) {
@@ -210,41 +207,36 @@ app.post('/publish', async (req: express.Request, res: express.Response) => {
 
       data.thumbnail = url;
       data.prompt.thumbnail = prompt;
-      image = url;
     } catch (error: any) {
       console.error('/publish: Error creating image:', error.message);
     }
   }
 
-  let linkedinPost: string | null = null;
-  let linkedinPost_v2: string | null = null;
+  let linkedinPosts: string[] | null = null;
   let twitterPost: string | null = null;
 
-  linkedinPost = await generateLinkedinPost({
-    content: html.replace(/<[^>]*>/g, ''),
-    image,
+  linkedinPosts = await generateLinkedinPost({
+    context: html.replace(/<[^>]*>/g, ''),
     href,
     locale: localesDetails[lang],
     info,
   });
 
-  linkedinPost_v2 = await generateLinkedinPost({
-    content: `Context:
-    "${data.prompt.content}"
-    Here's a structure of subjects we're able to cover in that post:
-    [${html.match(/<h2(?: id="[^"]+")?>(.+?)<\/h2>/g)?.map((subtitle) => subtitle.replace(/<[^>]*>?/gm, ''))}]
-    `,
-    image,
-    href: href.includes('clientId') ? href : `${href}?clientId=${clientId}`,
-    locale: localesDetails[lang],
-    info,
-  });
+  // linkedinPost_v2 = await generateLinkedinPost({
+  //   content: `Context:
+  //   "${data.prompt.content}"
+  //   Here's a structure of subjects we're able to cover in that post:
+  //   [${html.match(/<h2(?: id="[^"]+")?>(.+?)<\/h2>/g)?.map((subtitle) => subtitle.replace(/<[^>]*>?/gm, ''))}]
+  //   `,
+  //   image,
+  //   href: href.includes('clientId') ? href : `${href}?clientId=${clientId}`,
+  //   locale: localesDetails[lang],
+  //   info,
+  // });
 
   if (info.allowed?.twitter) {
     twitterPost = await generateTwitterPost(html.replace(/<[^>]*>/g, ''), href, localesDetails[lang]);
   }
-  const linkedinPosts =
-    linkedinPost || linkedinPost_v2 ? [linkedinPost, linkedinPost_v2].filter((post): post is string => post !== null) : null;
 
   //TODO: add a email wrapper
   const email = emailContent({
