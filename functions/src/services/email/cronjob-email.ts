@@ -33,7 +33,7 @@ export const createdArticleEmail = async (clientId: string, lang: string, id: st
     const teamReceiverEmail = 'contact@inceptionai.ca';
 
     const teamEmail = emailContent({
-      href: article.href,
+      href: `article.href?clientId=${clientId}`,
       lang: lang as Locale,
       linkedinPosts: null,
       facebookPosts: null,
