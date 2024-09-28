@@ -15,7 +15,7 @@ const runtimeOpts = {
 
 exports.app = functions.runWith(runtimeOpts).https.onRequest(app);
 
-exports.dailyCronjobs = onSchedule('0 10 * * *', async () => {
+exports.dailyCronjobs = onSchedule('0 8 * * *', async () => {
   try {
     await processDailyCronJob();
   } catch (error) {

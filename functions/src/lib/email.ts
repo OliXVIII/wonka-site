@@ -23,9 +23,9 @@ export const emailContent = ({
   const localizedContent = {
     en: {
       shareIntro: 'To share it on your social networks, here are some post suggestions:',
-      linkedin: 'LinkedIn posts 📫',
-      facebook: 'Facebook posts 📩',
-      twitter: 'Twitter posts 🐦',
+      linkedin: 'LinkedIn posts',
+      facebook: 'Facebook posts',
+      twitter: 'Twitter posts',
       viewOnWebsite: isNewArticleCreated
         ? 'Please review the new article created at the following link:'
         : 'You can view your new article on our website at the following link:',
@@ -35,9 +35,9 @@ export const emailContent = ({
     },
     fr: {
       shareIntro: 'Pour le partager sur vos réseaux sociaux, voici quelques suggestions de publications :',
-      linkedin: 'Publications LinkedIn 📫',
-      facebook: 'Publications Facebook 📩',
-      twitter: 'Publications Twitter 🐦',
+      linkedin: 'Publications LinkedIn',
+      facebook: 'Publications Facebook',
+      twitter: 'Publications Twitter',
       viewOnWebsite: isNewArticleCreated
         ? "Veuillez examiner l'article au lien suivant :"
         : "Vous pouvez consulter votre nouvel article sur notre site Web à l'adresse suivante :",
@@ -66,7 +66,7 @@ export const emailContent = ({
 
     if (linkedinPosts && linkedinPosts.length > 0) {
       socialMediaPostsHtml += `
-        <p style="margin: 5px 0; text-align: center; font-size: 20px;"><strong>${content.linkedin}</strong></p>
+        <p style="margin: 5px 0; text-align: center; font-size: 20px; padding-bottom: 10px;"><strong>${content.linkedin}</strong></p>
         ${linkedinPosts
           .map(
             (post, index) => `
