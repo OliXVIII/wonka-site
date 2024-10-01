@@ -1,23 +1,23 @@
-import { createBody } from './create-article/create-section/create-subtitle';
-import { getListSubtitle } from './create-article/create-section/get-list-subtitle';
-import { createContentForIntro } from './create-article/create-section/create-introduction';
-import { createContentForClosure } from './create-article/create-section/create-closure';
-import { preprocessJSON } from './preprocessJSON';
-import { addArticle } from './firebase/add-article';
-import { Locale, localesDetails } from '../types/languages';
-import { improveBody } from './create-article/edit-article/improve-body';
-import { editContent } from './create-article/edit-article/edit-content';
+import { createBody } from './create-section/create-subtitle';
+import { getListSubtitle } from './create-section/get-list-subtitle';
+import { createContentForIntro } from './create-section/create-introduction';
+import { createContentForClosure } from './create-section/create-closure';
+import { preprocessJSON } from '../preprocessJSON';
+import { addArticle } from './add-article';
+import { Locale, localesDetails } from '../../types/languages';
+import { improveBody } from './edit-article/improve-body';
+import { editContent } from './edit-article/edit-content';
 import { Timestamp } from 'firebase-admin/firestore';
-import { Article } from '../types/article';
-import { addSources } from './create-article/add-sources/add-souces';
-import { createGreatestTitleEverMade } from './create-article/create-title/create-greatest-title';
-import { createChartDataset } from './create-chart-dataset.ts/create-dataset';
-import { addChartToArticle } from './create-article/edit-article/add-chart-to-article';
-import { extractLabelAndTitleFromString } from './util/get-chart-info';
-import { addInstructionToPrompt } from './add-instruction-to-prompt';
-import { translate } from './translate-prompt';
-import { improveConclusion } from './create-article/edit-article/improve-closure';
-import { dbAdmin } from '../lib/firebase-admin';
+import { Article } from '../../types/article';
+import { addSources } from './add-sources/add-souces';
+import { createGreatestTitleEverMade } from './create-title/create-greatest-title';
+import { createChartDataset } from '../create-chart-dataset.ts/create-dataset';
+import { addChartToArticle } from './edit-article/add-chart-to-article';
+import { extractLabelAndTitleFromString } from '../util/get-chart-info';
+import { addInstructionToPrompt } from '../add-instruction-to-prompt';
+import { translate } from '../translate-prompt';
+import { improveConclusion } from './edit-article/improve-closure';
+import { dbAdmin } from '../../lib/firebase-admin';
 
 //TODO add CTA attribute in the database
 export const createNewArticle = async ({

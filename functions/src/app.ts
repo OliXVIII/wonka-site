@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { createNewArticle } from './services/create-new-article';
+import { createNewArticle } from './services/create-article/create-new-article';
 import { Locale, isValidLanguage, localesDetails } from './types/languages';
 import { generateLinkedinPost } from './services/create-post/create-linkedin-post';
 import { dbAdmin } from './lib/firebase-admin';
@@ -12,7 +12,7 @@ import { get100Ideas } from './services/ideas/get-100-ideas';
 import { ClientInfo } from './types/client-info';
 import { createImage } from './services/image/create-image';
 import { v4 as uuidv4 } from 'uuid';
-import { getTranslation } from './services/firebase/add-article';
+import { getTranslation } from './services/create-article/get-translation';
 import { Article } from './types/article';
 import { generateTwitterPost } from './services/create-post/create-twitter-post';
 import { Timestamp } from 'firebase-admin/firestore';

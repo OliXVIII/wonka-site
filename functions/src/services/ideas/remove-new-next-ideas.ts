@@ -1,45 +1,65 @@
-import { Timestamp } from 'firebase-admin/firestore';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
+import { updateNextIdeas } from './update-next-ideas';
 
 // This function is called by the cronjob to remove first element of nextIdeas and add a new one
 export const handleNewNextIdeas = async (clientId: string, mission: string, targetAudience: string) => {
-  const nextIdeasRef = await dbAdmin.doc(`${clientId}/info`).get();
-  const data = await nextIdeasRef.data();
+  const docRef = dbAdmin.doc(`${clientId}/info`);
+  const docSnap = await docRef.get();
+  const data = docSnap.data();
 
   if (!data) {
     console.log('Client info does not exist');
     return;
   }
-  let nextIdeas = data.nextIdeas as NextIdeas[];
-  let ideas = data.ideas;
+
+  let nextIdeas = data.nextIdeas as any[];
+  let ideas = data.ideas as string[];
 
   if (!nextIdeas || !ideas) {
     console.log('No next ideas or ideas found');
     return;
   }
 
-  const randomIndex = Math.floor(Math.random() * nextIdeas.length);
-  const newNextIdea = ideas[randomIndex];
+  // Step 1: Order the elements by date before updating
+  nextIdeas.sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime());
 
-  ideas = ideas.splice(randomIndex, 1); // Remove the idea from the list
-  if (!newNextIdea) {
-    console.log('No new next idea found');
-    return;
-  }
+  // Step 2: Remove the first element (after sorting)
+  nextIdeas.shift();
+
+  // Step 3: Get a new idea
+  const randomIndex = Math.floor(Math.random() * ideas.length);
+  const newNextIdeaTitle = ideas[randomIndex];
+
+  // Remove the idea from the ideas list
+  ideas.splice(randomIndex, 1);
+
   // If there are no ideas left, get 100 new ideas
   if (ideas.length === 0) {
     console.log('No ideas left, getting 100 new ideas');
-    const newIdeas = await get100Ideas(mission, targetAudience);
-    await dbAdmin.doc(`${clientId}/info`).update({ ideas: newIdeas });
+    ideas = await get100Ideas(mission, targetAudience);
   }
-  nextIdeas.shift(); // Remove the first element (the one that was just used)
-  nextIdeas.push({ title: newNextIdea, date: Timestamp.fromDate(new Date()), new: true }); //TODO: check with Oli for Date attribute
-  await dbAdmin.doc(`${clientId}/info`).update({ nextIdeas });
 
-  const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
-  // const cronjobs = await cronjobsRef.get();
+  // Add the new idea to nextIdeas
+  nextIdeas.push({ title: newNextIdeaTitle });
 
-  await cronjobsRef.update({ [clientId]: { date: new Date() } });
+  // Update the ideas array in Firestore
+  await docRef.update({ ideas });
+
+  // Step 4: Use updateNextIdeas to update dates and save to Firestore
+  await updateNextIdeas(clientId, nextIdeas);
+
+  // Step 5: Return the date of the closest next idea
+  const updatedDocSnap = await docRef.get();
+  const updatedData = updatedDocSnap.data();
+  const updatedNextIdeas = updatedData?.nextIdeas as NextIdeas[];
+
+  // Ensure the updated nextIdeas are sorted by date
+  updatedNextIdeas.sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime());
+
+  const closestNextIdea = updatedNextIdeas[0];
+
+  // Return the date of the closest next idea
+  return closestNextIdea.date;
 };

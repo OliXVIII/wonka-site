@@ -1,5 +1,6 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { StylePreferences } from '../private/image-prompt';
+import { Locale } from './languages';
 
 type Allowed = {
   [key: string]: boolean;
@@ -17,13 +18,16 @@ export type ClientInfo = {
   allowed?: Allowed;
   clientId?: string;
   companyName: string;
+  contact?: string;
   CTA: string;
   defaultAuthor?: string;
+  defaultLang?: Locale;
   domain: string;
   frequency?: FrequencyArticle;
   ideas: string[];
   mission: string;
   nextIdeas?: NextIdeas[];
+  region?: string;
   startDate: Timestamp;
   stylePreferences: StylePreferences;
   targetAudience: string;

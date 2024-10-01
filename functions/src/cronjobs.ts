@@ -37,7 +37,10 @@ export const processDailyCronJob = async () => {
         const dateTimestamp = date.getTime();
 
         if (dateTimestamp === todayTimestamp) {
-          await handleNewArticle(clientId, clientData.date);
+          const nextDate = await handleNewArticle(clientId, clientData.date);
+          if (nextDate) {
+            data[clientId].date = nextDate;
+          }
         } else {
           console.log(`Client ${clientId} does not have today's date.`);
         }
@@ -45,6 +48,8 @@ export const processDailyCronJob = async () => {
         console.log(`Client ${clientId} does not have a date field.`);
       }
     }
+
+    await cronjobsRef.set(data);
   }
 };
 

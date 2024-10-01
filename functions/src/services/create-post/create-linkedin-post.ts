@@ -1,7 +1,8 @@
 import { openai } from '../../lib/open-ai';
 import { linkedinSecretPrompt } from '../../private/linkedin';
 import { ClientInfo } from '../../types/client-info';
-import { LocaleDetails } from '../../types/languages';
+import { Locale, LocaleDetails, localesDetails } from '../../types/languages';
+import { getTranslation } from '../create-article/get-translation';
 
 export const generateLinkedinPost = async ({
   context,
@@ -41,6 +42,19 @@ export const generateLinkedinPost = async ({
 
     try {
       const list = JSON.parse(cleanedResponse) as string[];
+      //<hr style="border: none; border-top: 2px solid #000; margin: 40px 0;">
+      // list.map((item) => {
+      //   for (const translateLang of ['en', 'fr'] as Locale[]) {
+      //     if (locale.languageCode !== translateLang) {
+      //       const translateLocale = localesDetails[translateLang];
+
+      //       const traduction = getTranslation({
+      //         locale: translateLocale,
+      //         text: item,
+      //       });
+      //     }
+      //   }
+      // });
 
       return list;
     } catch (error) {

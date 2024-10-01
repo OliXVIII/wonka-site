@@ -1,5 +1,6 @@
 import { ClientInfo } from '../types/client-info';
 
+//TODO: make it personnal, "this is what WE learned..."
 export const linkedinSecretPrompt = (
   context: string,
   href: string,
@@ -7,6 +8,8 @@ export const linkedinSecretPrompt = (
   info: ClientInfo,
 ): { system: string; user: string } => {
   const { mission, CTA } = info;
+  const region = info.region || 'Quebec, Canada';
+
   return {
     system: `Your task is to generate an interesting LinkedIn posts in ${language} related to the following context:
   """
@@ -29,7 +32,8 @@ ${href && CTA ? `- Include a CTA to encourage to "${CTA}".` : "- JUST try to pro
 Requirements for first post:
 - No emojis.
 - Should be more informative and professional.
-- Should be longer than the other posts, but still concise (range of 1,300 to 2,000 characters).
+- Should be longer than the other posts, but still concise.
+- Range of 1,300 to 2,000 characters.
 - Purpose is to teach, inform and share knowledge in a professional but human way.
 
 Requirements for second post:
@@ -39,7 +43,8 @@ Requirements for second post:
 Requirements for third post:
 - Can use emojis naturally, that means put emojis after the punctuation in a sentence and organize in a logical order, so that they make sense and enhance your communication.
 - Should be more engaging and human-like, with possible humor or personal touch.
-- To add to that personnal touch, close with our mission in mind: "${mission}" without mentioning it directly, but underlining the importance of the mission in the context of the post.
+- Culturally relevant and engaging to for ${region}.
+- Make it personnal, convay the message as learning from experience, "this is what WE learned..." inline with our mission: "${mission}". (don't mention the mission directly in the post)
 `,
     //, with a call to action to follow the link ${href} to read the full content
     user: `Now generate 3 great LinkedIn posts in ${language} in html with geniuine interest in helping the reader learn more.
