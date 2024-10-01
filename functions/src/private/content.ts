@@ -176,9 +176,7 @@ export const createGreatestTitleEverMadePrompt = async ({
       - Do NOT mention the target audience directly in the title.
       - Be SEO FRIENDLY.
       - Avoid using colons (:) or any special characters.
-      ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
-
-
+      
     Here's our context:
     target audience: "${targetAudience}".
     mission: "${mission}".`,
