@@ -1,8 +1,7 @@
 import { openai } from '../../lib/open-ai';
 import { linkedinSecretPrompt } from '../../private/linkedin';
 import { ClientInfo } from '../../types/client-info';
-import { Locale, LocaleDetails, localesDetails } from '../../types/languages';
-import { getTranslation } from '../create-article/get-translation';
+import { LocaleDetails } from '../../types/languages';
 
 export const generateLinkedinPost = async ({
   context,
