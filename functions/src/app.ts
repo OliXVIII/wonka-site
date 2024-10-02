@@ -20,8 +20,6 @@ import { deleteImage } from './services/image/delete-image';
 import { updateNextIdeas } from './services/ideas/update-next-ideas';
 
 import { processDailyCronJob } from './cronjobs';
-import { update } from 'lodash';
-import { next } from 'cheerio/lib/api/traversing';
 
 const app = express();
 
