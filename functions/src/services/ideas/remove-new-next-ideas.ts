@@ -1,3 +1,4 @@
+import { next } from 'cheerio/lib/api/traversing';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
@@ -28,21 +29,24 @@ export const handleNewNextIdeas = async (clientId: string, mission: string, targ
   // Step 2: Remove the first element (after sorting)
   nextIdeas.shift();
 
-  // Step 3: Get a new idea
-  const randomIndex = Math.floor(Math.random() * ideas.length);
-  const newNextIdeaTitle = ideas[randomIndex];
+  // If there are less than 7 ideas, get a new one
+  if (nextIdeas.length < 7) {
+    // Step 3: Get a new idea
+    const randomIndex = Math.floor(Math.random() * ideas.length);
+    const newNextIdeaTitle = ideas[randomIndex];
 
-  // Remove the idea from the ideas list
-  ideas.splice(randomIndex, 1);
+    // Remove the idea from the ideas list
+    ideas.splice(randomIndex, 1);
 
-  // If there are no ideas left, get 100 new ideas
-  if (ideas.length === 0) {
-    console.log('No ideas left, getting 100 new ideas');
-    ideas = await get100Ideas(mission, targetAudience);
+    // If there are no ideas left, get 100 new ideas
+    if (ideas.length === 0) {
+      console.log('No ideas left, getting 100 new ideas');
+      ideas = await get100Ideas(mission, targetAudience);
+    }
+
+    // Add the new idea to nextIdeas
+    nextIdeas.push({ title: newNextIdeaTitle });
   }
-
-  // Add the new idea to nextIdeas
-  nextIdeas.push({ title: newNextIdeaTitle });
 
   // Update the ideas array in Firestore
   await docRef.update({ ideas });
