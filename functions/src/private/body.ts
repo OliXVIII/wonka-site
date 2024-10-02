@@ -34,7 +34,6 @@ export const getBodyPrompt = async (
 
 export const improveBodyPrompt = async (
   content: string,
-  lang: string,
   listOfSubtitles: string[],
   context: string,
 ): Promise<{ system: string; user: string }> => {
@@ -43,8 +42,6 @@ export const improveBodyPrompt = async (
       - Make sure the text is not redundant, easy to read, without big paragraph.
       - Each part of the body must have at least 4 paragraphs.
       - Make logic transition each part of the body.
-      - Make sure the language of the text is in ${lang}, even the subtitle.
-      ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
       - Develop and explain each ideas.
       - Make sure that the information of the text is display is various way.
       - Make sure bullet points are used in the text. Add them in a MAXIMUM of 2 or 3 SECTIONS.

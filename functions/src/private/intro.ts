@@ -4,7 +4,6 @@ export const getIntroPrompt = async (
   context: string,
   targetAudience: string,
   subtitle: string[],
-  lang: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Write introduction for the title: "${intro}" and the mission ${mission}", you're a professional on the subject.
@@ -20,8 +19,6 @@ export const getIntroPrompt = async (
       - It should have a lot of different keywords related to the context.
       - if you have to explain a concept, make it clear and easy to understand.
       - Don't mention the target audience in the text, this is only to guide the narration.
-      ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
-      - Make sure the text in the language: ${lang}.
   
       "
       `,

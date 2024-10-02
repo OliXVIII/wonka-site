@@ -1,10 +1,6 @@
 import { LocaleDetails } from '../types/languages';
 
-export const createDatasetPrompt = async (
-  prompt: string,
-  locale: LocaleDetails,
-  type?: 'bar' | 'pie',
-): Promise<{ system: string; user: string }> => {
+export const createDatasetPrompt = async (prompt: string, type?: 'bar' | 'pie'): Promise<{ system: string; user: string }> => {
   //TODO: THIS NEED TO BE GREATLY IMPROVED.
   return {
     system: `Your task is to create a chart data structure.
@@ -56,8 +52,7 @@ export const createDatasetPrompt = async (
       `,
     user: `Please provide a JSON following the given type structure. The dataset should be meaningful and simple enough to be visually compelling. Ensure that the dataset is relevant to the subject and interesting to engage the audience.
     Return the JSON object only, no comment, no explanation.
-    The context is: "${prompt}".
-    The language of the dataset is all in ${locale.language}.`,
+    The context is: "${prompt}".`,
   };
 };
 

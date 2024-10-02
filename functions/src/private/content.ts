@@ -59,19 +59,14 @@ export const createSEOTitlePrompt = async (
   lang: string,
 ): Promise<{ system: string; user: string }> => {
   return {
-    system: `Generate an SEO-friendly title for an article based on the provided context, mission, and target audience.
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
-    - Title must be in language: "${lang}".
-    - Use the most relevant keywords that the target audience would likely search for.
-    - Ensure the title is in "${lang}" and uses different words from the provided context.
-    - Avoid accents, adverbs, and unnecessary words.
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
+    system: `Generate an SEO-friendly title for an article based on the provided context, mission, and target audience.=
+    - Use the most relevant keywords that the target audience would likely search for.=
+    - Avoid accents, adverbs, and unnecessary words.=
     `,
 
-    user: `Create a concise SEO title in ${lang} for an article about "${prompt}".
+    user: `Create a concise SEO title for an article about "${prompt}".
     - Use the target audience: "${targetAudience}", and mission: "${mission}".
     - Ensure the title aligns with common search behavior and is not identical to the context.
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
     `,
   };
 };
@@ -81,14 +76,11 @@ export const getListOfSubjectSecretPrompt = async (
   targetAudience: string,
   mission: string,
   seoTitle: string,
-  lang: string,
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `Use the context to create subtitles for an article, while following the instructions of the context,
     you're a professional on the subject.
     The requirement for your task are the following:
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
-    - Make sure the text in the language: "${lang}".
     - Make sure the subtitles don't repeat the same information.
     - Each subtitle must be seo-friendly and contain keywords related to the context.
     - You can choose the number of subtitle you think you be best (using the given information (target audience, mission, context)),
@@ -112,7 +104,6 @@ export const getListOfSubjectSecretPrompt = async (
 
 export const editContentPrompt = async (
   article: string,
-  lang: string,
   subtitleList: string[],
   greatestTitle: string,
   context: string,
@@ -120,7 +111,6 @@ export const editContentPrompt = async (
   return {
     system: `You will receive an article, you will edit it with the requirements that follow.
 
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
     - Remove the "Introduction: " from the introduction title.
     - Edit the content of the article to make it easy to read and non-redundant.
     - If acronyms are used, make sure the acronym is written in full the first time it is used, followed by the acronym in parenthesis.
@@ -128,12 +118,9 @@ export const editContentPrompt = async (
     - Make sure to format it in html format.    
     - Here's a list of the subtitle of this article to help you do logical transition between the content: "${subtitleList}" and to help you format the text in html format.
     - You will add this string as title for the article in a h1 tag: "${greatestTitle}".
-    - Make sure that all the text is in language: "${lang}", even the subtitle.
     - If the article use abbreviations, make sure to write the full word and the abbreviation in parenthesis.
     - THE FIRST <P></P> MUST BE A SHORT INTRODUCTION OF THE ARTICLE. THIS SHOULD BE A MAXIMUM OF 2 SENTENCES.
-    - The first <p></p> should not have any <strong></strong>, <em></em>, <a></a> or any other html tags.
-    ${lang === 'French' ? '- Only use uppercase for the first letter of the title. Only the first letter of the first word should be capitalized, for the other word:  first letter should be lowercased. for normal use.' : ''}
-    - Make sure the mission is not mentioned literally in the test, it should be implicit, only to guide the narration.
+    - The first <p></p> should not have any <strong></strong>, <em></em>, <a></a> or any other html tags.    - Make sure the mission is not mentioned literally in the test, it should be implicit, only to guide the narration.
     - Make sure that each paragraph is separated by a <p></p> tag.
     - Remove any markup that is not necessary for the article.
     - Make sure the article follow the instructions of the context: "${context}".
@@ -157,12 +144,10 @@ export const createGreatestTitleEverMadePrompt = async ({
   prompt,
   targetAudience,
   mission,
-  lang,
 }: {
   prompt: string;
   targetAudience: string;
   mission: string;
-  lang: string;
 }): Promise<{ system: string; user: string }> => {
   //TODO: Use mission simply here
   return {
@@ -181,7 +166,7 @@ export const createGreatestTitleEverMadePrompt = async ({
     target audience: "${targetAudience}".
     mission: "${mission}".`,
 
-    user: `Create the best possible 'id' and 'title' for this article "${prompt}" in ${lang}.`,
+    user: `Create the best possible 'id' and 'title' for this article "${prompt}".`,
   };
 };
 

@@ -19,7 +19,6 @@ import { translate } from '../translate-prompt';
 import { improveConclusion } from './edit-article/improve-closure';
 import { dbAdmin } from '../../lib/firebase-admin';
 
-//TODO add CTA attribute in the database
 export const createNewArticle = async ({
   author,
   clientId,
@@ -29,7 +28,6 @@ export const createNewArticle = async ({
   targetAudience,
   CTA = "Let's get started",
   chart = true,
-  lang = 'en',
   source = false,
 }: {
   author: string;
@@ -40,24 +38,20 @@ export const createNewArticle = async ({
   targetAudience: string;
   CTA: string;
   chart?: boolean;
-  lang?: Locale;
   source?: boolean;
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
-  const language = localesDetails[lang].language;
   if (prompt.length < 50) {
     prompt = await addInstructionToPrompt(prompt);
   }
-  if (lang !== 'en') {
-    prompt = await translate(prompt, language);
-  }
+  prompt = await translate(prompt, 'English');
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article
-  const { title, id } = await createGreatestTitleEverMade(prompt, targetAudience, mission, lang);
+  const { title, id } = await createGreatestTitleEverMade(prompt, targetAudience, mission);
 
-  const docRef = dbAdmin.doc(`${clientId}/${lang}/articles/${id}`);
+  const docRef = dbAdmin.doc(`${clientId}/en/articles/${id}`);
 
   if ((await docRef.get()).exists) {
     console.log('Document already exists');
@@ -66,7 +60,7 @@ export const createNewArticle = async ({
 
   //TODO: Later, no added value, shorten id
 
-  const listSubtitle = await getListSubtitle(prompt, targetAudience, mission, title, language);
+  const listSubtitle = await getListSubtitle(prompt, targetAudience, mission, title);
   console.log('listSubtitle: ', listSubtitle);
   //Étape 2: First draft, créer le contenu pour chaque sous-titre en parallel
   const listDraft = await Promise.all(
@@ -74,30 +68,11 @@ export const createNewArticle = async ({
       const index = listSubtitle.indexOf(subtitle);
 
       if (index === 0) {
-        return await createContentForIntro(subtitle, mission, prompt, targetAudience, listSubtitle, lang);
+        return await createContentForIntro(subtitle, mission, prompt, targetAudience, listSubtitle);
       } else if (index === listSubtitle.length - 1) {
         //TODO: Offer availability in closure for the user to add a call to action (MAYBE)
-        let conclusion = await createContentForClosure(
-          subtitle,
-          mission,
-          prompt,
-          targetAudience,
-          listSubtitle,
-          language,
-          CTA,
-          domain,
-        );
-        return await improveConclusion(
-          subtitle,
-          mission,
-          prompt,
-          targetAudience,
-          listSubtitle,
-          language,
-          CTA,
-          domain,
-          conclusion,
-        );
+        let conclusion = await createContentForClosure(subtitle, mission, prompt, targetAudience, listSubtitle, CTA, domain);
+        return await improveConclusion(subtitle, mission, prompt, targetAudience, listSubtitle, CTA, domain, conclusion);
       } else {
         return await createBody(subtitle, mission, prompt, targetAudience, listSubtitle);
       }
@@ -108,9 +83,9 @@ export const createNewArticle = async ({
   //Étape 3: Final draft, créer le contenu final en faisant des liens dans le contenu (plus tard: aussi en ajoutant des liens internes)
   let body = listDraft.slice(1, -1).join('\n');
   console.log('draft finished');
-  body = await improveBody(body, language, listSubtitle, prompt);
+  body = await improveBody(body, listSubtitle, prompt);
   let content = `${listDraft[0]}\n${body}\n${listDraft[listDraft.length - 1]}`;
-  content = await editContent(content, language, listSubtitle, title, prompt);
+  content = await editContent(content, listSubtitle, title, prompt);
 
   //Add sources if needed
   if (source) {
@@ -139,7 +114,7 @@ export const createNewArticle = async ({
   if (chart) {
     //Add chart if needed
     const description = content.match(/<p(?: id="intro")?>(.+?)<\/p>/)?.[1] ?? '';
-    dataset = await createChartDataset(prompt + ' ' + description, localesDetails[lang]);
+    dataset = await createChartDataset(prompt + ' ' + description);
     const chart_info = extractLabelAndTitleFromString(dataset);
 
     //TODO: Not a priority as of Sep. 02 2024, but this is very very slow and costly for no reason, maybe use the title and prompt to generate the chart or generate the chart in the same step as the content?
@@ -147,9 +122,8 @@ export const createNewArticle = async ({
     content = preprocessJSON(await addChartToArticle(content, chart_info)).replaceAll('html', '');
     console.log('chart added');
   }
-  const langue = 'en'; //TODO: This is a temporary fix, we should implement the lang tin the database
   const article: Article = {
-    href: `https://inceptionai.ca/${langue}-CA/articles/${id}`,
+    href: `https://inceptionai.ca/$en-CA/articles/${id}`,
     id,
     title,
     content,
@@ -164,6 +138,6 @@ export const createNewArticle = async ({
     },
   };
 
-  await addArticle(article, clientId, lang);
+  await addArticle(article, clientId, 'en');
   return id;
 };

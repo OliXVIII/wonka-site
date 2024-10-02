@@ -8,22 +8,11 @@ export const improveConclusion = async (
   prompt: string,
   targetAudience: string,
   listSubtitle: string[],
-  lang: string,
   CTA: string,
   domain: string,
   conclusion: string,
 ): Promise<string> => {
-  const prompts = await improveConclusionPrompt(
-    subtitle,
-    mission,
-    prompt,
-    targetAudience,
-    listSubtitle,
-    lang,
-    CTA,
-    domain,
-    conclusion,
-  );
+  const prompts = await improveConclusionPrompt(subtitle, mission, prompt, targetAudience, listSubtitle, CTA, domain, conclusion);
 
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
