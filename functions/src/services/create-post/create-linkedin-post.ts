@@ -43,51 +43,49 @@ export const generateLinkedinPost = async ({
       let list = JSON.parse(cleanedResponse) as string[];
 
       for (const lang of ['French', 'English']) {
-        if (lang === locale.language) {
-          continue;
-        }
-        try {
-          const prompt = translateLinkedinSecret(list, lang);
+        if (lang !== locale.language) {
+          try {
+            const prompt = translateLinkedinSecret(list, lang);
 
-          const completion = await openai.chat.completions.create({
-            model: 'gpt-4o-mini',
-            messages: [
-              {
-                role: 'system',
-                content: prompt.system,
-              },
-              {
-                role: 'user',
-                content: prompt.user,
-              },
-            ],
-            response_format: { type: 'json_object' },
-          });
+            const completion = await openai.chat.completions.create({
+              model: 'gpt-4o-mini',
+              messages: [
+                {
+                  role: 'system',
+                  content: prompt.system,
+                },
+                {
+                  role: 'user',
+                  content: prompt.user,
+                },
+              ],
+            });
 
-          const content = completion.choices[0].message?.content;
-          console.log('Translated content:', content);
+            const content = completion.choices[0].message?.content;
+            console.log('Translated content:', content);
 
-          if (!content) {
-            console.error('create-linkedin-post.ts: Failed to translate:', completion);
-            continue;
+            if (!content) {
+              console.error('create-linkedin-post.ts: Failed to translate:', completion);
+              continue;
+            }
+            const contentWithTranslation = content
+              ?.replaceAll('```html', '')
+              .replaceAll('```', '')
+              .replace(/```[\s\S]*?```/g, '')
+              .replace(/^[^{[]*/, '')
+              .replace(/[^}\]]*$/, '')
+              .trim();
+
+            const data = JSON.parse(contentWithTranslation) as string[];
+
+            console.log('Translated data:', data);
+
+            list = list.map(
+              (current, i) => current + '<hr style="border: none; border-top: 2px solid #ffffff; margin: 20px 0;">' + data[i],
+            );
+          } catch (error) {
+            console.error('Failed to translate:', error);
           }
-          const contentWithTranslation = content
-            ?.replaceAll('```html', '')
-            .replaceAll('```', '')
-            .replace(/```[\s\S]*?```/g, '')
-            .replace(/^[^{[]*/, '')
-            .replace(/[^}\]]*$/, '')
-            .trim();
-
-          const data = JSON.parse(contentWithTranslation) as string[];
-
-          console.log('Translated data:', data);
-
-          list = list.map(
-            (current, i) => current + '<hr style="border: none; border-top: 2px solid #ffffff; margin: 20px 0;">' + data[i],
-          );
-        } catch (error) {
-          console.error('Failed to translate:', error);
         }
       }
 
