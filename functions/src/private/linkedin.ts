@@ -29,6 +29,7 @@ Requirements for all LinkedIn post:
 ${href && CTA ? `- Include a CTA to encourage to "${CTA}".` : "- JUST try to provide value and engaging content to the user from the context, don't ask for anything and don't include a CTA."}
 - Use HTML tag and without CSS styling that is compatible with the mailOptions usage for sending HTML emails via Node.js, use <br> between lines appropriately.
 - Output the completed HTML content only, no further explanation.
+- Emojis are after the punctuation in a sentence and organize in a logical order, to enhance communication.
 
 Specific requirements for each post:
 First post:
@@ -41,7 +42,7 @@ Second post:
 - Same requirements as the third post, but more concise and no emojis.
 
 Third post:
-- Can use emojis naturally, that means put emojis after the punctuation in a sentence and organize in a logical order, so that they make sense and enhance your communication.
+- Can use emojis naturally.
 - Should be more engaging and human-like, with possible humor or personal touch.
 - Culturally relevant and engaging to for ${region}.
 - Make it personnal, convay the message as learning from experience, "this is what WE learned..." inline with our mission: "${mission}". (don't mention the mission directly in the post)
@@ -52,18 +53,18 @@ Third post:
   };
 };
 
-export const translateLinkedinSecret = (
-  posts: string[],
-  languages: string[] = ['French', 'English'],
-): { system: string; user: string } => {
+export const translateLinkedinSecret = (posts: string[], language: string = 'French'): { system: string; user: string } => {
   return {
-    system: `You are TranslateAI. Your task is to take a list as input and return a content so we have ${languages.join(' and ')} versions of the LinkedIn posts, keep the current post at the top add the translated posts below.
-    Separate each translation by this separator: <hr style="border: none; border-top: 2px solid #ffffff; margin: 20px 0;">.
-    The purpose here is to outline the same information in a different language while adapting the content slightly to the language's specificities.
-    Use HTML tag and without CSS styling that is compatible with the mailOptions usage for sending HTML emails via Node.js, use <br> between lines appropriately.
-    Output the completed HTML content only, no further explanation.
-    Dont be too literal, make it sound natural using common french used in Canada or english used in the US.`,
-    user: `Translate the following list of LinkedIn posts into ${languages.join(' and ')}:
-    ${JSON.stringify(posts)}`,
+    system: `You are TranslateAI. Your task is to translate the provided LinkedIn posts into ${language}. 
+The purpose here is to convey the same information in a different language while adapting the content to the language's specificities.
+Use HTML tags without CSS styling that is compatible with sending HTML emails via Node.js. Use <br> between lines appropriately.
+Output the completed HTML content only, no further explanation.
+Don't be too literal; make it sound natural using common ${
+      language === 'French' ? 'french used in Canada' : 'English used in the US'
+    }.
+    ${language === 'French' ? 'In French formatting, only the first word of titles and sentences is capitalized (except proper nouns), quotation marks use « », there are specific spacing rules for punctuation, decimals use commas, and days, months, languages, and nationalities are not capitalized.' : ''}`,
+    user: `Translate the following list of LinkedIn posts into ${language}:
+${JSON.stringify(posts)}.
+Please provide the translate list as a JSON array with a string for each post without any additional text or formatting, like: ["translated post 1", "translated post 2", "translated post 3"]`,
   };
 };

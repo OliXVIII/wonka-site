@@ -1,4 +1,4 @@
-export type StylePreferences = 'retro-style cartoonish' | 'cinematic' | 'cartoonish' | 'realistic';
+export type StylePreferences = 'retro-style cartoonish' | 'cinematic' | 'cartoonish 3D illustration' | 'realistic';
 
 export const createImagePrompt = ({
   subject,
@@ -9,7 +9,7 @@ export const createImagePrompt = ({
   style?: StylePreferences;
   coreElements?: string | null;
 }): string => {
-  return `Create a ${' ' + style} image on the subject of "${subject}".\
+  return `Create a ${style} image on the subject of "${subject}".\
  ${coreElements ?? 'The image features 3 main elements to picturize the subject'}\
  The color palette is fresh and natural, using soft colors.\
  Ensuring the image remains clean and uncluttered.\

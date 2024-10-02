@@ -40,37 +40,58 @@ export const generateLinkedinPost = async ({
       .trim();
 
     try {
-      const list = JSON.parse(cleanedResponse) as string[];
-      const prompt = translateLinkedinSecret(list);
+      let list = JSON.parse(cleanedResponse) as string[];
 
-      const completionWithTranslation = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'user',
-            content: `${prompt.system}\n\n
-            ${prompt.user}`,
-          },
-        ],
-      });
+      for (const lang of ['French', 'English']) {
+        if (lang === locale.language) {
+          continue;
+        }
+        try {
+          const prompt = translateLinkedinSecret(list, lang);
 
-      const contentWithTranslation = completionWithTranslation.choices[0].message?.content
-        ?.replaceAll('```html', '')
-        .replaceAll('```', '');
+          const completion = await openai.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+              {
+                role: 'system',
+                content: prompt.system,
+              },
+              {
+                role: 'user',
+                content: prompt.user,
+              },
+            ],
+            response_format: { type: 'json_object' },
+          });
 
-      if (!contentWithTranslation) {
-        return null;
+          const content = completion.choices[0].message?.content;
+          console.log('Translated content:', content);
+
+          if (!content) {
+            console.error('create-linkedin-post.ts: Failed to translate:', completion);
+            continue;
+          }
+          const contentWithTranslation = content
+            ?.replaceAll('```html', '')
+            .replaceAll('```', '')
+            .replace(/```[\s\S]*?```/g, '')
+            .replace(/^[^{[]*/, '')
+            .replace(/[^}\]]*$/, '')
+            .trim();
+
+          const data = JSON.parse(contentWithTranslation) as string[];
+
+          console.log('Translated data:', data);
+
+          list = list.map(
+            (current, i) => current + '<hr style="border: none; border-top: 2px solid #ffffff; margin: 20px 0;">' + data[i],
+          );
+        } catch (error) {
+          console.error('Failed to translate:', error);
+        }
       }
 
-      const cleanedTranslation = contentWithTranslation
-        .replace(/```[\s\S]*?```/g, '')
-        .replace(/^[^{[]*/, '')
-        .replace(/[^}\]]*$/, '')
-        .trim();
-
-      const finishedList = JSON.parse(cleanedTranslation) as string[];
-
-      return finishedList;
+      return list;
     } catch (error) {
       console.error('Failed to parse JSON:', error);
       return null;

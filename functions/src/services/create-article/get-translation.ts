@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase-admin/firestore';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { openai } from '../../lib/open-ai';
 import { Article } from '../../types/article';
@@ -34,10 +33,10 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
   const data = JSON.parse(content) as Article;
   data.id = article.id;
   data.author = article.author;
-  data.published = false;
-  data.created = Timestamp.now();
+  data.published = article.published;
   data.thumbnail = article.thumbnail;
   data.prompt = article.prompt;
+  data.created = article.created;
 
   const docRefTranslate = dbAdmin.doc(`${clientId}/${lang}/articles/${data.id}`);
 
