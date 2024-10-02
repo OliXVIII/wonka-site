@@ -20,6 +20,7 @@ import { deleteImage } from './services/image/delete-image';
 import { updateNextIdeas } from './services/ideas/update-next-ideas';
 
 import { processDailyCronJob } from './cronjobs';
+import { update } from 'lodash';
 import { next } from 'cheerio/lib/api/traversing';
 
 const app = express();
@@ -693,21 +694,21 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
 
   const newNextIdeas = nextIdeas.map((title) => ({
     title: title,
-    date: Timestamp.fromDate(new Date()),
   }));
 
-  updateNextIdeas(clientId, newNextIdeas);
+  const nextIdeasWithDate = updateNextIdeas(clientId, newNextIdeas, true);
 
   const info = {
     mission,
     companyName,
     targetAudience,
     stylePreferences,
+    nextIdeas: nextIdeasWithDate,
     ideas: ideas100,
     domain,
     CTA,
   };
-  await docRef.update({ ...info, creationDate: Timestamp.now() });
+  await docRef.set({ ...info, creationDate: Timestamp.now() });
   res.status(200).json({ ...info, clientId });
 });
 

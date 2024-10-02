@@ -12,6 +12,12 @@ export type NextIdeas = {
   new?: boolean;
 };
 
+export type PartialNextIdeas = {
+  title: string;
+  date?: Timestamp;
+  new?: boolean;
+};
+
 export type FrequencyArticle = 'times-week-7' | 'times-week-4' | 'times-week-3' | 'times-week-2' | 'times-week-1';
 
 export type ClientInfo = {

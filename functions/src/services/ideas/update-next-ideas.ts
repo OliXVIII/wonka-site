@@ -1,5 +1,5 @@
 import { dbAdmin } from '../../lib/firebase-admin';
-import { FrequencyArticle, NextIdeas } from '../../types/client-info';
+import { FrequencyArticle, NextIdeas, PartialNextIdeas } from '../../types/client-info';
 import { Timestamp } from 'firebase-admin/firestore';
 
 /**
@@ -10,7 +10,7 @@ import { Timestamp } from 'firebase-admin/firestore';
  * 3. Modify an existing idea by setting title = string to an other value.
  */
 
-const updateNextIdeas = async (clientId: string, nextIdeasInput: NextIdeas[]) => {
+const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdeas[], updateNextIdeas = false) => {
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
   const doc = await docRef.get();
@@ -58,7 +58,7 @@ const updateNextIdeas = async (clientId: string, nextIdeasInput: NextIdeas[]) =>
 
   for (let i = 0; i < nextIdeasInput.length; i++) {
     const idea = nextIdeasInput[i];
-    const updatedIdea: NextIdeas = { ...idea };
+    const updatedIdea: PartialNextIdeas = { ...idea };
 
     // Validate title
     if (typeof idea.title !== 'string' || !idea.title.trim()) {
@@ -97,13 +97,16 @@ const updateNextIdeas = async (clientId: string, nextIdeasInput: NextIdeas[]) =>
     // Update date for next iteration
     date = new Date(date.getTime() + intervalMs);
 
-    updatedNextIdeas.push(updatedIdea);
+    updatedNextIdeas.push(updatedIdea as NextIdeas);
   }
 
   // Update Firestore document
-  await docRef.update({
-    nextIdeas: updatedNextIdeas,
-  });
+  if (updateNextIdeas) {
+    await docRef.update({
+      nextIdeas: updatedNextIdeas,
+    });
+  }
+  return updatedNextIdeas;
 };
 
 export { updateNextIdeas };
