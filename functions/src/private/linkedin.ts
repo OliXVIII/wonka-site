@@ -33,10 +33,11 @@ ${href && CTA ? `- Include a CTA to encourage to "${CTA}".` : "- JUST try to pro
 
 Specific requirements for each post:
 First post:
+- No emojis.
 - Should be more informative and professional.
 - Should be longer than the other posts, but still concise.
 - Range of 1,000 to 1,500 characters.
-- Purpose is to teach, inform and share knowledge in a professional but human way.
+- Purpose is to teach, inform and share knowledge in a professional but from a personal perspective.
 
 Second post:
 - Same requirements as the third post, but more concise and no emojis.

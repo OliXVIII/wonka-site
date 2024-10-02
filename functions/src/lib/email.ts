@@ -87,7 +87,7 @@ export const emailContent = ({
           .map(
             (post, index) => `
           <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ffffff; background-color: rgb(15, 25, 59); border-radius: 6px;">
-            <p><strong>Version ${index + 1}:</strong></p>
+            <h3 style="justify-content: center; text-align: center;"><strong>Version ${index + 1}</strong></h3>
             ${post}
           </div>
         `,
@@ -98,12 +98,12 @@ export const emailContent = ({
 
     if (twitterPosts && twitterPosts.length > 0) {
       socialMediaPostsHtml += `
-        <p style="margin: 5px 0; text-align: center; font-size: 20px;"><strong>${content.twitter}</strong></p>
+        <h3 style="margin: 5px 0; text-align: center; font-size: 20px;"><strong>${content.twitter}</strong></h3>
         ${twitterPosts
           .map(
             (post, index) => `
           <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ffffff; background-color: rgb(15, 25, 59); border-radius: 6px;">
-            <p><strong>Version ${index + 1}:</strong></p>
+            <p style="justify-content: center; text-align: center;"><strong>Version ${index + 1}</strong></p>
             ${post}
           </div>
         `,
