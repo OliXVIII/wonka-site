@@ -1,4 +1,3 @@
-import { next } from 'cheerio/lib/api/traversing';
 import { dbAdmin } from '../../lib/firebase-admin';
 import { NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
