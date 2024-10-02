@@ -91,7 +91,6 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     targetAudience,
     source,
     clientId,
-    lang,
     author,
     prompt,
     chart,
@@ -447,9 +446,7 @@ app.get('/update-chart-dataset', async (req: express.Request, res: express.Respo
 
   const context = snapshot.data()?.content as string;
 
-  const locale = localesDetails[lang];
-
-  const dataset = await createChartDataset(context, locale);
+  const dataset = await createChartDataset(context);
 
   await docRef.update({ dataset });
 
@@ -562,7 +559,7 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
       return;
     }
   }
-  clientId = uuidv4();
+  clientId = uuidv4().replaceAll('-', '');
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
   let ideas100 = await get100Ideas(mission, targetAudience);

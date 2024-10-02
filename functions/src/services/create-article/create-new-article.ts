@@ -4,7 +4,6 @@ import { createContentForIntro } from './create-section/create-introduction';
 import { createContentForClosure } from './create-section/create-closure';
 import { preprocessJSON } from '../preprocessJSON';
 import { addArticle } from './add-article';
-import { Locale, localesDetails } from '../../types/languages';
 import { improveBody } from './edit-article/improve-body';
 import { editContent } from './edit-article/edit-content';
 import { Timestamp } from 'firebase-admin/firestore';

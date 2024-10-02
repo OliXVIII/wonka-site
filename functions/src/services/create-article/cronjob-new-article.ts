@@ -56,7 +56,6 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
     prompt,
     targetAudience,
     CTA,
-    lang: defaultLang,
   });
   if (!id) {
     console.log('Error creating article');
