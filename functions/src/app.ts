@@ -1,3 +1,8 @@
+/**
+ * This file contains the implementation of various API endpoints for the InceptionAI News application.
+ * It includes functions for creating a new article, updating an image, publishing an article, and generating LinkedIn posts.
+ * The API endpoints are implemented using the Express framework.
+ */
 import express from 'express';
 import bodyParser from 'body-parser';
 import { createNewArticle } from './services/create-article/create-new-article';
@@ -709,8 +714,7 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
     domain,
     CTA,
   };
-
-  console.log('info', info);
+  console.log('nextIdeas dans setup', info.nextIdeas);
   await docRef.set({ ...info, creationDate: Timestamp.now() });
   res.status(200).json({ ...info, clientId });
 });
@@ -718,7 +722,7 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
 // Add this code after your existing endpoints
 
 app.post('/finish-setup', async (req, res) => {
-  const { clientId, info } = req.body;
+  let { clientId, info } = req.body;
 
   // Check if clientId is provided
   if (!clientId) {
@@ -726,7 +730,7 @@ app.post('/finish-setup', async (req, res) => {
     return;
   }
 
-  console.log('info', info);
+  console.log('info dans finish setup', info);
 
   const docRef = dbAdmin.doc(`${clientId}/info`);
   const snapshot = await docRef.get();
@@ -737,17 +741,23 @@ app.post('/finish-setup', async (req, res) => {
     return;
   }
 
-  // Update the client's info with the new data
-  await docRef.update(info);
+  const newNextIdeas = await updateNextIdeas(clientId, info.nextIdeas);
+  console.log('newNextIdeas', newNextIdeas);
+  // Call the updateNextIdeas endpoint to update the nextIdeas in info
+  // await docRef.update({
+  //   nextIdeas: newNextIdeas,
+  // });
 
   //TODO: Append first next ideas to cronjobs/nextIdeas
   const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
   const cronjobs = await cronjobsRef.get();
+  const cronjobClient = cronjobs.data()?.[clientId] ?? null;
+  console.log('cronjobClient', cronjobClient);
 
-  if (!cronjobs.exists) {
-    await cronjobsRef.set({ [clientId]: info.nextIdeas[0] });
+  if (!cronjobClient) {
+    await cronjobsRef.set({ [clientId]: info.newNextIdeas[0] });
   } else {
-    await cronjobsRef.update({ [clientId]: info.nextIdeas[0] });
+    await cronjobsRef.update({ [clientId]: info.newNextIdeas[0] });
   }
 
   res.status(200).json({ message: 'Setup finished successfully', clientId });
