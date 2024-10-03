@@ -722,31 +722,30 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
 // Add this code after your existing endpoints
 
 app.post('/finish-setup', async (req, res) => {
-  let { clientId, info } = req.body;
+  let { clientId, info } = req.body as { clientId: string; info: ClientInfo };
 
   // Check if clientId is provided
-  if (!clientId) {
-    res.status(400).send('Missing clientId');
+  if (!clientId || !info) {
+    res.status(400).send('Missing params');
     return;
   }
-
-  console.log('info dans finish setup', info);
 
   const docRef = dbAdmin.doc(`${clientId}/info`);
   const snapshot = await docRef.get();
 
   // Check if the client exists
-  if (!snapshot.exists) {
+  if (!snapshot.exists || !info?.nextIdeas) {
     res.status(404).send('Client not found');
     return;
   }
 
-  const newNextIdeas = await updateNextIdeas(clientId, info.nextIdeas);
+  const newNextIdeas = await updateNextIdeas(clientId, info?.nextIdeas);
   console.log('newNextIdeas', newNextIdeas);
   // Call the updateNextIdeas endpoint to update the nextIdeas in info
   // await docRef.update({
   //   nextIdeas: newNextIdeas,
   // });
+  await docRef.update(info);
 
   //TODO: Append first next ideas to cronjobs/nextIdeas
   const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
@@ -755,9 +754,9 @@ app.post('/finish-setup', async (req, res) => {
   console.log('cronjobClient', cronjobClient);
 
   if (!cronjobClient) {
-    await cronjobsRef.set({ [clientId]: info.newNextIdeas[0] });
+    await cronjobsRef.set({ [clientId]: { date: info.nextIdeas[0].date } });
   } else {
-    await cronjobsRef.update({ [clientId]: info.newNextIdeas[0] });
+    console.error('Client already exists in cronjobs');
   }
 
   res.status(200).json({ message: 'Setup finished successfully', clientId });
