@@ -10,7 +10,7 @@ import { Timestamp } from 'firebase-admin/firestore';
  * 3. Modify an existing idea by setting title = string to an other value.
  */
 
-const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdeas[], updateNextIdeas = false) => {
+const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdeas[]) => {
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
   const doc = await docRef.get();
@@ -101,12 +101,9 @@ const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdea
   }
 
   // Update Firestore document
-  if (updateNextIdeas) {
-    await docRef.update({
-      nextIdeas: updatedNextIdeas,
-    });
-  }
-  return updatedNextIdeas;
+  await docRef.update({
+    nextIdeas: updatedNextIdeas,
+  });
 };
 
 export { updateNextIdeas };

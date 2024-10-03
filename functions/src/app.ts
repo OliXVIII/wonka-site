@@ -699,18 +699,18 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
     title: title,
   }));
 
-  const nextIdeasWithDate = updateNextIdeas(clientId, newNextIdeas, true);
-
   const info = {
     mission,
     companyName,
     targetAudience,
     stylePreferences,
-    nextIdeas: nextIdeasWithDate,
+    nextIdeas: newNextIdeas,
     ideas: ideas100,
     domain,
     CTA,
   };
+
+  console.log('info', info);
   await docRef.set({ ...info, creationDate: Timestamp.now() });
   res.status(200).json({ ...info, clientId });
 });
@@ -725,6 +725,8 @@ app.post('/finish-setup', async (req, res) => {
     res.status(400).send('Missing clientId');
     return;
   }
+
+  console.log('info', info);
 
   const docRef = dbAdmin.doc(`${clientId}/info`);
   const snapshot = await docRef.get();
