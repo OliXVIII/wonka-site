@@ -621,7 +621,7 @@ app.post('/get-translations', async (req: express.Request, res: express.Response
 
     for (const translateLang of hardcodedClientLang) {
       const translateSnapshot = await dbAdmin.doc(`${clientId}/${translateLang}/articles/${id}`).get();
-      if (translateLang === lang || translateSnapshot.exists) {
+      if (translateSnapshot.exists) {
         continue;
       } else {
         await getTranslation(article, clientId, translateLang);

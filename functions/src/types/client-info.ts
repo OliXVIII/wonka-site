@@ -24,6 +24,7 @@ export type ClientInfo = {
   allowed?: Allowed;
   clientId?: string;
   companyName: string;
+  companyState?: string;
   contact?: string;
   CTA: string;
   defaultAuthor?: string;

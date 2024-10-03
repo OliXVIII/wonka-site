@@ -7,14 +7,14 @@ export const linkedinSecretPrompt = (
   language: string,
   info: ClientInfo,
 ): { system: string; user: string } => {
-  const { mission, CTA } = info;
+  const { mission, CTA, companyState, companyName } = info;
   const region = info.region || 'Quebec, Canada';
 
   return {
     system: `Your task is to generate an interesting LinkedIn posts in ${language} related to the following context:
-  """
-  ${context.replace(/"/g, "'")}
-  """.
+Context: "${(context = context.replace(/\n/g, ' ').replace(/"/g, "'"))}".
+Company name: "${companyName}".
+State of the company: "${companyState}".
   
   
 Requirements for all LinkedIn post:
@@ -35,24 +35,39 @@ Specific requirements for each post:
 First post:
 - No emojis.
 - Should be more informative and professional.
-- Should be longer than the other posts, but still concise.
-- Range of 1,000 to 1,500 characters.
-- Purpose is to teach, inform and share knowledge in a professional but from a personal perspective.
+- Keep paragraphs shorts and use line breaks often to make it easier to read.
+- Range of 500 to 1,000 characters.
+- Purpose is to teach, inform and share knowledge in a professional and factual manner.
 
 Second post:
-- Same requirements as the third post, but more concise and no emojis.
+- Short and catchy, with a hook could be multiple sentence like the following example and close by bringing value to the reader in form of a tip or advice.
+- The hook should attract the broadest audience possible in our target audiance: "${info.targetAudience}".
+Example: "Which one is way worse than the other? 
+A) Making a $1000 offer to someone with a $100 budget 
+B) Making a $100 offer to someone with a $1000 budget. 
+
+The correct answer is "B" which is WAY worse. 
+In option "A" you lose $100. 
+In option "B" you lose $900. 
+
+A friend of mine taught me this. 
+
+Always have an extremely high-price service that you can provide. 
+This will anchor your core services to look more affordable and will increase your core offering sales. It also allows you to nudge up your main offer price.
+"
 
 Third post:
-- Can use emojis naturally.
+- No emojis in the first sentence.
+- Can use a few emojis naturally.
 - Should be more engaging and human-like, with possible humor or personal touch.
 - Culturally relevant and engaging to for ${region}.
-- Make it personnal, convay the message as learning from experience, "this is what WE learned..." inline with our mission: "${mission}". (don't mention the mission directly in the post)
-`,
-    //, with a call to action to follow the link ${href} to read the full content
+- Make it personnal, convay the message as a point of view from observations from experience, use "WE..." inline with our mission: "${mission}" (don't mention the mission directly in the post).`,
     user: `Now generate 3 great LinkedIn posts in ${language} in html with geniuine interest in helping the reader learn more.
     Please provide the list as a JSON array with a string for each post without any additional text or formatting, like: ["post 1", "post 2", "post 3"]`,
   };
 };
+
+//- Make it personnal, convay the message as learning from experience, "this is what WE learned..." inline with our mission: "${mission}" (don't mention the mission directly in the post).
 
 export const translateLinkedinSecret = (posts: string[], language: string = 'French'): { system: string; user: string } => {
   return {
