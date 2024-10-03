@@ -745,7 +745,7 @@ app.post('/finish-setup', async (req, res) => {
   // await docRef.update({
   //   nextIdeas: newNextIdeas,
   // });
-  await docRef.update(info);
+  await docRef.set(info, { merge: true });
 
   //TODO: Append first next ideas to cronjobs/nextIdeas
   const cronjobsRef = dbAdmin.collection('cronjobs').doc('nextIdeas');
