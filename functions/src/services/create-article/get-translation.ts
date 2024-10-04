@@ -12,6 +12,7 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
       ...article,
       author: undefined,
       created: undefined,
+      href: undefined,
       id: undefined,
       prompt: undefined,
       published: undefined,
@@ -44,6 +45,7 @@ export const getTranslation = async (article: Article, clientId: string, lang: L
 
     data.author = article.author;
     data.created = article.created;
+    data.href = article.href.replace('/en-', `/${locale.languageCode}-`);
     data.id = article.id;
     if (article?.prompt) {
       data.prompt = article.prompt;

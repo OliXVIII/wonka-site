@@ -588,16 +588,19 @@ app.post('/update-next-ideas', async (req: express.Request, res: express.Respons
     res.status(400).send({ error: 'Invalid or missing input data' });
     return;
   }
+  const refInfo = `${clientId}/info`;
+  const snapshotInfo = await dbAdmin.doc(refInfo).get();
+  const info = snapshotInfo.data() as ClientInfo | undefined;
 
   // Validate nextIdeas array
-  if (!Array.isArray(nextIdeas)) {
-    res.status(400).send({ error: 'nextIdeas must be an array' });
+  if (!Array.isArray(nextIdeas) || !info) {
+    res.status(400).send({ error: 'Invalid or missing input data' });
     return;
   }
 
   try {
     // Call the `updateNextIdeas` function to handle the logic and update Firestore
-    await updateNextIdeas(clientId, nextIdeas);
+    await updateNextIdeas(info, nextIdeas);
 
     res.status(200).send({ message: 'nextIdeas successfully updated' });
   } catch (error: any) {
@@ -737,7 +740,7 @@ app.post('/finish-setup', async (req, res) => {
     res.status(404).send('Client not found');
     return;
   }
-  info.nextIdeas = await updateNextIdeas(clientId, info?.nextIdeas, info.frequency as FrequencyArticle, true);
+  info.nextIdeas = await updateNextIdeas(info, info?.nextIdeas, true);
 
   if (!info.nextIdeas) {
     res.status(400).send('Failed to update nextIdeas');

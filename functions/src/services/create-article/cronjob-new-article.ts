@@ -13,7 +13,7 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
     console.log('Client info does not exist');
     return;
   }
-  const info = snapshot.data();
+  const info = snapshot.data() as ClientInfo;
 
   if (!info) {
     console.log('Client data does not exist');
@@ -63,5 +63,5 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
   }
   await createdArticleEmail(clientId, defaultLang, id);
   console.log('Article created and email sent, congrats!');
-  return await handleNewNextIdeas(clientId, mission, targetAudience);
+  return await handleNewNextIdeas(info, mission, targetAudience);
 };

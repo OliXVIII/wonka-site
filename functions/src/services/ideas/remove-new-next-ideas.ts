@@ -1,11 +1,11 @@
 import { dbAdmin } from '../../lib/firebase-admin';
-import { NextIdeas } from '../../types/client-info';
+import { ClientInfo, NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
 import { updateNextIdeas } from './update-next-ideas';
 
 // This function is called by the cronjob to remove first element of nextIdeas and add a new one
-export const handleNewNextIdeas = async (clientId: string, mission: string, targetAudience: string) => {
-  const docRef = dbAdmin.doc(`${clientId}/info`);
+export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targetAudience: string) => {
+  const docRef = dbAdmin.doc(`${info.clientId}/info`);
   const docSnap = await docRef.get();
   const data = docSnap.data();
 
@@ -51,7 +51,7 @@ export const handleNewNextIdeas = async (clientId: string, mission: string, targ
   await docRef.update({ ideas });
 
   // Step 4: Use updateNextIdeas to update dates and save to Firestore
-  await updateNextIdeas(clientId, nextIdeas);
+  await updateNextIdeas(info, nextIdeas);
 
   // Step 5: Return the date of the closest next idea
   const updatedDocSnap = await docRef.get();

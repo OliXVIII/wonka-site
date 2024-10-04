@@ -1,36 +1,18 @@
 import { dbAdmin } from '../../lib/firebase-admin';
-import { FrequencyArticle, NextIdeas, PartialNextIdeas } from '../../types/client-info';
+import { ClientInfo, FrequencyArticle, NextIdeas, PartialNextIdeas } from '../../types/client-info';
 import { Timestamp } from 'firebase-admin/firestore';
 
 /**
  *
- * Here's 3 way to use this function:
+ * Here's 3 ways to use this function:
  * 1. Set title to an empty string to delete it from nextIdeas.
  * 2. Set a new object with title = string to add a new idea.
- * 3. Modify an existing idea by setting title = string to an other value.
+ * 3. Modify an existing idea by setting title = string to another value.
  */
 
-const updateNextIdeas = async (
-  clientId: string,
-  nextIdeasInput: PartialNextIdeas[],
-  frequencyArg?: FrequencyArticle,
-  merge?: boolean,
-) => {
-  const docRef = dbAdmin.doc(`${clientId}/info`);
-
-  const doc = await docRef.get();
-
-  if (!doc.exists) {
-    throw new Error('Client document does not exist');
-  }
-
-  const data = doc.data();
-
-  if (!data) {
-    throw new Error('Client document is empty');
-  }
-
-  const frequency = (data.frequency as FrequencyArticle) ?? frequencyArg;
+const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdeas[], merge?: boolean) => {
+  const docRef = dbAdmin.doc(`${info.clientId}/info`);
+  const frequency = info.frequency;
 
   if (!frequency) {
     throw new Error('Posting frequency is not set for the client');
@@ -56,8 +38,9 @@ const updateNextIdeas = async (
 
   const now = new Date();
 
-  // Initialize date to now or the earliest date in the list
-  let date = now;
+  // Initialize date to info.startDate or now
+  const startDate = info.startDate ? info.startDate.toDate() : now;
+  let date = startDate;
 
   const updatedNextIdeas: NextIdeas[] = [];
 
@@ -87,16 +70,27 @@ const updateNextIdeas = async (
       }
       date = ideaDate;
     } else {
-      // Assign a date based on the previous idea's date plus interval
-      if (i > 0 && updatedNextIdeas[i - 1].date) {
+      // Assign a date based on info.startDate or previous idea's date plus interval
+      if (i === 0) {
+        // Use info.startDate for the first idea if available
+        if (info.startDate) {
+          date = info.startDate.toDate();
+        } else if (date < now) {
+          // Ensure first date is not in the past
+          date = now;
+        }
+      } else if (updatedNextIdeas[i - 1].date) {
+        // For subsequent ideas, increment date by interval
         date = new Date(updatedNextIdeas[i - 1].date!.toDate().getTime() + intervalMs);
-      } else if (i === 0 && date < now) {
-        // Ensure first date is not in the past
-        date = now;
       }
 
       updatedIdea.date = Timestamp.fromDate(date);
       updatedIdea.new = true;
+    }
+
+    // Ensure date field is always a Timestamp
+    if (!updatedIdea.date) {
+      updatedIdea.date = Timestamp.fromDate(date);
     }
 
     // Update date for next iteration
