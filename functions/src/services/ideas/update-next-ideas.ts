@@ -10,7 +10,12 @@ import { Timestamp } from 'firebase-admin/firestore';
  * 3. Modify an existing idea by setting title = string to an other value.
  */
 
-const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdeas[], merge?: boolean) => {
+const updateNextIdeas = async (
+  clientId: string,
+  nextIdeasInput: PartialNextIdeas[],
+  frequencyArg?: FrequencyArticle,
+  merge?: boolean,
+) => {
   const docRef = dbAdmin.doc(`${clientId}/info`);
 
   const doc = await docRef.get();
@@ -25,7 +30,7 @@ const updateNextIdeas = async (clientId: string, nextIdeasInput: PartialNextIdea
     throw new Error('Client document is empty');
   }
 
-  const frequency = data.frequency as FrequencyArticle;
+  const frequency = (data.frequency as FrequencyArticle) ?? frequencyArg;
 
   if (!frequency) {
     throw new Error('Posting frequency is not set for the client');
