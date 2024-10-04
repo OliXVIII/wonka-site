@@ -14,7 +14,7 @@ import { emailContent } from './lib/email';
 import { deleteUnpublishedArticle } from './services/firebase/delete-article-not-published';
 import { createChartDataset } from './services/create-chart-dataset.ts/create-dataset';
 import { get100Ideas } from './services/ideas/get-100-ideas';
-import { ClientInfo, FrequencyArticle } from './types/client-info';
+import { ClientInfo } from './types/client-info';
 import { createImage } from './services/image/create-image';
 import { v4 as uuidv4 } from 'uuid';
 import { getTranslation } from './services/create-article/get-translation';
