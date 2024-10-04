@@ -714,7 +714,6 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
     domain,
     CTA,
   };
-  console.log('nextIdeas dans setup', info.nextIdeas);
   await docRef.set({ ...info, creationDate: Timestamp.now() });
   res.status(200).json({ ...info, clientId });
 });
@@ -738,7 +737,6 @@ app.post('/finish-setup', async (req, res) => {
     res.status(404).send('Client not found');
     return;
   }
-  console.log('info', info);
   info.nextIdeas = await updateNextIdeas(clientId, info?.nextIdeas, info.frequency as FrequencyArticle, true);
 
   if (!info.nextIdeas) {
