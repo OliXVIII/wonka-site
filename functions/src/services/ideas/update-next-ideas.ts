@@ -12,7 +12,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 
 const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdeas[], merge?: boolean) => {
   const docRef = dbAdmin.doc(`${info.clientId}/info`);
-  const frequency = info.frequency;
+  const frequency = info.frequency ?? 'times-week-3';
 
   if (!frequency) {
     throw new Error('Posting frequency is not set for the client');
