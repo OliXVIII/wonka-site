@@ -106,7 +106,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
   res.status(200).send({ id, lang });
 });
 
-app.post('/updateImage', async (req: express.Request, res: express.Response) => {
+app.post('/update-image', async (req: express.Request, res: express.Response) => {
   let { title, clientId, id, lang } = req.body as {
     title: string;
     clientId: string;
@@ -738,13 +738,13 @@ app.post('/finish-setup', async (req, res) => {
     res.status(404).send('Client not found');
     return;
   }
+  info.nextIdeas = await updateNextIdeas(clientId, info?.nextIdeas, true);
 
-  const newNextIdeas = await updateNextIdeas(clientId, info?.nextIdeas);
-  console.log('newNextIdeas', newNextIdeas);
-  // Call the updateNextIdeas endpoint to update the nextIdeas in info
-  // await docRef.update({
-  //   nextIdeas: newNextIdeas,
-  // });
+  if (!info.nextIdeas) {
+    res.status(400).send('Failed to update nextIdeas');
+    return;
+  }
+
   await docRef.set(info, { merge: true });
 
   //TODO: Append first next ideas to cronjobs/nextIdeas

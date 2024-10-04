@@ -122,7 +122,7 @@ export const createNewArticle = async ({
     console.log('chart added');
   }
   const article: Article = {
-    href: `https://inceptionai.ca/$en-CA/articles/${id}`,
+    href: `https://inceptionai.ca/en-CA/articles/${id}`,
     id,
     title,
     content,
