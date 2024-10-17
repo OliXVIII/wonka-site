@@ -13,7 +13,7 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
 
   const data = info;
 
-  console.log('Client info:', data);
+  // console.log('Client info:', data);
 
   if (!data) {
     console.log('Client info does not exist');
@@ -54,14 +54,14 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
     // Add the new idea to nextIdeas
     nextIdeas.push({ title: newNextIdeaTitle });
   }
-  console.log('Next ideas updated:', nextIdeas);
+  // console.log('Next ideas updated:', nextIdeas);
 
   // Update the ideas array in Firestore
   await docRef.update({ ideas });
 
   // Step 4: Use updateNextIdeas to update dates and save to Firestore
   await updateNextIdeas(info, nextIdeas, docRef);
-  console.log('Next ideas updated');
+  // console.log('Next ideas updated');
 
   // Step 5: Return the date of the closest next idea
   const updatedDocSnap = await docRef.get();
@@ -70,9 +70,9 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
 
   // Ensure the updated nextIdeas are sorted by date
   updatedNextIdeas.sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime());
-  console.log('Updated next ideas:', updatedNextIdeas);
+  // console.log('Updated next ideas:', updatedNextIdeas);
   const closestNextIdea = updatedNextIdeas[0];
-  console.log('Closest next idea:', closestNextIdea);
+  // console.log('Closest next idea:', closestNextIdea);
 
   // Return the date of the closest next idea
   return closestNextIdea.date;

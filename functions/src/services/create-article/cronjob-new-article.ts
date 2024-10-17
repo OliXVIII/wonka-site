@@ -74,7 +74,5 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
   console.log('sending email');
   await createdArticleEmail(clientId, defaultLang, id);
   console.log('Article created and email sent, congrats!');
-  const test = await handleNewNextIdeas(info, mission, targetAudience, ref);
-  console.log('test', test);
-  return test;
+  return await handleNewNextIdeas(info, mission, targetAudience, ref);
 };

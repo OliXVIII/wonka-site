@@ -40,7 +40,6 @@ export const processDailyCronJob = async () => {
         if (dateTimestamp === todayTimestamp) {
           console.log(`Client ${clientId} has a cronjob today.`);
           const nextDate = await handleNewArticle(clientId, clientData.date);
-          console.log(`Client ${clientId} has a new date: ${nextDate}`);
           if (nextDate) {
             data[clientId].date = nextDate;
           }
