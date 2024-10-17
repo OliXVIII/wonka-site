@@ -30,19 +30,22 @@ export const processDailyCronJob = async () => {
 
   if (data) {
     for (const clientId in data) {
+      console.log(`Processing client ${clientId}`);
       const clientData = data[clientId];
       if (clientData && clientData.date) {
         const date = new Date(clientData.date.toMillis());
         date.setHours(0, 0, 0, 0);
         const dateTimestamp = date.getTime();
-
+        console.log(date, today);
         if (dateTimestamp === todayTimestamp) {
+          console.log(`Client ${clientId} has a cronjob today.`);
           const nextDate = await handleNewArticle(clientId, clientData.date);
+          console.log(`Client ${clientId} has a new date: ${nextDate}`);
           if (nextDate) {
             data[clientId].date = nextDate;
           }
         } else {
-          console.log(`Client ${clientId} does not have today's date.`);
+          console.log(`Client ${clientId} does not have a cronjob today.`);
         }
       } else {
         console.log(`Client ${clientId} does not have a date field.`);

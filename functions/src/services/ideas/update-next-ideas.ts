@@ -10,8 +10,11 @@ import { Timestamp } from 'firebase-admin/firestore';
  * 3. Modify an existing idea by setting title = string to another value.
  */
 
-const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdeas[], merge?: boolean) => {
-  const docRef = dbAdmin.doc(`${info.clientId}/info`);
+const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdeas[], docRef?: any, merge?: boolean) => {
+  if (!docRef) {
+    docRef = dbAdmin.doc(`${info.clientId}/info`);
+  }
+
   const frequency = info.frequency ?? 'times-week-3';
 
   if (!frequency) {
@@ -74,11 +77,16 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
       if (i === 0) {
         // Use info.startDate for the first idea if available
         if (info.startDate) {
-          date = info.startDate.toDate();
-        } else if (date < now) {
-          // Ensure first date is not in the past
-          date = now;
+          if (info.startDate.toDate() < now) {
+            date = now;
+          } else {
+            date = info.startDate.toDate();
+          }
         }
+        // else if (date < now) {
+        //   // Ensure first date is not in the past
+        //   date = now;
+        // }
       } else if (updatedNextIdeas[i - 1].date) {
         // For subsequent ideas, increment date by interval
         date = new Date(updatedNextIdeas[i - 1].date!.toDate().getTime() + intervalMs);
@@ -87,7 +95,6 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
       updatedIdea.date = Timestamp.fromDate(date);
       updatedIdea.new = true;
     }
-
     // Ensure date field is always a Timestamp
     if (!updatedIdea.date) {
       updatedIdea.date = Timestamp.fromDate(date);

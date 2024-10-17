@@ -1,13 +1,19 @@
-import { dbAdmin } from '../../lib/firebase-admin';
+// import { dbAdmin } from '../../lib/firebase-admin';
 import { ClientInfo, NextIdeas } from '../../types/client-info';
 import { get100Ideas } from './get-100-ideas';
 import { updateNextIdeas } from './update-next-ideas';
 
 // This function is called by the cronjob to remove first element of nextIdeas and add a new one
-export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targetAudience: string) => {
-  const docRef = dbAdmin.doc(`${info.clientId}/info`);
-  const docSnap = await docRef.get();
-  const data = docSnap.data();
+export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targetAudience: string, docRef: any) => {
+  console.log('Updating next ideas');
+  // console.log('Client info:', info);
+  // const docRef = dbAdmin.doc(`${info.clientId}/info`);
+  // const docSnap = await docRef.get();
+  // const data = docSnap.data();
+
+  const data = info;
+
+  console.log('Client info:', data);
 
   if (!data) {
     console.log('Client info does not exist');
@@ -28,8 +34,10 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
   // Step 2: Remove the first element (after sorting)
   nextIdeas.shift();
 
+  // console.log('Next ideas after removing first element:', nextIdeas);
+
   // If there are less than 7 ideas, get a new one
-  if (nextIdeas.length < 7) {
+  while (nextIdeas.length < 7) {
     // Step 3: Get a new idea
     const randomIndex = Math.floor(Math.random() * ideas.length);
     const newNextIdeaTitle = ideas[randomIndex];
@@ -46,12 +54,14 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
     // Add the new idea to nextIdeas
     nextIdeas.push({ title: newNextIdeaTitle });
   }
+  console.log('Next ideas updated:', nextIdeas);
 
   // Update the ideas array in Firestore
   await docRef.update({ ideas });
 
   // Step 4: Use updateNextIdeas to update dates and save to Firestore
-  await updateNextIdeas(info, nextIdeas);
+  await updateNextIdeas(info, nextIdeas, docRef);
+  console.log('Next ideas updated');
 
   // Step 5: Return the date of the closest next idea
   const updatedDocSnap = await docRef.get();
@@ -60,8 +70,9 @@ export const handleNewNextIdeas = async (info: ClientInfo, mission: string, targ
 
   // Ensure the updated nextIdeas are sorted by date
   updatedNextIdeas.sort((a, b) => a.date.toDate().getTime() - b.date.toDate().getTime());
-
+  console.log('Updated next ideas:', updatedNextIdeas);
   const closestNextIdea = updatedNextIdeas[0];
+  console.log('Closest next idea:', closestNextIdea);
 
   // Return the date of the closest next idea
   return closestNextIdea.date;

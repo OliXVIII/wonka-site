@@ -29,19 +29,28 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
     domain,
     defaultLang = 'en',
   } = info as ClientInfo;
+  // console.log('info:', info);
 
   // Find the prompt where idea.date is the same day as date
-  const prompt = nextIdeas?.find((idea) => {
-    const ideaDate = new Date(idea.date.toMillis());
-    const targetDate = new Date(date.toMillis());
 
-    const isSameDay =
-      ideaDate.getFullYear() === targetDate.getFullYear() &&
-      ideaDate.getMonth() === targetDate.getMonth() &&
-      ideaDate.getDate() === targetDate.getDate();
+  // console.log('nextIdeas:', nextIdeas);
+  const sortedNextIdeas = nextIdeas?.sort((a, b) => a.date.seconds - b.date.seconds);
+  const prompt = sortedNextIdeas?.[0].title;
+  // console.log('prompt:', prompt);
 
-    return isSameDay;
-  })?.title;
+  // const prompt = nextIdeas?.find((idea) => {
+  //   const ideaDate = new Date(idea.date.toMillis());
+  //   const targetDate = new Date(date.toMillis());
+
+  //   const isSameDay =
+  //     ideaDate.getFullYear() === targetDate.getFullYear() &&
+  //     ideaDate.getMonth() === targetDate.getMonth() &&
+  //     ideaDate.getDate() === targetDate.getDate();
+
+  //   return isSameDay;
+  // })?.title;
+
+  // console.log('prompt:', prompt);
 
   if (!prompt) {
     return;
@@ -61,7 +70,11 @@ export const handleNewArticle = async (clientId: string, date: Timestamp): Promi
     console.log('Error creating article');
     return;
   }
+
+  console.log('sending email');
   await createdArticleEmail(clientId, defaultLang, id);
   console.log('Article created and email sent, congrats!');
-  return await handleNewNextIdeas(info, mission, targetAudience);
+  const test = await handleNewNextIdeas(info, mission, targetAudience, ref);
+  console.log('test', test);
+  return test;
 };
