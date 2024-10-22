@@ -58,7 +58,7 @@ export const processDailyCronJob = async () => {
 /**
  * Firebase scheduled cron job that runs every day at 8:00 AM.
  */
-exports.dailyCronjobs = onSchedule('0 8 * * *', async () => {
+exports.dailyCronjobs = onSchedule('0 12 * * *', async () => {
   try {
     await processDailyCronJob();
   } catch (error) {
