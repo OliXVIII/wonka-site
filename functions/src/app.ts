@@ -724,7 +724,9 @@ app.post('/setup-client', async (req: express.Request, res: express.Response) =>
 // Add this code after your existing endpoints
 
 app.post('/finish-setup', async (req, res) => {
-  let { clientId, info } = req.body as { clientId: string; info: ClientInfo };
+  let { clientId, selectedDate, info } = req.body as { clientId: string; selectedDate: string; info: ClientInfo };
+
+  info.startDate = Timestamp.fromDate(new Date(selectedDate));
 
   // Check if clientId is provided
   if (!clientId || !info) {
