@@ -42,10 +42,8 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
   const now = new Date();
 
   // Initialize date to info.startDate or now
-  console.log(info.startDate);
   const startDate = info.startDate ? info.startDate.toDate() : now;
   let date = startDate;
-  console.log(date);
 
   const updatedNextIdeas: NextIdeas[] = [];
 
@@ -61,16 +59,13 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
     updatedIdea.title = idea.title.trim();
 
     // Handle date
-    console.log('debut');
     if (idea.date) {
       // Check if date is a string, convert to Timestamp
       if (typeof idea.date === 'string') {
         idea.date = Timestamp.fromDate(new Date(idea.date));
         updatedIdea.date = idea.date;
       }
-      console.log('avant lui');
       const ideaDate = idea.date.toDate();
-      console.log('apres lui');
 
       const diffDays = (now.getTime() - ideaDate.getTime()) / (1000 * 60 * 60 * 24);
       if (diffDays > 3 && updatedIdea.new) {
@@ -81,7 +76,6 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
       // Assign a date based on info.startDate or previous idea's date plus interval
       if (i === 0) {
         // Use info.startDate for the first idea if available
-        console.log('avant les 2 if');
         if (info.startDate) {
           if (info.startDate.toDate() < now) {
             date = now;
@@ -97,7 +91,6 @@ const updateNextIdeas = async (info: ClientInfo, nextIdeasInput: PartialNextIdea
         // For subsequent ideas, increment date by interval
         date = new Date(updatedNextIdeas[i - 1].date!.toDate().getTime() + intervalMs);
       }
-      console.log('ici');
 
       updatedIdea.date = Timestamp.fromDate(date);
       updatedIdea.new = true;
