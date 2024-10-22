@@ -740,7 +740,7 @@ app.post('/finish-setup', async (req, res) => {
     res.status(404).send('Client not found');
     return;
   }
-  info.nextIdeas = await updateNextIdeas(info, info?.nextIdeas, true);
+  info.nextIdeas = await updateNextIdeas(info, info?.nextIdeas, docRef, true);
 
   if (!info.nextIdeas) {
     res.status(400).send('Failed to update nextIdeas');
