@@ -170,14 +170,30 @@ export const createGreatestTitleEverMadePrompt = async ({
   };
 };
 
-export const addInstructionToPromptPrompt = async (context: string): Promise<{ system: string; user: string }> => {
+export const addInstructionToPromptPrompt = async (
+  context: string,
+  mission: string,
+  targetAudience: string,
+): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a small context, the context is too short to be used as a prompt.
-    Your job will be to develop this context into a list of instruction to create an article from it, with a genuin interest in helping the readers.
+    Your job will be to develop this context into a list of instruction to create an article from it, 
+    with a genuine interest in helping the readers.
 
+    You will be given the mission and the target audience of the article, don't mention them in the prompt, this is only to guide the narrative.
+
+    The output should only be a little more than the prompt given, don't add useless instructions.
+    You should only structure the prompt in a way to make a better article out of it.
+    You should only guide the construction of the article that will be using the prompt.
     You will only guide the writing of the text, never suggest to add something to it.
+    Be concise, the result should not be too long.
+    Don't precise each part of the article, you should only mention what the article should take about,
+    which subject to details, etc. Don't guide the structure of the article, you should only be giving the big lines of the article.
+    Don't mention the beginning, end of article, of any part of the article. You should only improve the prompt by giving a more define subject of the article.
+
     Output only the revised context, nothing else.`,
-    user: `Here is the context you will use to create the instruction for the creation of the article: ${context}
+    user: `Here is the context you will use to create the instruction for the creation of the article: ${context}.
+    The mission is ${mission} and the target audience is ${targetAudience}.
     `,
   };
 };

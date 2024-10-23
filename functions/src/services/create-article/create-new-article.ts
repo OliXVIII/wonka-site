@@ -41,9 +41,12 @@ export const createNewArticle = async ({
 }) => {
   //fetch chat gpt api with gpt-4o-mini
   //Étape 1: getListSubtitle, créer une liste de sous-titres
+  console.log('prompt before adding instructions: ', prompt);
   if (prompt.length < 50) {
-    prompt = await addInstructionToPrompt(prompt);
+    prompt = await addInstructionToPrompt(prompt, mission, targetAudience);
   }
+  console.log('prompt after adding instructions: ', prompt);
+
   prompt = await translate(prompt, 'English');
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
