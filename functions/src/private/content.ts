@@ -177,6 +177,7 @@ export const addInstructionToPromptPrompt = async (
 ): Promise<{ system: string; user: string }> => {
   return {
     system: `You will receive a small context, the context is too short to be used as a prompt.
+    The result should have a maximum of 250 characters.
     Your job will be to develop this context into a list of instruction to create an article from it, 
     with a genuine interest in helping the readers.
 
@@ -194,6 +195,8 @@ export const addInstructionToPromptPrompt = async (
     Output only the revised context, nothing else.`,
     user: `Here is the context you will use to create the instruction for the creation of the article: ${context}.
     The mission is ${mission} and the target audience is ${targetAudience}.
+
+    The result should only be a maximum of 250 characters.
     `,
   };
 };
