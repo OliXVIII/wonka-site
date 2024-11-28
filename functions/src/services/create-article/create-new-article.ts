@@ -17,6 +17,8 @@ import { addInstructionToPrompt } from '../add-instruction-to-prompt';
 import { translate } from '../translate-prompt';
 import { improveConclusion } from './edit-article/improve-closure';
 import { dbAdmin } from '../../lib/firebase-admin';
+import { gemini } from '../../lib/gemini';
+import { promptGetRelatedNews } from '../../private/gemini-news';
 
 export const createNewArticle = async ({
   author,
@@ -48,6 +50,13 @@ export const createNewArticle = async ({
   console.log('prompt after adding instructions: ', prompt);
 
   prompt = await translate(prompt, 'English');
+
+  let geminiNews = await gemini.generateContent(promptGetRelatedNews(targetAudience, mission, prompt));
+  geminiNews = geminiNews.response.text();
+
+  console.log("geminiNews: ", geminiNews);
+
+  prompt = prompt + geminiNews;
 
   //TODO: Might be good to use 4o instead of 4o-mini and turn this operation into a more crutial part of the following steps in using the title in combinasion with the prompt
   // Also, we should use this title for the h1 tag in the article

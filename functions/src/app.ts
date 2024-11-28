@@ -36,7 +36,7 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
     prompt,
     source = false,
     clientId,
-    lang,
+    lang = "en",
     author,
     chart = true,
   } = req.body as {
@@ -65,7 +65,6 @@ app.post('/createNewArticle', async (req: express.Request, res: express.Response
   if (!author) {
     author = defaultAuthor ? defaultAuthor : companyName;
   }
-
   if (!mission || (!prompt && !ideas) || !clientId || !lang) {
     res.status(400).send('Missing required parameters');
     return;
