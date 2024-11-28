@@ -7,6 +7,7 @@ export const promptGetRelatedNews = (
     -You will received a short prompt about a news article that will be generated.
     -Response should be a maximum of 100 characters.
     -Cite the sources of the news afterward.
+    -You must return at least 1 valid source to validate the news (Must be cited in APA).
     -Make sure the news is relevant to the subject and to the target audience.
     -You are an expert on the subject.
     -You must return a string in the format: "Related news: [news]", where news in a short and concise news about the subject, to inspire the article that will be generated.
